@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using System;
 
-public class InputManager : MonoBehaviour
+public class Input_Manager : MonoBehaviour
 {
     public static RebindJumping inputActions;
 

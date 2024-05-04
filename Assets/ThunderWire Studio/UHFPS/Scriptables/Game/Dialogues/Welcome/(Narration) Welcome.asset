@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93cb5bd7e8a706a41b793e7440b34eea, type: 3}
+  m_Name: (Narration) Welcome
+  m_EditorClassIdentifier: 
+  Dialogues:
+  - DialogueAudio: {fileID: 8300000, guid: dd7097938c8985c46af6646be4efe04e, type: 3}
+    SubtitleType: 1
+    SingleSubtitle:
+      Time: 0
+      Narrator: 
+      Text:
+        GlocText: 
+        NormalText: 
+    Subtitles:
+    - Time: 0
+      Narrator: Narrator
+      Text:
+        GlocText: '*Welcome to the Ultimate Horror FPS KIT demo level, where fear
+          becomes your playground.'
+        NormalText: 
+    - Time: 5.8045726
+      Narrator: Narrator
+      Text:
+        GlocText: '*Step into this demo and interact with the best features of this
+          asset.'
+        NormalText: 
+    - Time: 10.497631
+      Narrator: Narrator
+      Text:
+        GlocText: '*Whether you''re a seasoned developer or horror genre newcomer'
+        NormalText: 
+    - Time: 14.573182
+      Narrator: Narrator
+      Text:
+        GlocText: '*delve into terror and unleash your creativity in this ultimate
+          horror game-building experience.'
+        NormalText: 
