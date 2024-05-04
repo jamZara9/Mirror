@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7520723505309d4d8edc9d83195d9a1, type: 3}
+  m_Name: Story_Two
+  m_EditorClassIdentifier: 
+  sentences:
+  - audioClip: {fileID: 0}
+    text: kawaiiiiiiii
+    speaker: {fileID: 11400000, guid: 051ae728cf6c24c4693c6feb3fe73fb5, type: 2}
+    background: {fileID: 21300000, guid: cd2ae302d3ba7484d93df276b24331e4, type: 3}
+    actions:
+    - speaker: {fileID: 0}
+      actionType: 0
+      spriteIndex: 0
+      coords: {x: 0, y: 0}
+      moveSpeed: 0
+    nextSentenceDelay: 0
+  - audioClip: {fileID: 0}
+    text: fdjfdfdlfhdhfdhiofdshi
+    speaker: {fileID: 11400000, guid: c3f69a004d82086419582c86fce5c41c, type: 2}
+    background: {fileID: 0}
+    actions: []
+    nextSentenceDelay: 0
+  - audioClip: {fileID: 0}
+    text: fjhoidfodsoia
+    speaker: {fileID: 11400000, guid: c3f69a004d82086419582c86fce5c41c, type: 2}
+    background: {fileID: 0}
+    actions: []
+    nextSentenceDelay: 0
+  - audioClip: {fileID: 0}
+    text: fdoijfdhoi
+    speaker: {fileID: 11400000, guid: c3f69a004d82086419582c86fce5c41c, type: 2}
+    background: {fileID: 0}
+    actions: []
+    nextSentenceDelay: 0
+  - audioClip: {fileID: 0}
+    text: fdfdsafdfdsfdsdsaf
+    speaker: {fileID: 11400000, guid: 051ae728cf6c24c4693c6feb3fe73fb5, type: 2}
+    background: {fileID: 21300000, guid: cd2ae302d3ba7484d93df276b24331e4, type: 3}
+    actions: []
+    nextSentenceDelay: 0
+  background: {fileID: 0}
+  backgroundMusic: {fileID: 0}
+  nextScene: {fileID: 11400000, guid: 152645f4dca84924b8277004d4c3b4a5, type: 2}
+  csvFile: {fileID: 4900000, guid: ed98a392ceda0c841b3d639281e70d00, type: 3}
