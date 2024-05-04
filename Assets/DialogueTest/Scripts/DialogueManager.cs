@@ -114,7 +114,7 @@ public class DialogueManager : MonoBehaviour
                 dialogue.audioClip = Resources.Load<AudioClip>("AudioClips/" + row[_CSV_AUDIOCLIP_INDEX].Trim());
             }
 
-            dialogue.nextSentenceDelay = (row[_CSV_NEXTDELAY_INDEX] != "" ? int.Parse(row[_CSV_NEXTDELAY_INDEX]) : 0);
+            dialogue.nextSentenceDelay = (row[_CSV_NEXTDELAY_INDEX] != "" ? float.Parse(row[_CSV_NEXTDELAY_INDEX]) : 0);
             
             List<StoryScene.Sentence.Action> actionList = new List<StoryScene.Sentence.Action>();
             StoryScene.Sentence.Action action = new StoryScene.Sentence.Action();
