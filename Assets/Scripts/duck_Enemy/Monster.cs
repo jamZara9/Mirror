@@ -34,12 +34,16 @@ public class Monster : MonoBehaviour
     [SerializeField] 
     private Animator anim;
 
-    public bool arrive = false;
+    public bool arrive = true;
     private Vector3 _randomPosition;
     private Vector3 distan;
     private NavMeshAgent _navMeshA;
 
     MonsterState m_State;
+
+    [SerializeField] private bool isMovingMonster = true;
+    [SerializeField] private List<Vector3> moveDirectionList;
+    private int _moveDirectionIndex = 0;
 
 
     enum MonsterState
@@ -56,6 +60,7 @@ public class Monster : MonoBehaviour
     {
         _navMeshA = GetComponent<NavMeshAgent>();
         _startPosition = transform.position;
+        _navMeshA.SetDestination(moveDirectionList[_moveDirectionIndex++]);
         m_State = MonsterState.Idle;
         _player = GameObject.FindWithTag("Player").transform;
     }
@@ -84,31 +89,13 @@ public class Monster : MonoBehaviour
   
     void Idle()
     {
-        if (!arrive)
+        if (isMovingMonster && _navMeshA.remainingDistance <= 0.2f)
         {
-            arrive = true;
-            _randomPosition = _startPosition + (Random.insideUnitSphere * 5f); // 랜덤한 위치 설정
-            Debug.Log("좌표 지정함: " + _randomPosition);
+            _navMeshA.SetDestination(moveDirectionList[_moveDirectionIndex]);
+            _moveDirectionIndex = (_moveDirectionIndex + 1) % moveDirectionList.Count;
+            Debug.Log(_moveDirectionIndex);
         }
-        distan = new Vector3(_randomPosition.x, transform.position.y, _randomPosition.z);
-        Vector3 dir = distan - transform.position;
-        Debug.Log("방향 벡터: " + distan);
-        float dirNomarl = Vector3.Distance(transform.position, distan);
-        if (_navMeshA.remainingDistance < 0.5f)
-        {
-            //버그 발생부분
-            _navMeshA.isStopped = true;
-            _navMeshA.ResetPath();
-            //_navMeshA.stoppingDistance = dirNomarl;
-            _navMeshA.destination = distan;
-            // transform.position += dir.normalized * moveSpeed * Time.deltaTime;
-            // transform.forward = dir; // 방향 벡터로 회전
-        }
-        else
-        {
-            arrive = false;
-            Debug.Log("도착");
-        }
+        
         //시야 적용 방식
         float fov = 90f; // 시야 각
         
@@ -122,25 +109,11 @@ public class Monster : MonoBehaviour
             {
                 if (hit.transform.CompareTag("Player"))
                 {
-                    arrive = false;
                     m_State = MonsterState.Move;
                     Debug.Log("추적");
                 }
             }
         }
-        // 플레이어 위치 참조 방식
-        // Vector3 t_direction = (_player.position - transform.position + new Vector3(0, 1, 0)).normalized;
-        // if (Physics.Raycast(transform.position, t_direction, out RaycastHit t_hit, findDistance))
-        // {
-        //     Debug.DrawRay(transform.position, t_direction * findDistance, Color.red);
-        //     Debug.Log(t_hit.collider.gameObject.name);
-        //     if (t_hit.transform.CompareTag("Player")) //collider
-        //     {
-        //         m_State = MonsterState.Move;
-        //         Debug.Log("추적");
-        //     }
-        // }
-        
     }
 
     void Move()
@@ -150,7 +123,9 @@ public class Monster : MonoBehaviour
         {
             Debug.Log("d?" + SearchDistance);
             m_State = MonsterState.Idle;
+            _navMeshA.SetDestination(_startPosition);
             _isDamaged = false;
+            arrive = true;
         }
         else if (Vector3.Distance(_player.position, transform.position) > attackDistance)
         {
