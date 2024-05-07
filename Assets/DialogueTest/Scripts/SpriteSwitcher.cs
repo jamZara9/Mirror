@@ -16,19 +16,13 @@ public class SpriteSwitcher : MonoBehaviour
     {
         if (!isSwitched)
         {
-            image1.enabled = false;
-            image2.enabled = true;
-            
             image2.sprite = sprite;
-            // anim.SetTrigger("SwitchFirst");
+            anim.SetTrigger("SwitchFirst");
         }
         else
         {
-            image1.enabled = true;
-            image2.enabled = false;
-            
             image1.sprite = sprite;
-            // anim.SetTrigger("SwitchSecond");
+            anim.SetTrigger("SwitchSecond");
         }
 
         isSwitched = !isSwitched;
@@ -38,16 +32,10 @@ public class SpriteSwitcher : MonoBehaviour
     {
         if (!isSwitched)
         {
-            image1.enabled = true;
-            image2.enabled = false;
-            
             image1.sprite = sprite;
         }
         else
         {
-            image2.enabled = true;
-            image1.enabled = false;
-            
             image2.sprite = sprite;
         }
     }

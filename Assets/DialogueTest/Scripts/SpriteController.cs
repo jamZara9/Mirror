@@ -9,6 +9,7 @@ using UnityEngine.Tilemaps;
 public class SpriteController : MonoBehaviour
 {
     private SpriteSwitcher _switcher;
+    private Animator _animator;
     private RectTransform _rect;
 
     private Queue<IEnumerator> _moveCoroutineQue = new Queue<IEnumerator>();
@@ -17,22 +18,23 @@ public class SpriteController : MonoBehaviour
     private void Awake()
     {
         _switcher = GetComponent<SpriteSwitcher>();
+        _animator = GetComponent<Animator>();
         _rect = GetComponent<RectTransform>();
     }
 
     public void SetUp(Sprite sprite)
     {
-        gameObject.SetActive(true);
         _switcher.SetImage(sprite);
     }
 
     public void Show(Vector2 coords)
     {
+        _animator.SetTrigger("Show");
         _rect.localPosition = coords;
     }
 
     public void Hide() {
-        gameObject.SetActive(false);
+        _animator.SetTrigger("Hide");
     }
 
     public void Move(Vector2 coords, float speed)

@@ -16,4 +16,4 @@ MonoBehaviour:
   nameColor: {r: 0.41774884, g: 0.33392662, b: 0.5283019, a: 1}
   sprites:
   - {fileID: 21300000, guid: 8538cb319c29aa742a29f245086c84e4, type: 3}
-  prefab: {fileID: 6550056432121420981, guid: aeda3c0c4334fed4b834835dc9b8d0ba, type: 3}
+  prefab: {fileID: 6550056432121420981, guid: 5249ea68011dc824ca24c3054b62e2aa, type: 3}
