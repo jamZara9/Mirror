@@ -10,15 +10,10 @@ public class Monster : MonoBehaviour
     
     [SerializeField] 
     private float findDistance = 5f;
-    [SerializeField] 
-    private LayerMask m_layerMask = 0;
-
-
+    
     [SerializeField] 
     private float monsterHp = 20f;
-
     private bool _isDamaged = false;
-
     [SerializeField] 
     private float attackDistance = 2f;
     [SerializeField]
@@ -44,6 +39,11 @@ public class Monster : MonoBehaviour
     [SerializeField] private bool isMovingMonster = true;
     [SerializeField] private List<Vector3> moveDirectionList;
     private int _moveDirectionIndex = 0;
+    
+    [SerializeField] 
+    private float fov = 90f; // 시야 각
+    [SerializeField] 
+    private float rayAngle = 5f; // 시야 각
 
 
     enum MonsterState
@@ -89,7 +89,7 @@ public class Monster : MonoBehaviour
   
     void Idle()
     {
-        if (isMovingMonster && _navMeshA.remainingDistance <= 0.2f)
+        if (isMovingMonster && _navMeshA.remainingDistance <= _navMeshA.stoppingDistance)
         {
             _navMeshA.SetDestination(moveDirectionList[_moveDirectionIndex]);
             _moveDirectionIndex = (_moveDirectionIndex + 1) % moveDirectionList.Count;
@@ -97,9 +97,9 @@ public class Monster : MonoBehaviour
         }
         
         //시야 적용 방식
-        float fov = 90f; // 시야 각
         
-        for (float angle = -fov / 2; angle <= fov / 2; angle += 5f) // 5도 간격으로 레이캐스트 발사함
+        
+        for (float angle = -fov / 2; angle <= fov / 2; angle += rayAngle) // 5도 간격으로 레이캐스트 발사함
         {
             
             Vector3 direction = Quaternion.AngleAxis(angle, transform.up) * transform.forward;
@@ -122,20 +122,21 @@ public class Monster : MonoBehaviour
         if (Vector3.Distance(_player.position, transform.position) > SearchDistance)
         {
             Debug.Log("d?" + SearchDistance);
-            m_State = MonsterState.Idle;
             _navMeshA.SetDestination(_startPosition);
+            m_State = MonsterState.Idle;
             _isDamaged = false;
             arrive = true;
         }
         else if (Vector3.Distance(_player.position, transform.position) > attackDistance)
         {
+            Debug.Log("Tlqkf");
             //Vector3 dir = (_player.position - transform.position);
             // dir = new Vector3(dir.x, 0, dir.z).normalized;
             // transform.position += dir * moveSpeed * Time.deltaTime;
             //transform.forward = dir;
-            _navMeshA.isStopped = true;
-            _navMeshA.ResetPath();
-            _navMeshA.stoppingDistance = attackDistance;
+            // _navMeshA.isStopped = true;
+            // _navMeshA.ResetPath();
+            // _navMeshA.stoppingDistance = attackDistance;
             // 내비게이션의 목적지를 플레이어의 위치로 설정한다.
             _navMeshA.destination = _player.position;
         }
