@@ -129,14 +129,6 @@ public class Monster : MonoBehaviour
         }
         else if (Vector3.Distance(_player.position, transform.position) > attackDistance)
         {
-            //Vector3 dir = (_player.position - transform.position);
-            // dir = new Vector3(dir.x, 0, dir.z).normalized;
-            // transform.position += dir * moveSpeed * Time.deltaTime;
-            //transform.forward = dir;
-            // _navMeshA.isStopped = true;
-            // _navMeshA.ResetPath();
-            // _navMeshA.stoppingDistance = attackDistance;
-            // 내비게이션의 목적지를 플레이어의 위치로 설정한다.
             _navMeshA.destination = _player.position;
         }
         else
