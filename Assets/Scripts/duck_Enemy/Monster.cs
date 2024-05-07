@@ -129,7 +129,6 @@ public class Monster : MonoBehaviour
         }
         else if (Vector3.Distance(_player.position, transform.position) > attackDistance)
         {
-            Debug.Log("Tlqkf");
             //Vector3 dir = (_player.position - transform.position);
             // dir = new Vector3(dir.x, 0, dir.z).normalized;
             // transform.position += dir * moveSpeed * Time.deltaTime;
