@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Monster : MonoBehaviour
+public class Monster : MonoBehaviour,IDamage
 {
     private Vector3 _startPosition;
     
@@ -154,6 +154,11 @@ public class Monster : MonoBehaviour
             m_State = MonsterState.Move;
             _currentTime = 0;
         }
+    }
+
+    public void Damage()
+    {
+        Debug.Log("우와 이게 뭐야");
     }
 
     public void HitMonster(int hitPower)
