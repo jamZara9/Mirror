@@ -85,7 +85,10 @@ public class DialogueManager : MonoBehaviour
         currentScene.sentences = new List<StoryScene.Sentence>();
         int cnt = 0;
 
-        for (int i = 1; i < data.Length - 1; i++)
+        currentScene.summaryText = data[data.Length - 2].Split(new char[] {','})[0];
+        Debug.Log(data[data.Length - 1].Split(new char[] {','})[0]);
+
+        for (int i = 1; i < data.Length - 2; i++)
         {
             string[] row = data[i].Split(new char[] { ',' });
             
@@ -294,6 +297,7 @@ public class DialogueManager : MonoBehaviour
     public void EndScene()
     {
         _sprites.Clear();
+        StopAllCoroutines();
 
         foreach (Transform child in spritesPrefab.transform)
         {

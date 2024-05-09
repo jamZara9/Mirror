@@ -11,6 +11,8 @@ public class StoryScene : ScriptableObject
     public StoryScene nextScene;
     public TextAsset csvFile;
 
+    public string summaryText;
+
     [System.Serializable]
     public struct Sentence
     {
