@@ -40,6 +40,7 @@ public class GameController : MonoBehaviour
             {
                 if (!currentScene.nextScene)
                 {
+                    dialogueManager.EndScene();
                     dialoguePanel.SetActive(false);
                     Time.timeScale = 1;
                     

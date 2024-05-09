@@ -278,7 +278,6 @@ public class DialogueManager : MonoBehaviour
             
             case StoryScene.Sentence.Action.Type.Change:
                 controller = _sprites[action.speaker];
-                // controller.SetUp(action.speaker.sprites[action.spriteIndex]);
                 controller.SwitchSprite(action.speaker.sprites[action.spriteIndex]);
                 break;
             
@@ -289,6 +288,16 @@ public class DialogueManager : MonoBehaviour
                     controller.Hide();
                 }
                 break;
+        }
+    }
+
+    public void EndScene()
+    {
+        _sprites.Clear();
+
+        foreach (Transform child in spritesPrefab.transform)
+        {
+            Destroy(child.gameObject);
         }
     }
 }
