@@ -18,8 +18,12 @@ public class ItemManager : MonoBehaviour
     // 아이템 데이터 딕셔너리 [ 아이템 ID, 아이템 데이터 ]
     public Dictionary<string, BaseItemData> itemDictionary;   
 
-    // 필드에 생성된 Item 오브젝트들을 저장하는 리스트
+    // 필드에 존재하는 Item 오브젝트들을 저장하는 리스트
     public List<BaseItem> items;
+   
+    // 테스트옹 변수들
+    private string testItemID = "Item001";
+
     
     void Awake(){
         // 싱글톤 인스턴스 설정
@@ -42,8 +46,10 @@ public class ItemManager : MonoBehaviour
             ShowItem(item, true);   // 아이템 활성화
         }
 
-        CreateItem("Item001");
+        CreateItem(testItemID);
 
+        // 아이템 제거 테스트
+        StartCoroutine(RemoveItemDelay(3.0f));
     }
 
     void LoadItemData(){
@@ -90,11 +96,15 @@ public class ItemManager : MonoBehaviour
         item.itemData = data;
     }
 
+    /// <summary>
+    /// 아이템 생성 함수
+    /// </summary>
+    /// <param name="itemID">생성하고자 하는 Item의 ID</param>
     public void CreateItem(string itemID){
 
         string itemPrefabPath = "Prefabs/Items/"; // 아이템 프리팹 경로
 
-        // 아이템 프리팹 로드 [ 테스트 용 ]
+        // 아이템 프리팹 로드
         GameObject itemPrefab = Resources.Load<GameObject>(itemPrefabPath + itemID);
         if (itemPrefab == null)
         {
@@ -123,5 +133,24 @@ public class ItemManager : MonoBehaviour
             Debug.LogError("BaseItem을 찾을 수 없습니다.");
         }
 
+    }
+
+    /// <summary>
+    /// 아이템 제거 함수
+    /// </summary>
+    /// <param name="item">제거할 아이템</param>
+    public void RemoveItem(BaseItem item){
+        items.Remove(item);
+        Destroy(item.gameObject);
+    }
+
+    /// <summary>
+    /// 아이템 제거 확인을 위한 테스트용 딜레이 함수
+    /// </summary>
+    /// <param name="delay"></param>
+    /// <returns></returns>
+    IEnumerator RemoveItemDelay(float delay){
+        yield return new WaitForSeconds(delay);
+        RemoveItem(items.Find(x => x.itemID == testItemID));
     }
 }
