@@ -32,7 +32,7 @@ public class ItemManager : MonoBehaviour
         }
 
         // 아이템 정보 로드
-        InitializeItem();
+        LoadItemData();
         
         // 모든 BaseItem 타입의 객체를 찾아서 리스트에 추가
         BaseItem[] allBaseItems = Resources.FindObjectsOfTypeAll<BaseItem>();
@@ -45,7 +45,7 @@ public class ItemManager : MonoBehaviour
         
     }
 
-    void InitializeItem(){
+    void LoadItemData(){
         if(File.Exists(jsonFilePath)){
             // json 데이터 로드
             string jsonData = FileManager.LoadJsonFile(jsonFilePath);
