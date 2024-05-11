@@ -24,8 +24,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: "P-0006-0007_\uC5D0\uC5B4\uCEE8,\uD615\uAD11\uB4F1"
-  m_Shader: {fileID: -6465566751694194690, guid: 174f4c5ff68e36f428d3d2f81065fc69,
-    type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 174f4c5ff68e36f428d3d2f81065fc69, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
