@@ -15,5 +15,8 @@ MonoBehaviour:
   speakerName: "\uBD80\uC815\uD615 \uC778\uAC04"
   nameColor: {r: 0.41774884, g: 0.33392662, b: 0.5283019, a: 1}
   sprites:
-  - {fileID: 21300000, guid: 8538cb319c29aa742a29f245086c84e4, type: 3}
-  prefab: {fileID: 6550056432121420981, guid: aeda3c0c4334fed4b834835dc9b8d0ba, type: 3}
+  - {fileID: 21300000, guid: 1ea6cde6784a8af42b52b2d8301dc713, type: 3}
+  - {fileID: 21300000, guid: 8a1d393456e3d584d90f0fba4aa899ed, type: 3}
+  - {fileID: 21300000, guid: 18410c9529282474e9908699cc4018ba, type: 3}
+  - {fileID: 21300000, guid: 41948974ff34ac14c958a6dbe9c0e230, type: 3}
+  prefab: {fileID: 6550056432121420981, guid: 5249ea68011dc824ca24c3054b62e2aa, type: 3}

@@ -17,4 +17,4 @@ MonoBehaviour:
   sprites:
   - {fileID: 21300000, guid: 7dd796d422f17f64484515ab84e4706c, type: 3}
   - {fileID: 21300000, guid: 59eee3f35517728478a4db86ef6a3cfc, type: 3}
-  prefab: {fileID: 6550056432121420981, guid: 3ebefd20b77ac0143af668fa0382d305, type: 3}
+  prefab: {fileID: 6550056432121420981, guid: 289acddbda5679f49a44fdc96304e778, type: 3}

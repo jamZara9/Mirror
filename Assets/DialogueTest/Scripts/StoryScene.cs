@@ -11,6 +11,8 @@ public class StoryScene : ScriptableObject
     public StoryScene nextScene;
     public TextAsset csvFile;
 
+    public string summaryText;
+
     [System.Serializable]
     public struct Sentence
     {
@@ -39,7 +41,7 @@ public class StoryScene : ScriptableObject
             [System.Serializable]
             public enum Type
             {
-                None, Appear, Move, DisAppear
+                None, Appear, Move, DisAppear, Change
             }
         }
     }

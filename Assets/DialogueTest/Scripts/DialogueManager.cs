@@ -85,7 +85,10 @@ public class DialogueManager : MonoBehaviour
         currentScene.sentences = new List<StoryScene.Sentence>();
         int cnt = 0;
 
-        for (int i = 1; i < data.Length - 1; i++)
+        currentScene.summaryText = data[data.Length - 2].Split(new char[] {','})[0];
+        Debug.Log(data[data.Length - 1].Split(new char[] {','})[0]);
+
+        for (int i = 1; i < data.Length - 2; i++)
         {
             string[] row = data[i].Split(new char[] { ',' });
             
@@ -114,7 +117,7 @@ public class DialogueManager : MonoBehaviour
                 dialogue.audioClip = Resources.Load<AudioClip>("AudioClips/" + row[_CSV_AUDIOCLIP_INDEX].Trim());
             }
 
-            dialogue.nextSentenceDelay = (row[_CSV_NEXTDELAY_INDEX] != "" ? int.Parse(row[_CSV_NEXTDELAY_INDEX]) : 0);
+            dialogue.nextSentenceDelay = (row[_CSV_NEXTDELAY_INDEX] != "" ? float.Parse(row[_CSV_NEXTDELAY_INDEX]) : 0);
             
             List<StoryScene.Sentence.Action> actionList = new List<StoryScene.Sentence.Action>();
             StoryScene.Sentence.Action action = new StoryScene.Sentence.Action();
@@ -123,15 +126,11 @@ public class DialogueManager : MonoBehaviour
                 Debug.Log("cnt : " + ++cnt);
                 action.speaker = Resources.Load<Speaker>("Speaker/" + row[_CSV_ACTION_INDEX].Trim());
 
+                int xPos = 0;
+                int yPos = 0;
+                
                 switch (row[_CSV_ACTION_TYPE_INDEX])
                 {
-                    case "Move":
-                        action.actionType = StoryScene.Sentence.Action.Type.Move;
-                        int xPos = int.Parse(row[_CSV_ACTION_COORDS_X_INDEX]);
-                        int yPos = int.Parse(row[_CSV_ACTION_COORDS_Y_INDEX]);
-                        action.coords = new Vector2(xPos, yPos);
-                        action.moveSpeed = float.Parse(row[_CSV_ACTION_MOVESPEED_INDEX]);
-                        break;
                     case "Appear":
                         action.actionType = StoryScene.Sentence.Action.Type.Appear;
                         xPos = int.Parse(row[_CSV_ACTION_COORDS_X_INDEX]);
@@ -139,6 +138,20 @@ public class DialogueManager : MonoBehaviour
                         action.coords = new Vector2(xPos, yPos);
                         action.spriteIndex = int.Parse(row[_CSV_ACTION_SPRITEINDEX_INDEX]);
                         break;
+                    
+                    case "Move":
+                        action.actionType = StoryScene.Sentence.Action.Type.Move;
+                        xPos = int.Parse(row[_CSV_ACTION_COORDS_X_INDEX]);
+                        yPos = int.Parse(row[_CSV_ACTION_COORDS_Y_INDEX]);
+                        action.coords = new Vector2(xPos, yPos);
+                        action.moveSpeed = float.Parse(row[_CSV_ACTION_MOVESPEED_INDEX]);
+                        break;
+                    
+                    case "Change":
+                        action.actionType = StoryScene.Sentence.Action.Type.Change;
+                        action.spriteIndex = int.Parse(row[_CSV_ACTION_SPRITEINDEX_INDEX]);
+                        break;
+                    
                     case "DisAppear":
                         action.actionType = StoryScene.Sentence.Action.Type.DisAppear;
                         break;
@@ -266,6 +279,11 @@ public class DialogueManager : MonoBehaviour
                 }
                 break;
             
+            case StoryScene.Sentence.Action.Type.Change:
+                controller = _sprites[action.speaker];
+                controller.SwitchSprite(action.speaker.sprites[action.spriteIndex]);
+                break;
+            
             case StoryScene.Sentence.Action.Type.DisAppear:
                 if (_sprites.ContainsKey(action.speaker))
                 {
@@ -273,18 +291,17 @@ public class DialogueManager : MonoBehaviour
                     controller.Hide();
                 }
                 break;
-            
-            // case StoryScene.Sentence.Action.Type.None:
-            //     if (_sprites.ContainsKey(action.speaker))
-            //     {
-            //         controller = _sprites[action.speaker];
-            //     }
-            //     break;
         }
+    }
 
-        if (controller != null)
+    public void EndScene()
+    {
+        _sprites.Clear();
+        StopAllCoroutines();
+
+        foreach (Transform child in spritesPrefab.transform)
         {
-            controller.SwitchSprite(action.speaker.sprites[action.spriteIndex]);
+            Destroy(child.gameObject);
         }
     }
 }

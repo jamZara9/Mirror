@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -9,6 +11,10 @@ public class GameController : MonoBehaviour
     public DialogueManager dialogueManager;
     public BackGroundController backGroundController;
 
+    private bool _isOnSkip = false;
+    public GameObject skipPanel;
+    public TextMeshProUGUI skipPanelStoryText;
+
     void Start()
     {
         dialoguePanel.SetActive(false);
@@ -16,10 +22,35 @@ public class GameController : MonoBehaviour
 
     public void PlayScene(StoryScene storyScene)
     {
-        // Time.timeScale = 0;
         dialoguePanel.SetActive(true);
         dialogueManager.ParseCSVFile(storyScene);
         dialogueManager.PlayScene();
+    }
+
+    public void OnSkip()
+    {
+        _isOnSkip = true;
+        skipPanelStoryText.text = currentScene.summaryText;
+        skipPanel.SetActive(true);
+    }
+
+    public void OnRealSkip()
+    {
+        if (!currentScene.nextScene)
+        {
+            skipPanel.SetActive(false);
+            EndCurrentStoryScene();
+        }
+        else
+        {
+            NextScene();
+        }
+    }
+
+    void OnSkipCancel()
+    {
+        _isOnSkip = false;
+        skipPanel.SetActive(false);
     }
 
     void Update()
@@ -40,14 +71,11 @@ public class GameController : MonoBehaviour
             {
                 if (!currentScene.nextScene)
                 {
-                    dialoguePanel.SetActive(false);
-                    Time.timeScale = 1;
-                    
+                    EndCurrentStoryScene();
                 }
                 else
                 {
-                    currentScene = currentScene.nextScene;
-                    dialogueManager.PlayScene();
+                    NextScene();
                 }
 
                 return;
@@ -55,5 +83,35 @@ public class GameController : MonoBehaviour
                 
             dialogueManager.PlayNextSentence();
         }
+
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            OnSkip();
+        }
+        if (_isOnSkip)
+        {
+            if (Input.GetKeyDown(KeyCode.L))
+            {
+                OnRealSkip();
+            }
+
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                OnSkipCancel();
+            }
+        }
+    }
+
+    void NextScene()
+    {
+        currentScene = currentScene.nextScene;
+        dialogueManager.PlayScene();
+    }
+
+    void EndCurrentStoryScene()
+    {
+        dialogueManager.EndScene(); 
+        dialoguePanel.SetActive(false);
+        Time.timeScale = 1;
     }
 }
