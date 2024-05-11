@@ -42,7 +42,8 @@ public class ItemManager : MonoBehaviour
             ShowItem(item, true);   // 아이템 활성화
         }
 
-        
+        CreateItem("Item001");
+
     }
 
     void LoadItemData(){
@@ -87,5 +88,40 @@ public class ItemManager : MonoBehaviour
 
         // 아이템 데이터 설정
         item.itemData = data;
+    }
+
+    public void CreateItem(string itemID){
+
+        string itemPrefabPath = "Prefabs/Items/"; // 아이템 프리팹 경로
+
+        // 아이템 프리팹 로드 [ 테스트 용 ]
+        GameObject itemPrefab = Resources.Load<GameObject>(itemPrefabPath + itemID);
+        if (itemPrefab == null)
+        {
+            Debug.LogError("아이템 프리팹을 찾을 수 없습니다: " + itemPrefabPath + itemID);
+            return;
+        }
+
+        // 아이템 생성
+        GameObject itemObject = Instantiate(itemPrefab);
+        BaseItem item = itemObject.GetComponent<BaseItem>();
+
+        // 추후 위치에 대한 값들이 결정되었을 경우 위치 설정 필요
+        if(item != null){
+            item.itemID = itemID;
+            item.transform.position = new Vector3(0, 0, 0);
+            item.transform.rotation = Quaternion.identity;
+            item.transform.localScale = new Vector3(1, 1, 1);
+            item.gameObject.SetActive(true);
+
+            // 아이템 데이터 설정
+            setItemData(item);
+
+            // 리스트에 추가
+            items.Add(item);
+        }else{
+            Debug.LogError("BaseItem을 찾을 수 없습니다.");
+        }
+
     }
 }
