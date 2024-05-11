@@ -1,0 +1,115 @@
+{
+  "id": "5b72d96021084c0c950e4025185a3822",
+  "playerData": {
+    "position": {
+      "x": 0.0,
+      "y": 1.0,
+      "z": -3.7
+    },
+    "rotation": {
+      "x": 0.0,
+      "y": 0.0
+    },
+    "localData": {
+      "health": 100,
+      "playerItems": {
+        "playerItem_0": {
+          "recordingTime": 0,
+          "batteryEnergy": 100.0,
+          "nightVision": false
+        },
+        "playerItem_1": {},
+        "playerItem_2": {},
+        "playerItem_3": {
+          "flashlightAttached": false
+        },
+        "playerItem_4": {
+          "batteryEnergy": 320.0
+        },
+        "playerItem_5": {
+          "currentFuel": 60.0
+        },
+        "playerItem_6": {},
+        "playerItem_7": {}
+      }
+    },
+    "globalData": {
+      "inventory": {
+        "expanded": 0,
+        "items": {},
+        "shortcuts": {
+          "shortcut_0": "{}",
+          "shortcut_1": "{}",
+          "shortcut_2": "{}",
+          "shortcut_3": "{}"
+        }
+      },
+      "objectives": {}
+    }
+  },
+  "worldState": {
+    "worldSaveables": {
+      "DraggableItem.b5b3779d12e0f1d4a9098b1963586ab3": {
+        "position": {
+          "x": -4.617,
+          "y": -57.1664963,
+          "z": -0.15700005
+        },
+        "rotation": {
+          "x": 270.0,
+          "y": 5.14461826E-05,
+          "z": 0.0
+        }
+      },
+      "TimedInteractEvent.e22929b9c6f2f464a949d9a3354e0f29": {
+        "interactOnce": false,
+        "isInteractTimed": false
+      },
+      "DraggableItem.3e2b9368e3700744f8664dff8ac109bf": {
+        "position": {
+          "x": -4.539,
+          "y": -57.1664963,
+          "z": -0.421
+        },
+        "rotation": {
+          "x": 270.0,
+          "y": 319.823547,
+          "z": 0.0
+        }
+      },
+      "SaveableObject.ca143818ddf91124da107fa8c09ade69": {
+        "position": {
+          "x": 0.0,
+          "y": -29.0,
+          "z": -2.0
+        },
+        "rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        }
+      },
+      "NPCHealth.34224b1e11d66db4e833e32b097cb749": {
+        "position": {
+          "x": -21.9901371,
+          "y": -58.9676666,
+          "z": 2.525932
+        },
+        "rotation": {
+          "x": 0.0,
+          "y": 234.738144,
+          "z": 0.0
+        },
+        "health": 100
+      },
+      "TimedInteractEvent.32d7c672cd292fe4b8169e09e4e878d9": {
+        "interactOnce": false,
+        "isInteractTimed": false
+      },
+      "ElevatorSystem.cf215f591ae2bf740a0356ec18268f9b": {
+        "floor": 2
+      }
+    },
+    "runtimeSaveables": {}
+  }
+}

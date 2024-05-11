@@ -12,7 +12,7 @@ public class JumpController : MonoBehaviour
 
     private void OnEnable()
     {
-        gameActions = InputManager.inputActions;
+        gameActions = Input_Manager.inputActions;
 
         gameActions.GameControls.Jump.started += DoJump;
         gameActions.GameControls.Enable();

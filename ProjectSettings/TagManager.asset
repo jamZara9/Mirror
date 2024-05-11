@@ -4,23 +4,22 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - CinemachineTarget
-  - Item
+  - Flesh
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Interact
+  - Weapon
+  - Focus
+  - NPC
+  - BodyPart
+  - Ground
+  - Slope
+  - World UI
   - 
   - 
   - 
