@@ -15,11 +15,17 @@ public class SpriteController : MonoBehaviour
     private Queue<IEnumerator> _moveCoroutineQue = new Queue<IEnumerator>();
     private bool _isMoving = false;
 
+    private RectTransform _childRectOne;
+    private RectTransform _childRectTwo;
+
     private void Awake()
     {
         _switcher = GetComponent<SpriteSwitcher>();
         _animator = GetComponent<Animator>();
         _rect = GetComponent<RectTransform>();
+
+        _childRectOne = transform.GetChild(0).GetComponent<RectTransform>();
+        _childRectTwo = transform.GetChild(1).GetComponent<RectTransform>();
     }
 
     public void SetUp(Sprite sprite)
@@ -46,6 +52,11 @@ public class SpriteController : MonoBehaviour
         }
     }
 
+    public void Scale(int width, int height, float speed)
+    {
+        StartCoroutine(ScaleCoroutine(new Vector2(width, height), speed));
+    }
+
     IEnumerator ProcessCoroutineQueue()
     {
         _isMoving = true;
@@ -66,6 +77,22 @@ public class SpriteController : MonoBehaviour
                 (_rect.localPosition,
                     coords,
                     speed * 1000f * Time.deltaTime);
+
+            yield return new WaitForSeconds(0.01f);
+        }
+    }
+    
+    IEnumerator ScaleCoroutine(Vector2 scale, float speed)
+    {
+        while (_childRectOne.rect.width != scale.x || _childRectOne.rect.height != scale.y)
+        {
+            Vector2 curScale = new Vector2(_childRectOne.rect.width, _childRectTwo.rect.height);
+            Vector2 scaleDir = new Vector2(scale.x, scale.y);
+
+            Vector2 a = Vector2.Lerp(curScale, scaleDir, speed * Time.deltaTime);
+            
+            _childRectOne.sizeDelta = a;
+            _childRectTwo.sizeDelta = a;
 
             yield return new WaitForSeconds(0.01f);
         }

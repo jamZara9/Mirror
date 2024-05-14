@@ -45,6 +45,9 @@ public class DialogueManager : MonoBehaviour
     private const int _CSV_ACTION_COORDS_X_INDEX = 8;
     private const int _CSV_ACTION_COORDS_Y_INDEX = 9;
     private const int _CSV_ACTION_MOVESPEED_INDEX = 10;
+    private const int _CSV_ACTION_SCALE_WIDTH_INDEX = 11;
+    private const int _CSV_ACTION_SCALE_HEIGHT_INDEX = 12;
+    private const int _CSV_ACTION_SCALE_SPEED_INDEX = 13;
 
     private enum State
     {
@@ -150,6 +153,13 @@ public class DialogueManager : MonoBehaviour
                     case "Change":
                         action.actionType = StoryScene.Sentence.Action.Type.Change;
                         action.spriteIndex = int.Parse(row[_CSV_ACTION_SPRITEINDEX_INDEX]);
+                        break;
+                    
+                    case "Scale":
+                        action.actionType = StoryScene.Sentence.Action.Type.Scale;
+                        action.width = int.Parse(row[_CSV_ACTION_SCALE_WIDTH_INDEX]);
+                        action.height = int.Parse(row[_CSV_ACTION_SCALE_HEIGHT_INDEX]);
+                        action.scaleSpeed = float.Parse(row[_CSV_ACTION_SCALE_SPEED_INDEX]);
                         break;
                     
                     case "DisAppear":
@@ -280,8 +290,19 @@ public class DialogueManager : MonoBehaviour
                 break;
             
             case StoryScene.Sentence.Action.Type.Change:
-                controller = _sprites[action.speaker];
-                controller.SwitchSprite(action.speaker.sprites[action.spriteIndex]);
+                if (_sprites.ContainsKey(action.speaker))
+                {
+                    controller = _sprites[action.speaker];
+                    controller.SwitchSprite(action.speaker.sprites[action.spriteIndex]);
+                }
+                break;
+            
+            case StoryScene.Sentence.Action.Type.Scale:
+                if (_sprites.ContainsKey(action.speaker))
+                {
+                    controller = _sprites[action.speaker];
+                    controller.Scale(action.width, action.height, action.scaleSpeed);
+                }
                 break;
             
             case StoryScene.Sentence.Action.Type.DisAppear:
