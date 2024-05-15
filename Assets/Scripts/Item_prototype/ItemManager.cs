@@ -12,9 +12,6 @@ public class ItemManager : MonoBehaviour
     private static ItemManager _itemManager;              // 싱글톤 인스턴스
     public static ItemManager Instance => _itemManager;   // 인스턴스 접근용 프로퍼티
 
-    // json 파일 경로
-    public string jsonFilePath= Path.Combine(Application.dataPath, "Scripts/Item_prototype/Json/items.json");
-
     // 아이템 데이터 딕셔너리 [ 아이템 ID, 아이템 데이터 ]
     public Dictionary<string, BaseItemData> itemDictionary;   
 
@@ -39,33 +36,37 @@ public class ItemManager : MonoBehaviour
         LoadItemData();
         
         // 모든 BaseItem 타입의 객체를 찾아서 리스트에 추가
-        BaseItem[] allBaseItems = Resources.FindObjectsOfTypeAll<BaseItem>();
+        // BaseItem[] allBaseItems = Resources.FindObjectsOfTypeAll<BaseItem>();
+        BaseItem[] allBaseItems = FindObjectsOfType<BaseItem>(); // 활성화된 오브젝트를 가져옴
         foreach (BaseItem item in allBaseItems){
             items.Add(item);        // 리스트에 추가
             setItemData(item);      // 아이템 데이터 설정
             ShowItem(item, true);   // 아이템 활성화
+            Debug.Log($"아이템 추가: {item.itemID}");
         }
 
-        CreateItem(testItemID);
+        // CreateItem(testItemID);
 
-        // 아이템 제거 테스트
-        StartCoroutine(RemoveItemDelay(3.0f));
+        // // 아이템 제거 테스트
+        // StartCoroutine(RemoveItemDelay(3.0f));
     }
 
     void LoadItemData(){
+        string jsonFilePath = Path.Combine(Application.dataPath, "Scripts/Item_prototype/Json/items.json");
+
         if(File.Exists(jsonFilePath)){
-            // json 데이터 로드
-            string jsonData = FileManager.LoadJsonFile(jsonFilePath);
+
+            string jsonData = FileManager.LoadJsonFile(jsonFilePath);       // json 파일 로드
 
             // json 데이터 -> 딕셔너리로 변환
             itemDictionary = JsonConvert.DeserializeObject<Dictionary<string, BaseItemData>>(jsonData);
-            Debug.Log($"아이템 데이터 로드 완료. 아이템 개수: {itemDictionary.Count}");
+            //Debug.Log($"아이템 데이터 로드 완료. 아이템 개수: {itemDictionary.Count}");
             
-            // itemDictionary의 모든 키와 값 출력
-            foreach (var kvp in itemDictionary)
-            {
-                Debug.Log($"Key: {kvp.Key}, Name: {kvp.Value.name}, Description: {kvp.Value.description}, Type: {kvp.Value.type}, IconPath: {kvp.Value.iconPath}");
-            }
+            // // itemDictionary의 모든 키와 값 출력
+            // foreach (var kvp in itemDictionary)
+            // {
+            //     Debug.Log($"Key: {kvp.Key}, Name: {kvp.Value.name}, Description: {kvp.Value.description}, Type: {kvp.Value.type}, IconPath: {kvp.Value.iconPath}");
+            // }
         }
         else{
             Debug.LogError($"JSON 파일을 찾을 수 없습니다. 경로: {jsonFilePath}");
