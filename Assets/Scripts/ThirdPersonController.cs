@@ -159,6 +159,7 @@ namespace StarterAssets
             JumpAndGravity();
             GroundedCheck();
             Move();
+            UseItem();
         }
 
         private void LateUpdate()
@@ -386,6 +387,26 @@ namespace StarterAssets
             if (animationEvent.animatorClipInfo.weight > 0.5f)
             {
                 AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
+            }
+        }
+
+        private void UseItem(){
+            if(_input.useItem){
+                // 아이템 사용 순서
+                // 1. 아이템을 클릭한다. ->  클릭시 해당 함수가 호출되는 것으로 가정
+                // 2. 클릭한 아이템의 ID를 가져온다. ItemManager 인스턴스의 items에서 key값이 해당 ID인 아이템을 찾는다.
+                ItemManager itemManager = ItemManager.Instance;
+                BaseItem item = itemManager.items.Find(x => x.itemID == "Item001");
+
+                // 3. 아이템의 ID가 가진 useItem 함수를 호출한다.
+                item.UseItem();
+
+                Debug.Log("아이템 사용");
+
+                _input.useItem = false;
+
+                // 4. 아이템의 useItem 함수에서 필요한 처리를 한다.
+                // 5. 필요한 처리가 끝나면 아이템을 제거한다. -> useItem 함수에서 제거하는 것으로 가정
             }
         }
     }

@@ -23,7 +23,7 @@ public class ConsumableItem : BaseItem
         switch (effectType)
         {
             case EffectType.Health:
-
+                useHeadthItem();
                 break;
             case EffectType.Speed:
 
@@ -35,6 +35,12 @@ public class ConsumableItem : BaseItem
                 
                 break;
         }
+    }
+
+    private void useHeadthItem()
+    {
+        // 체력 회복 아이템 사용
+        Debug.Log("체력 회복 아이템 사용");
     }
 
 }
