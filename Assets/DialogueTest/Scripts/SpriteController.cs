@@ -57,6 +57,11 @@ public class SpriteController : MonoBehaviour
         StartCoroutine(ScaleCoroutine(new Vector2(width, height), speed));
     }
 
+    public void SetFirst()
+    {
+        _rect.SetAsLastSibling();
+    }
+
     IEnumerator ProcessCoroutineQueue()
     {
         _isMoving = true;

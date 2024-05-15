@@ -5,13 +5,17 @@ Wak,차라리 비라도 시원하게 오던가…,,,1,Wak,Appear,0,-250,0,,,,
 Narration,교실 한 쪽에서 떠드는 목소리가 들려온다.,,,,Wak,Scale,,,,,800,900,5
 Wak,그 삼총사인가.,,,1,Wak,Change,1,,,,,,
 Gwon,니들 그거 알어? 별관 턍고의 뎐설...,RedBogdo,,2,Gwon,Appear,0,100,0,,,,
+,,,,,Gwon,Scale,,,,,600,700,4
 Negative,별관 창고...?,,,1,Negative,Appear,0,175,0,,,,
 ,,,,,Negative,Move,,225,0,0.5,,,
+,,,,,Negative,Scale,,,,,600,700,4
 Cal,아~ 그 거울 말인가? 뭐` 별거 아니던데?,WhiteBogdo,,,Cal,Appear,0,350,0,,,,
-Negative,거울...!?,,,0.5,,,,,,,,,
-Cal,그래~ 거울.,,,,,,,,,,,,
+,,,,,Cal,Scale,,,,,600,700,4
+Negative,거울...!?,,,0.5,Negative,First,,,,,,,
+Cal,그래~ 거울.,,,,Cal,First,,,,,,,
 ,별관 창고에 거울이 하나 있는데` 자정이 지나면 그 거울을 절대로 찾아가서는 안된다고 하더군…,,,,,,,,,,,,
 Negative,절대로 찾아가서는...!?,RedBogdo,,1,Negative,Move,,225,25,0.75,,,
 ,,,,,Negative,Move,,225,0,0.75,,,
-Cal,한번은 심령 동아리에서 그 거울을 찾아갔었는데 말이야...,,,,,,,,,,,,
+,,,,,Negative,First,,,,,,,
+Cal,한번은 심령 동아리에서 그 거울을 찾아갔었는데 말이야...,,,,Cal,First,,,,,,,
 요약글,,,,,,,,,,,,,

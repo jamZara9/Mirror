@@ -134,7 +134,7 @@ public class DialogueManager : MonoBehaviour
                 
                 switch (row[_CSV_ACTION_TYPE_INDEX])
                 {
-                    case "Appear":
+                    case "Appear" :
                         action.actionType = StoryScene.Sentence.Action.Type.Appear;
                         xPos = int.Parse(row[_CSV_ACTION_COORDS_X_INDEX]);
                         yPos = int.Parse(row[_CSV_ACTION_COORDS_Y_INDEX]);
@@ -142,7 +142,11 @@ public class DialogueManager : MonoBehaviour
                         action.spriteIndex = int.Parse(row[_CSV_ACTION_SPRITEINDEX_INDEX]);
                         break;
                     
-                    case "Move":
+                    case "First" :
+                        action.actionType = StoryScene.Sentence.Action.Type.First;
+                        break;
+                    
+                    case "Move" :
                         action.actionType = StoryScene.Sentence.Action.Type.Move;
                         xPos = int.Parse(row[_CSV_ACTION_COORDS_X_INDEX]);
                         yPos = int.Parse(row[_CSV_ACTION_COORDS_Y_INDEX]);
@@ -150,19 +154,19 @@ public class DialogueManager : MonoBehaviour
                         action.moveSpeed = float.Parse(row[_CSV_ACTION_MOVESPEED_INDEX]);
                         break;
                     
-                    case "Change":
+                    case "Change" :
                         action.actionType = StoryScene.Sentence.Action.Type.Change;
                         action.spriteIndex = int.Parse(row[_CSV_ACTION_SPRITEINDEX_INDEX]);
                         break;
                     
-                    case "Scale":
+                    case "Scale" :
                         action.actionType = StoryScene.Sentence.Action.Type.Scale;
                         action.width = int.Parse(row[_CSV_ACTION_SCALE_WIDTH_INDEX]);
                         action.height = int.Parse(row[_CSV_ACTION_SCALE_HEIGHT_INDEX]);
                         action.scaleSpeed = float.Parse(row[_CSV_ACTION_SCALE_SPEED_INDEX]);
                         break;
                     
-                    case "DisAppear":
+                    case "DisAppear" :
                         action.actionType = StoryScene.Sentence.Action.Type.DisAppear;
                         break;
                 }
@@ -265,7 +269,7 @@ public class DialogueManager : MonoBehaviour
 
         switch (action.actionType)
         {
-            case StoryScene.Sentence.Action.Type.Appear:
+            case StoryScene.Sentence.Action.Type.Appear :
                 if (!_sprites.ContainsKey(action.speaker))
                 {
                     controller = Instantiate(action.speaker.prefab.gameObject, spritesPrefab.transform)
@@ -281,7 +285,15 @@ public class DialogueManager : MonoBehaviour
                 controller.Show(action.coords);
                 return;
             
-            case StoryScene.Sentence.Action.Type.Move:
+            case StoryScene.Sentence.Action.Type.First :
+                if (_sprites.ContainsKey(action.speaker))
+                {
+                    controller = _sprites[action.speaker];
+                    controller.SetFirst();
+                }
+                break;
+            
+            case StoryScene.Sentence.Action.Type.Move :
                 if (_sprites.ContainsKey(action.speaker))
                 {
                     controller = _sprites[action.speaker];
@@ -289,7 +301,7 @@ public class DialogueManager : MonoBehaviour
                 }
                 break;
             
-            case StoryScene.Sentence.Action.Type.Change:
+            case StoryScene.Sentence.Action.Type.Change :
                 if (_sprites.ContainsKey(action.speaker))
                 {
                     controller = _sprites[action.speaker];
@@ -297,7 +309,7 @@ public class DialogueManager : MonoBehaviour
                 }
                 break;
             
-            case StoryScene.Sentence.Action.Type.Scale:
+            case StoryScene.Sentence.Action.Type.Scale :
                 if (_sprites.ContainsKey(action.speaker))
                 {
                     controller = _sprites[action.speaker];
@@ -305,7 +317,7 @@ public class DialogueManager : MonoBehaviour
                 }
                 break;
             
-            case StoryScene.Sentence.Action.Type.DisAppear:
+            case StoryScene.Sentence.Action.Type.DisAppear :
                 if (_sprites.ContainsKey(action.speaker))
                 {
                     controller = _sprites[action.speaker];
