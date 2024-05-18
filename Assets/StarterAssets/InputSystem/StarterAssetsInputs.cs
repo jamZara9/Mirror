@@ -22,6 +22,8 @@ namespace StarterAssets
 
 		// test code
 		public bool useItem;
+		public bool pickupItem;
+
 
 #if ENABLE_INPUT_SYSTEM
 		public void OnMove(InputValue value)
@@ -50,6 +52,11 @@ namespace StarterAssets
 		public void OnUseItem(InputValue value)
 		{
 			UseItemInput(value.isPressed);
+		}
+
+		public void OnPickupItem(InputValue value)
+		{
+			PickupItemInput(value.isPressed);
 		}
 #endif
 
@@ -87,6 +94,11 @@ namespace StarterAssets
 		private void UseItemInput(bool newUseItemState)
 		{
 			useItem = newUseItemState;
+		}
+
+		private void PickupItemInput(bool newPickupItemState)
+		{
+			pickupItem = newPickupItemState;
 		}
 	}
 	

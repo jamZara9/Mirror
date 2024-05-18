@@ -159,7 +159,10 @@ namespace StarterAssets
             JumpAndGravity();
             GroundedCheck();
             Move();
+
+
             UseItem();
+            PickupItem();
         }
 
         private void LateUpdate()
@@ -407,6 +410,19 @@ namespace StarterAssets
 
                 // 4. 아이템의 useItem 함수에서 필요한 처리를 한다.
                 // 5. 필요한 처리가 끝나면 아이템을 제거한다. -> useItem 함수에서 제거하는 것으로 가정
+            }
+        }
+
+        private void PickupItem(){
+            if(_input.pickupItem){
+                
+                ItemManager itemManager = ItemManager.Instance;
+                BaseItem item = itemManager.items.Find(x => x.itemID == "Item001");
+                item.Deactivate();      // 아이템 비활성화
+
+                Debug.Log("아이템 줍기");
+
+                _input.pickupItem = false;
             }
         }
     }
