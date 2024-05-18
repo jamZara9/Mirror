@@ -29,6 +29,7 @@ public abstract class BaseItem : MonoBehaviour
     [Header("Audio & Visual")]
     public GameObject impactVFX;
     public float impactVFXLifeTime;     // 지속시간
+    public GameObject particlePos;      // 파티클 위치
 
     [Header("Item Parameters")]
     public bool isActive = false;       // 활성화 여부
@@ -56,5 +57,13 @@ public abstract class BaseItem : MonoBehaviour
     {
         isActive = false;
         gameObject.SetActive(false);
+    }
+
+    public void UseEffect(){
+        // 아이템 사용 효과
+        if(impactVFX != null){
+            GameObject impactVFXObject = Instantiate(impactVFX, particlePos.transform.position, Quaternion.identity);
+            Destroy(impactVFXObject, impactVFXLifeTime);
+        }
     }
 }

@@ -41,6 +41,7 @@ public class ConsumableItem : BaseItem
     {
         // 체력 회복 아이템 사용
         Debug.Log("체력 회복 아이템 사용");
+        UseEffect();
     }
 
 }
