@@ -38,10 +38,14 @@ public class StoryScene : ScriptableObject
             public Vector2 coords;
             public float moveSpeed;
 
+            public int width;
+            public int height;
+            public float scaleSpeed;
+
             [System.Serializable]
             public enum Type
             {
-                None, Appear, Move, DisAppear, Change
+                None, Appear, Move, DisAppear, Change, Scale, First
             }
         }
     }
