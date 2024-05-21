@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 
 public class SpriteController : MonoBehaviour
 {
@@ -17,6 +18,9 @@ public class SpriteController : MonoBehaviour
 
     private RectTransform _childRectOne;
     private RectTransform _childRectTwo;
+    
+    private Image _childImageOne;
+    private Image _childImageTwo;
 
     private void Awake()
     {
@@ -26,6 +30,21 @@ public class SpriteController : MonoBehaviour
 
         _childRectOne = transform.GetChild(0).GetComponent<RectTransform>();
         _childRectTwo = transform.GetChild(1).GetComponent<RectTransform>();
+        
+        _childImageOne = transform.GetChild(0).GetComponent<Image>();
+        _childImageTwo = transform.GetChild(1).GetComponent<Image>();
+    }
+
+    public void SetColorDark()
+    {
+        _childImageOne.color = Color.gray;
+        _childImageTwo.color = Color.gray;
+    }
+
+    public void SetColorOrigin()
+    {
+        _childImageOne.color = Color.white;
+        _childImageTwo.color = Color.white;
     }
 
     public void SetUp(Sprite sprite)

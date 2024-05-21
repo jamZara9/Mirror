@@ -28,6 +28,8 @@ public class DialogueManager : MonoBehaviour
 
     private AudioSource _audioSource;
 
+    [SerializeField] private Speaker narrationSpeaker;
+
     private bool _isDelayFinish = true;
 
     private Speaker _lastSpeaker = null;
@@ -254,8 +256,21 @@ public class DialogueManager : MonoBehaviour
 
     void ActSpeakers()
     {
-        List<StoryScene.Sentence.Action> actions
-            = currentScene.sentences[_sentenceIndex].actions;
+        Speaker currentSpeaker = currentScene.sentences[_sentenceIndex].speaker;
+        
+        foreach (var sprite in _sprites)
+        {
+            if (currentSpeaker != sprite.Key && currentSpeaker != narrationSpeaker)
+            {
+                sprite.Value.SetColorDark();
+            }
+            else
+            {
+                sprite.Value.SetColorOrigin();
+            }
+        }
+        
+        List<StoryScene.Sentence.Action> actions = currentScene.sentences[_sentenceIndex].actions;
         
         for (int i = 0; i < actions?.Count; i++)
         {
