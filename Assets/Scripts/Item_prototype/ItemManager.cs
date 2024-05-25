@@ -10,7 +10,25 @@ using Newtonsoft.Json;
 public class ItemManager : MonoBehaviour
 {
     private static ItemManager _itemManager;              // 싱글톤 인스턴스
-    public static ItemManager Instance => _itemManager;   // 인스턴스 접근용 프로퍼티
+
+    // public static ItemManager Instance => _itemManager;   // 인스턴스 반환
+    // 싱글톤 진행
+    public static ItemManager Instance {
+        get{
+            if(_itemManager == null){
+                // 씬에서 ItemManager를 찾음
+                _itemManager = FindObjectOfType<ItemManager>();
+
+                // 씬에 ItemManager가 없는 경우 새로운 GameObject를 생성하여 추가
+                if (_itemManager == null)
+                {
+                    GameObject singleton = new GameObject("ItemManager");
+                    _itemManager = singleton.AddComponent<ItemManager>();
+                }
+            }
+            return _itemManager;
+        }
+    }
 
     // 아이템 데이터 딕셔너리 [ 아이템 ID, 아이템 데이터 ]
     public Dictionary<string, BaseItemData> itemDictionary;   
@@ -155,4 +173,5 @@ public class ItemManager : MonoBehaviour
         yield return new WaitForSeconds(delay);
         RemoveItem(items.Find(x => x.itemID == testItemID));
     }
+
 }
