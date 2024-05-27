@@ -31,9 +31,11 @@ public abstract class BaseItem : MonoBehaviour
     public float impactVFXLifeTime;     // 지속시간
     public GameObject particlePos;      // 파티클 위치
 
+    // 추후 getter / setter로 변경
     [Header("Item Parameters")]
     public bool isActive = false;       // 활성화 여부
     public bool isUsable = false;       // 사용 가능 여부
+    public bool isPickable = false;     // 줍기 가능 여부
     public string pickupArea;           // 픽업 가능한 영역
 
     /// <summary>

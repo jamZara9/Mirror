@@ -15,7 +15,10 @@ public class CameraController : MonoBehaviour
     [Header("Raycast Settings")]
     private Ray ray;                            // Raycast를 위한 Ray
     private RaycastHit hit;                     // Raycast를 통해 감지된 오브젝트
-    public float maxDistance = 10f;         // Raycast 최대 거리
+    public float maxDistance = 10f;             // Raycast 최대 거리
+
+
+    private BaseItem item = null;               // 최근 감지된 아이템
 
     void Awake()
     {
@@ -42,7 +45,16 @@ public class CameraController : MonoBehaviour
 
             // 오브젝트가 "Item" 태그를 가지고 있는지 확인
             if(hit.collider.tag == "Item"){
-                Debug.Log("Item Detected" + hit.collider.gameObject.name);
+                Debug.Log("Item is detected");
+                item = ItemManager.Instance.items.Find(x => x.gameObject == hit.collider.gameObject);
+
+                item.isPickable = true;
+            }else{
+                Debug.Log("Item is not detected");
+                if(item != null){
+                    item.isPickable = false;
+                }
+                item = null;
             }
         }
     }

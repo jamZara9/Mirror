@@ -418,6 +418,9 @@ namespace StarterAssets
                 
                 ItemManager itemManager = ItemManager.Instance;
                 BaseItem item = itemManager.items.Find(x => x.itemID == "Item001");
+                if(item.isPickable == false){
+                    return;
+                }
                 item.Deactivate();      // 아이템 비활성화
 
                 Debug.Log("아이템 줍기");
