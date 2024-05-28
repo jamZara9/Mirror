@@ -35,6 +35,8 @@ public class ItemManager : MonoBehaviour
 
     // 필드에 존재하는 Item 오브젝트들을 저장하는 리스트
     public List<BaseItem> items;
+
+    public GameObject detectedItem = null;    // 감지된 아이템
    
 
     // 테스트옹 변수들
