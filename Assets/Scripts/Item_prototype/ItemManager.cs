@@ -37,6 +37,7 @@ public class ItemManager : MonoBehaviour
     public List<BaseItem> items;
 
     public GameObject detectedItem = null;    // 감지된 아이템
+    public GameObject choiceItem = null;      // 선택된 아이템
    
 
     // 테스트옹 변수들
@@ -174,6 +175,25 @@ public class ItemManager : MonoBehaviour
     IEnumerator RemoveItemDelay(float delay){
         yield return new WaitForSeconds(delay);
         RemoveItem(items.Find(x => x.itemID == testItemID));
+    }
+
+    public void PickupItem(){
+        // 감지된 아이템이 픽업 가능한지 확인
+        if(detectedItem.GetComponent<BaseItem>().isPickable){
+            detectedItem.GetComponent<BaseItem>().Deactivate();  // 아이템 비활성화
+            Debug.Log("아이템 줍기");
+
+            choiceItem = detectedItem;  // 선택된 아이템 설정  [임시]
+        }
+    }
+
+    public void UseItem(){
+        // 선택된 아이템이 사용 가능한지 확인
+        // 추후 useable 여부에 대한 확인이 필요
+        if(choiceItem != null){
+            choiceItem.GetComponent<BaseItem>().UseItem();  // 아이템 사용
+            Debug.Log("아이템 사용");
+        }
     }
 
 }
