@@ -30,15 +30,20 @@ public class ItemManager : MonoBehaviour
         }
     }
 
+
+    [Header("Item Data")]
     // 아이템 데이터 딕셔너리 [ 아이템 ID, 아이템 데이터 ]
     public Dictionary<string, BaseItemData> itemDictionary;   
 
+
+    [Header("Item List")]
     // 필드에 존재하는 Item 오브젝트들을 저장하는 리스트
     public List<BaseItem> items;
 
+
+    [Header("Item Interaction")]
     public GameObject detectedItem = null;    // 감지된 아이템
     public GameObject choiceItem = null;      // 선택된 아이템
-   
 
     // 테스트옹 변수들
     private string testItemID = "Item001";
@@ -61,9 +66,9 @@ public class ItemManager : MonoBehaviour
         // BaseItem[] allBaseItems = Resources.FindObjectsOfTypeAll<BaseItem>();
         BaseItem[] allBaseItems = FindObjectsOfType<BaseItem>(); // 활성화된 오브젝트를 가져옴
         foreach (BaseItem item in allBaseItems){
-            items.Add(item);        // 리스트에 추가
-            setItemData(item);      // 아이템 데이터 설정
-            ShowItem(item, true);   // 아이템 활성화
+            items.Add(item);                    // 리스트에 추가
+            setItemData(item);                  // 아이템 데이터 설정
+            SetItemActiveState(item, true);     // 아이템 활성화
             Debug.Log($"아이템 추가: {item.itemID}");
         }
 
@@ -92,19 +97,6 @@ public class ItemManager : MonoBehaviour
         }
         else{
             Debug.LogError($"JSON 파일을 찾을 수 없습니다. 경로: {jsonFilePath}");
-        }
-    }
-
-    /// <summary>
-    /// 아이템 활성화 여부를 설정하는 함수
-    /// </summary>
-    /// <param name="show"></param>
-    public void ShowItem(BaseItem item, bool show){
-        if(show){
-            item.Activate();
-        }
-        else{
-            item.Deactivate();
         }
     }
 
@@ -177,10 +169,26 @@ public class ItemManager : MonoBehaviour
         RemoveItem(items.Find(x => x.itemID == testItemID));
     }
 
+    /// <summary>
+    /// 아이템 활성화 상태 설정 함수
+    /// </summary>
+    /// <param name="item">상태 변경이 일어날 아이템</param>
+    /// <param name="state">상태</param>
+    public void SetItemActiveState(BaseItem item, bool state){
+        item.gameObject.SetActive(state);
+        item.isActive = state;
+    }
+
+    /// <summary>
+    /// 아이템 줍기 함수
+    /// </summary>
     public void PickupItem(){
         // 감지된 아이템이 픽업 가능한지 확인
         if(detectedItem.GetComponent<BaseItem>().isPickable){
-            detectedItem.GetComponent<BaseItem>().Deactivate();  // 아이템 비활성화
+            // detectedItem.GetComponent<BaseItem>().Deactivate();  // 아이템 비활성화
+
+            PlayerInventory.Instance.AddItem(detectedItem.GetComponent<BaseItem>());    // 아이템 추가
+            SetItemActiveState(detectedItem.GetComponent<BaseItem>(), false);           // 아이템 비활성화
             Debug.Log("아이템 줍기");
 
             choiceItem = detectedItem;  // 선택된 아이템 설정  [임시]
