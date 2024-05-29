@@ -43,24 +43,6 @@ public abstract class BaseItem : MonoBehaviour
     /// </summary>
     public abstract void UseItem();
 
-    /// <summary>
-    /// 아이템 활성화 함수
-    /// </summary>
-    public virtual void Activate()
-    {
-        isActive = true;
-        gameObject.SetActive(true);
-    }
-
-    /// <summary>
-    /// 아이템 비활성화 함수
-    /// </summary>
-    public virtual void Deactivate()
-    {
-        isActive = false;
-        gameObject.SetActive(false);
-    }
-
     public void UseEffect(){
         // 아이템 사용 효과
         if(impactVFX != null){
