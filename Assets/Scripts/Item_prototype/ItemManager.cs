@@ -199,7 +199,8 @@ public class ItemManager : MonoBehaviour
         // 선택된 아이템이 사용 가능한지 확인
         // 추후 useable 여부에 대한 확인이 필요
         if(choiceItem != null){
-            choiceItem.GetComponent<BaseItem>().UseItem();  // 아이템 사용
+            choiceItem.GetComponent<BaseItem>().UseItem();                                  // 아이템 사용
+            PlayerInventory.Instance.RemoveItem(choiceItem.GetComponent<BaseItem>());       // 아이템 제거
             Debug.Log("아이템 사용");
         }
     }

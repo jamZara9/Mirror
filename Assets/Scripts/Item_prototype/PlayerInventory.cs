@@ -34,11 +34,19 @@ public class PlayerInventory : MonoBehaviour
 
     // 아이템 추가
     public void AddItem(BaseItem item){
-        items.Add(item);
+        item.itemData.count += 1;
+
+        if(!items.Contains(item)){
+            items.Add(item);
+        }
     }
 
     // 아이템 제거
     public void RemoveItem(BaseItem item){
-        items.Remove(item);
+        item.itemData.count -= 1;
+
+        if(item.itemData.count <= 0){
+            items.Remove(item);
+        }
     }
 }
