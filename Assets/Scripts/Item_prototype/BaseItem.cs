@@ -18,6 +18,8 @@ public class BaseItemData
     public string iconPath;         // 아이템 아이콘의 경로
     public ItemType type;           // 아이템 타입
     public string description;      // 아이템 설명
+    public int count;               // 아이템 개수
+    public int invenSpace;          // 인벤토리 공간
 }
 
 public abstract class BaseItem : MonoBehaviour
