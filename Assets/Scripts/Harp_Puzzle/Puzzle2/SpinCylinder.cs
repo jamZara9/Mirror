@@ -17,16 +17,24 @@ public class SpinCylinder : MonoBehaviour
 
     private float _spinRotate;
     private float _currentTime;
-    private void Awake()
+
+    private float _speed;
+    private float _waitTime;
+    public enum SpinPos
     {
-        cylinderSet = GameObject.Find("Puzzle2").GetComponent<CylinderSet>();
+        X,
+        Y,
+        Z
     }
 
-    private void Start()
+    public SpinPos spinPos;
+
+    private void Awake()
     {
-        
+        _waitTime = 1f / cylinderSet.speed;
+        _speed = cylinderSet.speed;
+        Debug.Log(transform.name + "  " + _waitTime);
         _spinRotate = 360 / cylinderSet.cylinderSpinSet[myNum];
-        Debug.Log(_spinRotate);
         StartCoroutine(Spin());
     }
 
@@ -34,7 +42,18 @@ public class SpinCylinder : MonoBehaviour
     {
         if (spin)
         {
-            transform.Rotate(_spinRotate * Time.deltaTime * 4,0,0);
+            switch (spinPos)
+            {
+                case SpinPos.X:
+                    transform.Rotate(_spinRotate * Time.deltaTime * _speed,0,0);
+                    break;
+                case SpinPos.Y:
+                    transform.Rotate(0,_spinRotate * Time.deltaTime * _speed,0);
+                    break;
+                case SpinPos.Z:
+                    transform.Rotate(0,0,_spinRotate * Time.deltaTime * _speed);
+                    break;
+            }
         }
         
     }
@@ -52,13 +71,24 @@ public class SpinCylinder : MonoBehaviour
         while (true)
         {
             yield return new WaitUntil((() => spin));
-            yield return new WaitForSeconds(0.25f);
-            cylinderSet.puzzleNowAnswer[myNum] += 1;
+            yield return new WaitForSeconds(_waitTime);
+            cylinderSet.puzzleNowAnswer[myNum]++;
             if (cylinderSet.cylinderSpinSet[myNum] <= cylinderSet.puzzleNowAnswer[myNum])
             {
                 cylinderSet.puzzleNowAnswer[myNum] = 0;
             }
-            transform.rotation = Quaternion.Euler(_spinRotate * cylinderSet.puzzleNowAnswer[myNum],0,0);
+            switch (spinPos)
+            {
+                case SpinPos.X:
+                    transform.rotation = Quaternion.Euler(_spinRotate * cylinderSet.puzzleNowAnswer[myNum],0,0);
+                    break;
+                case SpinPos.Y:
+                    transform.rotation = Quaternion.Euler(0,_spinRotate * cylinderSet.puzzleNowAnswer[myNum],0);
+                    break;
+                case SpinPos.Z:
+                    transform.rotation = Quaternion.Euler(0,0,_spinRotate * cylinderSet.puzzleNowAnswer[myNum]);
+                    break;
+            }
             spin = false;
         }
         

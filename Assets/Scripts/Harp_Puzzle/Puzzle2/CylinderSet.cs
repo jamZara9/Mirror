@@ -19,6 +19,8 @@ public class CylinderSet : MonoBehaviour
     public int[] puzzleNowAnswer;
 
     private bool _open;
+
+    public float speed;
     
     public Camera myCam;
     
