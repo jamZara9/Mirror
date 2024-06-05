@@ -214,8 +214,7 @@ public class DialogueManager : MonoBehaviour
     {
         _isDelayFinish = false;
         
-        StartCoroutine(TypeText
-            (currentScene.sentences[++_sentenceIndex].text));
+        StartCoroutine(TypeText(currentScene.sentences[++_sentenceIndex].text));
         
         StartCoroutine(DelayNextSentence(currentScene.sentences[_sentenceIndex].nextSentenceDelay));
         
