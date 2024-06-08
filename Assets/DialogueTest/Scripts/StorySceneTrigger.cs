@@ -14,7 +14,7 @@ public class StorySceneTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             gameController.PlayScene(myStoryScene, isMovableStory);
-            this.gameObject.SetActive(false);
+            Destroy(gameObject);
         }
     }
 }
