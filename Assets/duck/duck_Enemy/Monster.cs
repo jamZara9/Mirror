@@ -102,7 +102,7 @@ public class Monster : MonoBehaviour,IDamage
         Debug.Log(Targets[0].name);
         foreach(Collider EnemyColli in Targets)
         {
-            Vector3 targetPos = EnemyColli.transform.position;
+            Vector3 targetPos = EnemyColli.transform.position + new Vector3(0, 2, 0);
             Vector3 targetDir = (targetPos - myPos).normalized;
             float targetAngle = Mathf.Acos(Vector3.Dot(transform.forward, targetDir)) * Mathf.Rad2Deg;
             if(targetAngle <= ViewAngle * 0.5 && !Physics.Raycast(myPos, targetDir, ViewRadius, ObstacleMask))
