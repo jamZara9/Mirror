@@ -40,8 +40,13 @@ public class ConsumableItem : BaseItem
     private void useHeadthItem()
     {
         // 체력 회복 아이템 사용
-        Debug.Log("체력 회복 아이템 사용");
-        UseEffect();
+        PlayerStatus playerStatus = GameObject.Find("Player").GetComponent<PlayerStatus>();
+        playerStatus.currentHealth += 10;
+        if (playerStatus.currentHealth > playerStatus.maxHealth)
+        {
+            playerStatus.currentHealth = playerStatus.maxHealth;
+        }
+        Debug.Log("체력 회복 아이템 사용" + playerStatus.currentHealth);
     }
 
 }
