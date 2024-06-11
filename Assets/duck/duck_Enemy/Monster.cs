@@ -8,8 +8,8 @@ public class Monster : MonoBehaviour,IDamage
 {
     private Vector3 _startPosition;
     
-    [SerializeField] 
-    private float findDistance = 5f;
+    // [SerializeField] 
+    // private float findDistance = 5f;
     
     [SerializeField] 
     private float monsterHp = 20f;
@@ -40,10 +40,20 @@ public class Monster : MonoBehaviour,IDamage
     [SerializeField] private List<Vector3> moveDirectionList;
     private int _moveDirectionIndex = 0;
     
-    [SerializeField] 
-    private float fov = 90f; // 시야 각
-    [SerializeField] 
-    private float rayAngle = 5f; // 시야 각
+    //[SerializeField] 
+    //private float fov = 90f; // 시야 각
+    //[SerializeField] 
+    //private float rayAngle = 5f; // 시야 각
+    
+    //-----------------------------------------
+    [SerializeField] private bool DebugMode = false;
+    [Range(0f, 360f)] [SerializeField] private float ViewAngle = 0f;
+    [SerializeField] private float ViewRadius = 2f;
+    [SerializeField] private LayerMask TargetMask;
+    [SerializeField] LayerMask ObstacleMask;
+
+    private readonly List<Collider> hitTargetList = new List<Collider>();
+    private readonly Vector3[] directionCache = new Vector3[3];
 
 
     enum MonsterState
@@ -54,15 +64,64 @@ public class Monster : MonoBehaviour,IDamage
         Damaged,
         Die
     }
+    
 
     // Start is called before the first frame update
     void Start()
     {
+        directionCache[0] = AngleToDir(transform.eulerAngles.y + ViewAngle * 0.5f);
+        directionCache[1] = AngleToDir(transform.eulerAngles.y - ViewAngle * 0.5f);
+        directionCache[2] = AngleToDir(transform.eulerAngles.y);
+        //---------------------------------------------------------------------
         _navMeshA = GetComponent<NavMeshAgent>();
         _startPosition = transform.position;
         _navMeshA.SetDestination(moveDirectionList[_moveDirectionIndex++]);
         m_State = MonsterState.Idle;
         _player = GameObject.FindWithTag("Player").transform;
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (!DebugMode) return;
+        Vector3 myPos = transform.position + Vector3.up * 0.5f;
+        Gizmos.DrawWireSphere(myPos, ViewRadius);
+        Vector3 rightDir = AngleToDir(transform.eulerAngles.y + ViewAngle * 0.5f);
+        Vector3 leftDir = AngleToDir(transform.eulerAngles.y - ViewAngle * 0.5f);
+
+
+        Debug.DrawRay(myPos, rightDir * ViewRadius, Color.blue);
+        Debug.DrawRay(myPos, leftDir * ViewRadius, Color.blue);
+        Debug.DrawRay(myPos, transform.forward * ViewRadius, Color.cyan);
+        //--------------------------------------------
+
+        hitTargetList.Clear();
+        Collider[] Targets = Physics.OverlapSphere(myPos, ViewRadius, TargetMask);
+
+        if (Targets.Length == 0)
+            return;
+        Debug.Log(Targets[0].name);
+        foreach(Collider EnemyColli in Targets)
+        {
+            Vector3 targetPos = EnemyColli.transform.position;
+            Vector3 targetDir = (targetPos - myPos).normalized;
+            float targetAngle = Mathf.Acos(Vector3.Dot(transform.forward, targetDir)) * Mathf.Rad2Deg;
+            if(targetAngle <= ViewAngle * 0.5 && !Physics.Raycast(myPos, targetDir, ViewRadius, ObstacleMask))
+            {
+                Debug.Log("됐나요?");
+                hitTargetList.Add(EnemyColli);
+                if (EnemyColli.gameObject.CompareTag("Player"))
+                {
+                    m_State = MonsterState.Move;
+                }
+                if (DebugMode) Debug.DrawLine(myPos, targetPos, Color.red);
+            }
+        }
+
+    }
+    private Vector3 AngleToDir(float angle)
+    {
+        float radian = angle * Mathf.Deg2Rad;
+        return new Vector3(Mathf.Sin(radian), 0f, Mathf.Cos(radian));
     }
 
     // Update is called once per frame
@@ -95,30 +154,12 @@ public class Monster : MonoBehaviour,IDamage
             _moveDirectionIndex = (_moveDirectionIndex + 1) % moveDirectionList.Count;
             Debug.Log(_moveDirectionIndex);
         }
-        
         //시야 적용 방식
-        
-        
-        for (float angle = -fov / 2; angle <= fov / 2; angle += rayAngle) // 5도 간격으로 레이캐스트 발사함
-        {
-            
-            Vector3 direction = Quaternion.AngleAxis(angle, transform.up) * transform.forward;
-            Debug.DrawRay(transform.position, direction * findDistance, Color.red);
-        
-            if (Physics.Raycast(transform.position, direction, out RaycastHit hit, findDistance))
-            {
-                if (hit.transform.CompareTag("Player"))
-                {
-                    m_State = MonsterState.Move;
-                    Debug.Log("추적");
-                }
-            }
-        }
     }
 
     void Move()
     {
-        float SearchDistance = _isDamaged ? findDistance * 3 : findDistance * 2;
+        float SearchDistance = _isDamaged ? ViewRadius * 3 : ViewRadius * 2;
         if (Vector3.Distance(_player.position, transform.position) > SearchDistance)
         {
             Debug.Log("d?" + SearchDistance);
