@@ -8,6 +8,7 @@ public enum ItemType
     Immediate,      // 즉시 아이템
     Persistent,     // 지속 아이템
     Ammunition,     // 탄약 아이템
+    END             // 종료
 }
 
 [System.Serializable]
