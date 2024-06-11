@@ -1,0 +1,115 @@
+fileFormatVersion: 2
+guid: 83824b9fd094a1944b0aa67f311512ad
+ModelImporter:
+  serializedVersion: 22200
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mixer
+    second: {fileID: 2100000, guid: a686e958a6c4bf64fb9db2941c495926, type: 2}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties:
+    - '#BAKERY{"meshName":["Terminals","Cylinder.162","Cylinder.166","Cylinder.169","Cylinder.159","Cylinder.161","Cylinder.160","Cylinder.089","Cylinder.154","Cylinder.153","Cylinder.152","Cylinder.151","Cylinder.150","Cylinder.149","Cylinder.148","Cylinder.147","Cylinder.145","Cylinder.144","Cylinder.143","Cylinder.142","Cylinder.141","Cylinder.139","Cylinder.137","Cylinder.136","Cylinder.135","Cylinder.134","Cylinder.133","Cylinder.131","Cylinder.130","Cylinder.129","Cylinder.128","Cylinder.127","Cylinder.126","Cylinder.125","Cylinder.124","Cylinder.123","Cylinder.122","Cylinder.121","Cylinder.120","Cylinder.119","Cylinder.118","Cylinder.117","Cylinder.110","Cylinder.099","Cylinder.097","Cube.126","Cube.125","Cube.124","Cube.123","Cube.122","Cube.121","Cube.120","Cube.119","Cube.118","Cube.117","Cube.116","Cube.115","Cube.114","Cube.113","Cube.112","Cube.111","Cube.110","Cube.109","Cube.108","Cube.107","Cube.106","Cube.105","Cube.104","Cube.103","Cube.102","Cube.101","Cube.100","Cube.099","Cube.098","Cube.097","Cube.096","Cube.095","Cube.094","Cube.093","Cube.092","Cube.091","Cube.090","Cube.089","Cube.088","Cube.087","Cube.086","Cube.085","Cube.084","Cube.083","Cube.082","Cube.081","Cube.080","Cube.079","Cube.078","Cube.077","Cube.076","Cube.075","Cube.074","Cube.073","Cube.072","Cube.071","Cube.070","Cube.069","Cube.068","Cube.067","Cube.066","Cube.065","Cube.064","Cube.063","Cube.062","Cube.061","Cube.060","Cube.059","Cube.058","Cube.057","Cube.056","Cube.055","Cube.054","Cube.053","Cube.052","Cube.051","Cube.050","Cube.049","Cube.048","Cube.047","Cube.046","Cube.045","Cube.044","Cube.043","Cube.042","Cube.041","Cube.040","Cube.039","Cube.038","Cube.037","Cube.036","Cube.035","Cube.034","Cube.033","Cube.032","Cube.031","Cube.030","Cube.029","Cube.028","Cube.027","Cube.026","Cube.025","Cube.024","Cube.023","Cube.022","Cube.021","Cube.020","Cube.019","Cube.018","Cube.017","Cube.016","Cube.015","Cube.014","Cube.013","Cube.012","Cube.011","Cube.010","Cube.009","Cube.008","Cube.007","Cube.006","Cube"],"padding":[256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,170],"unwrapper":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}'
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.3
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 0
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 0.3
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
