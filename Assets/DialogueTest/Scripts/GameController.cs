@@ -10,8 +10,13 @@ using UnityEngine.InputSystem;
 public class GameController : MonoBehaviour
 {
     public GameObject dialoguePanel;
+    public GameObject movableDialoguePanel;
+    
     public StoryScene currentScene;
+    
     public DialogueManager dialogueManager;
+    public MovableDialogueManager movableDialogueManager;
+    
     public BackGroundController backGroundController;
 
     private bool _isOnSkip = false;
@@ -63,11 +68,20 @@ public class GameController : MonoBehaviour
         _realSkipAction.Disable();
     }
 
-    public void PlayScene(StoryScene storyScene)
+    public void PlayScene(StoryScene storyScene, bool isMovable)
     {
-        dialoguePanel.SetActive(true);
-        dialogueManager.ParseCSVFile(storyScene);
-        dialogueManager.PlayScene();
+        if (!isMovable)
+        {
+            dialoguePanel.SetActive(true);
+            dialogueManager.ParseCSVFile(storyScene);
+            dialogueManager.PlayScene();
+        }
+        else
+        {
+            movableDialoguePanel.SetActive(true);
+            movableDialogueManager.ParseCSVFile(storyScene);
+            movableDialogueManager.PlayScene();
+        }
     }
     
     bool IsDialogueOn() => dialoguePanel.activeSelf;
