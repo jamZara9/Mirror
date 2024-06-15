@@ -12,8 +12,6 @@ public class StoryScene : ScriptableObject
     public TextAsset csvFile;
 
     public string summaryText;
-
-    public GameObject storyEvent;
     
     public bool isMovableScene;
 

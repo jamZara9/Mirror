@@ -14,77 +14,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sentences:
   - audioClip: {fileID: 0}
-    text: "\uD55C\uAE00 \uD14D\uC2A4\uD2B8"
-    speaker: {fileID: 11400000, guid: 051ae728cf6c24c4693c6feb3fe73fb5, type: 2}
-    background: {fileID: 21300000, guid: 226f5d42cd2b968408cb5cedded53d52, type: 3}
+    text: 
+    speaker: {fileID: 0}
+    background: {fileID: 0}
     actions:
-    - speaker: {fileID: 11400000, guid: 051ae728cf6c24c4693c6feb3fe73fb5, type: 2}
-      actionType: 1
-      spriteIndex: 0
-      coords: {x: -330, y: -50}
-      moveSpeed: 0
-    - speaker: {fileID: 11400000, guid: 41db53fe5d40f3b4d807ca046b5f58d0, type: 2}
-      actionType: 1
-      spriteIndex: 0
-      coords: {x: 330, y: -50}
-      moveSpeed: 0
-    nextSentenceDelay: 1
-  - audioClip: {fileID: 0}
-    text: English Text
-    speaker: {fileID: 11400000, guid: 41db53fe5d40f3b4d807ca046b5f58d0, type: 2}
-    background: {fileID: 21300000, guid: 226f5d42cd2b968408cb5cedded53d52, type: 3}
-    actions:
-    - speaker: {fileID: 11400000, guid: 41db53fe5d40f3b4d807ca046b5f58d0, type: 2}
-      actionType: 2
-      spriteIndex: 0
-      coords: {x: 0, y: 0}
-      moveSpeed: 0.5
-    - speaker: {fileID: 11400000, guid: 41db53fe5d40f3b4d807ca046b5f58d0, type: 2}
-      actionType: 2
-      spriteIndex: 0
-      coords: {x: -200, y: 100}
-      moveSpeed: 0.5
-    - speaker: {fileID: 11400000, guid: 41db53fe5d40f3b4d807ca046b5f58d0, type: 2}
-      actionType: 2
-      spriteIndex: 0
-      coords: {x: 0, y: 0}
-      moveSpeed: 0.5
-    nextSentenceDelay: 2
-  - audioClip: {fileID: 0}
-    text: "\uD55C\uAE00 \uD14D\uC2A4\uD2B8"
-    speaker: {fileID: 11400000, guid: 41db53fe5d40f3b4d807ca046b5f58d0, type: 2}
-    background: {fileID: 21300000, guid: 226f5d42cd2b968408cb5cedded53d52, type: 3}
-    actions:
-    - speaker: {fileID: 11400000, guid: 41db53fe5d40f3b4d807ca046b5f58d0, type: 2}
-      actionType: 2
-      spriteIndex: 0
-      coords: {x: 200, y: 0}
-      moveSpeed: 0.7
-    nextSentenceDelay: 2
-  - audioClip: {fileID: 0}
-    text: "\uD55C\uAE00 \uD14D\uC2A4\uD2B8"
-    speaker: {fileID: 11400000, guid: 41db53fe5d40f3b4d807ca046b5f58d0, type: 2}
-    background: {fileID: 21300000, guid: 226f5d42cd2b968408cb5cedded53d52, type: 3}
-    actions:
-    - speaker: {fileID: 11400000, guid: 41db53fe5d40f3b4d807ca046b5f58d0, type: 2}
-      actionType: 3
+    - speaker: {fileID: 0}
+      actionType: 0
       spriteIndex: 0
       coords: {x: 0, y: 0}
       moveSpeed: 0
-    nextSentenceDelay: 1
-  - audioClip: {fileID: 0}
-    text: English Text
-    speaker: {fileID: 11400000, guid: 051ae728cf6c24c4693c6feb3fe73fb5, type: 2}
-    background: {fileID: 21300000, guid: f01a9358e1f8ea34883722a68c1a551f, type: 3}
-    actions: []
-    nextSentenceDelay: 0
-  - audioClip: {fileID: 0}
-    text: Narration Text
-    speaker: {fileID: 11400000, guid: b979470c0d8e9e04ca53f4063e9d1b4f, type: 2}
-    background: {fileID: 21300000, guid: 226f5d42cd2b968408cb5cedded53d52, type: 3}
-    actions: []
+      width: 0
+      height: 0
+      scaleSpeed: 0
     nextSentenceDelay: 0
   background: {fileID: 21300000, guid: 226f5d42cd2b968408cb5cedded53d52, type: 3}
   backgroundMusic: {fileID: 0}
-  nextScene: {fileID: 0}
+  nextScene: {fileID: 11400000, guid: 0f68a678d630f074d859a8bf986dc0e6, type: 2}
   csvFile: {fileID: 4900000, guid: ed98a392ceda0c841b3d639281e70d00, type: 3}
+  summaryText: 
+  isMovableScene: 0

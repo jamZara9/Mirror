@@ -171,6 +171,11 @@ public class GameController : MonoBehaviour
 
     void NextScene()
     {
+        dialogueManager.EndScene();
+        
+        skipPanel.SetActive(false);
+        _isOnSkip = false;
+        
         currentScene = currentScene.nextScene;
         dialogueManager.PlayScene(_storyEvent);
     }
