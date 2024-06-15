@@ -29,6 +29,8 @@ public class GameController : MonoBehaviour
     private InputAction _cancelSkipAction;
     private InputAction _realSkipAction;
 
+    private IStoryEvent _storyEvent;
+
     private void Awake()
     {
         dialoguePanel.SetActive(false);
@@ -68,13 +70,15 @@ public class GameController : MonoBehaviour
         _realSkipAction.Disable();
     }
 
-    public void PlayScene(StoryScene storyScene, bool isMovable)
+    public void PlayScene(StoryScene storyScene, IStoryEvent storyEvent)
     {
-        if (!isMovable)
+        this._storyEvent = storyEvent;
+        
+        if (!storyScene.isMovableScene)
         {
             dialoguePanel.SetActive(true);
             dialogueManager.ParseCSVFile(storyScene);
-            dialogueManager.PlayScene();
+            dialogueManager.PlayScene(this._storyEvent);
         }
         else
         {
@@ -115,7 +119,9 @@ public class GameController : MonoBehaviour
         dialogueManager.PlayNextSentence();
     }
 
-    
+    /// <summary>
+    /// 스킵 시, 요약본을 띄우고 취소 or 확인의 추가 선택지를 제공하는 함수 
+    /// </summary>
     private void OnSkip(InputAction.CallbackContext context)
     {
         if (!IsDialogueOn())
@@ -128,6 +134,9 @@ public class GameController : MonoBehaviour
         skipPanel.SetActive(true);
     }
 
+    /// <summary>
+    /// 스킵 버튼 누른 후 요약본 창에서 스킵 확인을 눌렀을 때의 기능을 제공하는 함수
+    /// </summary>
     private void OnRealSkip(InputAction.CallbackContext context)
     {
         if (!IsDialogueOn() || !IsSkipOn())
@@ -146,6 +155,9 @@ public class GameController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 스킵 시, 추가 선택지를 제공할 때 스킵을 취소하는 함수
+    /// </summary>
     void OnSkipCancel(InputAction.CallbackContext context)
     {
         if (!IsDialogueOn() || !IsSkipOn())
@@ -160,7 +172,7 @@ public class GameController : MonoBehaviour
     void NextScene()
     {
         currentScene = currentScene.nextScene;
-        dialogueManager.PlayScene();
+        dialogueManager.PlayScene(_storyEvent);
     }
 
     void EndCurrentStoryScene()
