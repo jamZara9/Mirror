@@ -35,6 +35,8 @@ public class DialogueManager : MonoBehaviour
     private Speaker _lastSpeaker = null;
     private Sprite _lastBackground = null;
     
+    private IStoryEvent _storyEvent;
+    
     private const int _CSV_SPEAKER_INDEX = 0;
     private const int _CSV_TEXT_INDEX = 1;
     private const int _CSV_BACKGROUND_INDEX = 2;
@@ -63,12 +65,14 @@ public class DialogueManager : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
     }
 
-    public void PlayScene()
+    public void PlayScene(IStoryEvent storyEvent)
     {
         _sentenceIndex = -1;
         
         _audioSource.clip = currentScene.backgroundMusic;
         _audioSource.Play();
+
+        this._storyEvent = storyEvent;
         
         PlayNextSentence();
     }
@@ -91,7 +95,6 @@ public class DialogueManager : MonoBehaviour
         int cnt = 0;
 
         currentScene.summaryText = data[data.Length - 2].Split(new char[] {','})[0];
-        Debug.Log(data[data.Length - 1].Split(new char[] {','})[0]);
 
         for (int i = 1; i < data.Length - 2; i++)
         {
@@ -204,6 +207,9 @@ public class DialogueManager : MonoBehaviour
         _isDelayFinish = true;
     }
 
+    /// <summary>
+    /// 비주얼 노벨 화면에서 다음 문장으로 넘어갈 준비가 된 상태 여부를 반환하는 함수 
+    /// </summary>
     public bool IsCompleted()
     {
         return _isDelayFinish && _state == State.Completed;
@@ -358,6 +364,8 @@ public class DialogueManager : MonoBehaviour
     {
         _sprites.Clear();
         StopAllCoroutines();
+        
+        _storyEvent?.StoryEvent();
 
         foreach (Transform child in spritesPrefab.transform)
         {

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewStoryScene", menuName = "Data/New Story Scene")]
+[CreateAssetMenu(fileName = "NewStoryScene", menuName = "Story/New Story Scene")]
 [System.Serializable]
 public class StoryScene : ScriptableObject
 {
@@ -12,6 +12,8 @@ public class StoryScene : ScriptableObject
     public TextAsset csvFile;
 
     public string summaryText;
+    
+    public bool isMovableScene;
 
     [System.Serializable]
     public struct Sentence

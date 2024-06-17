@@ -18,7 +18,7 @@ public class MovableDialogueManager : MonoBehaviour
     
     private const int _CSV_SPEAKER_INDEX = 0;
     private const int _CSV_TEXT_INDEX = 1;
-    private const int _CSV_NEXTDELAY_INDEX = 2;
+    private const int _CSV_NEXTDELAY_INDEX = 4;
 
     public void PlayScene()
     {
