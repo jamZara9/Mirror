@@ -47,6 +47,21 @@ public class SpriteController : MonoBehaviour
         _childImageTwo.color = Color.white;
     }
 
+    public void Blight(Dictionary<Speaker, SpriteController> sprites)
+    {
+        foreach (var sprite in sprites)
+        {
+            if (sprite.Value == this)
+            {
+                SetColorOrigin();
+            }
+            else
+            {
+                sprite.Value.SetColorDark();
+            }
+        }
+    }
+
     public void SetUp(Sprite sprite)
     {
         _switcher.SetImage(sprite);

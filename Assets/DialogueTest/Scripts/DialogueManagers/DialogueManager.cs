@@ -148,6 +148,10 @@ public class DialogueManager : MonoBehaviour
                         action.actionType = StoryScene.Sentence.Action.Type.First;
                         break;
                     
+                    case "Bright" :
+                        action.actionType = StoryScene.Sentence.Action.Type.Bright;
+                        break;
+
                     case "Move" :
                         action.actionType = StoryScene.Sentence.Action.Type.Move;
                         xPos = int.Parse(row[_CSV_ACTION_COORDS_X_INDEX]);
@@ -265,6 +269,7 @@ public class DialogueManager : MonoBehaviour
             }
             else
             {
+                sprite.Value.SetFirst();
                 sprite.Value.SetColorOrigin();
             }
         }
@@ -304,6 +309,14 @@ public class DialogueManager : MonoBehaviour
                 {
                     controller = _sprites[action.speaker];
                     controller.SetFirst();
+                }
+                break;
+            
+            case StoryScene.Sentence.Action.Type.Bright :
+                if (_sprites.ContainsKey(action.speaker))
+                {
+                    controller = _sprites[action.speaker];
+                    controller.Blight(_sprites);
                 }
                 break;
             

@@ -45,7 +45,7 @@ public class StoryScene : ScriptableObject
             [System.Serializable]
             public enum Type
             {
-                None, Appear, Move, DisAppear, Change, Scale, First
+                None, Appear, Move, DisAppear, Change, Scale, First, Bright
             }
         }
     }
