@@ -154,6 +154,14 @@ public class DialogueManager : MonoBehaviour
                     case "Bright" :
                         action.actionType = StoryScene.Sentence.Action.Type.Bright;
                         break;
+                    
+                    case "AllDark" :
+                        action.actionType = StoryScene.Sentence.Action.Type.AllDark;
+                        break;
+                    
+                    case "AllBright" :
+                        action.actionType = StoryScene.Sentence.Action.Type.AllBright;
+                        break;
 
                     case "Move" :
                         action.actionType = StoryScene.Sentence.Action.Type.Move;
@@ -308,7 +316,7 @@ public class DialogueManager : MonoBehaviour
                 }
                 controller.SetUp(action.speaker.sprites[action.spriteIndex]);
                 controller.Show(action.coords);
-                return;
+                break;
             
             case StoryScene.Sentence.Action.Type.First :
                 if (_sprites.ContainsKey(action.speaker))
@@ -318,11 +326,27 @@ public class DialogueManager : MonoBehaviour
                 }
                 break;
             
+            case StoryScene.Sentence.Action.Type.AllDark :
+                if (_sprites.ContainsKey(action.speaker))
+                {
+                    controller = _sprites[action.speaker];
+                    controller.AllDark(_sprites);
+                }
+                break;
+            
+            case StoryScene.Sentence.Action.Type.AllBright :
+                if (_sprites.ContainsKey(action.speaker))
+                {
+                    controller = _sprites[action.speaker];
+                    controller.AllBright(_sprites);
+                }
+                break;
+
             case StoryScene.Sentence.Action.Type.Bright :
                 if (_sprites.ContainsKey(action.speaker))
                 {
                     controller = _sprites[action.speaker];
-                    controller.Blight(_sprites);
+                    controller.SetColorOrigin();
                 }
                 break;
             
