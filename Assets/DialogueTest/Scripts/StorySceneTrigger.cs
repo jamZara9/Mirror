@@ -5,8 +5,13 @@ using UnityEngine;
 
 public class StorySceneTrigger : MonoBehaviour
 {
-    [SerializeField] private GameController gameController;
+    private GameController gameController;
     [SerializeField] private StoryScene myStoryScene;
+    
+    private void OnEnable()
+    {
+        gameController = FindObjectOfType<GameController>();
+    }
     
     private void OnTriggerEnter(Collider other)
     {

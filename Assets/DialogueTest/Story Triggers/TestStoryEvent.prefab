@@ -119,7 +119,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85275da18c7732640946f6057b6013e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameController: {fileID: 0}
   myStoryScene: {fileID: 11400000, guid: efb8fa5016f45b440b9e39ec0ad3e656, type: 2}
 --- !u!114 &6983860205590420066
 MonoBehaviour:
