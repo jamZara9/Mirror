@@ -28,6 +28,8 @@ public class CameraController : MonoBehaviour
         // Input System을 통해 마우스 위치를 업데이트
         mousePosition = lookAction.ReadValue<Vector2>();
         CheckForItem();
+
+        Cursor.lockState = CursorLockMode.Locked; // 마우스 커서 고정
     }
 
     private void CheckForItem(){
