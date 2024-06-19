@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+// UI 로드르 위한 네임스페이스
+using TMPro;
+using UnityEngine.UI;
+
 public class CameraController : MonoBehaviour
 {
 
@@ -16,6 +20,12 @@ public class CameraController : MonoBehaviour
     private Ray ray;                            // Raycast를 위한 Ray
     private RaycastHit hit;                     // Raycast를 통해 감지된 오브젝트
     public float maxDistance = 10f;             // Raycast 최대 거리
+
+    [Header("UI Settings")]
+    public TextMeshProUGUI objectNameText;      // 오브젝트 이름을 표시할 UI 텍스트
+    public TextMeshProUGUI inputKeyText;        // 입력 키를 표시할 UI 텍스트
+
+    private GameObject lastDetectedObject;      // 마지막으로 감지된 오브젝트
 
     void Awake()
     {
@@ -41,20 +51,43 @@ public class CameraController : MonoBehaviour
 
         // Raycast를 발사하여 오브젝트를 감지
         if(Physics.Raycast(ray, out hit, maxDistance)){
+
             // 오브젝트가 "Item" 태그를 가지고 있는지 확인
             if(hit.collider.tag == "Item"){
                 Debug.Log("Item is detected");
-                // item = ItemManager.Instance.items.Find(x => x.gameObject == hit.collider.gameObject);
-                // item.isPickable = true;
+
+                GameObject detectedObject = hit.collider.gameObject;                            // 마지막으로 감지된 오브젝트 저장
+                objectNameText.text = detectedObject.name;                                      // UI에 오브젝트 이름 표시
+                inputKeyText.text = "Press 'E' to pick up";                                     // UI에 입력 키 표시
+
+                // 마지막으로 감지된 오브젝트를 업데이트
+                lastDetectedObject = detectedObject;
+                
                 ItemManager.Instance.detectedItem = hit.collider.gameObject;                    // 감지된 아이템 저장
                 ItemManager.Instance.detectedItem.GetComponent<BaseItem>().isPickable = true;   // 아이템을 획득 가능하도록 설정
             }else{
                 Debug.Log("Item is not detected");
-                if(ItemManager.Instance.detectedItem != null){
-                    ItemManager.Instance.detectedItem.GetComponent<BaseItem>().isPickable = false;
-                }
-                ItemManager.Instance.detectedItem = null;
+                ResetDetectedItem();
             }
+        }else{
+            ResetDetectedItem();
+        }
+    }
+
+    /// <summary>
+    /// 감지된 아이템을 초기화하는 함수
+    /// </summary>
+    private void ResetDetectedItem()
+    {
+        // UI를 초기화
+        objectNameText.text = "";
+        inputKeyText.text = "";
+
+        // ItemManager 업데이트
+        if (ItemManager.Instance.detectedItem != null)
+        {
+            ItemManager.Instance.detectedItem.GetComponent<BaseItem>().isPickable = false;
+            ItemManager.Instance.detectedItem = null;
         }
     }
 
