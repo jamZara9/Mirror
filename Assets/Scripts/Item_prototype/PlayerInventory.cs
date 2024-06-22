@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerInventory : MonoBehaviour
+public class PlayerInventory : MonoBehaviour, IItemContainer
 {
     private static PlayerInventory _playerInventory;    // 싱글톤 인스턴스
 
