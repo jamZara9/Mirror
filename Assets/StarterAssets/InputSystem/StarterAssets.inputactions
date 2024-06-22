@@ -67,6 +67,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "TransferItem",
+                    "type": "Button",
+                    "id": "5395e084-6d5b-4442-9902-8c62e479cef8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -260,7 +269,7 @@
                 {
                     "name": "",
                     "id": "e1ef3ebb-60b2-4ac4-9e9a-e3eafff2fbe0",
-                    "path": "<Keyboard>/r",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
@@ -276,6 +285,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Look1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fc091a8f-a15a-4f72-8f00-5df63ade9f3e",
+                    "path": "<Keyboard>/t",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TransferItem",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

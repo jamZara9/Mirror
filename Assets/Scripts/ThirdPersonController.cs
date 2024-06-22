@@ -163,6 +163,7 @@ namespace StarterAssets
 
             UseItem();
             PickupItem();
+            TransferItem();
         }
 
         private void LateUpdate()
@@ -405,10 +406,23 @@ namespace StarterAssets
 
             // 키를 입력 받은 경우 
             if(_input.pickupItem){ 
-                Debug.Log("아이템 줍기");
+                // Debug.Log("아이템 줍기");
                 // ItemMaanager PickupItem 함수 호출
                 ItemManager.Instance.PickupItem();
                 _input.pickupItem = false;
+            }
+        }
+
+        private void TransferItem(){
+            if(_input.transferItem){
+
+                Debug.Log("아이템 이동");
+                // @TODO: 추후 임시코드 제거 및 해당 아이템이 인벤토리에 있는지 확인하는 코드 추가
+
+                // 임시 테스트 코드 진행
+                // 인벤토리에 있는 아이템 하나를 창고로 이동
+                ItemManager.Instance.TransferItem(PlayerInventory.Instance, Storage.Instance, PlayerInventory.Instance.items[0]);
+                _input.transferItem = false;
             }
         }
     }
