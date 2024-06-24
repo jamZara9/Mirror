@@ -83,7 +83,7 @@ public class Monster : MonoBehaviour,IDamage
     private void OnDrawGizmos()
     {
         if (!DebugMode) return;
-        Vector3 myPos = transform.position + Vector3.up * 0.5f;
+        Vector3 myPos = transform.position + Vector3.up * 0.5f - Vector3.back * 0.25f;
         Gizmos.DrawWireSphere(myPos, ViewRadius);
         Vector3 rightDir = AngleToDir(transform.eulerAngles.y + ViewAngle * 0.5f);
         Vector3 leftDir = AngleToDir(transform.eulerAngles.y - ViewAngle * 0.5f);
@@ -93,30 +93,6 @@ public class Monster : MonoBehaviour,IDamage
         Debug.DrawRay(myPos, leftDir * ViewRadius, Color.blue);
         Debug.DrawRay(myPos, transform.forward * ViewRadius, Color.cyan);
         //--------------------------------------------
-
-        hitTargetList.Clear();
-        Collider[] Targets = Physics.OverlapSphere(myPos, ViewRadius, TargetMask);
-
-        if (Targets.Length == 0)
-            return;
-        Debug.Log(Targets[0].name);
-        foreach(Collider EnemyColli in Targets)
-        {
-            Vector3 targetPos = EnemyColli.transform.position + new Vector3(0, 2, 0);
-            Vector3 targetDir = (targetPos - myPos).normalized;
-            float targetAngle = Mathf.Acos(Vector3.Dot(transform.forward, targetDir)) * Mathf.Rad2Deg;
-            if(targetAngle <= ViewAngle * 0.5 && !Physics.Raycast(myPos, targetDir, ViewRadius, ObstacleMask))
-            {
-                Debug.Log("됐나요?");
-                hitTargetList.Add(EnemyColli);
-                if (EnemyColli.gameObject.CompareTag("Player"))
-                {
-                    m_State = MonsterState.Move;
-                }
-                if (DebugMode) Debug.DrawLine(myPos, targetPos, Color.red);
-            }
-        }
-
     }
     private Vector3 AngleToDir(float angle)
     {
@@ -155,6 +131,30 @@ public class Monster : MonoBehaviour,IDamage
             Debug.Log(_moveDirectionIndex);
         }
         //시야 적용 방식
+        Vector3 myPos = transform.position + Vector3.up * 0.5f;
+        hitTargetList.Clear();
+        Collider[] Targets = Physics.OverlapSphere(myPos, ViewRadius, TargetMask);
+
+        if (Targets.Length == 0)
+            return;
+        Debug.Log(Targets[0].name);
+        foreach(Collider EnemyColli in Targets)
+        {
+            Vector3 targetPos = EnemyColli.transform.position + new Vector3(0, 2, 0);
+            Vector3 targetDir = (targetPos - myPos).normalized;
+            float targetAngle = Mathf.Acos(Vector3.Dot(transform.forward, targetDir)) * Mathf.Rad2Deg;
+            if(targetAngle <= ViewAngle * 0.5 && !Physics.Raycast(myPos, targetDir, ViewRadius, ObstacleMask))
+            {
+                Debug.Log("됐나요?");
+                hitTargetList.Add(EnemyColli);
+                if (EnemyColli.gameObject.CompareTag("Player"))
+                {
+                    m_State = MonsterState.Move;
+                }
+                if (DebugMode) Debug.DrawLine(myPos, targetPos, Color.red);
+            }
+        }
+
     }
 
     void Move()
