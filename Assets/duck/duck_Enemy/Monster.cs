@@ -26,8 +26,8 @@ public class Monster : MonoBehaviour,IDamage
     private float attackPower = 5f;
     private Transform _player;
 
-    [SerializeField] 
-    private Animator anim;
+
+    private Animator a_nim;
 
     public bool arrive = true;
     private Vector3 _randomPosition;
@@ -38,6 +38,8 @@ public class Monster : MonoBehaviour,IDamage
 
     [SerializeField] private bool isMovingMonster = true;
     [SerializeField] private List<Vector3> moveDirectionList;
+    [SerializeField] private List<float> moveDirectionDelayList;
+    private bool isWait = false;
     private int _moveDirectionIndex = 0;
     
     //[SerializeField] 
@@ -46,6 +48,7 @@ public class Monster : MonoBehaviour,IDamage
     //private float rayAngle = 5f; // 시야 각
     
     //-----------------------------------------
+    
     [SerializeField] private bool DebugMode = false;
     [Range(0f, 360f)] [SerializeField] private float ViewAngle = 0f;
     [SerializeField] private float ViewRadius = 2f;
@@ -54,7 +57,6 @@ public class Monster : MonoBehaviour,IDamage
 
     private readonly List<Collider> hitTargetList = new List<Collider>();
     private readonly Vector3[] directionCache = new Vector3[3];
-
 
     enum MonsterState
     {
@@ -69,6 +71,7 @@ public class Monster : MonoBehaviour,IDamage
     // Start is called before the first frame update
     void Start()
     {
+        a_nim = GetComponentInChildren<Animator>();
         directionCache[0] = AngleToDir(transform.eulerAngles.y + ViewAngle * 0.5f);
         directionCache[1] = AngleToDir(transform.eulerAngles.y - ViewAngle * 0.5f);
         directionCache[2] = AngleToDir(transform.eulerAngles.y);
@@ -92,7 +95,6 @@ public class Monster : MonoBehaviour,IDamage
         Debug.DrawRay(myPos, rightDir * ViewRadius, Color.blue);
         Debug.DrawRay(myPos, leftDir * ViewRadius, Color.blue);
         Debug.DrawRay(myPos, transform.forward * ViewRadius, Color.cyan);
-        //--------------------------------------------
     }
     private Vector3 AngleToDir(float angle)
     {
@@ -121,13 +123,28 @@ public class Monster : MonoBehaviour,IDamage
                 break;
         }
     }
-  
+
+   
+    IEnumerator WaitIdle(int index)
+    {
+        isWait = true;
+        a_nim.SetTrigger("toIdle");
+        yield return new WaitForSeconds(moveDirectionDelayList[index]);
+        a_nim.SetTrigger("toWork");
+        _navMeshA.SetDestination(moveDirectionList[_moveDirectionIndex]);
+        _moveDirectionIndex = (_moveDirectionIndex + 1) % moveDirectionList.Count;
+        isWait = false;
+    }
+    
     void Idle()
     {
+        
         if (isMovingMonster && _navMeshA.remainingDistance <= _navMeshA.stoppingDistance)
         {
-            _navMeshA.SetDestination(moveDirectionList[_moveDirectionIndex]);
-            _moveDirectionIndex = (_moveDirectionIndex + 1) % moveDirectionList.Count;
+            if (!isWait)
+            {
+                StartCoroutine(WaitIdle(_moveDirectionIndex));
+            }
             Debug.Log(_moveDirectionIndex);
         }
         //시야 적용 방식
@@ -145,7 +162,7 @@ public class Monster : MonoBehaviour,IDamage
             float targetAngle = Mathf.Acos(Vector3.Dot(transform.forward, targetDir)) * Mathf.Rad2Deg;
             if(targetAngle <= ViewAngle * 0.5 && !Physics.Raycast(myPos, targetDir, ViewRadius, ObstacleMask))
             {
-                Debug.Log("됐나요?");
+                Debug.Log("플레이어 감지");
                 hitTargetList.Add(EnemyColli);
                 if (EnemyColli.gameObject.CompareTag("Player"))
                 {
@@ -165,6 +182,7 @@ public class Monster : MonoBehaviour,IDamage
             Debug.Log("d?" + SearchDistance);
             _navMeshA.SetDestination(_startPosition);
             m_State = MonsterState.Idle;
+            /*a_nim.SetTrigger("toWork");*/
             _isDamaged = false;
             arrive = true;
         }
