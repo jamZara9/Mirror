@@ -58,7 +58,7 @@ public class SpinCylinder : MonoBehaviour
         
     }
 
-    public void Click()
+    public void PuzzleClick()
     {
         if (!spin)
         {

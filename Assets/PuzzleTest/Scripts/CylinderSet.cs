@@ -57,7 +57,7 @@ public class CylinderSet : MonoBehaviour
             if (weHitSomething)
             {
                 Debug.Log(raycastHit.transform.name);
-                raycastHit.transform.GetComponent<SpinCylinder>().Click();
+                raycastHit.transform.GetComponent<SpinCylinder>().PuzzleClick();
             }
         }
     }
