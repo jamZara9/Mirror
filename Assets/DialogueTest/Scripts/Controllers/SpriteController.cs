@@ -111,14 +111,21 @@ public class SpriteController : MonoBehaviour
 
     IEnumerator MoveCoroutine(Vector2 coords, float speed)
     {
-        while (_rect.localPosition.x != coords.x || _rect.localPosition.y != coords.y)
-        {
-            _rect.localPosition = Vector2.MoveTowards
-                (_rect.localPosition,
-                    coords,
-                    speed * 1000f * Time.deltaTime);
+        float currentTime = 0;
+        Vector2 startPosition = _rect.localPosition;
 
-            yield return new WaitForSeconds(0.01f);
+        if (speed == 0)
+        {
+            _rect.localPosition = coords;
+        }
+        
+        while (currentTime < speed)
+        {
+            Debug.Log(speed);
+            currentTime += Time.deltaTime;
+            _rect.localPosition = Vector2.Lerp(startPosition,coords, currentTime / speed);
+
+            yield return null;
         }
     }
     
