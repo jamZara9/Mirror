@@ -34,8 +34,7 @@ public class GameController : MonoBehaviour
     private void Awake()
     {
         dialoguePanel.SetActive(false);
-        
-        
+
         _dialogueInputAction = new DialogueInputAction();
         
         _nextSentenceAction = _dialogueInputAction.Dialogue.NextSentence;
@@ -70,6 +69,11 @@ public class GameController : MonoBehaviour
         _realSkipAction.Disable();
     }
 
+    /// <summary>
+    /// 조건에 맞게 다이얼로그 매니저의 스토리 실행 함수를 호출해 스토리를 시작시키는 함수  
+    /// </summary>
+    /// <param name="storyScene"> 다이얼로그 매니저에 넘겨 실행할 스토리를 인자로 받음 </param>
+    /// <param name="storyEvent"> 다이얼로그 매니저에 넘겨 실행할 스토리의 이벤트 인터페이스를 인자로 받음 </param>
     public void PlayScene(StoryScene storyScene, IStoryEvent storyEvent)
     {
         this._storyEvent = storyEvent;
@@ -84,7 +88,7 @@ public class GameController : MonoBehaviour
         {
             movableDialoguePanel.SetActive(true);
             movableDialogueManager.ParseCSVFile(storyScene);
-            movableDialogueManager.PlayScene();
+            movableDialogueManager.PlayScene(_storyEvent);
         }
     }
     

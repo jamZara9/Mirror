@@ -11,8 +11,6 @@ using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
-    public Image background;
-    
     public TextMeshProUGUI dialogueText;
     public TextMeshProUGUI speakerNameText;
 
@@ -26,7 +24,9 @@ public class DialogueManager : MonoBehaviour
     private Dictionary<Speaker, SpriteController> _sprites;
     public GameObject spritesPrefab;
 
-    private AudioSource _audioSource;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioSource sentenceAudioSource;
+    [SerializeField] private AudioSource typeAudioSource;
 
     [SerializeField] private Speaker narrationSpeaker;
 
@@ -62,15 +62,19 @@ public class DialogueManager : MonoBehaviour
     void Awake()
     {
         _sprites = new Dictionary<Speaker, SpriteController>();
-        _audioSource = GetComponent<AudioSource>();
     }
 
+    /// <summary>
+    /// 한 스토리를 시작하는 함수 
+    /// </summary>
+    /// <param name="storyEvent"> 각 스토리의 이벤트 인터페이스를 인자로 받음 </param>
     public void PlayScene(IStoryEvent storyEvent)
     {
         _sentenceIndex = -1;
         
-        _audioSource.clip = currentScene.backgroundMusic;
-        _audioSource.Play();
+        audioSource.clip = currentScene.backgroundMusic;
+        Debug.Log(audioSource.clip);
+        audioSource.Play();
 
         this._storyEvent = storyEvent;
         
@@ -111,7 +115,7 @@ public class DialogueManager : MonoBehaviour
             if (row[_CSV_TEXT_INDEX] != "")
             {
                 ++lastSentenceIndex;
-                dialogue.text = row[_CSV_TEXT_INDEX];
+                dialogue.text = row[_CSV_TEXT_INDEX] == "null" ? " " : row[_CSV_TEXT_INDEX];
             }
 
             if (row[_CSV_BACKGROUND_INDEX] != "")
@@ -187,20 +191,16 @@ public class DialogueManager : MonoBehaviour
                         action.actionType = StoryScene.Sentence.Action.Type.DisAppear;
                         break;
                 }
-                
             }
             
             if (row[_CSV_TEXT_INDEX].Trim() == "" && row[_CSV_ACTION_INDEX] != "")
             {
-                Debug.Log(action.actionType);
-                Debug.Log(lastSentenceIndex);
                 currentScene.sentences[lastSentenceIndex].actions.Add(action);
             }
             else
             {
                 if (row[_CSV_ACTION_INDEX] != "")
                 {
-                    Debug.Log(row[_CSV_ACTION_INDEX]);
                     actionList.Add(action);
                     dialogue.actions = actionList;
                 }
@@ -245,8 +245,8 @@ public class DialogueManager : MonoBehaviour
             _lastBackground = currentScene.sentences[_sentenceIndex].background;
         }
         
-        _audioSource.clip = currentScene.sentences[_sentenceIndex].audioClip;
-        _audioSource.Play();
+        sentenceAudioSource.clip = currentScene.sentences[_sentenceIndex].audioClip;
+        sentenceAudioSource.Play();
 
         ActSpeakers();
     }

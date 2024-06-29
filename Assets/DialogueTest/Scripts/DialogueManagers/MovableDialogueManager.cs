@@ -20,10 +20,14 @@ public class MovableDialogueManager : MonoBehaviour
     private const int _CSV_TEXT_INDEX = 1;
     private const int _CSV_NEXTDELAY_INDEX = 4;
 
-    public void PlayScene()
+    private IStoryEvent _storyEvent = null;
+    
+    public void PlayScene(IStoryEvent storyEvent)
     {
         _sentenceIndex = 0;
 
+        this._storyEvent = storyEvent;
+        
         StartCoroutine(PlayNextSentence());
     }
     
@@ -83,6 +87,7 @@ public class MovableDialogueManager : MonoBehaviour
     void EndScene()
     {
         StopAllCoroutines();
+        _storyEvent?.StoryEvent();
         gameObject.SetActive(false);
     }
 }
