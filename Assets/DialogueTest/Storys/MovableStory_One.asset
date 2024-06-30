@@ -103,3 +103,5 @@ MonoBehaviour:
   nextScene: {fileID: 0}
   csvFile: {fileID: 4900000, guid: 95a1f1665d2b20342bea80acc573f75a, type: 3}
   summaryText: 
+  storyEvent: {fileID: 0}
+  isMovableScene: 1

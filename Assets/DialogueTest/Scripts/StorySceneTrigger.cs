@@ -5,15 +5,20 @@ using UnityEngine;
 
 public class StorySceneTrigger : MonoBehaviour
 {
-    [SerializeField] private GameController gameController;
+    private GameController gameController;
     [SerializeField] private StoryScene myStoryScene;
-    [SerializeField] private bool isMovableStory;
+    
+    private void OnEnable()
+    {
+        gameController = FindObjectOfType<GameController>();
+    }
     
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            gameController.PlayScene(myStoryScene, isMovableStory);
+            IStoryEvent storyEvent = GetComponent<IStoryEvent>();
+            gameController.PlayScene(myStoryScene, storyEvent);
             Destroy(gameObject);
         }
     }

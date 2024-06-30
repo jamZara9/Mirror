@@ -37,13 +37,24 @@ MonoBehaviour:
       spriteIndex: 0
       coords: {x: -250, y: 0}
       moveSpeed: 0
+      width: 0
+      height: 0
+      scaleSpeed: 0
     nextSentenceDelay: 1
   - audioClip: {fileID: 0}
     text: "\uAD50\uC2E4 \uD55C \uCABD\uC5D0\uC11C \uB5A0\uB4DC\uB294 \uBAA9\uC18C\uB9AC\uAC00
       \uB4E4\uB824\uC628\uB2E4."
     speaker: {fileID: 11400000, guid: b979470c0d8e9e04ca53f4063e9d1b4f, type: 2}
     background: {fileID: 21300000, guid: 226f5d42cd2b968408cb5cedded53d52, type: 3}
-    actions: []
+    actions:
+    - speaker: {fileID: 11400000, guid: 051ae728cf6c24c4693c6feb3fe73fb5, type: 2}
+      actionType: 5
+      spriteIndex: 0
+      coords: {x: 0, y: 0}
+      moveSpeed: 0
+      width: 800
+      height: 900
+      scaleSpeed: 5
     nextSentenceDelay: 0
   - audioClip: {fileID: 0}
     text: "\uADF8 \uC0BC\uCD1D\uC0AC\uC778\uAC00."
@@ -55,6 +66,9 @@ MonoBehaviour:
       spriteIndex: 1
       coords: {x: 0, y: 0}
       moveSpeed: 0
+      width: 0
+      height: 0
+      scaleSpeed: 0
     nextSentenceDelay: 1
   - audioClip: {fileID: 0}
     text: "\uB2C8\uB4E4 \uADF8\uAC70 \uC54C\uC5B4? \uBCC4\uAD00 \uD10D\uACE0\uC758
@@ -67,6 +81,17 @@ MonoBehaviour:
       spriteIndex: 0
       coords: {x: 100, y: 0}
       moveSpeed: 0
+      width: 0
+      height: 0
+      scaleSpeed: 0
+    - speaker: {fileID: 11400000, guid: a2b8c598defdfe44ab5a634f685bf81b, type: 2}
+      actionType: 5
+      spriteIndex: 0
+      coords: {x: 0, y: 0}
+      moveSpeed: 0
+      width: 600
+      height: 700
+      scaleSpeed: 4
     nextSentenceDelay: 2
   - audioClip: {fileID: 0}
     text: "\uBCC4\uAD00 \uCC3D\uACE0...?"
@@ -78,11 +103,25 @@ MonoBehaviour:
       spriteIndex: 0
       coords: {x: 175, y: 0}
       moveSpeed: 0
+      width: 0
+      height: 0
+      scaleSpeed: 0
     - speaker: {fileID: 11400000, guid: 123a9bf71595c7149b7807f12181a61a, type: 2}
       actionType: 2
       spriteIndex: 0
       coords: {x: 225, y: 0}
       moveSpeed: 0.5
+      width: 0
+      height: 0
+      scaleSpeed: 0
+    - speaker: {fileID: 11400000, guid: 123a9bf71595c7149b7807f12181a61a, type: 2}
+      actionType: 5
+      spriteIndex: 0
+      coords: {x: 0, y: 0}
+      moveSpeed: 0
+      width: 600
+      height: 700
+      scaleSpeed: 4
     nextSentenceDelay: 1
   - audioClip: {fileID: 0}
     text: "\uC544~ \uADF8 \uAC70\uC6B8 \uB9D0\uC778\uAC00? \uBB50` \uBCC4\uAC70 \uC544\uB2C8\uB358\uB370?"
@@ -94,18 +133,61 @@ MonoBehaviour:
       spriteIndex: 0
       coords: {x: 350, y: 0}
       moveSpeed: 0
+      width: 0
+      height: 0
+      scaleSpeed: 0
+    - speaker: {fileID: 11400000, guid: c90bdfba958643e4e917f740c964ecee, type: 2}
+      actionType: 5
+      spriteIndex: 0
+      coords: {x: 0, y: 0}
+      moveSpeed: 0
+      width: 600
+      height: 700
+      scaleSpeed: 4
+    - speaker: {fileID: 11400000, guid: c90bdfba958643e4e917f740c964ecee, type: 2}
+      actionType: 9
+      spriteIndex: 0
+      coords: {x: 0, y: 0}
+      moveSpeed: 0
+      width: 0
+      height: 0
+      scaleSpeed: 0
     nextSentenceDelay: 0
   - audioClip: {fileID: 0}
     text: "\uAC70\uC6B8...!?"
     speaker: {fileID: 11400000, guid: 123a9bf71595c7149b7807f12181a61a, type: 2}
     background: {fileID: 21300000, guid: 226f5d42cd2b968408cb5cedded53d52, type: 3}
-    actions: []
+    actions:
+    - speaker: {fileID: 11400000, guid: 123a9bf71595c7149b7807f12181a61a, type: 2}
+      actionType: 6
+      spriteIndex: 0
+      coords: {x: 0, y: 0}
+      moveSpeed: 0
+      width: 0
+      height: 0
+      scaleSpeed: 0
     nextSentenceDelay: 0.5
   - audioClip: {fileID: 0}
     text: "\uADF8\uB798~ \uAC70\uC6B8."
     speaker: {fileID: 11400000, guid: c90bdfba958643e4e917f740c964ecee, type: 2}
     background: {fileID: 21300000, guid: 226f5d42cd2b968408cb5cedded53d52, type: 3}
-    actions: []
+    actions:
+    - speaker: {fileID: 11400000, guid: c90bdfba958643e4e917f740c964ecee, type: 2}
+      actionType: 6
+      spriteIndex: 0
+      coords: {x: 0, y: 0}
+      moveSpeed: 0
+      width: 0
+      height: 0
+      scaleSpeed: 0
+    - speaker: {fileID: 11400000, guid: c90bdfba958643e4e917f740c964ecee, type: 2}
+      actionType: 8
+      spriteIndex: 0
+      coords: {x: 0, y: 0}
+      moveSpeed: 0
+      width: 0
+      height: 0
+      scaleSpeed: 0
     nextSentenceDelay: 0
   - audioClip: {fileID: 0}
     text: "\uBCC4\uAD00 \uCC3D\uACE0\uC5D0 \uAC70\uC6B8\uC774 \uD558\uB098 \uC788\uB294\uB370`
@@ -125,20 +207,52 @@ MonoBehaviour:
       spriteIndex: 0
       coords: {x: 225, y: 25}
       moveSpeed: 0.75
+      width: 0
+      height: 0
+      scaleSpeed: 0
     - speaker: {fileID: 11400000, guid: 123a9bf71595c7149b7807f12181a61a, type: 2}
       actionType: 2
       spriteIndex: 0
       coords: {x: 225, y: 0}
       moveSpeed: 0.75
+      width: 0
+      height: 0
+      scaleSpeed: 0
+    - speaker: {fileID: 11400000, guid: 051ae728cf6c24c4693c6feb3fe73fb5, type: 2}
+      actionType: 6
+      spriteIndex: 0
+      coords: {x: 0, y: 0}
+      moveSpeed: 0
+      width: 0
+      height: 0
+      scaleSpeed: 0
+    - speaker: {fileID: 11400000, guid: 051ae728cf6c24c4693c6feb3fe73fb5, type: 2}
+      actionType: 7
+      spriteIndex: 0
+      coords: {x: 0, y: 0}
+      moveSpeed: 0
+      width: 0
+      height: 0
+      scaleSpeed: 0
     nextSentenceDelay: 1
   - audioClip: {fileID: 0}
     text: "\uD55C\uBC88\uC740 \uC2EC\uB839 \uB3D9\uC544\uB9AC\uC5D0\uC11C \uADF8
       \uAC70\uC6B8\uC744 \uCC3E\uC544\uAC14\uC5C8\uB294\uB370 \uB9D0\uC774\uC57C..."
     speaker: {fileID: 11400000, guid: c90bdfba958643e4e917f740c964ecee, type: 2}
     background: {fileID: 21300000, guid: f01a9358e1f8ea34883722a68c1a551f, type: 3}
-    actions: []
+    actions:
+    - speaker: {fileID: 11400000, guid: c90bdfba958643e4e917f740c964ecee, type: 2}
+      actionType: 6
+      spriteIndex: 0
+      coords: {x: 0, y: 0}
+      moveSpeed: 0
+      width: 0
+      height: 0
+      scaleSpeed: 0
     nextSentenceDelay: 0
   background: {fileID: 21300000, guid: 226f5d42cd2b968408cb5cedded53d52, type: 3}
   backgroundMusic: {fileID: 0}
-  nextScene: {fileID: 0}
+  nextScene: {fileID: 11400000, guid: 152645f4dca84924b8277004d4c3b4a5, type: 2}
   csvFile: {fileID: 4900000, guid: ed98a392ceda0c841b3d639281e70d00, type: 3}
+  summaryText: "\uC694\uC57D\uAE00"
+  isMovableScene: 0
