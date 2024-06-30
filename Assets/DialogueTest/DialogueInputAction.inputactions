@@ -1,0 +1,105 @@
+{
+    "name": "DialogueInputAction",
+    "maps": [
+        {
+            "name": "Dialogue",
+            "id": "323ec1fe-d41f-4822-a22c-a0b216b55982",
+            "actions": [
+                {
+                    "name": "Next Sentence",
+                    "type": "Value",
+                    "id": "b69bba5a-7a05-4ef1-b4d0-247b1014ab85",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Skip",
+                    "type": "Value",
+                    "id": "ae53f8a9-3309-45b6-9e25-577ff76e2eb8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Cancel Skip",
+                    "type": "Value",
+                    "id": "7e13430d-90f4-47cd-8651-a021b951ec6e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Real Skip",
+                    "type": "Value",
+                    "id": "c12506ee-0115-4172-b821-4ec1acf99ba4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "45cdb448-e7e8-4bdf-bd22-067378ea3eb0",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Next Sentence",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3ecc1fc4-152e-433c-933f-65d1ee66b738",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Next Sentence",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a0f0d739-dbd1-4f53-93a8-92a92496416c",
+                    "path": "<Keyboard>/j",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Skip",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b9cd37ff-5944-41eb-9387-4c732946e367",
+                    "path": "<Keyboard>/k",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cancel Skip",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c092fa66-68d6-4ded-81ac-df131e3587b2",
+                    "path": "<Keyboard>/l",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Real Skip",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
