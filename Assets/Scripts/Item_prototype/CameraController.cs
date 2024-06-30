@@ -54,22 +54,28 @@ public class CameraController : MonoBehaviour
 
             // 오브젝트가 "Item" 태그를 가지고 있는지 확인
             if(hit.collider.tag == "Item"){
-                Debug.Log("Item is detected");
+                // Debug.Log("Item is detected");
 
                 GameObject detectedObject = hit.collider.gameObject;                            // 마지막으로 감지된 오브젝트 저장
                 objectNameText.text = detectedObject.name;                                      // UI에 오브젝트 이름 표시
-                inputKeyText.text = "Press 'E' to pick up";                                     // UI에 입력 키 표시
+                // inputKeyText.text = "Press 'E' to pick up";                                     // UI에 입력 키 표시
+
+                objectNameText.text += " [E]";
 
                 // 마지막으로 감지된 오브젝트를 업데이트
                 lastDetectedObject = detectedObject;
                 
                 ItemManager.Instance.detectedItem = hit.collider.gameObject;                    // 감지된 아이템 저장
                 ItemManager.Instance.detectedItem.GetComponent<BaseItem>().isPickable = true;   // 아이템을 획득 가능하도록 설정
+
+                // lastDetectedObject.GetComponent<Outline>().OnMouseDown();                       // Outline 효과 활성화
             }else{
-                Debug.Log("Item is not detected");
+                // Debug.Log("Item is not detected");   
+                // lastDetectedObject.GetComponent<Outline>().OnMouseUp();                         // Outline 효과 비활성화
                 ResetDetectedItem();
             }
         }else{
+            // lastDetectedObject.GetComponent<Outline>().OnMouseUp();                             // Outline 효과 비활성화
             ResetDetectedItem();
         }
     }
