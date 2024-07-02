@@ -65,8 +65,8 @@ public class CameraController : MonoBehaviour
                 // 마지막으로 감지된 오브젝트를 업데이트
                 lastDetectedObject = detectedObject;
                 
-                ItemManager.Instance.detectedItem = hit.collider.gameObject;                    // 감지된 아이템 저장
-                ItemManager.Instance.detectedItem.GetComponent<BaseItem>().isPickable = true;   // 아이템을 획득 가능하도록 설정
+                MainGameManager.Instance.detectedItem = hit.collider.gameObject;                    // 감지된 아이템 저장
+                MainGameManager.Instance.detectedItem.GetComponent<BaseItem>().isPickable = true;   // 아이템을 획득 가능하도록 설정
 
                 // lastDetectedObject.GetComponent<Outline>().OnMouseDown();                       // Outline 효과 활성화
             }else{
@@ -89,11 +89,11 @@ public class CameraController : MonoBehaviour
         objectNameText.text = "";
         inputKeyText.text = "";
 
-        // ItemManager 업데이트
-        if (ItemManager.Instance.detectedItem != null)
+        // MainGameManager 업데이트
+        if (MainGameManager.Instance.detectedItem != null)
         {
-            ItemManager.Instance.detectedItem.GetComponent<BaseItem>().isPickable = false;
-            ItemManager.Instance.detectedItem = null;
+            MainGameManager.Instance.detectedItem.GetComponent<BaseItem>().isPickable = false;
+            MainGameManager.Instance.detectedItem = null;
         }
     }
 

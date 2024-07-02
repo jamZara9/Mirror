@@ -408,7 +408,7 @@ namespace StarterAssets
             if(_input.pickupItem){ 
                 // Debug.Log("아이템 줍기");
                 // ItemMaanager PickupItem 함수 호출
-                ItemManager.Instance.PickupItem();
+                // GameManager.Instance.PickupItem();
                 _input.pickupItem = false;
             }
         }
@@ -421,7 +421,7 @@ namespace StarterAssets
 
                 // 임시 테스트 코드 진행
                 // 인벤토리에 있는 아이템 하나를 창고로 이동
-                ItemManager.Instance.TransferItem(PlayerInventory.Instance, Storage.Instance, PlayerInventory.Instance.items[0]);
+                // ItemManager.Instance.TransferItem(PlayerInventory.Instance, Storage.Instance, PlayerInventory.Instance.items[0]);
                 _input.transferItem = false;
             }
         }

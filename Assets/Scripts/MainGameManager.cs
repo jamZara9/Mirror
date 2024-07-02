@@ -1,10 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using StarterAssets;
 
 public class MainGameManager : MonoBehaviour
 {
     private static MainGameManager _mainGameManager;              // 싱글톤 인스턴스
+
+
+    public GameObject player;            
+    private ThirdPersonController playerController;    // 플레이어 컨트롤러
+    private PlayerStatus playerStatus;                 // 플레이어 상태
+    private PlayerInventory playerInventory;           // 플레이어 인벤토리
+
+
+    public GameObject detectedItem;                    // 감지된 아이템
+
     public static MainGameManager Instance {
         get{
             if(_mainGameManager == null){
@@ -31,7 +42,18 @@ public class MainGameManager : MonoBehaviour
         else{
             Destroy(gameObject);
         }
+
+        if(player == null){
+            // 플레이어 컨트롤러 설정
+            playerController = player.GetComponentInChildren<ThirdPersonController>();
+            playerStatus = player.GetComponent<PlayerStatus>();
+            playerInventory = player.GetComponent<PlayerInventory>();
+        }
+
     }
 
-    
+    public void PickupItem(){
+        
+    }
+
 }

@@ -42,7 +42,6 @@ public class ItemManager : MonoBehaviour
 
 
     [Header("Item Interaction")]
-    public GameObject detectedItem = null;    // 감지된 아이템
     public GameObject choiceItem = null;      // 선택된 아이템
 
     // 테스트옹 변수들
@@ -184,15 +183,15 @@ public class ItemManager : MonoBehaviour
     /// </summary>
     public void PickupItem(){
         // 감지된 아이템이 픽업 가능한지 확인
-        if(detectedItem.GetComponent<BaseItem>().isPickable){
-            // detectedItem.GetComponent<BaseItem>().Deactivate();  // 아이템 비활성화
+        // if(detectedItem.GetComponent<BaseItem>().isPickable){
+        //     // detectedItem.GetComponent<BaseItem>().Deactivate();  // 아이템 비활성화
 
-            PlayerInventory.Instance.AddItem(detectedItem.GetComponent<BaseItem>());    // 아이템 추가
-            SetItemActiveState(detectedItem.GetComponent<BaseItem>(), false);           // 아이템 비활성화
-            Debug.Log("아이템 줍기");
+        //     // PlayerInventory.Instance.AddItem(detectedItem.GetComponent<BaseItem>());    // 아이템 추가
+        //     SetItemActiveState(detectedItem.GetComponent<BaseItem>(), false);           // 아이템 비활성화
+        //     Debug.Log("아이템 줍기");
 
-            choiceItem = detectedItem;  // 선택된 아이템 설정  [임시]
-        }
+        //     choiceItem = detectedItem;  // 선택된 아이템 설정  [임시]
+        // }
     }
 
     public void UseItem(){
@@ -200,7 +199,7 @@ public class ItemManager : MonoBehaviour
         // 추후 useable 여부에 대한 확인이 필요
         if(choiceItem != null){
             choiceItem.GetComponent<BaseItem>().UseItem();                                  // 아이템 사용
-            PlayerInventory.Instance.RemoveItem(choiceItem.GetComponent<BaseItem>());       // 아이템 제거
+            // PlayerInventory.Instance.RemoveItem(choiceItem.GetComponent<BaseItem>());       // 아이템 제거
             Debug.Log("아이템 사용");
         }
     }
