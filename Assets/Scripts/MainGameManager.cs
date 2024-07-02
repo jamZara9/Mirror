@@ -9,10 +9,9 @@ public class MainGameManager : MonoBehaviour
 
 
     public GameObject player;            
-    private ThirdPersonController playerController;    // 플레이어 컨트롤러
-    private PlayerStatus playerStatus;                 // 플레이어 상태
-    private PlayerInventory playerInventory;           // 플레이어 인벤토리
-
+    public ThirdPersonController playerController;    // 플레이어 컨트롤러
+    public PlayerStatus playerStatus;                 // 플레이어 상태
+    public PlayerInventory playerInventory;           // 플레이어 인벤토리
 
     public GameObject detectedItem;                    // 감지된 아이템
 
@@ -43,17 +42,13 @@ public class MainGameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if(player == null){
-            // 플레이어 컨트롤러 설정
-            playerController = player.GetComponentInChildren<ThirdPersonController>();
-            playerStatus = player.GetComponent<PlayerStatus>();
-            playerInventory = player.GetComponent<PlayerInventory>();
-        }
-
     }
 
     public void PickupItem(){
-        
+        if(detectedItem != null){
+            ItemManager.Instance.PickupItem(detectedItem, playerInventory);  // 아이템을 인벤토리에 추가
+            detectedItem = null;
+        }
     }
 
 }

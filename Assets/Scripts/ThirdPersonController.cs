@@ -407,8 +407,7 @@ namespace StarterAssets
             // 키를 입력 받은 경우 
             if(_input.pickupItem){ 
                 // Debug.Log("아이템 줍기");
-                // ItemMaanager PickupItem 함수 호출
-                // GameManager.Instance.PickupItem();
+                MainGameManager.Instance.PickupItem();
                 _input.pickupItem = false;
             }
         }

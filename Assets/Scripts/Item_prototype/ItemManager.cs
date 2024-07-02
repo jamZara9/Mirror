@@ -179,19 +179,16 @@ public class ItemManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 아이템 줍기 함수
+    /// 아이템 픽업 함수 [관측된 아이템을 플레이어 인벤토리에 추가]
     /// </summary>
-    public void PickupItem(){
+    /// <param name="detectedItem">관측된 아이템</param>
+    /// <param name="playerInventory">아이템을 저장할 인벤토리</param>
+    public void PickupItem(GameObject detectedItem, PlayerInventory playerInventory){
         // 감지된 아이템이 픽업 가능한지 확인
-        // if(detectedItem.GetComponent<BaseItem>().isPickable){
-        //     // detectedItem.GetComponent<BaseItem>().Deactivate();  // 아이템 비활성화
-
-        //     // PlayerInventory.Instance.AddItem(detectedItem.GetComponent<BaseItem>());    // 아이템 추가
-        //     SetItemActiveState(detectedItem.GetComponent<BaseItem>(), false);           // 아이템 비활성화
-        //     Debug.Log("아이템 줍기");
-
-        //     choiceItem = detectedItem;  // 선택된 아이템 설정  [임시]
-        // }
+        if(detectedItem.GetComponent<BaseItem>().isPickable){
+            SetItemActiveState(detectedItem.GetComponent<BaseItem>(), false);           // 아이템 비활성화
+            playerInventory.AddItem(detectedItem.GetComponent<BaseItem>());            // 플레이어 인벤토리에 아이템 추가
+        }
     }
 
     public void UseItem(){
