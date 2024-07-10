@@ -22,12 +22,10 @@ public class MovableDialogueManager : MonoBehaviour
 
     private IStoryEvent _storyEvent = null;
     
-    public void PlayScene(IStoryEvent storyEvent)
+    public void PlayScene()
     {
         _sentenceIndex = 0;
 
-        this._storyEvent = storyEvent;
-        
         StartCoroutine(PlayNextSentence());
     }
     
@@ -87,7 +85,9 @@ public class MovableDialogueManager : MonoBehaviour
     void EndScene()
     {
         StopAllCoroutines();
-        _storyEvent?.StoryEvent();
+        
+        StoryEventManager.Instance.PlayStoryEvent();
+        
         gameObject.SetActive(false);
     }
 }

@@ -67,8 +67,7 @@ public class DialogueManager : MonoBehaviour
     /// <summary>
     /// 한 스토리를 시작하는 함수 
     /// </summary>
-    /// <param name="storyEvent"> 각 스토리의 이벤트 인터페이스를 인자로 받음 </param>
-    public void PlayScene(IStoryEvent storyEvent)
+    public void PlayScene()
     {
         _sentenceIndex = -1;
         
@@ -76,8 +75,6 @@ public class DialogueManager : MonoBehaviour
         Debug.Log(audioSource.clip);
         audioSource.Play();
 
-        this._storyEvent = storyEvent;
-        
         PlayNextSentence();
     }
 
@@ -389,7 +386,7 @@ public class DialogueManager : MonoBehaviour
         _sprites.Clear();
         StopAllCoroutines();
         
-        _storyEvent?.StoryEvent();
+        StoryEventManager.Instance.PlayStoryEvent();
 
         foreach (Transform child in spritesPrefab.transform)
         {
