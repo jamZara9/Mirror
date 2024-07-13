@@ -11,17 +11,19 @@ public class MoveMoniter : MonoBehaviour
     public float spinRotate = 30f;
     public float movePos = 1f;
 
-    private int nowAngle; // -1 : 왼쪽, 0 : 중간, 1 : 오른쪽
+    public int nowAngle; // -1 : 왼쪽, 0 : 중간, 1 : 오른쪽
     private bool move;
     private bool leftMove;
 
-    private Quaternion startRot;
+    private Vector3 startRot;
     private Quaternion leftRot;
     private Quaternion rightRot;
     
     private Vector3 startPos;
     private Vector3 leftPos;
     private Vector3 rightPos;
+
+    public GameObject[] setTransform;
     
     public enum MoveState
     {
@@ -31,24 +33,53 @@ public class MoveMoniter : MonoBehaviour
     public MoveState movestate;
     private void Start()
     {
-        startRot = transform.rotation;
+        startRot = transform.rotation.eulerAngles;
         leftRot = Quaternion.Euler(0, startRot.y - spinRotate, 0);
         rightRot = Quaternion.Euler(0, startRot.y + spinRotate, 0);
+
         
         startPos = transform.position;
-        leftPos = startPos + Vector3.left * movePos;
-        rightPos = startPos + Vector3.right * movePos;
+        var leftDir = setTransform[0].transform.position;
+        var rightDir = setTransform[1].transform.position;
+        Debug.Log(leftDir+"   "+ rightDir);
+
+        leftDir = new Vector3(Mathf.Approximately(leftDir.x, startPos.x) ? 
+                startPos.x : 
+                leftDir.x > rightDir.x ? leftDir.x + movePos : leftDir.x - movePos,
+            Mathf.Approximately(leftDir.y, startPos.y) ? 
+                startPos.y : 
+                leftDir.y > rightDir.y ? leftDir.y + movePos : leftDir.y - movePos,
+            Mathf.Approximately(leftDir.z, startPos.z) ? 
+                startPos.z :
+                leftDir.z > rightDir.z ? leftDir.z + movePos : leftDir.z - movePos);
+        rightDir = new Vector3(Mathf.Approximately(rightDir.x, startPos.x) ?
+                startPos.x : 
+                rightDir.x > leftDir.x ? rightDir.x + movePos : rightDir.x - movePos,
+            Mathf.Approximately(rightDir.y, startPos.y) ? 
+                startPos.y : 
+                rightDir.y > leftDir.y ? rightDir.y + movePos : rightDir.y - movePos,
+            Mathf.Approximately(rightDir.z, startPos.z) ? 
+                startPos.z : 
+                rightDir.z > leftDir.z ? rightDir.z + movePos : rightDir.z - movePos);
+        
+        Debug.Log(leftDir+"   "+ rightDir);
+
+        leftPos = leftDir;
+        rightPos = rightDir;
+        
+        Debug.Log(leftPos+"   "+ rightPos);
     }
 
     void Update()
     {
+        if (!move) return;
         switch (movestate)
         {
             //회전
             case MoveState.Spin when nowAngle == 0:
                 transform.rotation =
                     Quaternion.RotateTowards(transform.rotation,
-                        startRot, 1);
+                        Quaternion.Euler(startRot), 1);
                 break;
             case MoveState.Spin:
                 transform.rotation =
@@ -60,12 +91,12 @@ public class MoveMoniter : MonoBehaviour
             case MoveState.Move when nowAngle == 0:
                 transform.position =
                     Vector3.MoveTowards(transform.position,
-                        startPos, 0.5f);
+                        startPos, 0.25f);
                 break;
             case MoveState.Move:
                 transform.position =
                     Vector3.MoveTowards(transform.position,
-                        (leftMove ? leftPos : rightPos), 0.5f);
+                        (leftMove ? leftPos : rightPos), 0.25f);
                 break;
         }
     }
@@ -74,7 +105,6 @@ public class MoveMoniter : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Debug.Log(other + " 감지");
             PuzzleClick();
         }
     }
@@ -94,11 +124,17 @@ public class MoveMoniter : MonoBehaviour
             move = true;
             StartCoroutine(WaitTime());
         }
+        
     }
 
     IEnumerator WaitTime()
     {
         yield return new WaitForSeconds(0.5f);
+        move = false;
+        if (nowAngle != 0)
+        {
+            leftMove = !leftMove;
+        }
         switch (nowAngle)
         {
             // 회전
@@ -106,7 +142,7 @@ public class MoveMoniter : MonoBehaviour
                 transform.rotation = leftRot;
                 break;
             case 0 when movestate == MoveState.Spin:
-                transform.rotation = startRot;
+                transform.rotation = Quaternion.Euler(startRot);
                 break;
             case 1 when movestate == MoveState.Spin:
                 transform.rotation = rightRot;
@@ -122,10 +158,5 @@ public class MoveMoniter : MonoBehaviour
                 transform.position = rightPos;
                 break;
         }
-        if (nowAngle != 0)
-        {
-            leftMove = !leftMove;
-        }
-        move = false;
     }
 }

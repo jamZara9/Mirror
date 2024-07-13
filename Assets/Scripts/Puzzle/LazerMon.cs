@@ -41,7 +41,12 @@ public class LazerMon : MonoBehaviour
 
         for (int i = 0; i < reflectNum; i++)
         {
-            if (Physics.Raycast(ray.origin, ray.direction, out hit, resetLen, clearObj))
+            if (Physics.Raycast(ray.origin, ray.direction, out hit, resetLen, defaultLayerMask))
+            {
+                lineRenderer.positionCount += 1;
+                lineRenderer.SetPosition(lineRenderer.positionCount -1, hit.point);
+            }
+            else if (Physics.Raycast(ray.origin, ray.direction, out hit, resetLen, clearObj))
             {
                 lineRenderer.positionCount += 1;
                 lineRenderer.SetPosition(lineRenderer.positionCount -1, hit.point);
@@ -50,18 +55,12 @@ public class LazerMon : MonoBehaviour
             }
             else if (Physics.Raycast(ray.origin, ray.direction, out hit, resetLen, reflectLayerMask))
             {
-                Debug.Log("asdf");
                 lineRenderer.positionCount += 1;
                 lineRenderer.SetPosition(lineRenderer.positionCount - 1, hit.point);
 
                 // resetLen -= Vector3.Distance(ray.origin, hit.point);
 
                 ray = new Ray(hit.point, Vector3.Reflect(ray.direction, hit.normal));
-            }
-            else if (Physics.Raycast(ray.origin, ray.direction, out hit, resetLen, defaultLayerMask))
-            {
-                lineRenderer.positionCount += 1;
-                lineRenderer.SetPosition(lineRenderer.positionCount -1, hit.point);
             }
             else
             {
