@@ -166,6 +166,7 @@ public class Monster : MonoBehaviour,IDamage
                 hitTargetList.Add(EnemyColli);
                 if (EnemyColli.gameObject.CompareTag("Player"))
                 {
+                    a_nim.SetTrigger("toWork");
                     m_State = MonsterState.Move;
                 }
                 if (DebugMode) Debug.DrawLine(myPos, targetPos, Color.red);
@@ -204,7 +205,15 @@ public class Monster : MonoBehaviour,IDamage
             _currentTime += Time.deltaTime;
             if (_currentTime > attackDelay)
             {
-                Debug.Log("공격");
+                int randValue = Random.Range(0, 10);
+                if (randValue < 5) //50%로 방향을 구함
+                {
+                    Debug.Log("공격");    
+                }
+                else
+                {
+                    Debug.Log("깨물기 공격");
+                }
                 _currentTime = 0;
             }
         }
