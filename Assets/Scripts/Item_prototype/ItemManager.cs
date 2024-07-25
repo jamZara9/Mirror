@@ -76,6 +76,18 @@ public class ItemManager : MonoBehaviour
         // // 아이템 제거 테스트
         // StartCoroutine(RemoveItemDelay(3.0f));
     }
+    
+    // EventManager에 이벤트 핸들러 등록
+    private void OnEnable() {
+        EventManager.OnItemPickup += HandleItemPickup;
+        EventManager.OnItemUse += HandleItemUse;
+    }
+
+    // EventManager에 이벤트 핸들러 해제
+    private void OnDisable() {
+        EventManager.OnItemPickup -= HandleItemPickup;
+        EventManager.OnItemUse -= HandleItemUse;
+    }
 
     void LoadItemData(){
         string jsonFilePath = Path.Combine(Application.dataPath, "Scripts/Item_prototype/Json/items.json");
@@ -178,12 +190,36 @@ public class ItemManager : MonoBehaviour
         item.isActive = state;
     }
 
-    /// <summary>
+    // /// <summary>
+    // /// 아이템 픽업 함수 [관측된 아이템을 플레이어 인벤토리에 추가]
+    // /// </summary>
+    // /// <param name="detectedItem">관측된 아이템</param>
+    // /// <param name="playerInventory">아이템을 저장할 인벤토리</param>
+    // public void PickupItem(GameObject detectedItem, PlayerInventory playerInventory){
+    //     // 감지된 아이템이 픽업 가능한지 확인
+    //     if(detectedItem.GetComponent<BaseItem>().isPickable){
+    //         SetItemActiveState(detectedItem.GetComponent<BaseItem>(), false);           // 아이템 비활성화
+    //         playerInventory.AddItem(detectedItem.GetComponent<BaseItem>());            // 플레이어 인벤토리에 아이템 추가
+    //     }
+    // }
+
+    // public void UseItem(){
+    //     // 선택된 아이템이 사용 가능한지 확인
+    //     // 추후 useable 여부에 대한 확인이 필요
+    //     if(choiceItem != null){
+    //         choiceItem.GetComponent<BaseItem>().UseItem();                                  // 아이템 사용
+    //         // PlayerInventory.Instance.RemoveItem(choiceItem.GetComponent<BaseItem>());       // 아이템 제거
+    //         Debug.Log("아이템 사용");
+    //     }
+    // }
+
+
+        /// <summary>
     /// 아이템 픽업 함수 [관측된 아이템을 플레이어 인벤토리에 추가]
     /// </summary>
     /// <param name="detectedItem">관측된 아이템</param>
     /// <param name="playerInventory">아이템을 저장할 인벤토리</param>
-    public void PickupItem(GameObject detectedItem, PlayerInventory playerInventory){
+    private void HandleItemPickup(GameObject detectedItem, PlayerInventory playerInventory){
         // 감지된 아이템이 픽업 가능한지 확인
         if(detectedItem.GetComponent<BaseItem>().isPickable){
             SetItemActiveState(detectedItem.GetComponent<BaseItem>(), false);           // 아이템 비활성화
@@ -191,16 +227,17 @@ public class ItemManager : MonoBehaviour
         }
     }
 
-    public void UseItem(){
+    private void HandleItemUse(GameObject selectedItem, PlayerInventory playerInventory){
         // 선택된 아이템이 사용 가능한지 확인
         // 추후 useable 여부에 대한 확인이 필요
-        if(choiceItem != null){
-            choiceItem.GetComponent<BaseItem>().UseItem();                                  // 아이템 사용
-            // PlayerInventory.Instance.RemoveItem(choiceItem.GetComponent<BaseItem>());       // 아이템 제거
+        if(selectedItem != null){
+            selectedItem.GetComponent<BaseItem>().UseItem();                                  // 아이템 사용
+            // PlayerInventory.Instance.RemoveItem(selectedItem.GetComponent<BaseItem>());       // 아이템 제거
+            playerInventory.RemoveItem(selectedItem.GetComponent<BaseItem>());       // 아이템 제거
+            playerInventory.selectedItem = null;
             Debug.Log("아이템 사용");
         }
     }
-
 
     /// <summary>
     /// 아이템 이동 함수

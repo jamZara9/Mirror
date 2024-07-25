@@ -46,8 +46,16 @@ public class MainGameManager : MonoBehaviour
 
     public void PickupItem(){
         if(detectedItem != null){
-            ItemManager.Instance.PickupItem(detectedItem, playerInventory);  // 아이템을 인벤토리에 추가
+            //ItemManager.Instance.PickupItem(detectedItem, playerInventory);  // 아이템을 인벤토리에 추가
+            EventManager.ItemPickup(detectedItem, playerInventory);  // 아이템을 인벤토리에 추가
             detectedItem = null;
+        }
+    }
+
+    public void UseItem(){
+        if(playerInventory.selectedItem != null){
+            //ItemManager.Instance.UseItem(playerInventory.selectedItem, playerInventory);  // 아이템 사용
+            EventManager.ItemUse(playerInventory.selectedItem, playerInventory);  // 아이템 사용
         }
     }
 

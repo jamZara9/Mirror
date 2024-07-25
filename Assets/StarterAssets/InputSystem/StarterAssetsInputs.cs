@@ -25,6 +25,8 @@ namespace StarterAssets
 		public bool pickupItem;
 		public bool transferItem;
 
+		public bool[] quickSlots = new bool[5];
+
 #if ENABLE_INPUT_SYSTEM
 		public void OnMove(InputValue value)
 		{
@@ -62,6 +64,11 @@ namespace StarterAssets
 		public void OnTransferItem(InputValue value)
 		{
 			TransferItemInput(value.isPressed);
+		}
+
+		public void OnQuickSlot(InputValue value)
+		{
+			QuickSlotInput(value);
 		}
 #endif
 
@@ -109,6 +116,19 @@ namespace StarterAssets
 		private void TransferItemInput(bool newTransferItemState)
 		{
 			transferItem = newTransferItemState;
+		}
+
+		private void QuickSlotInput(InputValue value)
+		{
+			int slotIndex = value.Get<int>();
+
+			for (int i = 0; i < quickSlots.Length; i++){
+				quickSlots[i] = false;
+			}
+
+			if (slotIndex >= 0 && slotIndex < quickSlots.Length){
+				quickSlots[slotIndex - 1] = value.isPressed;
+			}
 		}
 	}
 	

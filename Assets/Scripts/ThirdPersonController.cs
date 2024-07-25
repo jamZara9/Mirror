@@ -396,7 +396,8 @@ namespace StarterAssets
 
         private void UseItem(){
             if(_input.useItem){
-                ItemManager.Instance.UseItem();
+                // ItemManager.Instance.HandleItemUse();
+                MainGameManager.Instance.UseItem();
                 _input.useItem = false;
 
             }
