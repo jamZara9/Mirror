@@ -60,7 +60,7 @@ public class CameraController : MonoBehaviour
                 objectNameText.text = detectedObject.name;                                      // UI에 오브젝트 이름 표시
                 // inputKeyText.text = "Press 'E' to pick up";                                     // UI에 입력 키 표시
 
-                objectNameText.text += " [E]";
+                objectNameText.text += " [F]";
 
                 // 마지막으로 감지된 오브젝트를 업데이트
                 lastDetectedObject = detectedObject;

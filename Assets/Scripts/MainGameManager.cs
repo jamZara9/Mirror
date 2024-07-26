@@ -7,6 +7,8 @@ public class MainGameManager : MonoBehaviour
 {
     private static MainGameManager _mainGameManager;              // 싱글톤 인스턴스
 
+    [Header("Manager")]
+    public ItemManager itemManager;
 
     public GameObject player;            
     public ThirdPersonController playerController;    // 플레이어 컨트롤러
@@ -36,7 +38,13 @@ public class MainGameManager : MonoBehaviour
         // 싱글톤 인스턴스 설정
         if(_mainGameManager == null){
             _mainGameManager = this;                            // 인스턴스 할당
-            DontDestroyOnLoad(gameObject);                  // 씬 전환 시에도 파괴되지 않도록 설정
+            DontDestroyOnLoad(gameObject);                      // 씬 전환 시에도 파괴되지 않도록 설정
+
+            if(itemManager == null){
+                GameObject itemManagerObject = new GameObject("ItemManager");
+                itemManager = itemManagerObject.AddComponent<ItemManager>();
+                DontDestroyOnLoad(itemManagerObject);
+            }
         }
         else{
             Destroy(gameObject);
@@ -44,17 +52,19 @@ public class MainGameManager : MonoBehaviour
 
     }
 
+
+    // 아이템 픽업 함수
     public void PickupItem(){
         if(detectedItem != null){
-            //ItemManager.Instance.PickupItem(detectedItem, playerInventory);  // 아이템을 인벤토리에 추가
             EventManager.ItemPickup(detectedItem, playerInventory);  // 아이템을 인벤토리에 추가
             detectedItem = null;
         }
     }
 
+
+    // 아이템 사용 함수
     public void UseItem(){
         if(playerInventory.selectedItem != null){
-            //ItemManager.Instance.UseItem(playerInventory.selectedItem, playerInventory);  // 아이템 사용
             EventManager.ItemUse(playerInventory.selectedItem, playerInventory);  // 아이템 사용
         }
     }
