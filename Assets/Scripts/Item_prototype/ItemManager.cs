@@ -16,14 +16,11 @@ public class ItemManager : MonoBehaviour
     // 필드에 존재하는 Item 오브젝트들을 저장하는 리스트
     public List<BaseItem> items = new List<BaseItem>();
 
-    // 테스트옹 변수들
-    private string testItemID = "Item001";
     private string itemDataPath = "Json/items"; // 아이템 데이터 경로
 
     void Awake(){
 
         // 아이템 정보 로드
-        LoadItemData();
         LoadItemData(itemDataPath);
         
         // 모든 BaseItem 타입의 객체를 찾아서 리스트에 추가
@@ -58,16 +55,6 @@ public class ItemManager : MonoBehaviour
         if(jsonData != null){
             // json 데이터 -> 딕셔너리로 변환
             itemDictionary = JsonConvert.DeserializeObject<Dictionary<string, BaseItemData>>(jsonData);
-            //Debug.Log($"아이템 데이터 로드 완료. 아이템 개수: {itemDictionary.Count}");
-            
-            // // itemDictionary의 모든 키와 값 출력
-            // foreach (var kvp in itemDictionary)
-            // {
-            //     Debug.Log($"Key: {kvp.Key}, Name: {kvp.Value.name}, Description: {kvp.Value.description}, Type: {kvp.Value.type}, IconPath: {kvp.Value.iconPath}");
-            // }
-        }
-        else{
-            Debug.LogError($"JSON 파일을 찾을 수 없습니다. 경로: {jsonFilePath}");
             Debug.Log($"아이템 데이터 로드 완료. 아이템 개수: {itemDictionary.Count}");
         }
     }
@@ -138,7 +125,7 @@ public class ItemManager : MonoBehaviour
     /// <returns></returns>
     IEnumerator RemoveItemDelay(float delay){
         yield return new WaitForSeconds(delay);
-        RemoveItem(items.Find(x => x.itemID == testItemID));
+        // RemoveItem(items.Find(x => x.itemID == testItemID));
     }
 
     /// <summary>
@@ -154,23 +141,27 @@ public class ItemManager : MonoBehaviour
     /// <summary>
     /// 아이템 픽업 함수 [관측된 아이템을 플레이어 인벤토리에 추가]
     /// </summary>
-    /// <param name="detectedItem">관측된 아이템</param>
+    /// <param name="detectedItem">관측된 아이템의 BaseItem Script</param>
     /// <param name="playerInventory">아이템을 저장할 인벤토리</param>
-    private void HandleItemPickup(GameObject detectedItem, PlayerInventory playerInventory){
+    private void HandleItemPickup(BaseItem detectedItem, PlayerInventory playerInventory){
         // 감지된 아이템이 픽업 가능한지 확인
-        if(detectedItem.GetComponent<BaseItem>().isPickable){
-            SetItemActiveState(detectedItem.GetComponent<BaseItem>(), false);           // 아이템 비활성화
-            playerInventory.AddItem(detectedItem.GetComponent<BaseItem>());            // 플레이어 인벤토리에 아이템 추가
+        if(detectedItem.isPickable){
+            SetItemActiveState(detectedItem, false);           // 아이템 비활성화
+            playerInventory.AddItem(detectedItem);            // 플레이어 인벤토리에 아이템 추가
         }
     }
 
-    private void HandleItemUse(GameObject selectedItem, PlayerInventory playerInventory){
+    /// <summary>
+    /// 아이템 사용 함수
+    /// </summary>
+    /// <param name="playerInventory">아이템을 저장할 인벤토리</param>
+    private void HandleItemUse(PlayerInventory playerInventory){
         // 선택된 아이템이 사용 가능한지 확인
-        // 추후 useable 여부에 대한 확인이 필요
-        if(selectedItem != null){
-            selectedItem.GetComponent<BaseItem>().UseItem();                                  // 아이템 사용
-            // PlayerInventory.Instance.RemoveItem(selectedItem.GetComponent<BaseItem>());       // 아이템 제거
-            playerInventory.RemoveItem(selectedItem.GetComponent<BaseItem>());       // 아이템 제거
+        // @TODO: useable 여부에 대한 확인이 필요
+        if(playerInventory.selectedItem != null){
+            BaseItem targetItem = playerInventory.selectedItem.GetComponent<BaseItem>();
+            targetItem.UseItem();                        // 아이템 사용
+            playerInventory.RemoveItem(targetItem);      // 아이템 제거
             playerInventory.selectedItem = null;
             Debug.Log("아이템 사용");
         }

@@ -9,11 +9,14 @@ public class MainGameManager : MonoBehaviour
 
     [Header("Manager")]
     public ItemManager itemManager;
+    public CameraController cameraController;        // 카메라 컨트롤러
+    public UIController_Test uiController;            // UI 컨트롤러
 
     public GameObject player;            
     public ThirdPersonController playerController;    // 플레이어 컨트롤러
     public PlayerStatus playerStatus;                 // 플레이어 상태
     public PlayerInventory playerInventory;           // 플레이어 인벤토리
+    public GameObject inventoryUI;                     // 인벤토리 UI
 
     public GameObject detectedItem;                    // 감지된 아이템
 
@@ -43,7 +46,7 @@ public class MainGameManager : MonoBehaviour
             if(itemManager == null){
                 GameObject itemManagerObject = new GameObject("ItemManager");
                 itemManager = itemManagerObject.AddComponent<ItemManager>();
-                DontDestroyOnLoad(itemManagerObject);
+                DontDestroyOnLoad(itemManagerObject);   // ItemManager에 대한 정보를 확인하기 위해 임시로 설정
             }
         }
         else{
@@ -51,22 +54,4 @@ public class MainGameManager : MonoBehaviour
         }
 
     }
-
-
-    // 아이템 픽업 함수
-    public void PickupItem(){
-        if(detectedItem != null){
-            EventManager.ItemPickup(detectedItem, playerInventory);  // 아이템을 인벤토리에 추가
-            detectedItem = null;
-        }
-    }
-
-
-    // 아이템 사용 함수
-    public void UseItem(){
-        if(playerInventory.selectedItem != null){
-            EventManager.ItemUse(playerInventory.selectedItem, playerInventory);  // 아이템 사용
-        }
-    }
-
 }
