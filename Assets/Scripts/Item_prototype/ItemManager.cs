@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 using Newtonsoft.Json;
 
@@ -19,11 +18,13 @@ public class ItemManager : MonoBehaviour
 
     // 테스트옹 변수들
     private string testItemID = "Item001";
+    private string itemDataPath = "Json/items"; // 아이템 데이터 경로
 
     void Awake(){
 
         // 아이템 정보 로드
         LoadItemData();
+        LoadItemData(itemDataPath);
         
         // 모든 BaseItem 타입의 객체를 찾아서 리스트에 추가
         // BaseItem[] allBaseItems = Resources.FindObjectsOfTypeAll<BaseItem>();
@@ -48,13 +49,13 @@ public class ItemManager : MonoBehaviour
         EventManager.OnItemUse -= HandleItemUse;
     }
 
-    public void LoadItemData(){
-        string jsonFilePath = Path.Combine(Application.dataPath, "Scripts/Item_prototype/Json/items.json");
-
-        if(File.Exists(jsonFilePath)){
-
-            string jsonData = FileManager.LoadJsonFile(jsonFilePath);       // json 파일 로드
-
+    /// <summary>
+    /// 아이템 데이터 로드 함수
+    /// </summary>
+    /// <param name="itemPath">item 데이터가 있는 path</param>
+    public void LoadItemData(string itemPath){
+        string jsonData = FileManager.LoadJsonFile(itemDataPath);       // json 파일 로드
+        if(jsonData != null){
             // json 데이터 -> 딕셔너리로 변환
             itemDictionary = JsonConvert.DeserializeObject<Dictionary<string, BaseItemData>>(jsonData);
             //Debug.Log($"아이템 데이터 로드 완료. 아이템 개수: {itemDictionary.Count}");
@@ -67,6 +68,7 @@ public class ItemManager : MonoBehaviour
         }
         else{
             Debug.LogError($"JSON 파일을 찾을 수 없습니다. 경로: {jsonFilePath}");
+            Debug.Log($"아이템 데이터 로드 완료. 아이템 개수: {itemDictionary.Count}");
         }
     }
 
