@@ -15,8 +15,7 @@ public class LazerMon : MonoBehaviour
 
     private LineRenderer lineRenderer;
     private RaycastHit   hit;
-
-    private Ray ray;
+    
     private Vector3 _direction;
 
     // Start is called before the first frame update
@@ -32,16 +31,25 @@ public class LazerMon : MonoBehaviour
     }
     void ReflectLazer()
     {
-        ray = new Ray(transform.position, transform.forward);
+        var ray = new Ray(transform.position, transform.forward);
 
         lineRenderer.positionCount = 1;
         lineRenderer.SetPosition(0, transform.position);
 
-        float resetLen = defaultLength;
+        var resetLen = defaultLength;
 
         for (int i = 0; i < reflectNum; i++)
         {
-            if (Physics.Raycast(ray.origin, ray.direction, out hit, resetLen, defaultLayerMask))
+            if (Physics.Raycast(ray.origin, ray.direction, out hit, resetLen, reflectLayerMask))
+            {
+                lineRenderer.positionCount += 1;
+                lineRenderer.SetPosition(lineRenderer.positionCount - 1, hit.point);
+
+                // resetLen -= Vector3.Distance(ray.origin, hit.point);
+
+                ray = new Ray(hit.point, Vector3.Reflect(ray.direction, hit.normal));
+            }
+            else if (Physics.Raycast(ray.origin, ray.direction, out hit, resetLen, defaultLayerMask))
             {
                 lineRenderer.positionCount += 1;
                 lineRenderer.SetPosition(lineRenderer.positionCount -1, hit.point);
@@ -52,15 +60,6 @@ public class LazerMon : MonoBehaviour
                 lineRenderer.SetPosition(lineRenderer.positionCount -1, hit.point);
                 
                 Debug.Log("Clear");
-            }
-            else if (Physics.Raycast(ray.origin, ray.direction, out hit, resetLen, reflectLayerMask))
-            {
-                lineRenderer.positionCount += 1;
-                lineRenderer.SetPosition(lineRenderer.positionCount - 1, hit.point);
-
-                // resetLen -= Vector3.Distance(ray.origin, hit.point);
-
-                ray = new Ray(hit.point, Vector3.Reflect(ray.direction, hit.normal));
             }
             else
             {
