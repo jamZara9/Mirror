@@ -7,10 +7,6 @@ using UnityEngine.AI;
 public class Monster : MonoBehaviour,IDamage
 {
     private Vector3 _startPosition;
-    
-    // [SerializeField] 
-    // private float findDistance = 5f;
-    
     [SerializeField] 
     private float monsterHp = 20f;
     private bool _isDamaged = false;
@@ -28,8 +24,7 @@ public class Monster : MonoBehaviour,IDamage
 
 
     private Animator a_nim;
-
-    public bool arrive = true;
+    
     private Vector3 _randomPosition;
     private Vector3 distan;
     private NavMeshAgent _navMeshA;
@@ -185,7 +180,6 @@ public class Monster : MonoBehaviour,IDamage
             m_State = MonsterState.Idle;
             /*a_nim.SetTrigger("toWork");*/
             _isDamaged = false;
-            arrive = true;
         }
         else if (Vector3.Distance(_player.position, transform.position) > attackDistance)
         {
