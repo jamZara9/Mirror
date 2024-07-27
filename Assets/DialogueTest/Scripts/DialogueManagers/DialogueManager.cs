@@ -34,9 +34,7 @@ public class DialogueManager : MonoBehaviour
 
     private Speaker _lastSpeaker = null;
     private Sprite _lastBackground = null;
-    
-    private IStoryEvent _storyEvent;
-    
+
     private const int _CSV_SPEAKER_INDEX = 0;
     private const int _CSV_TEXT_INDEX = 1;
     private const int _CSV_BACKGROUND_INDEX = 2;
@@ -383,10 +381,9 @@ public class DialogueManager : MonoBehaviour
 
     public void EndScene()
     {
+        StoryEventManager.Instance.PlayStoryEvent();
         _sprites.Clear();
         StopAllCoroutines();
-        
-        StoryEventManager.Instance.PlayStoryEvent();
 
         foreach (Transform child in spritesPrefab.transform)
         {

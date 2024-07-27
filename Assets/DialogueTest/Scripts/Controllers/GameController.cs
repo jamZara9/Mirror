@@ -29,8 +29,6 @@ public class GameController : MonoBehaviour
     private InputAction _cancelSkipAction;
     private InputAction _realSkipAction;
 
-    private IStoryEvent _storyEvent;
-
     private void Awake()
     {
         dialoguePanel.SetActive(false);
