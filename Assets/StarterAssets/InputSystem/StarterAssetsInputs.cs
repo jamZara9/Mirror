@@ -24,6 +24,7 @@ namespace StarterAssets
 		public bool useItem;
 		public bool pickupItem;
 		public bool transferItem;
+		public bool inventory;
 
 		public bool[] quickSlots = new bool[5];
 
@@ -69,6 +70,11 @@ namespace StarterAssets
 		public void OnQuickSlot(InputValue value)
 		{
 			QuickSlotInput(value);
+		}
+
+		public void OnInventory(InputValue value)
+		{
+			ShowInventory(value.isPressed);
 		}
 #endif
 
@@ -129,6 +135,10 @@ namespace StarterAssets
 			if (slotIndex >= 0 && slotIndex < quickSlots.Length){
 				quickSlots[slotIndex - 1] = value.isPressed;
 			}
+		}
+
+		private void ShowInventory(bool newInventoryState){
+			inventory = newInventoryState;
 		}
 	}
 	

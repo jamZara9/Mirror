@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum ItemType
 {
@@ -33,6 +34,7 @@ public abstract class BaseItem : MonoBehaviour
     public GameObject impactVFX;
     public float impactVFXLifeTime;     // 지속시간
     public GameObject particlePos;      // 파티클 위치
+    public Sprite icon;                  // 아이콘
 
     // 추후 getter / setter로 변경
     [Header("Item Parameters")]

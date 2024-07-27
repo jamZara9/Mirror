@@ -14,6 +14,7 @@ public class CameraController : MonoBehaviour
     private InputAction lookAction;             // Look 액션 참조
     public InputActionAsset  inputActionAsset;  // Input Action Asset 참조
     private Vector2 mousePosition;              // 마우스 위치
+    private bool isCursorLocked = true;         // 마우스 커서 상태
 
 
     [Header("Raycast Settings")]
@@ -23,23 +24,23 @@ public class CameraController : MonoBehaviour
 
     [Header("UI Settings")]
     public TextMeshProUGUI objectNameText;      // 오브젝트 이름을 표시할 UI 텍스트
-    public TextMeshProUGUI inputKeyText;        // 입력 키를 표시할 UI 텍스트
 
     private GameObject lastDetectedObject;      // 마지막으로 감지된 오브젝트
 
-    void Awake()
-    {
+    void Awake(){
         // Input Action Asset에서 Look 액션 참조
         lookAction = inputActionAsset.FindActionMap("Player").FindAction("Look1");
-        
     }
-    void Update()
-    {
+
+    void Update(){
         // Input System을 통해 마우스 위치를 업데이트
         mousePosition = lookAction.ReadValue<Vector2>();
         CheckForItem();
-
-        Cursor.lockState = CursorLockMode.Locked; // 마우스 커서 고정
+        if(isCursorLocked){
+            Cursor.lockState = CursorLockMode.Locked; // 마우스 커서 고정
+        }else{
+            Cursor.lockState = CursorLockMode.Confined;   // 마우스 커서 해제
+        }
     }
 
     private void CheckForItem(){
@@ -58,7 +59,6 @@ public class CameraController : MonoBehaviour
 
                 GameObject detectedObject = hit.collider.gameObject;                            // 마지막으로 감지된 오브젝트 저장
                 objectNameText.text = detectedObject.name;                                      // UI에 오브젝트 이름 표시
-                // inputKeyText.text = "Press 'E' to pick up";                                     // UI에 입력 키 표시
 
                 objectNameText.text += " [F]";
 
@@ -87,7 +87,6 @@ public class CameraController : MonoBehaviour
     {
         // UI를 초기화
         objectNameText.text = "";
-        inputKeyText.text = "";
 
         // MainGameManager 업데이트
         if (MainGameManager.Instance.detectedItem != null)
@@ -107,5 +106,13 @@ public class CameraController : MonoBehaviour
     private void OnDisable()
     {
         lookAction.Disable();
+    }
+
+    public void SetCursorState(bool state){
+        // Debug.Log("Cursor State: " + state);
+        Cursor.visible = state;
+        isCursorLocked = !state;
+        // Debug.Log("Cursor Lock State: " + isCursorLocked);
+        // Debug.Log("Cursor Visible State: " + Cursor.visible);
     }
 }

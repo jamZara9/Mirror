@@ -164,6 +164,7 @@ namespace StarterAssets
             UseItem();
             PickupItem();
             TransferItem();
+            ShowInventory();
         }
 
         private void LateUpdate()
@@ -396,19 +397,24 @@ namespace StarterAssets
 
         private void UseItem(){
             if(_input.useItem){
-                // ItemManager.Instance.HandleItemUse();
-                MainGameManager.Instance.UseItem();
+                MainGameManager gameManager = MainGameManager.Instance;
+                if(gameManager.playerInventory.selectedItem != null){
+                    // 아이템 사용
+                    EventManager.ItemUse(gameManager.playerInventory);
+                }
                 _input.useItem = false;
-
             }
         }
 
         private void PickupItem(){
-
             // 키를 입력 받은 경우 
             if(_input.pickupItem){ 
-                // Debug.Log("아이템 줍기");
-                MainGameManager.Instance.PickupItem();
+                MainGameManager gameManager = MainGameManager.Instance;
+                if(gameManager.detectedItem != null){
+                    // 아이템을 획득
+                    EventManager.ItemPickup(gameManager.detectedItem.GetComponent<BaseItem>(), gameManager.playerInventory);
+                    gameManager.detectedItem = null;
+                }
                 _input.pickupItem = false;
             }
         }
@@ -423,6 +429,16 @@ namespace StarterAssets
                 // 인벤토리에 있는 아이템 하나를 창고로 이동
                 // ItemManager.Instance.TransferItem(PlayerInventory.Instance, Storage.Instance, PlayerInventory.Instance.items[0]);
                 _input.transferItem = false;
+            }
+        }
+
+        private void ShowInventory(){
+            if(_input.inventory){
+                MainGameManager gameManager = MainGameManager.Instance;
+                gameManager.inventoryUI.SetActive(!gameManager.inventoryUI.activeSelf);
+                gameManager.cameraController.SetCursorState(gameManager.inventoryUI.activeSelf);
+                gameManager.uiController.UpdateInventoryUI();
+                _input.inventory = false;
             }
         }
     }

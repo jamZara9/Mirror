@@ -78,6 +78,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Inventory",
+                    "type": "Button",
+                    "id": "47a9250d-023a-454d-bfc5-f14f26359340",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Slot1",
                     "type": "Button",
                     "id": "d5bb780d-7cf3-4d19-894e-4147f81e84e8",
@@ -396,6 +405,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Slot5",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "34e003c2-f42f-4e13-a921-b4d37ddbb75b",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Inventory",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
