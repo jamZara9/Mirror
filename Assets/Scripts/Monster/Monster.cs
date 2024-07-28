@@ -7,10 +7,6 @@ using UnityEngine.AI;
 public class Monster : MonoBehaviour,IDamage
 {
     private Vector3 _startPosition;
-    
-    // [SerializeField] 
-    // private float findDistance = 5f;
-    
     [SerializeField] 
     private float monsterHp = 20f;
     private bool _isDamaged = false;
@@ -28,8 +24,7 @@ public class Monster : MonoBehaviour,IDamage
 
 
     private Animator a_nim;
-
-    public bool arrive = true;
+    
     private Vector3 _randomPosition;
     private Vector3 distan;
     private NavMeshAgent _navMeshA;
@@ -166,6 +161,7 @@ public class Monster : MonoBehaviour,IDamage
                 hitTargetList.Add(EnemyColli);
                 if (EnemyColli.gameObject.CompareTag("Player"))
                 {
+                    a_nim.SetTrigger("toWork");
                     m_State = MonsterState.Move;
                 }
                 if (DebugMode) Debug.DrawLine(myPos, targetPos, Color.red);
@@ -184,7 +180,6 @@ public class Monster : MonoBehaviour,IDamage
             m_State = MonsterState.Idle;
             /*a_nim.SetTrigger("toWork");*/
             _isDamaged = false;
-            arrive = true;
         }
         else if (Vector3.Distance(_player.position, transform.position) > attackDistance)
         {
@@ -204,7 +199,15 @@ public class Monster : MonoBehaviour,IDamage
             _currentTime += Time.deltaTime;
             if (_currentTime > attackDelay)
             {
-                Debug.Log("공격");
+                int randValue = Random.Range(0, 10);
+                if (randValue < 5) //50%로 방향을 구함
+                {
+                    Debug.Log("공격");    
+                }
+                else
+                {
+                    Debug.Log("깨물기 공격");
+                }
                 _currentTime = 0;
             }
         }
