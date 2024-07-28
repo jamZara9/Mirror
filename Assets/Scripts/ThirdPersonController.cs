@@ -165,6 +165,7 @@ namespace StarterAssets
             PickupItem();
             TransferItem();
             ShowInventory();
+            UseQuickSlot();
         }
 
         private void LateUpdate()
@@ -437,9 +438,18 @@ namespace StarterAssets
                 MainGameManager gameManager = MainGameManager.Instance;
                 gameManager.inventoryUI.SetActive(!gameManager.inventoryUI.activeSelf);
                 gameManager.cameraController.SetCursorState(gameManager.inventoryUI.activeSelf);
-                gameManager.uiController.UpdateInventoryUI();
                 _input.inventory = false;
             }
         }
+
+        // 퀵슬롯 사용
+        // @TODO: 퀵슬롯 사용 로직 추가 필요 및 미완성상태
+        // 입력받은 키보드 입력에 따라 퀵슬롯을 사용할 수 있도록 해야하나 아직 미구현
+        private void UseQuickSlot(){
+            if(_input.quickSlots != 0){
+                _input.quickSlots = 0;
+            }
+        }
+
     }
 }

@@ -87,49 +87,13 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Slot1",
-                    "type": "Button",
+                    "name": "QuickSlots",
+                    "type": "Value",
                     "id": "d5bb780d-7cf3-4d19-894e-4147f81e84e8",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Key",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Slot2",
-                    "type": "Button",
-                    "id": "e0a5bf0a-be3f-492c-aef1-2242d1175e04",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Slot3",
-                    "type": "Button",
-                    "id": "732dcec7-a87a-4cc2-b43a-10c8cb79a12d",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Slot4",
-                    "type": "Button",
-                    "id": "1d676c91-251e-4a2a-920a-a5ef97674c11",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Slot5",
-                    "type": "Button",
-                    "id": "3b4c382e-7ff5-42a7-b6d6-585fb77224e5",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -360,51 +324,51 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Slot1",
+                    "action": "QuickSlots",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "4cc4b996-9517-410e-8ff1-aa4d2780213b",
+                    "id": "b7a1b7f1-2a93-4e73-9345-05b1012cd04e",
                     "path": "<Keyboard>/2",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Slot2",
+                    "action": "QuickSlots",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "9b470556-1e11-45ff-afb7-8df8e14864da",
+                    "id": "e9ca1cbd-e117-491b-b91e-c44dd3073303",
                     "path": "<Keyboard>/3",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Slot3",
+                    "action": "QuickSlots",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "ff9858ee-7999-4bdd-9aa3-99b06b2c92c7",
+                    "id": "de8483ae-05a6-4c5b-aa88-a9d52eba6f60",
                     "path": "<Keyboard>/4",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Slot4",
+                    "action": "QuickSlots",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "6e1b2048-7179-4d88-9550-f7ed9c2ce996",
+                    "id": "05399e39-25ad-4323-9a2b-a1cba61bff7c",
                     "path": "<Keyboard>/5",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Slot5",
+                    "action": "QuickSlots",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

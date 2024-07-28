@@ -26,7 +26,7 @@ namespace StarterAssets
 		public bool transferItem;
 		public bool inventory;
 
-		public bool[] quickSlots = new bool[5];
+		public int quickSlots;
 
 #if ENABLE_INPUT_SYSTEM
 		public void OnMove(InputValue value)
@@ -67,7 +67,7 @@ namespace StarterAssets
 			TransferItemInput(value.isPressed);
 		}
 
-		public void OnQuickSlot(InputValue value)
+		public void OnQuickSlots(InputValue value)
 		{
 			QuickSlotInput(value);
 		}
@@ -124,17 +124,16 @@ namespace StarterAssets
 			transferItem = newTransferItemState;
 		}
 
+		/// <summary>
+		/// 퀵슬롯 입력 처리
+		/// </summary>
+		/// <param name="value"></param>
+		/// @TODO : 입력받은 퀵슬롯 번호를 저장해야 함 현재는 입력받았는지 즉 0(KeyDown) or 1(KeyUp)만 확인된 상태
+		/// @TODO : 하나로 바인딩 처리할 때 입력받은 번호를 가져올 수 있도록 수정 필요
 		private void QuickSlotInput(InputValue value)
 		{
-			int slotIndex = value.Get<int>();
-
-			for (int i = 0; i < quickSlots.Length; i++){
-				quickSlots[i] = false;
-			}
-
-			if (slotIndex >= 0 && slotIndex < quickSlots.Length){
-				quickSlots[slotIndex - 1] = value.isPressed;
-			}
+			quickSlots = (int) value.Get<float>();
+			Debug.Log($"QuickSlot: {quickSlots}");
 		}
 
 		private void ShowInventory(bool newInventoryState){

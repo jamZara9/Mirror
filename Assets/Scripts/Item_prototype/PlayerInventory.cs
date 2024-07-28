@@ -9,8 +9,13 @@ public class PlayerInventory : MonoBehaviour, IItemContainer
     public GameObject selectedItem = null;      // 선택된 아이템
 
     public int maxSlots = 9;                    // 인벤토리 슬롯 최대 개수
+    public int maxQuickSlots = 5;               // 퀵슬롯 최대 개수
 
-    public UIController_Test uiController;      // UI 컨트롤러
+    private UIController_Test uiController;     // UI 컨트롤러
+
+    void Start(){
+        uiController = MainGameManager.Instance.uiController;
+    }
 
     // 아이템 추가
     public void AddItem(BaseItem item){
@@ -18,7 +23,7 @@ public class PlayerInventory : MonoBehaviour, IItemContainer
 
         if(!items.Contains(item)){
             items.Add(item);
-            uiController.UpdateInventoryUI();
+            uiController.UpdateInventoryUI(items.Count - 1);
         }else{
             Debug.Log("인벤토리가 가득 찼습니다.");
         }
@@ -39,11 +44,13 @@ public class PlayerInventory : MonoBehaviour, IItemContainer
         return null;
     }
 
-    public void MoveItemToQuickSlot(BaseItem item, int quickSlotIndex){
-        if (items.Contains(item)){
+    public void MoveItemToQuickSlot(GameObject item, int quickSlotIndex){
+        BaseItem baseItem = item.GetComponent<BaseItem>();
+        if (items.Contains(baseItem)) {
             if (quickSlotIndex >= 0 && quickSlotIndex < quickSlots.Count){
-                quickSlots[quickSlotIndex] = item;
-                Debug.Log($"아이템 '{item.itemID}'이(가) 퀵슬롯 {quickSlotIndex}에 추가되었습니다.");
+                quickSlots[quickSlotIndex] = baseItem;
+                uiController.UpdateQuickSlotUI(quickSlotIndex);
+                Debug.Log($"아이템 '{baseItem.itemID}'이(가) 퀵슬롯 {quickSlotIndex}에 추가되었습니다.");
             }else{
                 Debug.LogError("유효하지 않은 퀵슬롯 인덱스입니다.");
             }
