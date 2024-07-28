@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 1770587556519498574}
   - component: {fileID: 5397440541590504928}
   - component: {fileID: 7670368751980001694}
-  - component: {fileID: 6983860205590420066}
   m_Layer: 0
   m_Name: TestStoryEvent
   m_TagString: Untagged
@@ -120,16 +119,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myStoryScene: {fileID: 11400000, guid: efb8fa5016f45b440b9e39ec0ad3e656, type: 2}
---- !u!114 &6983860205590420066
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8922467744936465554}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39e32840ca28ef7498c7dadb46db965e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  storyEventTestTxt: {fileID: 0}

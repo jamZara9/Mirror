@@ -17,8 +17,8 @@ public class StorySceneTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            IStoryEvent storyEvent = GetComponent<IStoryEvent>();
-            gameController.PlayScene(myStoryScene, storyEvent);
+            gameController.PlayScene(myStoryScene);
+
             Destroy(gameObject);
         }
     }

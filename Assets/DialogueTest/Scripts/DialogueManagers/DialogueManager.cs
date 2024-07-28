@@ -34,9 +34,7 @@ public class DialogueManager : MonoBehaviour
 
     private Speaker _lastSpeaker = null;
     private Sprite _lastBackground = null;
-    
-    private IStoryEvent _storyEvent;
-    
+
     private const int _CSV_SPEAKER_INDEX = 0;
     private const int _CSV_TEXT_INDEX = 1;
     private const int _CSV_BACKGROUND_INDEX = 2;
@@ -67,8 +65,7 @@ public class DialogueManager : MonoBehaviour
     /// <summary>
     /// 한 스토리를 시작하는 함수 
     /// </summary>
-    /// <param name="storyEvent"> 각 스토리의 이벤트 인터페이스를 인자로 받음 </param>
-    public void PlayScene(IStoryEvent storyEvent)
+    public void PlayScene()
     {
         _sentenceIndex = -1;
         
@@ -76,8 +73,6 @@ public class DialogueManager : MonoBehaviour
         Debug.Log(audioSource.clip);
         audioSource.Play();
 
-        this._storyEvent = storyEvent;
-        
         PlayNextSentence();
     }
 
@@ -386,10 +381,9 @@ public class DialogueManager : MonoBehaviour
 
     public void EndScene()
     {
+        StoryEventManager.Instance.PlayStoryEvent();
         _sprites.Clear();
         StopAllCoroutines();
-        
-        _storyEvent?.StoryEvent();
 
         foreach (Transform child in spritesPrefab.transform)
         {

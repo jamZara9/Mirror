@@ -29,8 +29,6 @@ public class GameController : MonoBehaviour
     private InputAction _cancelSkipAction;
     private InputAction _realSkipAction;
 
-    private IStoryEvent _storyEvent;
-
     private void Awake()
     {
         dialoguePanel.SetActive(false);
@@ -74,21 +72,19 @@ public class GameController : MonoBehaviour
     /// </summary>
     /// <param name="storyScene"> 다이얼로그 매니저에 넘겨 실행할 스토리를 인자로 받음 </param>
     /// <param name="storyEvent"> 다이얼로그 매니저에 넘겨 실행할 스토리의 이벤트 인터페이스를 인자로 받음 </param>
-    public void PlayScene(StoryScene storyScene, IStoryEvent storyEvent)
+    public void PlayScene(StoryScene storyScene)
     {
-        this._storyEvent = storyEvent;
-        
         if (!storyScene.isMovableScene)
         {
             dialoguePanel.SetActive(true);
             dialogueManager.ParseCSVFile(storyScene);
-            dialogueManager.PlayScene(this._storyEvent);
+            dialogueManager.PlayScene();
         }
         else
         {
             movableDialoguePanel.SetActive(true);
             movableDialogueManager.ParseCSVFile(storyScene);
-            movableDialogueManager.PlayScene(_storyEvent);
+            movableDialogueManager.PlayScene();
         }
     }
     
@@ -181,7 +177,7 @@ public class GameController : MonoBehaviour
         _isOnSkip = false;
         
         currentScene = currentScene.nextScene;
-        dialogueManager.PlayScene(_storyEvent);
+        dialogueManager.PlayScene();
     }
 
     void EndCurrentStoryScene()
