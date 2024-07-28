@@ -164,6 +164,8 @@ namespace StarterAssets
             UseItem();
             PickupItem();
             TransferItem();
+            ShowInventory();
+            UseQuickSlot();
         }
 
         private void LateUpdate()
@@ -396,19 +398,24 @@ namespace StarterAssets
 
         private void UseItem(){
             if(_input.useItem){
-                ItemManager.Instance.UseItem();
+                MainGameManager gameManager = MainGameManager.Instance;
+                if(gameManager.playerInventory.selectedItem != null){
+                    // 아이템 사용
+                    EventManager.ItemUse(gameManager.playerInventory);
+                }
                 _input.useItem = false;
-
             }
         }
 
         private void PickupItem(){
-
             // 키를 입력 받은 경우 
             if(_input.pickupItem){ 
-                // Debug.Log("아이템 줍기");
-                // ItemMaanager PickupItem 함수 호출
-                ItemManager.Instance.PickupItem();
+                MainGameManager gameManager = MainGameManager.Instance;
+                if(gameManager.detectedItem != null){
+                    // 아이템을 획득
+                    EventManager.ItemPickup(gameManager.detectedItem.GetComponent<BaseItem>(), gameManager.playerInventory);
+                    gameManager.detectedItem = null;
+                }
                 _input.pickupItem = false;
             }
         }
@@ -421,9 +428,28 @@ namespace StarterAssets
 
                 // 임시 테스트 코드 진행
                 // 인벤토리에 있는 아이템 하나를 창고로 이동
-                ItemManager.Instance.TransferItem(PlayerInventory.Instance, Storage.Instance, PlayerInventory.Instance.items[0]);
+                // ItemManager.Instance.TransferItem(PlayerInventory.Instance, Storage.Instance, PlayerInventory.Instance.items[0]);
                 _input.transferItem = false;
             }
         }
+
+        private void ShowInventory(){
+            if(_input.inventory){
+                MainGameManager gameManager = MainGameManager.Instance;
+                gameManager.inventoryUI.SetActive(!gameManager.inventoryUI.activeSelf);
+                gameManager.cameraController.SetCursorState(gameManager.inventoryUI.activeSelf);
+                _input.inventory = false;
+            }
+        }
+
+        // 퀵슬롯 사용
+        // @TODO: 퀵슬롯 사용 로직 추가 필요 및 미완성상태
+        // 입력받은 키보드 입력에 따라 퀵슬롯을 사용할 수 있도록 해야하나 아직 미구현
+        private void UseQuickSlot(){
+            if(_input.quickSlots != 0){
+                _input.quickSlots = 0;
+            }
+        }
+
     }
 }

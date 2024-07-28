@@ -3,7 +3,7 @@
 		"name" : "아데카솔",
 		"description" : "새살이 솔솔~ 아데카솔!",
 		"type" : "Persistent",
-		"iconPath" : "1",
+		"iconPath" : "Items/Sprite/Ammo9mm",
 		"count" : 0,
 		"invenSpace" : 1
 	},
@@ -11,7 +11,7 @@
 		"name" : "레게놀",
 		"description" : "누군가의 착각으로 지어진 이름의 약",
 		"type" : "Persistent",
-		"iconPath" : "1",
+		"iconPath" : "Items/Sprite/Battery",
 		"count" : 0,
 		"invenSpace" : 1
 	},

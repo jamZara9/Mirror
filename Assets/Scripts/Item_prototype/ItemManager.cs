@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 using Newtonsoft.Json;
 
@@ -9,58 +8,20 @@ using Newtonsoft.Json;
 /// </summary>
 public class ItemManager : MonoBehaviour
 {
-    private static ItemManager _itemManager;              // 싱글톤 인스턴스
-
-    // public static ItemManager Instance => _itemManager;   // 인스턴스 반환
-    // 싱글톤 진행
-    public static ItemManager Instance {
-        get{
-            if(_itemManager == null){
-                // 씬에서 ItemManager를 찾음
-                _itemManager = FindObjectOfType<ItemManager>();
-
-                // 씬에 ItemManager가 없는 경우 새로운 GameObject를 생성하여 추가
-                if (_itemManager == null)
-                {
-                    GameObject singleton = new GameObject("ItemManager");
-                    _itemManager = singleton.AddComponent<ItemManager>();
-                }
-            }
-            return _itemManager;
-        }
-    }
-
-
     [Header("Item Data")]
     // 아이템 데이터 딕셔너리 [ 아이템 ID, 아이템 데이터 ]
-    public Dictionary<string, BaseItemData> itemDictionary;   
-
+    public Dictionary<string, BaseItemData> itemDictionary = new Dictionary<string, BaseItemData>();   
 
     [Header("Item List")]
     // 필드에 존재하는 Item 오브젝트들을 저장하는 리스트
-    public List<BaseItem> items;
+    public List<BaseItem> items = new List<BaseItem>();
 
+    private string itemDataPath = "Json/items"; // 아이템 데이터 경로
 
-    [Header("Item Interaction")]
-    public GameObject detectedItem = null;    // 감지된 아이템
-    public GameObject choiceItem = null;      // 선택된 아이템
-
-    // 테스트옹 변수들
-    private string testItemID = "Item001";
-
-    
     void Awake(){
-        // 싱글톤 인스턴스 설정
-        if(_itemManager == null){
-            _itemManager = this;                            // 인스턴스 할당
-            DontDestroyOnLoad(gameObject);                  // 씬 전환 시에도 파괴되지 않도록 설정
-        }
-        else{
-            Destroy(gameObject);
-        }
 
         // 아이템 정보 로드
-        LoadItemData();
+        LoadItemData(itemDataPath);
         
         // 모든 BaseItem 타입의 객체를 찾아서 리스트에 추가
         // BaseItem[] allBaseItems = Resources.FindObjectsOfTypeAll<BaseItem>();
@@ -71,32 +32,30 @@ public class ItemManager : MonoBehaviour
             SetItemActiveState(item, true);     // 아이템 활성화
             Debug.Log($"아이템 추가: {item.itemID}");
         }
-
-        // CreateItem(testItemID);
-
-        // // 아이템 제거 테스트
-        // StartCoroutine(RemoveItemDelay(3.0f));
+    }
+    
+    // EventManager에 이벤트 핸들러 등록
+    private void OnEnable() {
+        EventManager.OnItemPickup += HandleItemPickup;
+        EventManager.OnItemUse += HandleItemUse;
     }
 
-    void LoadItemData(){
-        string jsonFilePath = Path.Combine(Application.dataPath, "Scripts/Item_prototype/Json/items.json");
+    // EventManager에 이벤트 핸들러 해제
+    private void OnDisable() {
+        EventManager.OnItemPickup -= HandleItemPickup;
+        EventManager.OnItemUse -= HandleItemUse;
+    }
 
-        if(File.Exists(jsonFilePath)){
-
-            string jsonData = FileManager.LoadJsonFile(jsonFilePath);       // json 파일 로드
-
+    /// <summary>
+    /// 아이템 데이터 로드 함수
+    /// </summary>
+    /// <param name="itemPath">item 데이터가 있는 path</param>
+    public void LoadItemData(string itemPath){
+        string jsonData = FileManager.LoadJsonFile(itemDataPath);       // json 파일 로드
+        if(jsonData != null){
             // json 데이터 -> 딕셔너리로 변환
             itemDictionary = JsonConvert.DeserializeObject<Dictionary<string, BaseItemData>>(jsonData);
-            //Debug.Log($"아이템 데이터 로드 완료. 아이템 개수: {itemDictionary.Count}");
-            
-            // // itemDictionary의 모든 키와 값 출력
-            // foreach (var kvp in itemDictionary)
-            // {
-            //     Debug.Log($"Key: {kvp.Key}, Name: {kvp.Value.name}, Description: {kvp.Value.description}, Type: {kvp.Value.type}, IconPath: {kvp.Value.iconPath}");
-            // }
-        }
-        else{
-            Debug.LogError($"JSON 파일을 찾을 수 없습니다. 경로: {jsonFilePath}");
+            Debug.Log($"아이템 데이터 로드 완료. 아이템 개수: {itemDictionary.Count}");
         }
     }
 
@@ -166,7 +125,7 @@ public class ItemManager : MonoBehaviour
     /// <returns></returns>
     IEnumerator RemoveItemDelay(float delay){
         yield return new WaitForSeconds(delay);
-        RemoveItem(items.Find(x => x.itemID == testItemID));
+        // RemoveItem(items.Find(x => x.itemID == testItemID));
     }
 
     /// <summary>
@@ -180,31 +139,33 @@ public class ItemManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 아이템 줍기 함수
+    /// 아이템 픽업 함수 [관측된 아이템을 플레이어 인벤토리에 추가]
     /// </summary>
-    public void PickupItem(){
+    /// <param name="detectedItem">관측된 아이템의 BaseItem Script</param>
+    /// <param name="playerInventory">아이템을 저장할 인벤토리</param>
+    private void HandleItemPickup(BaseItem detectedItem, PlayerInventory playerInventory){
         // 감지된 아이템이 픽업 가능한지 확인
-        if(detectedItem.GetComponent<BaseItem>().isPickable){
-            // detectedItem.GetComponent<BaseItem>().Deactivate();  // 아이템 비활성화
-
-            PlayerInventory.Instance.AddItem(detectedItem.GetComponent<BaseItem>());    // 아이템 추가
-            SetItemActiveState(detectedItem.GetComponent<BaseItem>(), false);           // 아이템 비활성화
-            Debug.Log("아이템 줍기");
-
-            choiceItem = detectedItem;  // 선택된 아이템 설정  [임시]
+        if(detectedItem.isPickable){
+            SetItemActiveState(detectedItem, false);           // 아이템 비활성화
+            playerInventory.AddItem(detectedItem);            // 플레이어 인벤토리에 아이템 추가
         }
     }
 
-    public void UseItem(){
+    /// <summary>
+    /// 아이템 사용 함수
+    /// </summary>
+    /// <param name="playerInventory">아이템을 저장할 인벤토리</param>
+    private void HandleItemUse(PlayerInventory playerInventory){
         // 선택된 아이템이 사용 가능한지 확인
-        // 추후 useable 여부에 대한 확인이 필요
-        if(choiceItem != null){
-            choiceItem.GetComponent<BaseItem>().UseItem();                                  // 아이템 사용
-            PlayerInventory.Instance.RemoveItem(choiceItem.GetComponent<BaseItem>());       // 아이템 제거
+        // @TODO: useable 여부에 대한 확인이 필요
+        if(playerInventory.selectedItem != null){
+            BaseItem targetItem = playerInventory.selectedItem.GetComponent<BaseItem>();
+            targetItem.UseItem();                        // 아이템 사용
+            playerInventory.RemoveItem(targetItem);      // 아이템 제거
+            playerInventory.selectedItem = null;
             Debug.Log("아이템 사용");
         }
     }
-
 
     /// <summary>
     /// 아이템 이동 함수

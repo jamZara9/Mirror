@@ -24,6 +24,9 @@ namespace StarterAssets
 		public bool useItem;
 		public bool pickupItem;
 		public bool transferItem;
+		public bool inventory;
+
+		public int quickSlots;
 
 #if ENABLE_INPUT_SYSTEM
 		public void OnMove(InputValue value)
@@ -62,6 +65,16 @@ namespace StarterAssets
 		public void OnTransferItem(InputValue value)
 		{
 			TransferItemInput(value.isPressed);
+		}
+
+		public void OnQuickSlots(InputValue value)
+		{
+			QuickSlotInput(value);
+		}
+
+		public void OnInventory(InputValue value)
+		{
+			ShowInventory(value.isPressed);
 		}
 #endif
 
@@ -109,6 +122,22 @@ namespace StarterAssets
 		private void TransferItemInput(bool newTransferItemState)
 		{
 			transferItem = newTransferItemState;
+		}
+
+		/// <summary>
+		/// 퀵슬롯 입력 처리
+		/// </summary>
+		/// <param name="value"></param>
+		/// @TODO : 입력받은 퀵슬롯 번호를 저장해야 함 현재는 입력받았는지 즉 0(KeyDown) or 1(KeyUp)만 확인된 상태
+		/// @TODO : 하나로 바인딩 처리할 때 입력받은 번호를 가져올 수 있도록 수정 필요
+		private void QuickSlotInput(InputValue value)
+		{
+			quickSlots = (int) value.Get<float>();
+			Debug.Log($"QuickSlot: {quickSlots}");
+		}
+
+		private void ShowInventory(bool newInventoryState){
+			inventory = newInventoryState;
 		}
 	}
 	
