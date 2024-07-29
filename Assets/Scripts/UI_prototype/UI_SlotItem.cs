@@ -115,66 +115,6 @@ public class UI_SlotItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         transform.SetParent(newSlotTransform);
         transform.localPosition = Vector3.zero;
         raycaster.enabled = true;  // 드래그 종료 후 레이캐스트 활성화
-
-        // if (item != null)
-        // {
-            
-
-        //     if (newSlotTransform != null){
-        //         UI_Slot newSlot = newSlotTransform.GetComponent<UI_Slot>();
-        //         if (newSlot != null){
-        //             int originalIndex = originalSlot.transform.GetSiblingIndex();
-        //             int newIndex = newSlot.transform.GetSiblingIndex();
-
-        //             // 동일한 슬롯 타입 내에서 이동한 경우
-        //             if(newSlot.slotType == originalSlot.slotType){                  // inventory -> inventory
-        //                 if(newSlot.slotType == UI_Slot.SlotType.Inventory){
-        //                     // newSlot의 게임오브젝트에 자식 객체로 SlotItem가 존재하는 경우 -> 스왑
-        //                     if(newSlot.transform.childCount > 0){
-        //                         // drop 슬롯에 존재하는 SlotItem을 originalSlot으로 이동
-        //                         UI_SlotItem currentSlotItem = newSlot.transform.GetChild(0).GetComponent<UI_SlotItem>();
-        //                         currentSlotItem.originalSlot = originalSlot;
-        //                         currentSlotItem.transform.SetParent(originalSlot.transform);
-        //                         currentSlotItem.transform.localPosition = Vector3.zero;
-        //                     }
-        //                     newSlot.SetSlotItem(this);
-        //                 }else if(newSlot.slotType == UI_Slot.SlotType.QuickSlot){   // quickSlot -> quickSlot
-        //                     // 아이템이 이미 존재하는 경우 스왑
-        //                     if(newSlot.transform.childCount > 0){
-        //                         UI_SlotItem currentSlotItem = newSlot.transform.GetChild(0).GetComponent<UI_SlotItem>();
-        //                         currentSlotItem.originalSlot = originalSlot;
-        //                         currentSlotItem.transform.SetParent(originalSlot.transform);
-        //                         currentSlotItem.transform.localPosition = Vector3.zero;
-        //                     }
-        //                     newSlot.SetSlotItem(this);
-        //                 }
-        //                 // 드래그가 끝난 후, SlotItem을 새로운 슬롯으로 이동
-        //                 transform.SetParent(newSlotTransform);
-        //             }else{  // 서로 다른 슬롯 타입으로 이동한 경우
-        //                 if(newSlot.slotType == UI_Slot.SlotType.QuickSlot){   // inventory -> quickSlot
-        //                     MainGameManager.Instance.playerInventory.SetItemToQuickSlot(item.gameObject, newIndex);
-
-        //                     // 퀵슬롯에 이미 아이템이 있는 경우 해당 아이템을 비우고 새로운 아이템을 추가
-        //                     if(newSlot.transform.childCount > 0){
-        //                         newSlot.ClearSlot();
-        //                         Destroy(newSlot.transform.GetChild(0).gameObject);
-        //                     }
-        //                     newSlot.SetSlotItem(this);
-
-        //                     // 드래그가 끝난 후, SlotItem을 복사하여 새로운 슬롯에 추가
-        //                     MainGameManager.Instance.uiController.UpdateInventoryUI(originalIndex);
-        //                     transform.SetParent(newSlotTransform);
-        //                 }
-        //             }
-        //         }
-                
-        //     }else{
-        //         // 슬롯이 없는 곳에 드래그가 끝난 경우 원래 슬롯으로 돌아감
-        //         transform.SetParent(originalSlot.transform);
-        //     }
-        //     transform.localPosition = Vector3.zero;
-        //     raycaster.enabled = true;  // 드래그 종료 후 레이캐스트 활성화
-        // }
     }
     
     /// <summary>
