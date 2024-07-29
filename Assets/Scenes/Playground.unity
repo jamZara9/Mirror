@@ -477,6 +477,7 @@ MonoBehaviour:
   inputActionAsset: {fileID: -944628639613478452, guid: 4419d82f33d36e848b3ed5af4c8da37e, type: 3}
   maxDistance: 10
   objectNameText: {fileID: 456326758}
+  detectedItem: {fileID: 0}
 --- !u!114 &280350532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2010,7 +2011,9 @@ MonoBehaviour:
   uiSlotPrefab: {fileID: 3913737346482926141, guid: e2565eae0498c8f44a749d2e3101b441, type: 3}
   itemSlotContainer: {fileID: 739237114}
   itemQuickSlotContainer: {fileID: 495729702}
+  canvas: {fileID: 1714153901}
   hpText: {fileID: 1732160267}
+  inventoryUI: {fileID: 0}
   slots: []
   quickSlots: []
 --- !u!1 &1046216217
@@ -2631,8 +2634,6 @@ MonoBehaviour:
   playerController: {fileID: 1061641610}
   playerStatus: {fileID: 1046216219}
   playerInventory: {fileID: 1046216220}
-  inventoryUI: {fileID: 739237113}
-  detectedItem: {fileID: 0}
 --- !u!4 &1627113917
 Transform:
   m_ObjectHideFlags: 0

@@ -24,8 +24,9 @@ public class CameraController : MonoBehaviour
 
     [Header("UI Settings")]
     public TextMeshProUGUI objectNameText;      // 오브젝트 이름을 표시할 UI 텍스트
-
     private GameObject lastDetectedObject;      // 마지막으로 감지된 오브젝트
+
+    public GameObject detectedItem;             // 감지된 아이템
 
     void Awake(){
         // Input Action Asset에서 Look 액션 참조
@@ -65,8 +66,8 @@ public class CameraController : MonoBehaviour
                 // 마지막으로 감지된 오브젝트를 업데이트
                 lastDetectedObject = detectedObject;
                 
-                MainGameManager.Instance.detectedItem = hit.collider.gameObject;                    // 감지된 아이템 저장
-                MainGameManager.Instance.detectedItem.GetComponent<BaseItem>().isPickable = true;   // 아이템을 획득 가능하도록 설정
+                detectedItem = hit.collider.gameObject;                    // 감지된 아이템 저장
+                detectedItem.GetComponent<BaseItem>().isPickable = true;   // 아이템을 획득 가능하도록 설정
 
                 // lastDetectedObject.GetComponent<Outline>().OnMouseDown();                       // Outline 효과 활성화
             }else{
@@ -89,10 +90,10 @@ public class CameraController : MonoBehaviour
         objectNameText.text = "";
 
         // MainGameManager 업데이트
-        if (MainGameManager.Instance.detectedItem != null)
+        if (detectedItem != null)
         {
-            MainGameManager.Instance.detectedItem.GetComponent<BaseItem>().isPickable = false;
-            MainGameManager.Instance.detectedItem = null;
+            detectedItem.GetComponent<BaseItem>().isPickable = false;
+            detectedItem = null;
         }
     }
 

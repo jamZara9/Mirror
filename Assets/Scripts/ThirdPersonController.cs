@@ -411,10 +411,12 @@ namespace StarterAssets
             // 키를 입력 받은 경우 
             if(_input.pickupItem){ 
                 MainGameManager gameManager = MainGameManager.Instance;
-                if(gameManager.detectedItem != null){
+                CameraController cameraController = gameManager.cameraController;
+
+                if(cameraController.detectedItem != null){
                     // 아이템을 획득
-                    EventManager.ItemPickup(gameManager.detectedItem.GetComponent<BaseItem>(), gameManager.playerInventory);
-                    gameManager.detectedItem = null;
+                    EventManager.ItemPickup(cameraController.detectedItem.GetComponent<BaseItem>(), gameManager.playerInventory);
+                    cameraController.detectedItem = null;
                 }
                 _input.pickupItem = false;
             }
