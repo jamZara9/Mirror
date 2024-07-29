@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Flesh
   - Puzzle2
+  - CinemachineTarget
+  - Item
+  - Inventory
+  - QuickSlot
   layers:
   - Default
   - TransparentFX

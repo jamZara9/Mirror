@@ -118,7 +118,7 @@ public class UIController_Test : MonoBehaviour
         ClearSlot(slot);
 
         GameObject slotItem = Instantiate(uiSlotPrefab, slot.transform);
-        UI_Slot uiSlot = slotItem.GetComponent<UI_Slot>();
+        UI_SlotItem uiSlot = slotItem.GetComponent<UI_SlotItem>();
 
         if(uiSlot != null){
             uiSlot.SetItem(items[index]);

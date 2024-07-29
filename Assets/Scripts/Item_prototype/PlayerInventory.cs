@@ -44,12 +44,12 @@ public class PlayerInventory : MonoBehaviour, IItemContainer
         return null;
     }
 
-    public void MoveItemToQuickSlot(GameObject item, int quickSlotIndex){
+    public void SetQuickSlotItem(GameObject item, int quickSlotIndex){
         BaseItem baseItem = item.GetComponent<BaseItem>();
+
         if (items.Contains(baseItem)) {
             if (quickSlotIndex >= 0 && quickSlotIndex < quickSlots.Count){
                 quickSlots[quickSlotIndex] = baseItem;
-                uiController.UpdateQuickSlotUI(quickSlotIndex);
                 Debug.Log($"아이템 '{baseItem.itemID}'이(가) 퀵슬롯 {quickSlotIndex}에 추가되었습니다.");
             }else{
                 Debug.LogError("유효하지 않은 퀵슬롯 인덱스입니다.");
