@@ -16,7 +16,6 @@ public class MainGameManager : MonoBehaviour
     public ThirdPersonController playerController;    // 플레이어 컨트롤러
     public PlayerStatus playerStatus;                 // 플레이어 상태
     public PlayerInventory playerInventory;           // 플레이어 인벤토리
-    public GameObject inventoryUI;                     // 인벤토리 UI
 
     public GameObject detectedItem;                    // 감지된 아이템
 

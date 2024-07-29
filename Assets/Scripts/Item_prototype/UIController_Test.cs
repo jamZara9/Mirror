@@ -8,7 +8,11 @@ public class UIController_Test : MonoBehaviour
     public GameObject uiSlotPrefab;             // SlotItem UI 프리팹
     public Transform itemSlotContainer;         // 아이템 슬롯들을 담을 컨테이너
     public Transform itemQuickSlotContainer;    // 퀵슬롯 아이템 슬롯들을 담을 컨테이너
-    public GameObject hpText;                   // HP 텍스트 UI
+
+    [Header("UI GameObjects")]
+    public GameObject canvas;      // 캔버스
+    public GameObject hpText;      // HP 텍스트 UI
+    public GameObject inventoryUI; // 인벤토리 UI
 
     private PlayerInventory playerInventory;    // 플레이어 인벤토리
     private PlayerStatus playerStatus;          // 플레이어 상태
@@ -22,8 +26,10 @@ public class UIController_Test : MonoBehaviour
         playerStatus = MainGameManager.Instance.playerStatus;
         playerInventory = MainGameManager.Instance.playerInventory;
 
-        if (playerInventory == null){
-            Debug.LogError("PlayerInventory를 찾을 수 없습니다.");
+        // UI GameObjects 초기화
+        if (canvas != null){
+            if(inventoryUI == null) inventoryUI = canvas.transform.Find("Inventory").gameObject;
+            if(hpText == null ) hpText = canvas.transform.Find("HP").gameObject;
         }
 
         InitializeInventoryUI();

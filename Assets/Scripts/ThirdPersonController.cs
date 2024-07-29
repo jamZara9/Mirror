@@ -435,9 +435,12 @@ namespace StarterAssets
 
         private void ShowInventory(){
             if(_input.inventory){
-                MainGameManager gameManager = MainGameManager.Instance;
-                gameManager.inventoryUI.SetActive(!gameManager.inventoryUI.activeSelf);
-                gameManager.cameraController.SetCursorState(gameManager.inventoryUI.activeSelf);
+                MainGameManager gameManager = MainGameManager.Instance;     // MainGameManager 인스턴스
+                UIController_Test uiController = gameManager.uiController;  // UIController_Test 인스턴스
+
+                // 인벤토리 UI 활성화/비활성화
+                uiController.inventoryUI.SetActive(!uiController.inventoryUI.activeSelf);
+                gameManager.cameraController.SetCursorState(uiController.inventoryUI.activeSelf);   // 커서 상태 설정
                 _input.inventory = false;
             }
         }
