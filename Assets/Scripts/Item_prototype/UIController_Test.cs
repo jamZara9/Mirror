@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+/// <summary>
+/// UI 전체 관리 및 업데이트
+/// </summary>
 public class UIController_Test : MonoBehaviour
 {
     public GameObject uiSlotPrefab;             // SlotItem UI 프리팹

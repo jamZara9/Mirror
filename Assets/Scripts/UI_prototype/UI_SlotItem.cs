@@ -6,11 +6,9 @@ using UnityEngine.EventSystems;
 using System.Security.Cryptography;
 
 public class UI_SlotItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
-
 {
     public Image itemIcon;                  // 아이템 이미지를 표시할 Image 컴포넌트
     public BaseItem item;
-
 
     [Header("Slot Data")]
     private Canvas canvas;                  // 캔버스[UI]
@@ -38,15 +36,8 @@ public class UI_SlotItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     // 슬롯 업데이트
     public void UpdateSlot(){
-        if (item != null){
-            if (itemIcon != null){
-                itemIcon.sprite = Resources.Load<Sprite>(item.itemData.iconPath);
-            }
-        }else{
-            if (itemIcon != null){
-                itemIcon.sprite = null;
-            }
-        }
+        if(itemIcon != null)
+            itemIcon.sprite = item != null ? Resources.Load<Sprite>(item.itemData.iconPath) : null;
     }
 
     // 드래그 시작 시 호출되는 함수
@@ -91,7 +82,7 @@ public class UI_SlotItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
         // 동일한 슬롯 타입 내에서 이동한 경우
         if(newSlot.slotType == originalSlot.slotType){
-            HandleSameSlotTypeMove(newSlot);
+            HandleSameSlotTypeMove(newSlot,originalIndex, newIndex);
         }else{  // 서로 다른 슬롯 타입으로 이동한 경우
             if(newSlot.slotType == UI_Slot.SlotType.QuickSlot){
                 MainGameManager.Instance.playerInventory.SetQuickSlotItem(item.gameObject, newIndex);
@@ -135,14 +126,18 @@ public class UI_SlotItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     /// 동일한 슬롯 타입 내에서 이동할 때 호출되는 함수
     /// </summary>
     /// <param name="newSlot"></param>
-    private void HandleSameSlotTypeMove(UI_Slot newSlot){
+    private void HandleSameSlotTypeMove(UI_Slot newSlot, int originalIndex, int newIndex){
         // newSlot의 게임오브젝트에 자식 객체로 SlotItem이 존재하는 경우 -> 스왑
         if(newSlot.transform.childCount > 0){
             UI_SlotItem existingItem = newSlot.transform.GetChild(0).GetComponent<UI_SlotItem>();
             existingItem.originalSlot = originalSlot;
             existingItem.transform.SetParent(originalSlot.transform);
             existingItem.transform.localPosition = Vector3.zero;
+
         }
+        // 슬롯의 인덱스를 업데이트
+        MainGameManager.Instance.playerInventory.SwapInventoryItem(originalIndex, newIndex);
+
         newSlot.SetSlotItem(this);
     }
     
@@ -168,8 +163,9 @@ public class UI_SlotItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     private Transform GetSlotUnderPointer(PointerEventData eventData){
         
         // 드래그 중인 SlotItem의 위치를 eventData.position으로 설정
-        PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
-        pointerEventData.position = eventData.position; 
+        PointerEventData pointerEventData = new PointerEventData(EventSystem.current){
+            position = eventData.position
+        };
 
         // 포인터 위치에서 레이캐스트를 수행한 후, 히트된 UI 요소들의 정보 저장하기 위한 리스트
         List<RaycastResult> raycastResults = new List<RaycastResult>();

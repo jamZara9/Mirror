@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine.EventSystems;
 
 /// <summary>
-/// SlotItem이 보유한 아이템 정보를 처리하는 클래스
+/// 슬롯의 UI 업데이트
 /// </summary>
 public class UI_Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -20,20 +20,12 @@ public class UI_Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public Image border;            // 슬롯 테두리 이미지
     public UI_SlotItem slotItem;  // 슬롯에 할당된 아이템
 
-    /// <summary>
-    /// 마우스가 슬롯 위에 있을 때 호출되는 함수 [아직 x]
-    /// </summary>
-    /// <param name="eventData"></param>
     public void OnPointerEnter(PointerEventData eventData){
         if(border != null){ 
             border.enabled = true;
         }
     }
-    
-    /// <summary>
-    /// 마우스가 슬롯 밖으로 나갈 때 호출되는 함수 [아직 x]
-    /// </summary>
-    /// <param name="eventData"></param>
+
     public void OnPointerExit(PointerEventData eventData){
         if(border != null){
             border.enabled = false;

@@ -22,6 +22,8 @@ public class BaseItemData
     public string description;      // 아이템 설명
     public int count;               // 아이템 개수
     public int invenSpace;          // 인벤토리 공간
+    public int inventoryIndex;      // 인벤토리 인덱스
+    public int quickSlotIndex;      // 퀵슬롯 인덱스
 }
 
 public abstract class BaseItem : MonoBehaviour

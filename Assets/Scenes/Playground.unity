@@ -2207,15 +2207,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   items: []
-  quickSlots:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  quickSlots: []
   selectedItem: {fileID: 0}
   maxSlots: 9
   maxQuickSlots: 5
+  currentSlots: 0
 --- !u!114 &1061641610 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7990298391408737501, guid: 3a078128f4a830a45b4731c7993edf03, type: 3}

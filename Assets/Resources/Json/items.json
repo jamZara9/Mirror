@@ -5,7 +5,9 @@
 		"type" : "Persistent",
 		"iconPath" : "Items/Sprite/Ammo9mm",
 		"count" : 0,
-		"invenSpace" : 1
+		"invenSpace" : 1,
+		"inventoryIndex" : -1,
+		"quickSlotIndex" : -1
 	},
 	"Item002": {
 		"name" : "레게놀",
@@ -13,7 +15,9 @@
 		"type" : "Persistent",
 		"iconPath" : "Items/Sprite/Battery",
 		"count" : 0,
-		"invenSpace" : 1
+		"invenSpace" : 1,
+		"inventoryIndex" : -1,
+		"quickSlotIndex" : -1
 	},
 	"Item003": {
 		"name" : "밴드에이드",
@@ -21,7 +25,9 @@
 		"type" : "Immediate",
 		"iconPath" : "1",
 		"count" : 0,
-		"invenSpace" : 1
+		"invenSpace" : 1,
+		"inventoryIndex" : -1,
+		"quickSlotIndex" : -1
 	},
 	"Item004": {
 		"name" : "구급상자",
@@ -29,7 +35,9 @@
 		"type" : "Quest",
 		"iconPath" : "1",
 		"count" : 0,
-		"invenSpace" : 1
+		"invenSpace" : 1,
+		"inventoryIndex" : -1,
+		"quickSlotIndex" : -1
 	},
 	"Item005": {
 		"name" : "수상한 앰플",
@@ -37,7 +45,9 @@
 		"type" : "Immediate",
 		"iconPath" : "1",
 		"count" : 0,
-		"invenSpace" : 1
+		"invenSpace" : 1,
+		"inventoryIndex" : -1,
+		"quickSlotIndex" : -1
 	},
 	"Item006": {
 		"name" : "12게이지",
@@ -45,7 +55,9 @@
 		"type" : "Ammunition",
 		"iconPath" : "1",
 		"count" : 0,
-		"invenSpace" : 1
+		"invenSpace" : 1,
+		"inventoryIndex" : -1,
+		"quickSlotIndex" : -1
 	},
 	"Item007": {
 		"name" : ".45ACP",
@@ -53,7 +65,9 @@
 		"type" : "Ammunition",
 		"iconPath" : "1",
 		"count" : 0,
-		"invenSpace" : 1
+		"invenSpace" : 1,
+		"inventoryIndex" : -1,
+		"quickSlotIndex" : -1
 	},
 	"Item008": {
 		"name" : "5.56mm",
@@ -61,6 +75,8 @@
 		"type" : "Ammunition",
 		"iconPath" : "1",
 		"count" : 0,
-		"invenSpace" : 1
+		"invenSpace" : 1,
+		"inventoryIndex" : -1,
+		"quickSlotIndex" : -1
 	}
 }
