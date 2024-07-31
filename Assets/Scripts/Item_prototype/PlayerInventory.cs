@@ -30,31 +30,47 @@ public class PlayerInventory : MonoBehaviour, IItemContainer
     }
 
     // 아이템 추가
-    public void AddItem(BaseItem item){
+    public void AddItem(BaseItem item) {
         item.itemData.count += 1;
 
-        if(!items.Contains(item)){
-            item.itemData.inventoryIndex = currentSlots;
-            // items.Add(item);
-            items[currentSlots] = item;
-            uiController.UpdateInventoryUI(currentSlots);
-            currentSlots += 1;
-        }else{
+        if (currentSlots < maxSlots) {
+            int index = items.IndexOf(null);  // 빈 슬롯을 찾습니다.
+            if (index != -1) {
+                item.itemData.inventoryIndex = index;
+                items[index] = item;
+                uiController.UpdateInventoryUI(index);
+                currentSlots += 1;
+            } else {
+                Debug.Log("인벤토리가 가득 찼습니다.");
+            }
+        } else {
             Debug.Log("인벤토리가 가득 찼습니다.");
         }
     }
 
-    // 아이템 제거
-    public void RemoveItem(BaseItem item){
-        item.itemData.count -= 1;
-
-        if(item.itemData.count <= 0){
-            item.itemData.inventoryIndex = -1;
-            // items.Remove(item);
-            items[currentSlots] = null;
+    public void RemoveItem(BaseItem item) {
+        if (items.Contains(item)) {
+            items[item.itemData.inventoryIndex] = null;
             currentSlots -= 1;
+            uiController.UpdateInventoryUI(item.itemData.inventoryIndex);
+        } else {
+            Debug.Log("인벤토리에 아이템이 존재하지 않습니다.");
         }
     }
+
+
+    public void ChangeItemCount(BaseItem item) {
+        int itemCount = item.itemData.count;
+
+        if(itemCount > 0){
+            item.itemData.count -= 1;
+            
+            //@TOD: 현재는 itemCount만 조절 추후 인벤토리 / 퀵슬롯 제거 여부에 따라 수정 필요
+        }else{
+            Debug.Log("아이템이 없습니다.");
+        }
+    }
+
     public BaseItem GetItemAt(int index){
         if (index >= 0 && index < items.Count){
             return items[index];

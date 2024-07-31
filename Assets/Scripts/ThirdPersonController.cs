@@ -451,8 +451,23 @@ namespace StarterAssets
         // @TODO: 퀵슬롯 사용 로직 추가 필요 및 미완성상태
         // 입력받은 키보드 입력에 따라 퀵슬롯을 사용할 수 있도록 해야하나 아직 미구현
         private void UseQuickSlot(){
-            if(_input.quickSlots != 0){
-                _input.quickSlots = 0;
+            if(_input.number != 0){
+                MainGameManager gameManager = MainGameManager.Instance;
+                PlayerInventory playerInventory = gameManager.playerInventory;
+
+                int itemIndex = _input.number - 1;
+                Debug.Log($"itemIndex : {itemIndex}");
+
+                if(playerInventory.maxQuickSlots > itemIndex && playerInventory.quickSlots[itemIndex] != null){
+                    playerInventory.selectedItem = playerInventory.quickSlots[itemIndex].gameObject;
+
+                    Debug.Log($"playerInventory.selectedItem : {playerInventory.selectedItem.name}");
+
+                    // 아이템 사용
+                    EventManager.ItemUse(playerInventory);
+                }
+                _input.number = 0;
+
             }
         }
 

@@ -154,14 +154,14 @@ public class ItemManager : MonoBehaviour
     /// <summary>
     /// 아이템 사용 함수
     /// </summary>
-    /// <param name="playerInventory">아이템을 저장할 인벤토리</param>
+    /// <param name="playerInventory">아이템을 사용할 인벤토리</param>
     private void HandleItemUse(PlayerInventory playerInventory){
         // 선택된 아이템이 사용 가능한지 확인
         // @TODO: useable 여부에 대한 확인이 필요
         if(playerInventory.selectedItem != null){
             BaseItem targetItem = playerInventory.selectedItem.GetComponent<BaseItem>();
             targetItem.UseItem();                        // 아이템 사용
-            playerInventory.RemoveItem(targetItem);      // 아이템 제거
+            playerInventory.ChangeItemCount(targetItem);
             playerInventory.selectedItem = null;
             Debug.Log("아이템 사용");
         }
@@ -175,7 +175,7 @@ public class ItemManager : MonoBehaviour
     /// <param name="item">전달하고자 하는 아이템</param>
     public void TransferItem(IItemContainer from, IItemContainer to, BaseItem item){
         Debug.Log("아이템 이동");
-        // @ TODO: 아이템 이동 로직 구현 아직 미완성 임시로 제거 추가만 구현진행함
+        // @ TODO: 아이템 이동 로직 구현 아직 미완성
         from.RemoveItem(item);
         to.AddItem(item);
     }

@@ -26,9 +26,10 @@ namespace StarterAssets
 		public bool transferItem;
 		public bool inventory;
 
-		public int quickSlots;
+		public int number = 0;
 
 #if ENABLE_INPUT_SYSTEM
+
 		public void OnMove(InputValue value)
 		{
 			MoveInput(value.Get<Vector2>());
@@ -66,19 +67,48 @@ namespace StarterAssets
 		{
 			TransferItemInput(value.isPressed);
 		}
-
-		public void OnQuickSlots(InputValue value)
-		{
-			QuickSlotInput(value);
-		}
-
 		public void OnInventory(InputValue value)
 		{
 			ShowInventory(value.isPressed);
 		}
+
+		public void OnNumber1(InputValue value)
+		{
+			ClickNumber(value.isPressed, 1);
+		}
+		public void OnNumber2(InputValue value)
+		{
+			ClickNumber(value.isPressed, 2);
+		}
+		public void OnNumber3(InputValue value)
+		{
+			ClickNumber(value.isPressed, 3);
+		}
+		public void OnNumber4(InputValue value)
+		{
+			ClickNumber(value.isPressed, 4);
+		}
+		public void OnNumber5(InputValue value)
+		{
+			ClickNumber(value.isPressed, 5);
+		}
+		public void OnNumber6(InputValue value)
+		{
+			ClickNumber(value.isPressed, 6);
+		}
+		public void OnNumber7(InputValue value)
+		{
+			ClickNumber(value.isPressed, 7);
+		}	
+		public void OnNumber8(InputValue value)
+		{
+			ClickNumber(value.isPressed, 8);
+		}
+		public void OnNumber9(InputValue value)
+		{
+			ClickNumber(value.isPressed, 9);
+		}
 #endif
-
-
 		public void MoveInput(Vector2 newMoveDirection)
 		{
 			move = newMoveDirection;
@@ -123,21 +153,15 @@ namespace StarterAssets
 		{
 			transferItem = newTransferItemState;
 		}
-
-		/// <summary>
-		/// 퀵슬롯 입력 처리
-		/// </summary>
-		/// <param name="value"></param>
-		/// @TODO : 입력받은 퀵슬롯 번호를 저장해야 함 현재는 입력받았는지 즉 0(KeyDown) or 1(KeyUp)만 확인된 상태
-		/// @TODO : 하나로 바인딩 처리할 때 입력받은 번호를 가져올 수 있도록 수정 필요
-		private void QuickSlotInput(InputValue value)
-		{
-			quickSlots = (int) value.Get<float>();
-			Debug.Log($"QuickSlot: {quickSlots}");
-		}
-
+		
 		private void ShowInventory(bool newInventoryState){
 			inventory = newInventoryState;
+		}
+
+		private void ClickNumber(bool newNumberState, int number){
+			if(newNumberState){
+				this.number = number;
+			}
 		}
 	}
 	
