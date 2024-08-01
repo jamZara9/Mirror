@@ -65,6 +65,8 @@ public class CameraController : MonoBehaviour
                 detectedItem = hit.collider.gameObject;                    // 감지된 아이템 저장
                 detectedItem.GetComponent<BaseItem>().isPickable = true;   // 아이템을 획득 가능하도록 설정
 
+                detectedItem.GetComponent<BaseItem>().isPickable = true;   // 아이템을 획득 가능하도록 설정
+                detectedItem.GetComponent<Outline>().isOutlineOn = true;   // 아웃라인 활성화
             }else{
                 ResetDetectedItem();
             }
@@ -85,6 +87,7 @@ public class CameraController : MonoBehaviour
         if (detectedItem != null)
         {
             detectedItem.GetComponent<BaseItem>().isPickable = false;
+            detectedItem.GetComponent<Outline>().isOutlineOn = false;
             detectedItem = null;
         }
     }
