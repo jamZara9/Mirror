@@ -46,7 +46,6 @@ public class CameraController : MonoBehaviour
     private void CheckForItem(){
 
         // Raycast를 통해 마우스 위치에 아이템이 있는지 확인 [ 필요에 따라서 카메라 위치로 변경 ]
-        RaycastHit hit;
         // Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         ray = Camera.main.ScreenPointToRay(mousePosition);
 
@@ -55,15 +54,10 @@ public class CameraController : MonoBehaviour
 
             // 오브젝트가 "Item" 태그를 가지고 있는지 확인
             if(hit.collider.tag == "Item"){
-                // Debug.Log("Item is detected");
 
-                GameObject detectedObject = hit.collider.gameObject;                            // 마지막으로 감지된 오브젝트 저장
-                objectNameText.text = detectedObject.name;                                      // UI에 오브젝트 이름 표시
-
+                detectedItem = hit.collider.gameObject;                    // 마지막으로 감지된 오브젝트 저장
+                objectNameText.text = detectedItem.name;                   // UI에 오브젝트 이름 표시
                 objectNameText.text += " [F]";
-                
-                detectedItem = hit.collider.gameObject;                    // 감지된 아이템 저장
-                detectedItem.GetComponent<BaseItem>().isPickable = true;   // 아이템을 획득 가능하도록 설정
 
                 detectedItem.GetComponent<BaseItem>().isPickable = true;   // 아이템을 획득 가능하도록 설정
                 detectedItem.GetComponent<Outline>().isOutlineOn = true;   // 아웃라인 활성화
