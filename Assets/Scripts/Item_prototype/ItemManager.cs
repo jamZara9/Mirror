@@ -13,7 +13,7 @@ public class ItemManager : MonoBehaviour
     public Dictionary<string, BaseItemData> itemDictionary = new Dictionary<string, BaseItemData>();   
 
     [Header("Item List")]
-    // 필드에 존재하는 Item 오브젝트들을 저장하는 리스트
+    // 필드(씬)에 존재하는 Item 오브젝트들을 저장하는 리스트
     public List<BaseItem> items = new List<BaseItem>();
 
     private string itemDataPath = "Json/items"; // 아이템 데이터 경로

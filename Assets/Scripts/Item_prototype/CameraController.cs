@@ -53,7 +53,7 @@ public class CameraController : MonoBehaviour
         if(Physics.Raycast(ray, out hit, maxDistance)){
 
             // 오브젝트가 "Item" 태그를 가지고 있는지 확인
-            if(hit.collider.tag == "Item"){
+            if(hit.collider.CompareTag("Item")){
 
                 detectedItem = hit.collider.gameObject;                    // 마지막으로 감지된 오브젝트 저장
                 objectNameText.text = detectedItem.name;                   // UI에 오브젝트 이름 표시
@@ -78,10 +78,9 @@ public class CameraController : MonoBehaviour
         objectNameText.text = "";
 
         // MainGameManager 업데이트
-        if (detectedItem != null)
-        {
-            detectedItem.GetComponent<BaseItem>().isPickable = false;
+        if (detectedItem != null){
             detectedItem.GetComponent<Outline>().isOutlineOn = false;
+            detectedItem.GetComponent<BaseItem>().isPickable = false;
             detectedItem = null;
         }
     }
