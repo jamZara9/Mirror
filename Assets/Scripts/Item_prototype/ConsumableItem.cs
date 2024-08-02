@@ -18,12 +18,19 @@ public class ConsumableItem : BaseItem
     [Header("Item Parameters")]
     public EffectType effectType;   // 아이템 효과 타입
 
+    private PlayerStatus playerStatus;  // 플레이어 상태
+
+    void Start()
+    {
+        playerStatus = MainGameManager.Instance.playerStatus;
+    }
+
     public override void UseItem()
     {
         switch (effectType)
         {
             case EffectType.Health:
-                useHeadthItem();
+                UseHeadthItem();
                 break;
             case EffectType.Speed:
 
@@ -37,11 +44,12 @@ public class ConsumableItem : BaseItem
         }
     }
 
-    private void useHeadthItem()
+    private void UseHeadthItem()
     {
         // 체력 회복 아이템 사용
-        PlayerStatus playerStatus = GameObject.Find("Player").GetComponent<PlayerStatus>();
         playerStatus.currentHealth += 10;
+
+        // 최대 체력을 넘어가지 않도록 설정
         if (playerStatus.currentHealth > playerStatus.maxHealth)
         {
             playerStatus.currentHealth = playerStatus.maxHealth;

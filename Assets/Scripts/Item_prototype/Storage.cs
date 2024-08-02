@@ -4,32 +4,11 @@ using UnityEngine;
 
 public class Storage : MonoBehaviour, IItemContainer
 {
-    private static Storage _storage;    // 싱글톤 인스턴스
+    public List<BaseItem> items;    // 창고 아이템 리스트
 
-    public List<BaseItem> items = new List<BaseItem>();    // 창고 아이템 리스트
-
-    public static Storage Instance{
-        get{
-            if(_storage == null){
-                _storage = FindObjectOfType<Storage>();
-
-                if(_storage == null){
-                    GameObject singleton = new GameObject("Storage");
-                    _storage = singleton.AddComponent<Storage>();
-                }
-            }
-            return _storage;
-        }
-    }
-
-    void Awake(){
-        if(_storage == null){
-            _storage = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else{
-            Destroy(gameObject);
-        }
+    void Start(){
+        // 아이템 리스트 초기화
+        items = new List<BaseItem>();
     }
 
     // 아이템 추가

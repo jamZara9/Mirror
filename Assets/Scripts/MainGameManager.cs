@@ -10,11 +10,12 @@ public class MainGameManager : MonoBehaviour
 
     [Header("Manager")]
     public ItemManager itemManager;
-    public CameraController cameraController;        // 카메라 컨트롤러
+    public CameraController cameraController;         // 카메라 컨트롤러
     public UIController_Test uiController;            // UI 컨트롤러
+    public Storage storage;                           // 저장소
 
-    public GameObject player;            
-    public ThirdPersonController playerController;    // 플레이어 컨트롤러
+    // public GameObject player;            
+    // public ThirdPersonController playerController;    // 플레이어 컨트롤러
     public PlayerStatus playerStatus;                 // 플레이어 상태
     public PlayerInventory playerInventory;           // 플레이어 인벤토리
 
@@ -47,6 +48,9 @@ public class MainGameManager : MonoBehaviour
         CheckObject(ref itemManager);
         CheckObject(ref uiController);
         CheckObject(ref cameraController);
+        CheckObject(ref storage);
+        CheckObject(ref playerStatus);
+        CheckObject(ref playerInventory);
 
     }
 

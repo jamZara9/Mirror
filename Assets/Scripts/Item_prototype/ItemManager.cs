@@ -70,44 +70,44 @@ public class ItemManager : MonoBehaviour
         item.itemData = data;
     }
 
-    /// <summary>
-    /// 아이템 생성 함수
-    /// </summary>
-    /// <param name="itemID">생성하고자 하는 Item의 ID</param>
-    public void CreateItem(string itemID){
+    // /// <summary>
+    // /// 아이템 생성 함수
+    // /// </summary>
+    // /// <param name="itemID">생성하고자 하는 Item의 ID</param>
+    // public void CreateItem(string itemID){
 
-        string itemPrefabPath = "Prefabs/Items/"; // 아이템 프리팹 경로
+    //     string itemPrefabPath = "Prefabs/Items/"; // 아이템 프리팹 경로
 
-        // 아이템 프리팹 로드
-        GameObject itemPrefab = Resources.Load<GameObject>(itemPrefabPath + itemID);
-        if (itemPrefab == null)
-        {
-            Debug.LogError("아이템 프리팹을 찾을 수 없습니다: " + itemPrefabPath + itemID);
-            return;
-        }
+    //     // 아이템 프리팹 로드
+    //     GameObject itemPrefab = Resources.Load<GameObject>(itemPrefabPath + itemID);
+    //     if (itemPrefab == null)
+    //     {
+    //         Debug.LogError("아이템 프리팹을 찾을 수 없습니다: " + itemPrefabPath + itemID);
+    //         return;
+    //     }
 
-        // 아이템 생성
-        GameObject itemObject = Instantiate(itemPrefab);
-        BaseItem item = itemObject.GetComponent<BaseItem>();
+    //     // 아이템 생성
+    //     GameObject itemObject = Instantiate(itemPrefab);
+    //     BaseItem item = itemObject.GetComponent<BaseItem>();
 
-        // 추후 위치에 대한 값들이 결정되었을 경우 위치 설정 필요
-        if(item != null){
-            item.itemID = itemID;
-            item.transform.position = new Vector3(0, 0, 0);
-            item.transform.rotation = Quaternion.identity;
-            item.transform.localScale = new Vector3(1, 1, 1);
-            item.gameObject.SetActive(true);
+    //     // 추후 위치에 대한 값들이 결정되었을 경우 위치 설정 필요
+    //     if(item != null){
+    //         item.itemID = itemID;
+    //         item.transform.position = new Vector3(0, 0, 0);
+    //         item.transform.rotation = Quaternion.identity;
+    //         item.transform.localScale = new Vector3(1, 1, 1);
+    //         item.gameObject.SetActive(true);
 
-            // 아이템 데이터 설정
-            setItemData(item);
+    //         // 아이템 데이터 설정
+    //         setItemData(item);
 
-            // 리스트에 추가
-            items.Add(item);
-        }else{
-            Debug.LogError("BaseItem을 찾을 수 없습니다.");
-        }
+    //         // 리스트에 추가
+    //         items.Add(item);
+    //     }else{
+    //         Debug.LogError("BaseItem을 찾을 수 없습니다.");
+    //     }
 
-    }
+    // }
 
     /// <summary>
     /// 아이템 제거 함수
