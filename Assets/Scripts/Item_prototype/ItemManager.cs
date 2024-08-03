@@ -5,6 +5,10 @@ using Newtonsoft.Json;
 
 /// <summary>
 /// 아이템을 관리하는 클래스
+/// 
+/// <para>
+/// author: Argonaut
+/// </para>
 /// </summary>
 public class ItemManager : MonoBehaviour
 {

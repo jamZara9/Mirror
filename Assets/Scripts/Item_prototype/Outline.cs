@@ -2,42 +2,58 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 아웃라인 클래스
+/// 
+/// <para>
+/// author  : Argonaut
+/// </para>
+/// </summary>
 public class Outline : MonoBehaviour
 {
-    [SerializeField] private List<Material> materialList = new List<Material>();
+    [SerializeField] private List<MeshRenderer> meshRenderers = new();            // Material 리스트
     [SerializeField] private Material outlineMaterial; 
-
-    private MeshRenderer meshRenderer;                      // MeshRenderer 참조
-    private int outlineIndex = -1;                           // 아웃라인 Material의 인덱스
-
-    public bool isOutlineOn = false;                         // 아웃라인 활성화 여부
 
     void Start()
     {
-        meshRenderer = GetComponent<MeshRenderer>();
+        // 자식 오브젝가 존재한다면 자식 오브젝트의 MeshRenderer/Material을 가져와서 materialList에 추가
+        if (transform.childCount > 0){
+            foreach (Transform child in transform){
+                if (child.TryGetComponent<MeshRenderer>(out var childMeshRenderer)){
+                    // 자식의 MeshRender에 outlineMaterial을 추가
+                    List<Material> materials = new List<Material>(childMeshRenderer.materials)
+                    {
+                        outlineMaterial
+                    };
+                    
+                    childMeshRenderer.materials = materials.ToArray();
 
-        // materialList 초기화
-        if (meshRenderer != null && meshRenderer.material != null){
-            materialList.Add(meshRenderer.material);
+                    // 자식의 MeshRender를 meshRenderers에 추가
+                    meshRenderers.Add(childMeshRenderer);
+
+                    // 초기에는 아웃라인을 끄고 시작
+                    childMeshRenderer.materials[materials.Count - 1].SetFloat("_Outline_On", 0f);
+                }
+            }
+        }else{  // 자식 오브젝트가 없다면 자신의 MeshRenderer/Material을 가져와서 materialList에 추가
+            if (TryGetComponent<MeshRenderer>(out var meshRenderer)){
+                List<Material> materials = new List<Material>(meshRenderer.materials)
+                {
+                    outlineMaterial
+                };
+                
+                meshRenderer.materials = materials.ToArray();
+                meshRenderers.Add(meshRenderer);
+                meshRenderer.materials[materials.Count - 1].SetFloat("_Outline_On", 0f);
+            }
         }
+    }    
 
-        // outlineMaterial이 null이 아니면 materialList에 추가
-        if (outlineMaterial != null){
-            materialList.Add(outlineMaterial);
-            outlineIndex = materialList.Count - 1;
+    public void SetOutline(bool state){
+        foreach (var meshRenderer in meshRenderers){
+            // meshRenderer.materials[meshRenderer.materials.Length - 1].SetFloat("_Outline_On", state ? 1f : 0f);
+            meshRenderer.materials[^1].SetFloat("_Outline_On", state ? 1f : 0f);
         }
-
-        // meshRenderer의 materials 속성에 materialList 할당
-        if (materialList.Count > 0){
-            meshRenderer.materials = materialList.ToArray();
-        }
-
-        // 아웃라인의 material의 _Outline_On 속성을 0으로 초기화
-        meshRenderer.materials[outlineIndex].SetFloat("_Outline_On", 0f);
-    }
-
-    void Update(){
-        meshRenderer.materials[outlineIndex].SetFloat("_Outline_On", isOutlineOn ? 1f : 0f);
     }
 
 }
