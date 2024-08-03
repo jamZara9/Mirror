@@ -306,6 +306,8 @@ MonoBehaviour:
     description: 
     count: 0
     invenSpace: 0
+    inventoryIndex: 0
+    quickSlotIndex: 0
   impactVFX: {fileID: 0}
   impactVFXLifeTime: 0
   particlePos: {fileID: 0}

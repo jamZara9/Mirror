@@ -7,6 +7,13 @@ using UnityEngine.InputSystem;
 using TMPro;
 using UnityEngine.UI;
 
+/// <summary>
+/// 카메라 컨트롤러 클래스
+/// 
+/// <para>
+/// author: Argonaut
+/// </para>
+/// </summary>
 public class CameraController : MonoBehaviour
 {
 
@@ -42,7 +49,6 @@ public class CameraController : MonoBehaviour
             Cursor.lockState = CursorLockMode.Confined;   // 마우스 커서 해제
         }
     }
-
     private void CheckForItem(){
 
         // Raycast를 통해 마우스 위치에 아이템이 있는지 확인 [ 필요에 따라서 카메라 위치로 변경 ]
@@ -60,7 +66,8 @@ public class CameraController : MonoBehaviour
                 objectNameText.text += " [F]";
 
                 detectedItem.GetComponent<BaseItem>().isPickable = true;   // 아이템을 획득 가능하도록 설정
-                detectedItem.GetComponent<Outline>().isOutlineOn = true;   // 아웃라인 활성화
+                // detectedItem.GetComponent<Outline>().isOutlineOn = true;   // 아웃라인 활성화
+                detectedItem.GetComponent<Outline>().SetOutline(true);     // 아웃라인 활성화
             }else{
                 ResetDetectedItem();
             }
@@ -79,7 +86,8 @@ public class CameraController : MonoBehaviour
 
         // MainGameManager 업데이트
         if (detectedItem != null){
-            detectedItem.GetComponent<Outline>().isOutlineOn = false;
+            // detectedItem.GetComponent<Outline>().isOutlineOn = false;
+            detectedItem.GetComponent<Outline>().SetOutline(false);
             detectedItem.GetComponent<BaseItem>().isPickable = false;
             detectedItem = null;
         }
@@ -97,6 +105,10 @@ public class CameraController : MonoBehaviour
         lookAction.Disable();
     }
 
+    /// <summary>
+    /// 커서 상태를 설정하는 함수
+    /// </summary>
+    /// <param name="state"></param>
     public void SetCursorState(bool state){
         // Debug.Log("Cursor State: " + state);
         Cursor.visible = state;
