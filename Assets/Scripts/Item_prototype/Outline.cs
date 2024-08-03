@@ -49,6 +49,10 @@ public class Outline : MonoBehaviour
         }
     }    
 
+    /// <summary>
+    /// 아웃라인 on/off
+    /// </summary>
+    /// <param name="state">on/off 기능 추가</param>
     public void SetOutline(bool state){
         foreach (var meshRenderer in meshRenderers){
             // meshRenderer.materials[meshRenderer.materials.Length - 1].SetFloat("_Outline_On", state ? 1f : 0f);
