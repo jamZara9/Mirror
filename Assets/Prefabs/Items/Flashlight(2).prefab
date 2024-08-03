@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 0e73182ee7268ea438d8d0af3eeb57ed, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.03
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0e73182ee7268ea438d8d0af3eeb57ed, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.03
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0e73182ee7268ea438d8d0af3eeb57ed, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.03
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0e73182ee7268ea438d8d0af3eeb57ed, type: 3}
       propertyPath: m_LocalPosition.x
@@ -26,7 +26,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0e73182ee7268ea438d8d0af3eeb57ed, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.438
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0e73182ee7268ea438d8d0af3eeb57ed, type: 3}
       propertyPath: m_LocalPosition.z
@@ -68,8 +68,92 @@ PrefabInstance:
       propertyPath: m_Name
       value: Flashlight(2)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0e73182ee7268ea438d8d0af3eeb57ed, type: 3}
+      propertyPath: m_TagString
+      value: Item
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0e73182ee7268ea438d8d0af3eeb57ed, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4701897109606419217}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0e73182ee7268ea438d8d0af3eeb57ed, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5776363541053999103}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0e73182ee7268ea438d8d0af3eeb57ed, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2974200621758313090}
   m_SourcePrefab: {fileID: 100100000, guid: 0e73182ee7268ea438d8d0af3eeb57ed, type: 3}
+--- !u!1 &996797148614654232 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 0e73182ee7268ea438d8d0af3eeb57ed, type: 3}
+  m_PrefabInstance: {fileID: 77753512292861001}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4701897109606419217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996797148614654232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfe5f538618de974083ba6a7246699c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshRenderers: []
+  outlineMaterial: {fileID: 2100000, guid: 06df2334372858f40bc2b16ab7f485ce, type: 2}
+--- !u!114 &5776363541053999103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996797148614654232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0db3aa10732681a45b3715d84733549d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemID: Item005
+  itemData:
+    name: 
+    iconPath: 
+    type: 0
+    description: 
+    count: 0
+    invenSpace: 0
+    inventoryIndex: 0
+    quickSlotIndex: 0
+  impactVFX: {fileID: 0}
+  impactVFXLifeTime: 0
+  particlePos: {fileID: 0}
+  icon: {fileID: 0}
+  isActive: 0
+  isUsable: 0
+  isPickable: 0
+  pickupArea: 
+  effectType: 0
+--- !u!65 &2974200621758313090
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996797148614654232}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.1, y: 0.55, z: 0.55}
+  m_Center: {x: 0, y: 0, z: 0}

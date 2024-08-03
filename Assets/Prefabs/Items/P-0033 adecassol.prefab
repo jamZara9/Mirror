@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 2301432848667946146}
   - component: {fileID: 7340924520576233632}
   - component: {fileID: 6912396042340879186}
+  - component: {fileID: 6249510254116669150}
   m_Layer: 0
   m_Name: P-0033 adecassol
   m_TagString: Item
@@ -111,7 +112,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.6695884, z: -0, w: 0.7427324}
   m_LocalPosition: {x: 2.141, y: 1.444, z: 4.371}
-  m_LocalScale: {x: 0.03, y: 0.03, z: 0.03}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8647172658599665080}
@@ -140,9 +141,12 @@ MonoBehaviour:
     description: 
     count: 0
     invenSpace: 0
+    inventoryIndex: 0
+    quickSlotIndex: 0
   impactVFX: {fileID: 0}
   impactVFXLifeTime: 0
   particlePos: {fileID: 0}
+  icon: {fileID: 0}
   isActive: 0
   isUsable: 0
   isPickable: 0
@@ -167,8 +171,22 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3, y: 2, z: 6}
-  m_Center: {x: 1, y: 1, z: -0.08}
+  m_Size: {x: 3, y: 2, z: 6.8}
+  m_Center: {x: 1, y: 1, z: -0.2}
+--- !u!114 &6249510254116669150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1493933214391399960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfe5f538618de974083ba6a7246699c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshRenderers: []
+  outlineMaterial: {fileID: 2100000, guid: 06df2334372858f40bc2b16ab7f485ce, type: 2}
 --- !u!1 &5829115353260266905
 GameObject:
   m_ObjectHideFlags: 0
