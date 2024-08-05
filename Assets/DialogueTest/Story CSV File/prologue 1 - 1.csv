@@ -4,6 +4,7 @@ Narration,장마철이라 그런지` 날씨가 오락가락 한다.,WhiteBogdo,,
 Wak,차라리 비라도 시원하게 오던가…,,,1,Wak,Appear,0,-250,0,,,,
 Narration,교실 한 쪽에서 떠드는 목소리가 들려온다.,,TempClip1,,Wak,Scale,,,,,800,900,5
 Wak,그 삼총사인가.,,,1,Wak,Change,1,,,,,,
+,,,,,Wak,Scale,,,,,100,100,1
 ,,,,,Wak,Move,,100,50,3,,,
 Gwon,니들 그거 알어? 별관 턍고의 뎐설...,RedBogdo,,2,Gwon,Appear,0,100,0,,,,
 ,,,,,Gwon,Scale,,,,,600,700,4

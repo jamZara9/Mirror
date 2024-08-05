@@ -12,14 +12,19 @@ public class MovableDialogueManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI speakerNameText;
     [SerializeField] private TextMeshProUGUI sentenceText;
 
+    // 다음 문장으로 넘어가는 기본 딜레이 시간.
     [SerializeField] private float defaultDelay = 1.25f;
     
     private int _sentenceIndex = 0;
     
+    // CSV 파일의 항목별 인덱스 값 저장.
     private const int _CSV_SPEAKER_INDEX = 0;
     private const int _CSV_TEXT_INDEX = 1;
     private const int _CSV_NEXTDELAY_INDEX = 4;
-
+    
+    /// <summary>
+    /// 한 스토리를 시작하는 함수.
+    /// </summary>
     public void PlayScene()
     {
         _sentenceIndex = 0;
@@ -27,6 +32,10 @@ public class MovableDialogueManager : MonoBehaviour
         StartCoroutine(PlayNextSentence());
     }
     
+    /// <summary>
+    /// 각 스토리의 CSV 파일에 맞게 데이터를 파싱하는 함수. 
+    /// </summary>
+    /// /// <param name="scene">파싱할 StoryScene 스크립터블 오브젝트</param>
     public void ParseCSVFile(StoryScene scene)
     {
         _currentMovableStoryScene = scene;
@@ -61,6 +70,10 @@ public class MovableDialogueManager : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// 다음 문장으로 넘어가는 로직 처리 함수.
+    /// </summary>
+    /// <returns></returns>
     IEnumerator PlayNextSentence()
     {
         speakerNameText.text = _currentMovableStoryScene.sentences[_sentenceIndex].speaker.speakerName;
@@ -80,6 +93,9 @@ public class MovableDialogueManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    ///  한 스토리가 끝났을 때의 처리를 담당하는 함수.
+    /// </summary>
     void EndScene()
     {
         StopAllCoroutines();
