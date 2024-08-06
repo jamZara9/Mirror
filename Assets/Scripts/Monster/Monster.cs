@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Monster : MonoBehaviour,IDamage
+public class Monster : MonoBehaviour,IMonster
 {
     private Vector3 _startPosition;
     [SerializeField] 
@@ -131,7 +131,7 @@ public class Monster : MonoBehaviour,IDamage
         isWait = false;
     }
     
-    void Idle()
+    public void Idle()
     {
         
         if (isMovingMonster && _navMeshA.remainingDistance <= _navMeshA.stoppingDistance)
@@ -170,7 +170,7 @@ public class Monster : MonoBehaviour,IDamage
 
     }
 
-    void Move()
+    public void Move()
     {
         float SearchDistance = _isDamaged ? ViewRadius * 3 : ViewRadius * 2;
         if (Vector3.Distance(_player.position, transform.position) > SearchDistance)
@@ -192,7 +192,7 @@ public class Monster : MonoBehaviour,IDamage
         }
     }
 
-    void Attack()
+    public void Attack()
     {
         if (Vector3.Distance(_player.position, transform.position) < attackDistance)
         {
@@ -241,7 +241,7 @@ public class Monster : MonoBehaviour,IDamage
         m_State = MonsterState.Move;
     }
 
-    void Die()
+    public void Die()
     {
         gameObject.SetActive(false);
     }
