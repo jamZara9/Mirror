@@ -72,6 +72,7 @@ public class MonsterStudent : MonoBehaviour,IMonster
         directionCache[2] = AngleToDir(transform.eulerAngles.y);
         //---------------------------------------------------------------------
         _navMeshA = GetComponent<NavMeshAgent>();
+        _navMeshA.speed = moveSpeed;
         _startPosition = transform.position;
         _navMeshA.SetDestination(moveDirectionList[_moveDirectionIndex++]);
         m_State = MonsterState.Idle;
