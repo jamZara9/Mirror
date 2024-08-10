@@ -8,19 +8,23 @@ public class MonsterMirror : MonoBehaviour,IMonster
 {
     private Vector3 _startPosition;
     [SerializeField] 
-    private float monsterHp = 20f;
+    private float monsterHp = 20f;//체력
     private bool _isDamaged = false;
     [SerializeField] 
-    private float attackDistance = 2f;
+    private float attackDistance = 2f;//공격 범위
     [SerializeField]
-    private float moveSpeed = 8f;
+    private float moveSpeed = 8f;//움직이는 속도
 
     private float _currentTime = 0f;
     [SerializeField] 
-    private float attackDelay = 2f;
+    private float attackDelay = 2f;//공격 딜레이 시간
     [SerializeField] 
-    private float attackPower = 5f;
+    private float attackPower = 5f;//플레이어를 공격할때 데미지
     private Transform _player;
+    public GameObject mirror;
+
+    [SerializeField]
+    private bool _isMirrorAttack = false;
 
 
     private Animator a_nim;
@@ -31,9 +35,9 @@ public class MonsterMirror : MonoBehaviour,IMonster
 
     MonsterState m_State;
 
-    [SerializeField] private bool isMovingMonster = true;
-    [SerializeField] private List<Vector3> moveDirectionList;
-    [SerializeField] private List<float> moveDirectionDelayList;
+    [SerializeField] private bool isMovingMonster = true;//움직이게 할 것인지
+    [SerializeField] private List<Vector3> moveDirectionList;//몬스터 탐색 루트를 지정함
+    [SerializeField] private List<float> moveDirectionDelayList;//각 루트당 몇초 기다릴지 지정함
     private bool isWait = false;
     private int _moveDirectionIndex = 0;
     
@@ -44,10 +48,10 @@ public class MonsterMirror : MonoBehaviour,IMonster
     
     //-----------------------------------------
     
-    [SerializeField] private bool DebugMode = false;
-    [Range(0f, 360f)] [SerializeField] private float ViewAngle = 0f;
-    [SerializeField] private float ViewRadius = 2f;
-    [SerializeField] private LayerMask TargetMask;
+    [SerializeField] private bool DebugMode = false;// 인지 범위를 보이게 할지 
+    [Range(0f, 360f)] [SerializeField] private float ViewAngle = 0f;//시야각
+    [SerializeField] private float ViewRadius = 2f;//탐색 범위
+    [SerializeField] private LayerMask TargetMask;//타겟 지정
     [SerializeField] LayerMask ObstacleMask;
 
     private readonly List<Collider> hitTargetList = new List<Collider>();
@@ -100,6 +104,7 @@ public class MonsterMirror : MonoBehaviour,IMonster
     // Update is called once per frame
     void Update()
     {
+        mirror.SetActive(!_isMirrorAttack);
         switch (m_State)
         {
             case MonsterState.Damaged:
@@ -199,14 +204,21 @@ public class MonsterMirror : MonoBehaviour,IMonster
             _currentTime += Time.deltaTime;
             if (_currentTime > attackDelay)
             {
-                int randValue = Random.Range(0, 10);
-                if (randValue < 5) //50%로 방향을 구함
+                if (!_isMirrorAttack)
                 {
-                    Debug.Log("공격");    
+                    MirrorAttack();
                 }
                 else
                 {
-                    Debug.Log("깨물기 공격");
+                    int randValue = Random.Range(0, 10);
+                    if (randValue < 5) //50%로 방향을 구함
+                    {
+                        Debug.Log("공격");    
+                    }
+                    else
+                    {
+                        Debug.Log("깨물기 공격");
+                    }
                 }
                 _currentTime = 0;
             }
@@ -233,6 +245,12 @@ public class MonsterMirror : MonoBehaviour,IMonster
             _isDamaged = true;
             StartCoroutine(WaitDamage());
         }
+    }
+
+    void MirrorAttack()
+    {
+        Debug.Log("거울 공격");
+        _isMirrorAttack = true;
     }
 
     IEnumerator WaitDamage()
