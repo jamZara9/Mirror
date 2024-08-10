@@ -125,11 +125,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterHp: 20
   attackDistance: 2
-  moveSpeed: 8
+  moveSpeed: 4
   attackDelay: 2
   attackPower: 5
-  mirror: {fileID: 7204858600453076654}
-  _isMirrorAttack: 0
   isMovingMonster: 1
   moveDirectionList:
   - {x: 0, y: 1, z: 20}
@@ -146,6 +144,8 @@ MonoBehaviour:
   ObstacleMask:
     serializedVersion: 2
     m_Bits: 0
+  Mirror: {fileID: 7204858600453076654}
+  isMirrorAttacked: 0
 --- !u!54 &1280834569873104485
 Rigidbody:
   m_ObjectHideFlags: 0

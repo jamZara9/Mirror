@@ -21,7 +21,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &995392319121594365
 Transform:
   m_ObjectHideFlags: 0
@@ -35,7 +35,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2263703320225962659}
+  - {fileID: 8744175686957158422}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &733308204823880756
@@ -128,8 +128,7 @@ MonoBehaviour:
   moveSpeed: 3
   attackDelay: 2
   attackPower: 5
-  arrive: 0
-  isMovingMonster: 1
+  isMovingMonster: 0
   moveDirectionList:
   - {x: 0, y: 1, z: 20}
   - {x: 0, y: 1, z: 10}
@@ -200,7 +199,7 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!1001 &1792700178366315848
+--- !u!1001 &9138705278165661693
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -273,8 +272,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f1f39ddb4b749746af1c0807a4a6a81, type: 3}
---- !u!4 &2263703320225962659 stripped
+--- !u!4 &8744175686957158422 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1f1f39ddb4b749746af1c0807a4a6a81, type: 3}
-  m_PrefabInstance: {fileID: 1792700178366315848}
+  m_PrefabInstance: {fileID: 9138705278165661693}
   m_PrefabAsset: {fileID: 0}
