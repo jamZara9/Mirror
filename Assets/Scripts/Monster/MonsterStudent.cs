@@ -7,40 +7,40 @@ using UnityEngine.AI;
 public class MonsterStudent : MonoBehaviour,IDamage
 {
     //   기본 상태값
-    private Vector3 _startPosition;     // 거울사제2(몬스터)의 시작 위치
+    private Vector3 _startPosition;     // 학생(몬스터)의 시작 위치
     [SerializeField] 
-    private float monsterHp = 20f;      // 거울사제2(몬스터)의 체력
-    private bool _isDamaged = false;        // 거울사제2(몬스터)의 피격확인용 변수
+    private float monsterHp = 20f;      // 학생(몬스터)의 체력
+    private bool _isDamaged = false;        // 학생(몬스터)의 피격확인용 변수
     [SerializeField] 
-    private float attackDistance = 2f;      // 거울사제2(몬스터)의 공격범위
+    private float attackDistance = 2f;      // 학생(몬스터)의 공격범위
     [SerializeField]
-    private float moveSpeed = 8f;       // 거울사제2(몬스터)의 이동속도
+    private float moveSpeed = 8f;       // 학생(몬스터)의 이동속도
     [SerializeField] 
-    private float attackDelay = 2f;     // 거울사제2(몬스터)의 공격 딜레이
+    private float attackDelay = 2f;     // 학생(몬스터)의 공격 딜레이
     [SerializeField] 
-    private float attackPower = 5f;     // 거울사제2(몬스터)의 공격력
-    private float _currentTime = 0f;    // 거울사제2(몬스터)의 현재 공격시간 currentTime이 Delay보다 커진다면 공격 진행
+    private float attackPower = 5f;     // 학생(몬스터)의 공격력
+    private float _currentTime = 0f;    // 학생(몬스터)의 현재 공격시간 currentTime이 Delay보다 커진다면 공격 진행
     
     private Transform _player;          // 플레이어의 위치 값 받아오는 용도
-    private Animator _animator;         // 거울사제2(몬스터)의 애니메이터
-    private NavMeshAgent _navMeshA;     // 거울사제2(몬스터)의 네비매쉬매니저
+    private Animator _animator;         // 학생(몬스터)의 애니메이터
+    private NavMeshAgent _navMeshA;     // 학생(몬스터)의 네비매쉬매니저
     
     private Vector3 _randomPosition;
     private Vector3 _distance;
     
 
-    MonsterState m_State;               // 거울사제2(몬스터)의 현재 상태
+    MonsterState m_State;               // 학생(몬스터)의 현재 상태
 
-    [SerializeField] private bool isMovingMonster = true;               // 거울사제2(몬스터)가 움직일지 여부
-    [SerializeField] private List<Vector3> moveDirectionList;           // 거울사제2(몬스터)의 탐색 경로 지정리스트
-    [SerializeField] private List<float> moveDirectionDelayList;        // 거울사제2(몬스터)각 경로에서 몇초 동안 멈출지 지정리스트
-    private bool _isWait = false;                                       // 거울사제2(몬스터) 지금 대기중인지 확인용 변수
-    private int _moveDirectionIndex = 0;                                // 거울사제2(몬스터)현재 경로 인덱스
-    [SerializeField] private bool DebugMode = false;                    // 거울사제2(몬스터)의 탐색범위 가시화 할지 여부
-    [Range(0f, 360f)] [SerializeField] private float ViewAngle = 0f;    // 거울사제2(몬스터)의 탐색범위(시야각)
-    [SerializeField] private float ViewRadius = 2f;                     // 거울사제2(몬스터)의 탐색범위(반지름)
-    [SerializeField] private LayerMask TargetMask;                      // 거울사제2(몬스터)의 탐색대상 레이어
-    [SerializeField] LayerMask ObstacleMask;                            // 거울사제2(몬스터)의 탐색대상 레이어2
+    [SerializeField] private bool isMovingMonster = true;               // 학생(몬스터)가 움직일지 여부
+    [SerializeField] private List<Vector3> moveDirectionList;           // 학생(몬스터)의 탐색 경로 지정리스트
+    [SerializeField] private List<float> moveDirectionDelayList;        // 학생(몬스터)각 경로에서 몇초 동안 멈출지 지정리스트
+    private bool _isWait = false;                                       // 학생(몬스터) 지금 대기중인지 확인용 변수
+    private int _moveDirectionIndex = 0;                                // 학생(몬스터)현재 경로 인덱스
+    [SerializeField] private bool DebugMode = false;                    // 학생(몬스터)의 탐색범위 가시화 할지 여부
+    [Range(0f, 360f)] [SerializeField] private float ViewAngle = 0f;    // 학생(몬스터)의 탐색범위(시야각)
+    [SerializeField] private float ViewRadius = 2f;                     // 학생(몬스터)의 탐색범위(반지름)
+    [SerializeField] private LayerMask TargetMask;                      // 학생(몬스터)의 탐색대상 레이어
+    [SerializeField] LayerMask ObstacleMask;                            // 학생(몬스터)의 탐색대상 레이어2
 
     private readonly List<Collider> _hitTargetList = new List<Collider>();// 탐지한 오브젝트 담을 리스트
     private readonly Vector3[] _directionCache = new Vector3[3];        // 지즈모 그릴 방향
@@ -118,7 +118,7 @@ public class MonsterStudent : MonoBehaviour,IDamage
     }
 
    
-    IEnumerator WaitIdle(int index) //      거울사제2(몬스터)가 각 루트끝에 몇 초 동안 대기하고 다음 루트를 지정하는 함수
+    IEnumerator WaitIdle(int index) //      학생(몬스터)가 각 루트끝에 몇 초 동안 대기하고 다음 루트를 지정하는 함수
     {
         _isWait = true; //  기다림 시작
         _animator.SetTrigger("toIdle"); //                          애니메이션 변경
@@ -129,7 +129,7 @@ public class MonsterStudent : MonoBehaviour,IDamage
         _isWait = false; // 기다림 끝
     }
     
-    public void Idle()  //  거울사제2(몬스터) 탐색
+    void Idle()  //  학생(몬스터) 탐색
     {
         if (isMovingMonster && _navMeshA.remainingDistance <= _navMeshA.stoppingDistance) // 몬스터의 거리가 목적지와 가깝다면
         {
@@ -159,7 +159,7 @@ public class MonsterStudent : MonoBehaviour,IDamage
                 if (EnemyColli.gameObject.CompareTag("Player"))//   만약 레이를 맞은 오브젝트가 플레이어라면
                 {
                     _animator.SetTrigger("toWork");     //      애니메이션 변경
-                    m_State = MonsterState.Move;    //              거울사제2(몬스터)의 상태를 Move로 변경
+                    m_State = MonsterState.Move;    //              학생(몬스터)의 상태를 Move로 변경
                 }
                 if (DebugMode) Debug.DrawLine(myPos, targetPos, Color.red); //  레이를 시각화 함
             }
@@ -167,11 +167,11 @@ public class MonsterStudent : MonoBehaviour,IDamage
 
     }
 
-    public void Move()  //  거울사제2(몬스터)추격
+    void Move()  //  학생(몬스터)추격
     {
         float SearchDistance = _isDamaged ? ViewRadius * 3 : ViewRadius * 2; 
-        // 거울사제2(몬스터)가 Damage로 Move가 됬는지 Idle에서 Move로 됬는지 만약 Damage라면 추격 범위가 탐색범위 * 3 아니면 탐색범위 * 2
-        if (Vector3.Distance(_player.position, transform.position) > SearchDistance) // 플레이어와 거울사제2(몬스터)의 거리가 탐색범위 보다 길다면
+        // 학생(몬스터)가 Damage로 Move가 됬는지 Idle에서 Move로 됬는지 만약 Damage라면 추격 범위가 탐색범위 * 3 아니면 탐색범위 * 2
+        if (Vector3.Distance(_player.position, transform.position) > SearchDistance) // 플레이어와 학생(몬스터)의 거리가 탐색범위 보다 길다면
         {
             Debug.Log("d?" + SearchDistance);
             _navMeshA.SetDestination(_startPosition); // 시작 위치로 돌아감
@@ -185,14 +185,14 @@ public class MonsterStudent : MonoBehaviour,IDamage
             _navMeshA.destination = _player.position;   // 추격함 
         }
         else
-        {   // 만약 플레이어와 거울사제2(몬스터)의 거리가 공격 범위보다 가깝다면 
-            m_State = MonsterState.Attack;// 거울사제2(몬스터)의 상태를 Attak으로 변경
+        {   // 만약 플레이어와 학생(몬스터)의 거리가 공격 범위보다 가깝다면 
+            m_State = MonsterState.Attack;// 학생(몬스터)의 상태를 Attak으로 변경
             _currentTime = attackDelay; // 처음 1회 공격 바로 시전
         }
     }
 
-    public void Attack()        //  거울사제2(몬스터)의 플레이어 공격
-    {                           //  만약 플레이어와 거울사제2(몬스터)의 거리가 공격 범위 내라면
+    void Attack()        //  학생(몬스터)의 플레이어 공격
+    {                           //  만약 플레이어와 학생(몬스터)의 거리가 공격 범위 내라면
         if (Vector3.Distance(_player.position, transform.position) < attackDistance)
         {                       //  currentTime 카운트 시작
             _currentTime += Time.deltaTime;
@@ -211,25 +211,25 @@ public class MonsterStudent : MonoBehaviour,IDamage
             }
         }
         else
-        {               //  플레이어와 거울사제2(몬스터)의 거리가 공격 범위 보다 멀다면
-            m_State = MonsterState.Move;    // 거울사제2(몬스터)의 상태를 Move로 변경
+        {               //  플레이어와 학생(몬스터)의 거리가 공격 범위 보다 멀다면
+            m_State = MonsterState.Move;    // 학생(몬스터)의 상태를 Move로 변경
             _currentTime = 0;   // currentTime 초기화
         }
     }
 
-    public void Damage()    //  거울사제2(몬스터)의 피격
+    public void Damage()    //  학생(몬스터)의 피격
     {
         Debug.Log("우와 이게 뭐야");
     }
 
-    public void HitedMonster(int hitPower)  //  거울사제2(몬스터)의 체력을 뺴는 함수
+    public void HitedMonster(int hitPower)  //  학생(몬스터)의 체력을 뺴는 함수
     {
         if (m_State == MonsterState.Damaged || m_State == MonsterState.Die) return; 
         if (monsterHp > 0)  
             //                                  체력이 0 or 죽은 상태가 아니라면
         {
-            monsterHp -= hitPower;  // 거울사제2(몬스터)의 체력을 뺌
-            m_State = MonsterState.Damaged;// 거울사제2(몬스터)의 상태를 Damaged 변경
+            monsterHp -= hitPower;  // 학생(몬스터)의 체력을 뺌
+            m_State = MonsterState.Damaged;// 학생(몬스터)의 상태를 Damaged 변경
             _isDamaged = true;             //피격 상태 
             StartCoroutine(WaitDamage());// WaitDamage 함수 호출
         }
@@ -237,11 +237,12 @@ public class MonsterStudent : MonoBehaviour,IDamage
 
     IEnumerator WaitDamage()        // 피격 되는 시간동안 움직이지 못하게 하는 함수
     {
+        
         yield return new WaitForSeconds(1f);//  1초동안 대기함
-        m_State = MonsterState.Move;        //  거울사제2(몬스터)의 상태를 Move 변경
+        m_State = MonsterState.Move;        //  학생(몬스터)의 상태를 Move 변경
     }
 
-    public void Die()   // 거울사제2(몬스터)를 죽음처리(없앰)함
+    void Die()   // 학생(몬스터)를 죽음처리(없앰)함
     {
         gameObject.SetActive(false);
     }
