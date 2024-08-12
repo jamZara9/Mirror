@@ -11,6 +11,10 @@ public class BackGroundController : MonoBehaviour
     public Image backGround2;
     public Animator anim;
 
+    /// <summary>
+    /// 배경 이미지 변경 (애니메이션 O)
+    /// </summary>
+    /// <param name="sprite">바뀔 이미지</param>
     public void SwitchImage(Sprite sprite)
     {
         if (!isSwitched)
@@ -27,6 +31,10 @@ public class BackGroundController : MonoBehaviour
         isSwitched = !isSwitched;
     }
     
+    /// <summary>
+    /// 배경 이미지 세팅 (애니메이션 X)
+    /// </summary>
+    /// <param name="sprite">바뀔 이미지</param>
     public void SetImage(Sprite sprite)
     {
         if (!isSwitched)

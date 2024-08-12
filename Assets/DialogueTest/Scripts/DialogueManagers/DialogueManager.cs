@@ -21,20 +21,23 @@ public class DialogueManager : MonoBehaviour
 
     public float typeDelay = 0.05f;
 
+    // 스프라이트별 오브젝트 및 컨트롤러 저장
     private Dictionary<Speaker, SpriteController> _sprites;
     public GameObject spritesPrefab;
 
+    // 메인 BGM 및 사운드 이펙트 AudioSource.
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioSource sentenceAudioSource;
-    [SerializeField] private AudioSource typeAudioSource;
 
     [SerializeField] private Speaker narrationSpeaker;
 
     private bool _isDelayFinish = true;
 
+    // CSV 파일 작성 편의를 위한 임시 저장 변수.
     private Speaker _lastSpeaker = null;
     private Sprite _lastBackground = null;
 
+    // CSV 파일의 항목별 인덱스 값 저장.
     private const int _CSV_SPEAKER_INDEX = 0;
     private const int _CSV_TEXT_INDEX = 1;
     private const int _CSV_BACKGROUND_INDEX = 2;
@@ -51,31 +54,37 @@ public class DialogueManager : MonoBehaviour
     private const int _CSV_ACTION_SCALE_HEIGHT_INDEX = 12;
     private const int _CSV_ACTION_SCALE_SPEED_INDEX = 13;
 
+    // 타이핑 상태 열거.
     private enum State
     {
+        // 타이핑 중, 타이핑 끝.
         Playing, Completed
     }
     private State _state = State.Completed;
-
+    
     void Awake()
     {
+        // 딕셔너리 초기화.
         _sprites = new Dictionary<Speaker, SpriteController>();
     }
 
     /// <summary>
-    /// 한 스토리를 시작하는 함수 
+    /// 한 스토리를 시작하는 함수.
     /// </summary>
     public void PlayScene()
     {
         _sentenceIndex = -1;
         
         audioSource.clip = currentScene.backgroundMusic;
-        Debug.Log(audioSource.clip);
         audioSource.Play();
 
         PlayNextSentence();
     }
 
+    /// <summary>
+    /// 각 스토리의 CSV 파일에 맞게 데이터를 파싱하는 함수. 
+    /// </summary>
+    /// <param name="scene">파싱할 StoryScene 스크립터블 오브젝트</param>
     public void ParseCSVFile(StoryScene scene)
     {
         currentScene = scene;
@@ -130,7 +139,6 @@ public class DialogueManager : MonoBehaviour
             StoryScene.Sentence.Action action = new StoryScene.Sentence.Action();
             if (row[_CSV_ACTION_INDEX] != "")
             {
-                Debug.Log("cnt : " + ++cnt);
                 action.speaker = Resources.Load<Speaker>("Speaker/" + row[_CSV_ACTION_INDEX].Trim());
 
                 int xPos = 0;
@@ -204,6 +212,10 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 다음 문장으로 넘어가기 위한 딜레이를 시작하는 함수.
+    /// </summary>
+    /// <param name="delay">문장별 딜레이 시간</param>
     IEnumerator DelayNextSentence(float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -211,18 +223,25 @@ public class DialogueManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 비주얼 노벨 화면에서 다음 문장으로 넘어갈 준비가 된 상태 여부를 반환하는 함수 
+    /// 다음 문장으로 넘어갈 준비가 된 상태 여부를 반환하는 함수 
     /// </summary>
     public bool IsCompleted()
     {
         return _isDelayFinish && _state == State.Completed;
     }
 
+    
+    /// <summary>
+    /// 현재 문장이 해당 스토리의 마지막 문장인지 참거짓을 반환하는 함수.
+    /// </summary>
     public bool IsLastSentence()
     {
         return _sentenceIndex + 1 ==  currentScene.sentences.Count;
     }
-
+    
+    /// <summary>
+    /// 다음 문장을 실행시키는 함수.
+    /// </summary>
     public void PlayNextSentence()
     {
         _isDelayFinish = false;
@@ -246,6 +265,10 @@ public class DialogueManager : MonoBehaviour
         ActSpeakers();
     }
     
+    /// <summary>
+    /// 대사를 한 글자씩 입력하는 함수.
+    /// </summary>
+    /// <param name="text">CSV의 대사 문자열</param>
     IEnumerator TypeText(string text)
     {
         dialogueText.text = "";
@@ -266,10 +289,15 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 각 문장별 액션 리스트를 처리하는 함수.
+    /// </summary>
     void ActSpeakers()
     {
         Speaker currentSpeaker = currentScene.sentences[_sentenceIndex].speaker;
         
+        // 기본 연출.
+        // 현재 문장을 말하는 스프라이트 밝게, 나머지 모든 스프라이트 어둡게 함. 
         foreach (var sprite in _sprites)
         {
             if (currentSpeaker != sprite.Key && currentSpeaker != narrationSpeaker)
@@ -291,6 +319,10 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 각 스프라이트의 액션을 실행시키는 함수.
+    /// </summary>
+    /// <param name="action">StoryScene.Sentence.Action 타입</param>
     void ActSpeaker(StoryScene.Sentence.Action action)
     {
         SpriteController controller = null;
@@ -379,6 +411,9 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    ///  한 스토리가 끝났을 때의 처리를 담당하는 함수.
+    /// </summary>
     public void EndScene()
     {
         StoryEventManager.Instance.PlayStoryEvent();
