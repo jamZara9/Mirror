@@ -127,6 +127,12 @@ public class MovableDialogueManager : MonoBehaviour
     {
         // 모든 코루틴 멈춤.
         StopAllCoroutines();
+        
+        // 필수 스토리면 스토리 이벤트 시작.
+        if (_currentMovableStoryScene.isMainStory)
+        {
+            StoryManager.Instance.PlayStoryEvent();
+        }
 
         // UI 패널 비활성화.
         gameObject.SetActive(false);

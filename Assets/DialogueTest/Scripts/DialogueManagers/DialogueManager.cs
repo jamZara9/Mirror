@@ -416,7 +416,11 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     public void EndScene()
     {
-        StoryEventManager.Instance.PlayStoryEvent();
+        // 필수 스토리면 스토리 이벤트 시작.
+        if (currentScene.isMainStory)
+        {
+            StoryManager.Instance.PlayStoryEvent();
+        }
         _sprites.Clear();
         StopAllCoroutines();
 

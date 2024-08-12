@@ -18,6 +18,6 @@ public class TestStoryEventZero : StoryEventBase
     public override void StoryEvent()
     {
         Debug.Log("테스트 이벤트 0번 실행");
-        StoryEventManager.Instance.SuccessEvent();
+        StoryManager.Instance.SuccessEvent();
     }
 }
