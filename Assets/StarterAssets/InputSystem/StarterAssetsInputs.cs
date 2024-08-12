@@ -25,9 +25,10 @@ namespace StarterAssets
 		public bool pickupItem;
 		public bool transferItem;
 		public bool inventory;
+		public bool isFire = false;
 
 		public int number = 0;
-
+	
 #if ENABLE_INPUT_SYSTEM
 
 		public void OnMove(InputValue value)
@@ -108,6 +109,10 @@ namespace StarterAssets
 		{
 			ClickNumber(value.isPressed, 9);
 		}
+		public void OnFire(InputValue value)
+		{
+			isFire = value.isPressed;
+		}
 #endif
 		public void MoveInput(Vector2 newMoveDirection)
 		{
@@ -162,6 +167,11 @@ namespace StarterAssets
 			if(newNumberState){
 				this.number = number;
 			}
+		}
+
+		public void FireInput(bool newFireState)
+		{
+			isFire = newFireState;
 		}
 	}
 	

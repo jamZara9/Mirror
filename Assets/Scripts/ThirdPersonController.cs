@@ -471,5 +471,12 @@ namespace StarterAssets
             }
         }
 
+        private void OnFire(){
+            if(_input.isFire){
+                Debug.Log("Fire");
+                _input.isFire = false;
+            }
+        }
+
     }
 }

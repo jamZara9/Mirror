@@ -24,6 +24,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "Look1",
+                    "type": "Value",
+                    "id": "a9898401-b738-4925-909c-b77dfcfbafa1",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Jump",
                     "type": "Button",
                     "id": "8c4abdf8-4099-493a-aa1a-129acec7c3df",
@@ -51,6 +60,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Fire",
+                    "type": "Button",
+                    "id": "ab1d62cc-c7ef-4a5e-8985-59c00fe93e66",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "PickupItem",
                     "type": "Button",
                     "id": "0f28f5df-fbc0-41b2-b8e7-53e92d8a644d",
@@ -58,15 +76,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "Look1",
-                    "type": "Value",
-                    "id": "a9898401-b738-4925-909c-b77dfcfbafa1",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
                 },
                 {
                     "name": "TransferItem",
@@ -369,17 +378,6 @@
                 },
                 {
                     "name": "",
-                    "id": "17bc1156-cff8-4cfc-8669-e18d52c518d3",
-                    "path": "<Mouse>/position",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Look1",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "fc091a8f-a15a-4f72-8f00-5df63ade9f3e",
                     "path": "<Keyboard>/t",
                     "interactions": "",
@@ -496,6 +494,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Number9",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "17bc1156-cff8-4cfc-8669-e18d52c518d3",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e0b0568c-269e-41fd-854a-d1ee88880352",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fire",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
