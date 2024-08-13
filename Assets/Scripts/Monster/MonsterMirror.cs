@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 public class MonsterMirror : MonoBehaviour,IDamage
 {
@@ -237,12 +239,7 @@ public class MonsterMirror : MonoBehaviour,IDamage
         }
     }
 
-    public void Damage()    //  거울사제2(몬스터)의 피격
-    {
-        Debug.Log("우와 이게 뭐야");
-    }
-
-    public void HitedMonster(int hitPower)  //  거울사제2(몬스터)의 체력을 뺴는 함수
+    public void Damage(int hitPower)    //  거울사제2(몬스터)의 피격
     {
         if (m_State == MonsterState.Damaged || m_State == MonsterState.Die) return; 
         if (monsterHp > 0)  
@@ -254,6 +251,19 @@ public class MonsterMirror : MonoBehaviour,IDamage
             StartCoroutine(WaitDamage());// WaitDamage 함수 호출
         }
     }
+
+    // public void HitedMonster(int hitPower)  //  학생(몬스터)의 체력을 뺴는 함수
+    // {
+    //     if (m_State == MonsterState.Damaged || m_State == MonsterState.Die) return; 
+    //     if (monsterHp > 0)  
+    //         //                                  체력이 0 or 죽은 상태가 아니라면
+    //     {
+    //         monsterHp -= hitPower;  // 학생(몬스터)의 체력을 뺌
+    //         m_State = MonsterState.Damaged;// 학생(몬스터)의 상태를 Damaged 변경
+    //         _isDamaged = true;             //피격 상태 
+    //         StartCoroutine(WaitDamage());// WaitDamage 함수 호출
+    //     }
+    // }
 
     IEnumerator WaitDamage()        // 피격 되는 시간동안 움직이지 못하게 하는 함수
     {
@@ -281,6 +291,16 @@ public class MonsterMirror : MonoBehaviour,IDamage
         }
         transform.position = targetPosition;                                            // 최종 위치 설정
         isDashing = false;
-        // isMirrorAttacked = true; // 거울을 안보이게 함
+        
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (isDashing)
+        {
+            Debug.Log(other.gameObject.name+" 부딪힘");
+            isMirrorAttacked = true; // 거울을 안보이게 함
+            
+        }
     }
 }
