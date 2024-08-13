@@ -11,7 +11,8 @@ public class MovableDialogueManager : MonoBehaviour
     // CSV 작성 편의를 위해 마지막 화자를 저장하는 변수.
     private Speaker _lastSpeaker = null;
 
-    // UI 패널에 들어갈 화자 이름 및 대사 텍스트.
+    // UI 패널 및 화자 이름 및 대사 텍스트.
+    [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI speakerNameText;
     [SerializeField] private TextMeshProUGUI sentenceText;
 
@@ -135,6 +136,6 @@ public class MovableDialogueManager : MonoBehaviour
         }
 
         // UI 패널 비활성화.
-        gameObject.SetActive(false);
+        dialoguePanel.SetActive(false);
     }
 }

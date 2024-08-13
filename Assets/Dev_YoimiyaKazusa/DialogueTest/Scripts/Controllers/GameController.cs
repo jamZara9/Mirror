@@ -14,10 +14,10 @@ public class GameController : MonoBehaviour
     public GameObject movableDialoguePanel;
     
     // 각 스토리 진행 방식에 따른 매니저 스크립트. 
-    public DialogueManager dialogueManager;
-    public MovableDialogueManager movableDialogueManager;
+    private DialogueManager dialogueManager;
+    private MovableDialogueManager movableDialogueManager;
     
-    public StoryScene currentScene;
+    private StoryScene currentScene;
 
     // 스킵 패널 UI 처리에 필요한 변수들.
     private bool _isOnSkip = false;
@@ -42,6 +42,10 @@ public class GameController : MonoBehaviour
         _skipAction = _dialogueInputAction.Dialogue.Skip;
         _cancelSkipAction = _dialogueInputAction.Dialogue.CancelSkip;
         _realSkipAction = _dialogueInputAction.Dialogue.RealSkip;
+        
+        // 컴포넌트 세팅.
+        dialogueManager = GetComponent<DialogueManager>();
+        movableDialogueManager = GetComponent<MovableDialogueManager>();
     }
 
     private void OnEnable()
@@ -78,6 +82,8 @@ public class GameController : MonoBehaviour
     /// <param name="storyScene">다이얼로그 매니저에 넘겨 실행할 스토리</param>
     public void PlayScene(StoryScene storyScene)
     {
+        currentScene = storyScene;
+        
         if (!storyScene.isMovableScene)
         {
             // VN 방식 스토리 진행.
