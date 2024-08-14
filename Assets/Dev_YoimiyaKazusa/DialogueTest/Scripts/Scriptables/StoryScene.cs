@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,16 +7,24 @@ using UnityEngine;
 public class StoryScene : ScriptableObject
 {
     public bool isMainStory = true; // 필수 스토리인가?
-    public bool isMovableScene; // 움직일 수 있는 스토리 진행 방식인가?
+    public StoryType storyType; // 스토리 진행 방식.
     
     public List<Sentence> sentences; // 문장 리스트.
     public Sprite background; // 기본 배경 이미지.
     public AudioClip backgroundMusic; // BGM Clip.
     public StoryScene nextScene; // 바로 이어져 실행할 다음 스토리.
-    
+
+    public string sheetURL;
     public TextAsset csvFile; // 해당 스토리의 CSV 파일.
     
     public string summaryText; // 요약글.
+
+    public enum StoryType
+    {
+        VisualNovel,
+        Movable,
+        Information
+    }
 
     // 문장
     [System.Serializable]

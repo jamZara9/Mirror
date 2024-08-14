@@ -1512,7 +1512,7 @@ Transform:
   m_GameObject: {fileID: 542508511}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.883975, y: 1.4691391, z: 10.852547}
+  m_LocalPosition: {x: 6.8843875, y: 1.4691391, z: 10.853202}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3379,7 +3379,7 @@ Transform:
   m_GameObject: {fileID: 1028513131}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.975318, y: 7.7070103, z: 13.440702}
+  m_LocalPosition: {x: 3.9755654, y: 7.7070103, z: 13.441487}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4361,8 +4361,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1232744802}
   - component: {fileID: 1232744801}
+  - component: {fileID: 1232744807}
   - component: {fileID: 1232744804}
-  - component: {fileID: 1232744803}
   - component: {fileID: 1232744805}
   - component: {fileID: 1232744806}
   m_Layer: 0
@@ -4403,22 +4403,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1232744803
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1232744800}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d869e8711a6b4446a76d4f3b4b32cd7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialoguePanel: {fileID: 2145418517}
-  speakerNameText: {fileID: 480912034}
-  sentenceText: {fileID: 1055802887}
-  defaultDelay: 1.25
 --- !u!114 &1232744804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4431,11 +4415,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a907be329e74d084498532d40aad6cf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  csvParser: {fileID: 1232744807}
   dialogueText: {fileID: 1562642091}
   speakerNameText: {fileID: 786654963}
+  movableDialoguePanel: {fileID: 2145418517}
+  movableSpeakerNameText: {fileID: 480912034}
+  sentenceText: {fileID: 1055802887}
   currentScene: {fileID: 11400000, guid: 152645f4dca84924b8277004d4c3b4a5, type: 2}
   backGroundController: {fileID: 1779735242}
   typeDelay: 0.05
+  defaultDelay: 1.25
   spritesPrefab: {fileID: 825380981}
   audioSource: {fileID: 1232744805}
   sentenceAudioSource: {fileID: 1232744806}
@@ -4632,6 +4621,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1232744807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1232744800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7c9f5c64040c064d84e6c03f1e6be75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1237605497 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 979784530847494435, guid: 1bbbb9b815c8c8d44837dbc2d9872370, type: 3}
@@ -7861,7 +7862,7 @@ Transform:
   m_GameObject: {fileID: 1764214107}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.8485446, y: 1.7575052, z: 14.836988}
+  m_LocalPosition: {x: 0.8485975, y: 1.7575052, z: 14.837887}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

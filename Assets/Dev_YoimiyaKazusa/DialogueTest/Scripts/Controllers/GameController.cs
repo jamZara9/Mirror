@@ -13,10 +13,9 @@ public class GameController : MonoBehaviour
     public GameObject dialoguePanel;
     public GameObject movableDialoguePanel;
     
-    // 각 스토리 진행 방식에 따른 매니저 스크립트. 
+    // 다이얼로그 이용을 위한 매니저 스크립트. 
     private DialogueManager dialogueManager;
-    private MovableDialogueManager movableDialogueManager;
-    
+
     private StoryScene currentScene;
 
     // 스킵 패널 UI 처리에 필요한 변수들.
@@ -45,7 +44,6 @@ public class GameController : MonoBehaviour
         
         // 컴포넌트 세팅.
         dialogueManager = GetComponent<DialogueManager>();
-        movableDialogueManager = GetComponent<MovableDialogueManager>();
     }
 
     private void OnEnable()
@@ -83,21 +81,18 @@ public class GameController : MonoBehaviour
     public void PlayScene(StoryScene storyScene)
     {
         currentScene = storyScene;
-        
-        if (!storyScene.isMovableScene)
+
+        switch (storyScene.storyType)
         {
-            // VN 방식 스토리 진행.
-            dialoguePanel.SetActive(true);
-            dialogueManager.ParseCSVFile(storyScene);
-            dialogueManager.PlayScene();
+            case StoryScene.StoryType.VisualNovel :
+                dialoguePanel.SetActive(true);
+                break;
+            
+            case StoryScene.StoryType.Movable :
+                movableDialoguePanel.SetActive(true);
+                break;
         }
-        else
-        {
-            // 움직일 수 있는 방식 스토리 진행.
-            movableDialoguePanel.SetActive(true);
-            movableDialogueManager.ParseCSVFile(storyScene);
-            movableDialogueManager.PlayScene();
-        }
+        dialogueManager.PlayScene(storyScene, storyScene.storyType);
     }
     
     /// <summary>
@@ -144,7 +139,7 @@ public class GameController : MonoBehaviour
             return;
         }
 
-        dialogueManager.PlayNextSentence();
+        dialogueManager.VisualNovelNextSentence();
     }
 
     /// <summary>
@@ -208,7 +203,7 @@ public class GameController : MonoBehaviour
         _isOnSkip = false;
         
         currentScene = currentScene.nextScene;
-        dialogueManager.PlayScene();
+        dialogueManager.PlayScene(currentScene, currentScene.storyType);
     }
 
     /// <summary>
