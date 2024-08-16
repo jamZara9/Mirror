@@ -1,98 +1,161 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Numerics;
+using TMPro;
 using UHFPS.Runtime;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 
-[System.Serializable]
 public class Inventory_Manager : MonoBehaviour
 {
-    private static Inventory_Manager instance;
+    private float Inventory_MaxSize = 12;
+    private float QuickSlot_MaxSize = 4;
 
-    [SerializeField]
-    private Inventory_Container[] Mirror_Inventory;
+    //[SerializeField]
+    public List<UI_Slot_bls> Inventory = new List<UI_Slot_bls>(12);
+    public List<UI_QuickSlot> QuickSlot = new List<UI_QuickSlot>(4);
 
-    // Start is called before the first frame update
-    void Start()
+    public GameObject Text_ItemName;
+    public GameObject Text_ItemDescription;
+
+    public BaseItem[] testitems;
+
+    public GameObject HUD_Canvas;
+    public GameObject Inventory_Canvas;
+    public GameObject QuickSlot_Canvas;
+
+    public bool Use_Inventory = false;
+    public bool Use_QuickSlot = false;
+
+    private void Awake()
     {
 
     }
 
-    private void Awake()
+    private void Start()
     {
-        if(null == instance )
-        {
-            instance = this;
+        Inventory.Sort(delegate (UI_Slot_bls a, UI_Slot_bls b) { return a.index.CompareTo(b.index); });
+        QuickSlot.Sort(delegate (UI_QuickSlot a, UI_QuickSlot b) { return a.index.CompareTo(b.index); });
 
-            Mirror_Inventory = new Inventory_Container[(int)ItemType.END];
-            for (int i = 0; i < Mirror_Inventory.Length; i++)
-            {
-                Mirror_Inventory[i] = new Inventory_Container();
-                Mirror_Inventory[i].Initialize();
-            }
-
-            DontDestroyOnLoad( this.gameObject );
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
+        Inventory_Canvas.SetActive(false);
+        QuickSlot_Canvas.SetActive(false);
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Q) && Use_Inventory)
+        {
+            testitems = FindObjectsOfType<BaseItem>();
+
+            for (int i = 0; i < testitems.Length; i++)
+            {
+                UI_Slot_bls slot = Inventory.Find(x => x.Get_Item()?.itemData.name == testitems[i].itemData.name);
+
+                if (slot != null)
+                {
+                    slot.Get_Item().itemData.count++;
+                }
+                else
+                {
+                    Add_Item(testitems[i]);
+
+                }
+
+            }
+        }
+
+        if(Input.GetKeyDown(KeyCode.I))
+        {
+            Use_Inventory = !Use_Inventory;
+            Inventory_Canvas.SetActive(Use_Inventory);
+        }
+
+        if (Input.GetMouseButtonDown((int)MouseButton.Middle))
+            Use_QuickSlot = true;
+
+        if (Input.GetMouseButtonUp((int)MouseButton.Middle))
+            Use_QuickSlot = false;
+
+        if(!Use_Inventory)
+            QuickSlot_Canvas.SetActive(Use_QuickSlot);
+
+        foreach(UI_Slot_bls slot in Inventory)
+        {
+            if(slot.Get_Item()?.itemData.count == 0)
+            {
+                Remove_Item(slot);
+            }
+        }
+    }
+
+    public void swap_Item(UI_Slot_bls _from, UI_Slot_bls _to)
+    {
+        Debug.Log("아이템 스왑");
+
+        /////////////////////// 등록된 퀵슬롯 교환
+        UI_QuickSlot tempQSlot = _to.QuickSlot;
+        _to.QuickSlot = _from.QuickSlot;
+        _from.QuickSlot = tempQSlot;
+        ///////////////////////
+ 
+        ////////////////////////// 테스트 코드
+        Color tempColor = _from.testColor;
+        _from.testColor = _to.testColor;
+        _to.testColor = tempColor;
+        //////////////////////////
+
+        /////////////////////// 아이템 교환
+        BaseItem temp = _to.Get_Item();
+        _to.Set_Item(_from.Get_Item());
+        _from.Set_Item(temp);
+        ///////////////////////
+    }
+
+    public void Add_Item(BaseItem _Item)
+    {
+        foreach (UI_Slot_bls slot in Inventory)
+        {
+            if(null == slot.Get_Item())
+            {
+                _Item.itemData.count++;
+                slot.Set_Item(_Item);
+                slot.Set_Color(new Color(Random.RandomRange(0f, 1f), Random.RandomRange(0f, 1f), Random.RandomRange(0f, 1f)));
+                slot.Update_Slot();
+                return;
+            }
+        }
+
         
     }
 
-    public static Inventory_Manager Instance
+    public void Use_Item(UI_Slot_bls _Slot)
     {
-        get
+        _Slot.Get_Item().itemData.count--;
+        _Slot.Update_Slot();
+    }
+
+    public void Remove_Item(UI_Slot_bls _Slot)
+    {
+        _Slot.Clear();
+    }
+
+    public void Add_InventorySlot(UI_Slot_bls _Slot)
+    {
+        if(Inventory.Count < Inventory_MaxSize)
         {
-            if ( null == instance )
-            {
-                return null;
-            }
-            return instance;
+            Inventory.Add(_Slot);
         }
     }
 
-
-
-
-
-    // 인벤토리 기능
-    public bool Add_Item(GameObject _obj)
+    public void Add_QuickSlot(UI_QuickSlot _Slot)
     {
-        if (null == _obj) // GameObject가 null인지 체크
-        {
-            Debug.Log("NULL Object");
-            return false;
-        }
-
-        if (_obj.GetComponent<BaseItem>() == null) // GameObject가 Item인지 체크
-        {
-            Debug.Log("GameObject is not BaseItem");
-            return false;
-        }
-
-        ItemType type = _obj.GetComponent<BaseItem>().itemData.type;
-        string str = _obj.GetComponent<BaseItem>().itemData.name;
-
-        Mirror_Inventory[(int)type].Add_Item( _obj, str);
-        return true;
+        if (QuickSlot.Count < QuickSlot_MaxSize)
+            QuickSlot.Add(_Slot);
     }
 
-    //인벤토리 상단에 목록이 있고, 메이플식 바둑판 인벤토리로 가정(4 x 10), 특정 위치의 아이템을 사용하는 상황으로 제작
-    public void Use_Item(ItemType _type, int x, int y)
-    {
-        //인벤토리의 가로, 세로크기에 따라 다르게 수정할 예정.
-        Mirror_Inventory[(int)_type].Use_Item(4 * y + x);
-    }
-
-    GameObject Get_Item(string _name, ItemType _type)
-    {
-        return Mirror_Inventory[(int)_type].Get_Item(_name);
-    }
 }
