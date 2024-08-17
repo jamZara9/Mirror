@@ -1512,7 +1512,7 @@ Transform:
   m_GameObject: {fileID: 542508511}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.8839397, y: 1.4691391, z: 10.852492}
+  m_LocalPosition: {x: 6.8839493, y: 1.4691391, z: 10.852508}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3090,7 +3090,7 @@ GameObject:
   - component: {fileID: 947218421}
   m_Layer: 0
   m_Name: TempDoor
-  m_TagString: InterationableObject
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3486,7 +3486,7 @@ Transform:
   m_GameObject: {fileID: 1028513131}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.9753008, y: 7.7070103, z: 13.4406395}
+  m_LocalPosition: {x: 3.9753056, y: 7.7070103, z: 13.440659}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6343,7 +6343,7 @@ Transform:
   m_GameObject: {fileID: 1764214107}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.8485398, y: 1.7575052, z: 14.836916}
+  m_LocalPosition: {x: 0.84854317, y: 1.7575052, z: 14.836939}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
