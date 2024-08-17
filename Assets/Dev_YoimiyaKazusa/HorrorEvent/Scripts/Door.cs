@@ -18,6 +18,7 @@ public class Door : MonoBehaviour, IInteractionable
 
     private void Start()
     {
+        // 임시로 상호작용 테스트.
         Interaction();
     }
 
