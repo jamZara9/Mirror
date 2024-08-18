@@ -37,6 +37,11 @@ public class PlayerStateController : MonoBehaviour
     private int _animIDFreeFall;
     private int _animIDMotionSpeed;
 
+    [Header("Audio Settings")]
+    [SerializeField] private AudioClip landingAudioClip;        // 착지 사운드
+    [SerializeField] private AudioClip[] footstepAudioClips;    // 발소리 사운드
+    [Range(0, 1)] public float footstepAudioVolume = 0.5f;      // 발소리 사운드 볼륨
+
     private PlayerInputAction _inputActions;            // 플레이어 입력 액션
     private CharacterController _characterController;   //  캐릭터 컨트롤러
 
@@ -146,7 +151,7 @@ public class PlayerStateController : MonoBehaviour
         moveDirection = transform.TransformDirection(moveDirection).normalized;
 
         // 캐릭터를 이동 / 점프
-        _characterController.Move(moveDirection  * (_speed * Time.deltaTime) + new Vector3(0, _verticalVelocity, 0) * Time.deltaTime);
+        _characterController.Move(moveDirection * (_speed * Time.deltaTime) + new Vector3(0, _verticalVelocity, 0) * Time.deltaTime);
 
         // 애니메이터가 존재하는 경우, 애니메이션 상태를 업데이트
         if (_hasAnimator)
@@ -294,7 +299,14 @@ public class PlayerStateController : MonoBehaviour
     /// </summary>
     private void OnFootstep(AnimationEvent animationEvent)
     {
-
+        if (animationEvent.animatorClipInfo.weight > 0.5f)
+        {
+            if (footstepAudioClips.Length > 0)
+            {
+                var index = UnityEngine.Random.Range(0, footstepAudioClips.Length);
+                AudioSource.PlayClipAtPoint(footstepAudioClips[index], transform.TransformPoint(_characterController.center), footstepAudioVolume);
+            }
+        }
     }
 
     /// <summary>
@@ -303,7 +315,10 @@ public class PlayerStateController : MonoBehaviour
     /// <param name="animationEvent"></param>
     private void OnLand(AnimationEvent animationEvent)
     {
-
+        if (animationEvent.animatorClipInfo.weight > 0.5f)
+        {
+            AudioSource.PlayClipAtPoint(landingAudioClip, transform.TransformPoint(_characterController.center), footstepAudioVolume);
+        }
     }
 
 }
