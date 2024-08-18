@@ -22,10 +22,7 @@ public class PlayerStateController : MonoBehaviour
 
     private float _speed = 0.0f;                // 현재 속도
     private float _animationBlend;              // 애니메이션 블렌드
-    private float _targetRotation = 0.0f;       // 목표 회전 각도
-    private float _rotationVelocity;            // 회전 속도
-    private float _verticalVelocity;            // 수직 속도
-    public float rotationSmoothTime = 0.12f;     // 회전 부드러움 시간
+    public float rotationSmoothTime = 0.12f;    // 회전 부드러움 시간
 
 
     private bool _hasAnimator;      // 애니메이터가 있는지 여부
@@ -40,14 +37,11 @@ public class PlayerStateController : MonoBehaviour
 
     private PlayerInputAction _inputActions;            // 플레이어 입력 액션
     private CharacterController _characterController;   //  캐릭터 컨트롤러
-    private Vector3 _playerVelocity;                    // 플레이어의 속도
 
     // camera settings
     [SerializeField] private GameObject _cinemachineCamera;  // 카메라
     private Transform _playerHeadTr;                        // 플레이어의 머리 위치
-    private float _cinemachineTargetYaw = 0.0f;             // 현재 카메라 회전 각도
     private float _cinemachineTargetPitch = 0.0f;           // 현재 카메라 회전 각도
-    private float cameraRotationLimit = 80.0f;              // 카메라 회전 제한 각도
     public float topClamp = 70.0f;                          // 카메라 상단 회전 제한 각도
     public float bottomClamp = -30.0f;                      // 카메라 하단 회전 제한 각도
     public float cameraAngleOverride = 0.0f;                // 카메라 각도 오버라이드
@@ -81,6 +75,8 @@ public class PlayerStateController : MonoBehaviour
 
 
         OnMovement();
+        CameraRotation();
+        ChracterRotation();
 
         OnJump();
         OnSprint();
@@ -88,6 +84,7 @@ public class PlayerStateController : MonoBehaviour
 
     void LateUpdate()
     {
+        HeadBoneRotation();
     }
 
 
@@ -139,7 +136,6 @@ public class PlayerStateController : MonoBehaviour
         _animationBlend = Mathf.Lerp(_animationBlend, speed, Time.deltaTime * settings.speedChangeRate);
         if (_animationBlend < 0.01f) _animationBlend = 0f;
 
-
         Vector3 moveDirection = new Vector3(_inputActions.move.x, 0, _inputActions.move.y).normalized;
 
         // 캐릭터가 향하고 있는 방향에 맞게 이동 방향을 변환
@@ -155,6 +151,52 @@ public class PlayerStateController : MonoBehaviour
             _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
         }
     }
+    /// <summary>
+    /// 머리 회전 처리
+    /// </summary>
+    private void HeadBoneRotation()
+    {
+        Vector3 HeadDir = _cinemachineCamera.transform.position + _cinemachineCamera.transform.forward * 10.0f;
+        _playerHeadTr.LookAt(HeadDir);
+    }
+
+    /// <summary>
+    /// 카메라 회전 처리
+    /// </summary>
+    private void CameraRotation()
+    {
+        float _xRotation = _inputActions.look.y * rotationSmoothTime;    // 상하 회전
+
+        _cinemachineTargetPitch -= _xRotation;
+        _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, bottomClamp, topClamp);
+
+        _cinemachineCamera.transform.localRotation = Quaternion.Euler(_cinemachineTargetPitch + cameraAngleOverride, 0.0f, 0.0f);
+    }
+
+    /// <summary>
+    /// 캐릭터 회전 처리
+    /// </summary>
+    private void ChracterRotation()
+    {
+        float _yRotation = _inputActions.look.x;
+        Vector3 _characterRotationY = new Vector3(0f, _yRotation, 0f) * rotationSmoothTime;
+        _characterController.transform.Rotate(_characterRotationY);
+    }
+
+    /// <summary>
+    /// 각도 제한
+    /// </summary>
+    /// <param name="lfAngle"></param>
+    /// <param name="lfMin"></param>
+    /// <param name="lfMax"></param>
+    /// <returns></returns>
+    private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
+    {
+        if (lfAngle < -360f) lfAngle += 360f;
+        if (lfAngle > 360f) lfAngle -= 360f;
+        return Mathf.Clamp(lfAngle, lfMin, lfMax);
+    }
+
 
     private void OnJump()
     {
