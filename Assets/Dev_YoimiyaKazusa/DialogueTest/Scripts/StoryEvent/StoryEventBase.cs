@@ -15,7 +15,7 @@ public abstract class StoryEventBase : MonoBehaviour
     {
         Init();
         // 시작 시, 자신의 순서 번호, 로직을 매니저의 딕셔너리에 추가. 
-        StoryEventManager.Instance.AddStoryEventDictionary(myIndex, this);
+        StoryManager.Instance.AddStoryEventDictionary(myIndex, this);
     }
     
     /// <summary>

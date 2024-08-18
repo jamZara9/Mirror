@@ -17,6 +17,11 @@ public class BackGroundController : MonoBehaviour
     /// <param name="sprite">바뀔 이미지</param>
     public void SwitchImage(Sprite sprite)
     {
+        if (!sprite)
+        {
+            return;
+        }
+        
         if (!isSwitched)
         {
             backGround2.sprite = sprite;
@@ -37,6 +42,11 @@ public class BackGroundController : MonoBehaviour
     /// <param name="sprite">바뀔 이미지</param>
     public void SetImage(Sprite sprite)
     {
+        if (!sprite)
+        {
+            return;
+        }
+        
         if (!isSwitched)
         {
             backGround1.sprite = sprite;

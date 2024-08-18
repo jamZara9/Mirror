@@ -10,27 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d7520723505309d4d8edc9d83195d9a1, type: 3}
-  m_Name: TestStoryEvent
+  m_Name: MainEventOne
   m_EditorClassIdentifier: 
+  isMainStory: 1
+  isMovableScene: 1
+  storyType: 1
   sentences:
   - audioClip: {fileID: 0}
-    text: "\uC7A5\uB9C8\uCCA0\uC774\uB77C \uADF8\uB7F0\uC9C0` \uB0A0\uC528\uAC00
-      \uC624\uB77D\uAC00\uB77D \uD55C\uB2E4."
+    text: "\uBB38\uC774 \uC5F4\uB9AC\uC9C0 \uC54A\uC544.."
     speaker: {fileID: 11400000, guid: b979470c0d8e9e04ca53f4063e9d1b4f, type: 2}
     background: {fileID: 21300000, guid: 226f5d42cd2b968408cb5cedded53d52, type: 3}
     actions: []
     nextSentenceDelay: 1
   - audioClip: {fileID: 0}
-    text: "\uBA70\uCE60\uC9F8 \uC5B4\uB461\uACE0 \uD750\uB9B0 \uD558\uB298\uC744
-      \uBCF4\uACE0 \uC788\uC73C\uB824\uB2C8 \uBAB8\uC774 \uC9C0\uBFCC\uB465\uD558\uB2E4. "
+    text: "\uD604\uAD00\uBB38 \uC5F4\uC1E0\uB294 \uAD50\uBB34\uC2E4\uC5D0 \uC788\uC5C8\uC9C0."
     speaker: {fileID: 11400000, guid: b979470c0d8e9e04ca53f4063e9d1b4f, type: 2}
-    background: {fileID: 21300000, guid: 226f5d42cd2b968408cb5cedded53d52, type: 3}
+    background: {fileID: 0}
     actions: []
     nextSentenceDelay: 0
   background: {fileID: 0}
   backgroundMusic: {fileID: 0}
   nextScene: {fileID: 0}
+  sheetURL: 
   csvFile: {fileID: 4900000, guid: c2aa07309a303db4886c21da096188a0, type: 3}
-  summaryText: "\uC694\uC57D\uAE00"
-  storyEvent: {fileID: 1411071896433579237, guid: be4ce1a2da993d94eb71eca02ec4a894, type: 3}
-  isMovableScene: 0
+  summaryText: 

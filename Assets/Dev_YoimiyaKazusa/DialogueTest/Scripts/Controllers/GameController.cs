@@ -13,11 +13,10 @@ public class GameController : MonoBehaviour
     public GameObject dialoguePanel;
     public GameObject movableDialoguePanel;
     
-    // 각 스토리 진행 방식에 따른 매니저 스크립트. 
-    public DialogueManager dialogueManager;
-    public MovableDialogueManager movableDialogueManager;
-    
-    public StoryScene currentScene;
+    // 다이얼로그 이용을 위한 매니저 스크립트. 
+    private DialogueManager dialogueManager;
+
+    private StoryScene currentScene;
 
     // 스킵 패널 UI 처리에 필요한 변수들.
     private bool _isOnSkip = false;
@@ -42,6 +41,9 @@ public class GameController : MonoBehaviour
         _skipAction = _dialogueInputAction.Dialogue.Skip;
         _cancelSkipAction = _dialogueInputAction.Dialogue.CancelSkip;
         _realSkipAction = _dialogueInputAction.Dialogue.RealSkip;
+        
+        // 컴포넌트 세팅.
+        dialogueManager = GetComponent<DialogueManager>();
     }
 
     private void OnEnable()
@@ -78,20 +80,19 @@ public class GameController : MonoBehaviour
     /// <param name="storyScene">다이얼로그 매니저에 넘겨 실행할 스토리</param>
     public void PlayScene(StoryScene storyScene)
     {
-        if (!storyScene.isMovableScene)
+        currentScene = storyScene;
+
+        switch (storyScene.storyType)
         {
-            // VN 방식 스토리 진행.
-            dialoguePanel.SetActive(true);
-            dialogueManager.ParseCSVFile(storyScene);
-            dialogueManager.PlayScene();
+            case StoryScene.StoryType.VisualNovel :
+                dialoguePanel.SetActive(true);
+                break;
+            
+            case StoryScene.StoryType.Movable :
+                movableDialoguePanel.SetActive(true);
+                break;
         }
-        else
-        {
-            // 움직일 수 있는 방식 스토리 진행.
-            movableDialoguePanel.SetActive(true);
-            movableDialogueManager.ParseCSVFile(storyScene);
-            movableDialogueManager.PlayScene();
-        }
+        dialogueManager.PlayScene(storyScene, storyScene.storyType);
     }
     
     /// <summary>
@@ -138,7 +139,7 @@ public class GameController : MonoBehaviour
             return;
         }
 
-        dialogueManager.PlayNextSentence();
+        dialogueManager.VisualNovelNextSentence();
     }
 
     /// <summary>
@@ -202,7 +203,7 @@ public class GameController : MonoBehaviour
         _isOnSkip = false;
         
         currentScene = currentScene.nextScene;
-        dialogueManager.PlayScene();
+        dialogueManager.PlayScene(currentScene, currentScene.storyType);
     }
 
     /// <summary>

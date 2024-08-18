@@ -11,15 +11,28 @@ using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
+    private CsvParser csvParser;
+    
+    // VN 방식 UI. 
     public TextMeshProUGUI dialogueText;
     public TextMeshProUGUI speakerNameText;
+    
+    // Movable 방식 UI 패널 및 화자 이름 및 대사 텍스트.
+    [SerializeField] private GameObject movableDialoguePanel;
+    [SerializeField] private TextMeshProUGUI movableSpeakerNameText;
+    [SerializeField] private TextMeshProUGUI sentenceText;
+
 
     private int _sentenceIndex = -1;
     public StoryScene currentScene;
 
     [SerializeField] private BackGroundController backGroundController;
 
-    public float typeDelay = 0.05f;
+    // 대사 텍스트 입력 딜레이.
+    [SerializeField] private float typeDelay = 0.025f;
+    
+    // 다음 문장으로 넘어가는 기본 딜레이 시간.
+    [SerializeField] private float defaultDelay = 1.25f;
 
     // 스프라이트별 오브젝트 및 컨트롤러 저장
     private Dictionary<Speaker, SpriteController> _sprites;
@@ -33,27 +46,6 @@ public class DialogueManager : MonoBehaviour
 
     private bool _isDelayFinish = true;
 
-    // CSV 파일 작성 편의를 위한 임시 저장 변수.
-    private Speaker _lastSpeaker = null;
-    private Sprite _lastBackground = null;
-
-    // CSV 파일의 항목별 인덱스 값 저장.
-    private const int _CSV_SPEAKER_INDEX = 0;
-    private const int _CSV_TEXT_INDEX = 1;
-    private const int _CSV_BACKGROUND_INDEX = 2;
-    private const int _CSV_AUDIOCLIP_INDEX = 3;
-    private const int _CSV_NEXTDELAY_INDEX = 4; 
-
-    private const int _CSV_ACTION_INDEX = 5;
-    private const int _CSV_ACTION_TYPE_INDEX = 6;
-    private const int _CSV_ACTION_SPRITEINDEX_INDEX = 7;
-    private const int _CSV_ACTION_COORDS_X_INDEX = 8;
-    private const int _CSV_ACTION_COORDS_Y_INDEX = 9;
-    private const int _CSV_ACTION_MOVESPEED_INDEX = 10;
-    private const int _CSV_ACTION_SCALE_WIDTH_INDEX = 11;
-    private const int _CSV_ACTION_SCALE_HEIGHT_INDEX = 12;
-    private const int _CSV_ACTION_SCALE_SPEED_INDEX = 13;
-
     // 타이핑 상태 열거.
     private enum State
     {
@@ -64,152 +56,10 @@ public class DialogueManager : MonoBehaviour
     
     void Awake()
     {
+        // CSV Parser 등록.
+        csvParser = GetComponent<CsvParser>();
         // 딕셔너리 초기화.
         _sprites = new Dictionary<Speaker, SpriteController>();
-    }
-
-    /// <summary>
-    /// 한 스토리를 시작하는 함수.
-    /// </summary>
-    public void PlayScene()
-    {
-        _sentenceIndex = -1;
-        
-        audioSource.clip = currentScene.backgroundMusic;
-        audioSource.Play();
-
-        PlayNextSentence();
-    }
-
-    /// <summary>
-    /// 각 스토리의 CSV 파일에 맞게 데이터를 파싱하는 함수. 
-    /// </summary>
-    /// <param name="scene">파싱할 StoryScene 스크립터블 오브젝트</param>
-    public void ParseCSVFile(StoryScene scene)
-    {
-        currentScene = scene;
-        backGroundController.SetImage(currentScene.background);
-        _lastBackground = currentScene.background;
-
-        TextAsset csvData = currentScene.csvFile;
-
-        string[] data = csvData.text.Split(new char[] { '\n' });
-
-        int lastSentenceIndex = -1;
-        _lastSpeaker = null;
-        _lastBackground = null;
-
-        currentScene.sentences = new List<StoryScene.Sentence>();
-        int cnt = 0;
-
-        currentScene.summaryText = data[data.Length - 2].Split(new char[] {','})[0];
-
-        for (int i = 1; i < data.Length - 2; i++)
-        {
-            string[] row = data[i].Split(new char[] { ',' });
-            
-            StoryScene.Sentence dialogue = new StoryScene.Sentence();
-
-            if (row[_CSV_SPEAKER_INDEX] != "")
-            {
-                _lastSpeaker = Resources.Load<Speaker>("Speaker/" + row[_CSV_SPEAKER_INDEX].Trim());
-            }
-            dialogue.speaker = _lastSpeaker;
-
-            if (row[_CSV_TEXT_INDEX] != "")
-            {
-                ++lastSentenceIndex;
-                dialogue.text = row[_CSV_TEXT_INDEX] == "null" ? " " : row[_CSV_TEXT_INDEX];
-            }
-
-            if (row[_CSV_BACKGROUND_INDEX] != "")
-            {
-                _lastBackground = Resources.Load<Sprite>("Background/" + row[_CSV_BACKGROUND_INDEX].Trim());
-            }
-            dialogue.background = _lastBackground;
-
-            if (row[_CSV_AUDIOCLIP_INDEX] != "")
-            {
-                dialogue.audioClip = Resources.Load<AudioClip>("AudioClips/" + row[_CSV_AUDIOCLIP_INDEX].Trim());
-            }
-
-            dialogue.nextSentenceDelay = (row[_CSV_NEXTDELAY_INDEX] != "" ? float.Parse(row[_CSV_NEXTDELAY_INDEX]) : 0);
-            
-            List<StoryScene.Sentence.Action> actionList = new List<StoryScene.Sentence.Action>();
-            StoryScene.Sentence.Action action = new StoryScene.Sentence.Action();
-            if (row[_CSV_ACTION_INDEX] != "")
-            {
-                action.speaker = Resources.Load<Speaker>("Speaker/" + row[_CSV_ACTION_INDEX].Trim());
-
-                int xPos = 0;
-                int yPos = 0;
-                
-                switch (row[_CSV_ACTION_TYPE_INDEX])
-                {
-                    case "Appear" :
-                        action.actionType = StoryScene.Sentence.Action.Type.Appear;
-                        xPos = int.Parse(row[_CSV_ACTION_COORDS_X_INDEX]);
-                        yPos = int.Parse(row[_CSV_ACTION_COORDS_Y_INDEX]);
-                        action.coords = new Vector2(xPos, yPos);
-                        action.spriteIndex = int.Parse(row[_CSV_ACTION_SPRITEINDEX_INDEX]);
-                        break;
-                    
-                    case "First" :
-                        action.actionType = StoryScene.Sentence.Action.Type.First;
-                        break;
-                    
-                    case "Bright" :
-                        action.actionType = StoryScene.Sentence.Action.Type.Bright;
-                        break;
-                    
-                    case "AllDark" :
-                        action.actionType = StoryScene.Sentence.Action.Type.AllDark;
-                        break;
-                    
-                    case "AllBright" :
-                        action.actionType = StoryScene.Sentence.Action.Type.AllBright;
-                        break;
-
-                    case "Move" :
-                        action.actionType = StoryScene.Sentence.Action.Type.Move;
-                        xPos = int.Parse(row[_CSV_ACTION_COORDS_X_INDEX]);
-                        yPos = int.Parse(row[_CSV_ACTION_COORDS_Y_INDEX]);
-                        action.coords = new Vector2(xPos, yPos);
-                        action.moveSpeed = float.Parse(row[_CSV_ACTION_MOVESPEED_INDEX]);
-                        break;
-                    
-                    case "Change" :
-                        action.actionType = StoryScene.Sentence.Action.Type.Change;
-                        action.spriteIndex = int.Parse(row[_CSV_ACTION_SPRITEINDEX_INDEX]);
-                        break;
-                    
-                    case "Scale" :
-                        action.actionType = StoryScene.Sentence.Action.Type.Scale;
-                        action.width = int.Parse(row[_CSV_ACTION_SCALE_WIDTH_INDEX]);
-                        action.height = int.Parse(row[_CSV_ACTION_SCALE_HEIGHT_INDEX]);
-                        action.scaleSpeed = float.Parse(row[_CSV_ACTION_SCALE_SPEED_INDEX]);
-                        break;
-                    
-                    case "DisAppear" :
-                        action.actionType = StoryScene.Sentence.Action.Type.DisAppear;
-                        break;
-                }
-            }
-            
-            if (row[_CSV_TEXT_INDEX].Trim() == "" && row[_CSV_ACTION_INDEX] != "")
-            {
-                currentScene.sentences[lastSentenceIndex].actions.Add(action);
-            }
-            else
-            {
-                if (row[_CSV_ACTION_INDEX] != "")
-                {
-                    actionList.Add(action);
-                    dialogue.actions = actionList;
-                }
-                currentScene.sentences.Add(dialogue);
-            }
-        }
     }
 
     /// <summary>
@@ -229,10 +79,9 @@ public class DialogueManager : MonoBehaviour
     {
         return _isDelayFinish && _state == State.Completed;
     }
-
     
     /// <summary>
-    /// 현재 문장이 해당 스토리의 마지막 문장인지 참거짓을 반환하는 함수.
+    /// 현재 문장이 해당 스토리의 마지막 문장인지 확인하는 함수.
     /// </summary>
     public bool IsLastSentence()
     {
@@ -240,9 +89,43 @@ public class DialogueManager : MonoBehaviour
     }
     
     /// <summary>
-    /// 다음 문장을 실행시키는 함수.
+    /// 한 스토리를 시작하는 함수.
     /// </summary>
-    public void PlayNextSentence()
+    public void PlayScene(StoryScene scene, StoryScene.StoryType storyType)
+    {
+        // 스토리 파싱하여 데이터 저장.
+        currentScene = csvParser.ParseCSVFile(scene);
+        
+        // 문장 인덱스 초기화.
+        _sentenceIndex = -1;
+        
+        // 스토리 BGM 실행.
+        audioSource.clip = currentScene.backgroundMusic;
+        audioSource.Play();
+
+        // 스토리 타입에 따라 문장 실행.
+        switch (storyType)
+        {
+            // 비주얼 노벨 방식 진행.
+            case StoryScene.StoryType.VisualNovel :
+                VisualNovelNextSentence();
+                break;
+            
+            //움직일 수 있는 방식 실행.
+            case StoryScene.StoryType.Movable :
+                StartCoroutine(MovableNextSentence());
+                break;
+            
+            // 간단한 정보, 알림 패널 방식 실행. 
+            case StoryScene.StoryType.Information :
+                break;
+        }
+    }
+    
+    /// <summary>
+    /// 비주얼 노벨 방식의 다음 문장을 실행시키는 함수.
+    /// </summary>
+    public void VisualNovelNextSentence()
     {
         _isDelayFinish = false;
         
@@ -252,17 +135,48 @@ public class DialogueManager : MonoBehaviour
         
         speakerNameText.text = currentScene.sentences[_sentenceIndex].speaker.speakerName;
         speakerNameText.color = currentScene.sentences[_sentenceIndex].speaker.nameColor;
-
-        if (currentScene.sentences[_sentenceIndex].background != _lastBackground)
-        {
-            backGroundController.SwitchImage(currentScene.sentences[_sentenceIndex].background);
-            _lastBackground = currentScene.sentences[_sentenceIndex].background;
-        }
         
+        backGroundController.SwitchImage(currentScene.sentences[_sentenceIndex].background);
+
         sentenceAudioSource.clip = currentScene.sentences[_sentenceIndex].audioClip;
         sentenceAudioSource.Play();
 
         ActSpeakers();
+    }
+    
+    /// <summary>
+    /// 움직일 수 있는 방식의 다음 문장으로 넘어가는 로직 처리 함수.
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator MovableNextSentence()
+    {
+        // 화자 이름 텍스트 UI를 해당 순서 문장의 화자 이름 및 색상으로 변경.
+        movableSpeakerNameText.text = currentScene.sentences[++_sentenceIndex].speaker.speakerName;
+        movableSpeakerNameText.color = currentScene.sentences[_sentenceIndex].speaker.nameColor;
+
+        // 대사 텍스트 UI를 해당 순서 문장의 대사로 변경.
+        sentenceText.text = currentScene.sentences[_sentenceIndex].text;
+        
+        // 해당 문장의 딜레이 시간만큼 다음 문장으로 넘어가지 않고 대기.
+        float delay = currentScene.sentences[_sentenceIndex].nextSentenceDelay;
+        // 딜레이를 지정하지 않았다면 기본 딜레이 시간으로 세팅.
+        if (delay == 0)
+        {
+            delay = defaultDelay;
+        }
+        yield return new WaitForSeconds(delay);
+
+        // 다음 문장으로 넘어가기 위해 인덱스값 증가.
+        // 마지막 문장이 아니면 다음 문장 호출.
+        if (_sentenceIndex + 1 < currentScene.sentences.Count)
+        {
+            StartCoroutine(MovableNextSentence());
+        }
+        // 마지막 문장이 맞으면 끝내기.
+        else
+        {
+            EndScene();
+        }
     }
     
     /// <summary>
@@ -271,16 +185,22 @@ public class DialogueManager : MonoBehaviour
     /// <param name="text">CSV의 대사 문자열</param>
     IEnumerator TypeText(string text)
     {
+        // 타이핑 전 텍스트 초기화.
         dialogueText.text = "";
-        text = text.Replace("`", ",");
+        // 현재 상태를 타이핑 중으로 변경.
         _state = State.Playing;
+        // 현재 글자 인덱스 초기화.
         int wordIndex = 0;
 
+        // 모든 글자를 입력하기 전까지 타이핑.
         while (_state != State.Completed)
         {
+            // 텍스트에 글자 하나씩 추가.
             dialogueText.text += text[wordIndex];
+            // 타이핑 딜레이만큼 대기.
             yield return new WaitForSeconds(typeDelay);
 
+            // 모든 글자를 입력했으면 상태를 완료로 변경.
             if (++wordIndex >= text.Length)
             {
                 _state = State.Completed;
@@ -416,10 +336,20 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     public void EndScene()
     {
-        StoryEventManager.Instance.PlayStoryEvent();
+        // 필수 스토리면 스토리 이벤트 시작.
+        if (currentScene.isMainStory)
+        {
+            StoryManager.Instance.PlayStoryEvent();
+        }
+        // 딕셔너리 초기화.
         _sprites.Clear();
+        // 모든 코루틴 정지.
         StopAllCoroutines();
+        
+        // UI 패널 비활성화.
+        movableDialoguePanel.SetActive(false);
 
+        // 생성한 캐릭터 스프라이트 모두 삭제. 
         foreach (Transform child in spritesPrefab.transform)
         {
             Destroy(child.gameObject);
