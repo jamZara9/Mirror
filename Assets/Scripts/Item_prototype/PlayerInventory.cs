@@ -8,6 +8,9 @@ public class PlayerInventory : MonoBehaviour, IItemContainer
     public List<BaseItem> quickSlots = new List<BaseItem>();    // 퀵슬롯 아이템 리스트
     public GameObject selectedItem = null;      // 선택된 아이템
 
+    public GameObject ItemNameTxt;
+    public GameObject ItemSubTxt;
+
     public int maxSlots = 9;                    // 인벤토리 슬롯 최대 개수
     public int maxQuickSlots = 5;               // 퀵슬롯 최대 개수
 

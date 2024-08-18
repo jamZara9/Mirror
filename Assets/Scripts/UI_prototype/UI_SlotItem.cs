@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Security.Cryptography;
+using TMPro;
 
 public class UI_SlotItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
@@ -151,6 +152,8 @@ public class UI_SlotItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         MainGameManager.Instance.playerInventory.selectedItem = item.gameObject;
         Debug.Log($"아이템 '{item.itemData.name}'이(가) 선택되었습니다.");
 
+        MainGameManager.Instance.playerInventory.ItemNameTxt.GetComponent<TMPro.TextMeshPro>().text = item.itemData.name;
+        MainGameManager.Instance.playerInventory.ItemSubTxt.GetComponent<TMPro.TextMeshPro>().text = item.itemData.description;
         // 임시로 자동으로 퀵슬롯에 추가
         // MainGameManager.Instance.playerInventory.MoveItemToQuickSlot(item.gameObject, 0);
     }
