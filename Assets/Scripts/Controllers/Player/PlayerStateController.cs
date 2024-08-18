@@ -8,18 +8,7 @@ using System;
 /// </summary>
 public class PlayerStateController : MonoBehaviour
 {
-
-    [Serializable]
-    public sealed class BasicSettings
-    {
-        public float walkSpeed = 2.0f;         // 걷기 속도
-        public float runSpeed = 5.335f;        // 달리기 속도
-        public float speedChangeRate = 10.0f;  // 속도 변경 비율
-        public float jumpHeight = 1;           // 점프 높이
-    }
-
-    private BasicSettings settings = new();
-
+    private PlayerStatus.PlayerBasicSettings _settings;  // PlayerBasicSettings를 참조
     private float _speed = 0.0f;                // 현재 속도
     private float _animationBlend;              // 애니메이션 블렌드
     public float rotationSmoothTime = 0.12f;    // 회전 부드러움 시간
@@ -49,8 +38,10 @@ public class PlayerStateController : MonoBehaviour
     void Start()
     {
         _hasAnimator = TryGetComponent(out _animator);
+        _settings = GetComponent<PlayerStatus>().settings;
         _characterController = GetComponent<CharacterController>();
         _inputActions = GetComponent<PlayerInputAction>();
+
         AssignAnimationIDs();
 
         // animator가 있는 경우, 머리 위치를 가져옴
@@ -67,7 +58,7 @@ public class PlayerStateController : MonoBehaviour
 
     void Update()
     {
-        _hasAnimator = TryGetComponent(out _animator);
+        // _hasAnimator = TryGetComponent(out _animator);
         if (_hasAnimator)
         {
             _animator.SetBool("Grounded", _characterController.isGrounded);
@@ -79,7 +70,6 @@ public class PlayerStateController : MonoBehaviour
         ChracterRotation();
 
         OnJump();
-        OnSprint();
     }
 
     void LateUpdate()
@@ -93,11 +83,11 @@ public class PlayerStateController : MonoBehaviour
     /// </summary>
     private void AssignAnimationIDs()
     {
-        _animIDSpeed = Animator.StringToHash("Speed");
-        _animIDGrounded = Animator.StringToHash("Grounded");
-        _animIDJump = Animator.StringToHash("Jump");
-        _animIDFreeFall = Animator.StringToHash("FreeFall");
-        _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
+        _animIDSpeed        = AnimationConstants.AnimIDSpeed;
+        _animIDGrounded     = AnimationConstants.AnimIDGrounded;
+        _animIDJump         = AnimationConstants.AnimIDJump;
+        _animIDFreeFall     = AnimationConstants.AnimIDFreeFall;
+        _animIDMotionSpeed  = AnimationConstants.AnimIDMotionSpeed;
     }
 
     /// <summary>
@@ -106,7 +96,7 @@ public class PlayerStateController : MonoBehaviour
     private void OnMovement()
     {
         // 달리기 입력이 있는 경우, 속도를 RunSpeed로 설정
-        float speed = _inputActions.sprint ? settings.runSpeed : settings.walkSpeed;
+        float speed = _inputActions.sprint ? _settings.runSpeed : _settings.walkSpeed;
 
         // 이동 입력이 없는 경우, 속도를 0으로 설정
         if (_inputActions.move == Vector2.zero) speed = 0.0f;
@@ -122,7 +112,7 @@ public class PlayerStateController : MonoBehaviour
         if (Mathf.Abs(currentHorizontalSpeed - speed) > speedOffset)
         {
             // Mathf.Lerp는 선형 보간을 통해 속도를 자연스럽게 변경
-            _speed = Mathf.Lerp(currentHorizontalSpeed, speed * inputMagnitude, Time.deltaTime * settings.speedChangeRate);
+            _speed = Mathf.Lerp(currentHorizontalSpeed, speed * inputMagnitude, Time.deltaTime * _settings.speedChangeRate);
 
             // 속도를 소수점 3자리까지 반올림하여 처리
             _speed = Mathf.Round(_speed * 1000f) / 1000f;
@@ -133,7 +123,7 @@ public class PlayerStateController : MonoBehaviour
         }
 
         // 애니메이션 블렌드를 처리하여 이동 애니메이션이 부드럽게 전환되도록 진행
-        _animationBlend = Mathf.Lerp(_animationBlend, speed, Time.deltaTime * settings.speedChangeRate);
+        _animationBlend = Mathf.Lerp(_animationBlend, speed, Time.deltaTime * _settings.speedChangeRate);
         if (_animationBlend < 0.01f) _animationBlend = 0f;
 
         Vector3 moveDirection = new Vector3(_inputActions.move.x, 0, _inputActions.move.y).normalized;
@@ -199,11 +189,6 @@ public class PlayerStateController : MonoBehaviour
 
 
     private void OnJump()
-    {
-
-    }
-
-    private void OnSprint()
     {
 
     }
