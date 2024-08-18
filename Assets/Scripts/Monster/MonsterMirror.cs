@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 public class MonsterMirror : MonoBehaviour,IDamage
 {
@@ -47,9 +49,13 @@ public class MonsterMirror : MonoBehaviour,IDamage
     
     public GameObject Mirror;                                           // 공격 후 부서질 거울 오브젝트
     [SerializeField]
-    private bool isMirrorAttacked = false;                               // 거울 부수기 공격을 사용했는지 여부
-
-
+    private bool isMirrorAttacked = false;                               // 거울이 부서졌는지 여부
+    [SerializeField]
+    private float dashDistance = 5f;                                     // 돌진 거리
+    [SerializeField]
+    private float dashDuration = 0.5f;                                   // 돌진 시간
+    private bool isDashing = false;
+    
     enum MonsterState       // 몬스터의 FSM
     {
         Idle,
@@ -135,7 +141,7 @@ public class MonsterMirror : MonoBehaviour,IDamage
         _isWait = false; // 기다림 끝
     }
     
-    public void Idle()  //  거울사제2(몬스터) 탐색
+    void Idle()  //  거울사제2(몬스터) 탐색
     {
         if (isMovingMonster && _navMeshA.remainingDistance <= _navMeshA.stoppingDistance) // 몬스터의 거리가 목적지와 가깝다면
         {
@@ -173,7 +179,7 @@ public class MonsterMirror : MonoBehaviour,IDamage
 
     }
 
-    public void Move()  //  거울사제2(몬스터)추격
+    void Move()  //  거울사제2(몬스터)추격
     {
         float SearchDistance = _isDamaged ? ViewRadius * 3 : ViewRadius * 2; 
         // 거울사제2(몬스터)가 Damage로 Move가 됬는지 Idle에서 Move로 됬는지 만약 Damage라면 추격 범위가 탐색범위 * 3 아니면 탐색범위 * 2
@@ -197,16 +203,16 @@ public class MonsterMirror : MonoBehaviour,IDamage
         }
     }
 
-    public void Attack()        //  거울사제2(몬스터)의 플레이어 공격
+    void Attack()        //  거울사제2(몬스터)의 플레이어 공격
     {                           //  만약 플레이어와 거울사제2(몬스터)의 거리가 공격 범위 내라면
         if (Vector3.Distance(_player.position, transform.position) < attackDistance)
         {                       //  currentTime 카운트 시작
             _currentTime += Time.deltaTime;
             if (_currentTime > attackDelay)// currentTime이 attackDelay만큼 카운트 했다면 공격 진행
             {
-                if (!isMirrorAttacked) //   거울 부수기 공격을 하지 않았다면
+                if (!isMirrorAttacked && !isDashing) //   거울 부수기 공격을 하지 않았고 지금 대쉬 중이 아니라면
                 {
-                    MirrorAttack();     // 거울 부수기 공격
+                    StartCoroutine(MirrorAttack());    //  거울 부수기 공격
                 }
                 else
                 {
@@ -225,17 +231,15 @@ public class MonsterMirror : MonoBehaviour,IDamage
         }
         else
         {               //  플레이어와 거울사제2(몬스터)의 거리가 공격 범위 보다 멀다면
-            m_State = MonsterState.Move;    // 거울사제2(몬스터)의 상태를 Move로 변경
-            _currentTime = 0;   // currentTime 초기화
+            if (!isDashing)
+            {
+                m_State = MonsterState.Move;    // 거울사제2(몬스터)의 상태를 Move로 변경
+                _currentTime = 0;   // currentTime 초기화
+            }
         }
     }
 
-    public void Damage()    //  거울사제2(몬스터)의 피격
-    {
-        Debug.Log("우와 이게 뭐야");
-    }
-
-    public void HitedMonster(int hitPower)  //  거울사제2(몬스터)의 체력을 뺴는 함수
+    public void Damage(int hitPower)    //  거울사제2(몬스터)의 피격
     {
         if (m_State == MonsterState.Damaged || m_State == MonsterState.Die) return; 
         if (monsterHp > 0)  
@@ -248,20 +252,55 @@ public class MonsterMirror : MonoBehaviour,IDamage
         }
     }
 
+    // public void HitedMonster(int hitPower)  //  학생(몬스터)의 체력을 뺴는 함수
+    // {
+    //     if (m_State == MonsterState.Damaged || m_State == MonsterState.Die) return; 
+    //     if (monsterHp > 0)  
+    //         //                                  체력이 0 or 죽은 상태가 아니라면
+    //     {
+    //         monsterHp -= hitPower;  // 학생(몬스터)의 체력을 뺌
+    //         m_State = MonsterState.Damaged;// 학생(몬스터)의 상태를 Damaged 변경
+    //         _isDamaged = true;             //피격 상태 
+    //         StartCoroutine(WaitDamage());// WaitDamage 함수 호출
+    //     }
+    // }
+
     IEnumerator WaitDamage()        // 피격 되는 시간동안 움직이지 못하게 하는 함수
     {
         yield return new WaitForSeconds(1f);//  1초동안 대기함
         m_State = MonsterState.Move;        //  거울사제2(몬스터)의 상태를 Move 변경
     }
 
-    public void Die()   // 거울사제2(몬스터)를 죽음처리(없앰)함
+    void Die()   // 거울사제2(몬스터)를 죽음처리(없앰)함
     {
         gameObject.SetActive(false);
     }
-    void MirrorAttack() // 거울 부수기 공격
+    private IEnumerator MirrorAttack()               // 거울 부수기 공격
     {
         Debug.Log("거울 공격");
-        isMirrorAttacked = true; // 거울을 안보이게 함
+        isDashing = true;                            // 대쉬중
+        Vector3 dashStartPosition = transform.position;
+        Vector3 targetPosition = dashStartPosition + transform.forward * dashDistance; // 현재 방향 + 앞 만큼 * 돌진거리
+        float elapsedTime = 0f;                                                         // 누적 시간
+
+        while (elapsedTime < dashDuration)                                              
+        {                                                                               // 돌진 거리만큼을 돌진 시간에 걸려서 도착
+            transform.position = Vector3.Lerp(dashStartPosition, targetPosition, (elapsedTime / dashDuration)); // 선형 보간으로 부드럽게 이동
+            elapsedTime += Time.deltaTime;  
+            yield return null;                                                          // 다음 프레임까지 대기
+        }
+        transform.position = targetPosition;                                            // 최종 위치 설정
+        isDashing = false;
+        
     }
 
+    private void OnCollisionEnter(Collision other)
+    {
+        if (isDashing)
+        {
+            Debug.Log(other.gameObject.name+" 부딪힘");
+            isMirrorAttacked = true; // 거울을 안보이게 함
+            
+        }
+    }
 }

@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IDamage
 {
-    void Damage();
+    void Damage(int hitPower);
 }
