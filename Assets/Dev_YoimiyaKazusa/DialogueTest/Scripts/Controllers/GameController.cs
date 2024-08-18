@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UHFPS.Scriptable;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;

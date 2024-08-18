@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InputMainManager : BasicSingleton<InputMainManager>
+public class InputMainManager : Singleton<InputMainManager>
 {
     public InputActionAsset inputActions;   // PlayerInputAction이 할당될 변수
     public static InputActionAsset ActionsAsset => Instance.inputActions;

@@ -4,7 +4,7 @@ using UnityEngine;
 using StarterAssets;
 using System;
 
-public class MainGameManager : BasicSingleton<MainGameManager>
+public class MainGameManager : Singleton<MainGameManager>
 {
     private static MainGameManager _mainGameManager;              // 싱글톤 인스턴스
 

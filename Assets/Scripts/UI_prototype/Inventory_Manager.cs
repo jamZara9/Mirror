@@ -4,7 +4,6 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Numerics;
 using TMPro;
-using UHFPS.Runtime;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -95,21 +94,21 @@ public class Inventory_Manager : MonoBehaviour
 
     public void swap_Item(UI_Slot_bls _from, UI_Slot_bls _to)
     {
-        Debug.Log("¾ÆÀÌÅÛ ½º¿Ò");
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 
-        /////////////////////// µî·ÏµÈ Äü½½·Ô ±³È¯
+        /////////////////////// ï¿½ï¿½Ïµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
         UI_QuickSlot tempQSlot = _to.QuickSlot;
         _to.QuickSlot = _from.QuickSlot;
         _from.QuickSlot = tempQSlot;
         ///////////////////////
  
-        ////////////////////////// Å×½ºÆ® ÄÚµå
+        ////////////////////////// ï¿½×½ï¿½Æ® ï¿½Úµï¿½
         Color tempColor = _from.testColor;
         _from.testColor = _to.testColor;
         _to.testColor = tempColor;
         //////////////////////////
 
-        /////////////////////// ¾ÆÀÌÅÛ ±³È¯
+        /////////////////////// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
         BaseItem temp = _to.Get_Item();
         _to.Set_Item(_from.Get_Item());
         _from.Set_Item(temp);
