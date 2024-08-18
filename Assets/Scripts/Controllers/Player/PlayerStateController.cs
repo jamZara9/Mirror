@@ -11,9 +11,22 @@ public class PlayerStateController : MonoBehaviour
     private PlayerStatus.PlayerBasicSettings _settings;  // PlayerBasicSettings를 참조
     private float _speed = 0.0f;                // 현재 속도
     private float _animationBlend;              // 애니메이션 블렌드
-    public float rotationSmoothTime = 0.12f;    // 회전 부드러움 시간
+    private float _rotationSmoothTime = 0.12f;    // 회전 부드러움 시간
 
+    [Header("Jump Settings")]
+    private bool _isGrounded = true;              // 땅에 붙어 있는지 여부
+    private float _gravity = -9.81f;              // 중력
+    private float _jumpTimeoutDelta = 0.0f;       // 점프 타임아웃 델타
+    private float _jumpTimeout = 0.5f;           // 점프 타임아웃
+    private float _fallTimeoutDelta;              // 낙하 타임아웃 델타
+    private float _fallTimeout = 0.15f;           // 낙하 타임아웃
+    private float _verticalVelocity;              // 수직 속도
+    private float _terminalVelocity = 53.0f;      // 터미널 속도
+    [SerializeField] private LayerMask _groundLayers; // 플레이어가 이동할 수 있는 Ground의 Layer
+    private float _groundedOffset = -0.14f;         // 땅과의 거리
+    public float _groundedRadius = 0.28f;  // 땅에 붙어 있는지 확인할 반지름(CharacterController의 radius와 동일하게 설정)
 
+    [Header("Animation Settings")]
     private bool _hasAnimator;      // 애니메이터가 있는지 여부
     private Animator _animator;     // 애니메이터 컴포넌트
 
@@ -59,10 +72,10 @@ public class PlayerStateController : MonoBehaviour
     void Update()
     {
         // _hasAnimator = TryGetComponent(out _animator);
-        if (_hasAnimator)
-        {
-            _animator.SetBool("Grounded", _characterController.isGrounded);
-        }
+        // if (_hasAnimator)
+        // {
+        //     _animator.SetBool(_animIDGrounded, _characterController.isGrounded);
+        // }
 
 
         OnMovement();
@@ -70,6 +83,7 @@ public class PlayerStateController : MonoBehaviour
         ChracterRotation();
 
         OnJump();
+        CheckGround();
     }
 
     void LateUpdate()
@@ -83,11 +97,11 @@ public class PlayerStateController : MonoBehaviour
     /// </summary>
     private void AssignAnimationIDs()
     {
-        _animIDSpeed        = AnimationConstants.AnimIDSpeed;
-        _animIDGrounded     = AnimationConstants.AnimIDGrounded;
-        _animIDJump         = AnimationConstants.AnimIDJump;
-        _animIDFreeFall     = AnimationConstants.AnimIDFreeFall;
-        _animIDMotionSpeed  = AnimationConstants.AnimIDMotionSpeed;
+        _animIDSpeed = AnimationConstants.AnimIDSpeed;
+        _animIDGrounded = AnimationConstants.AnimIDGrounded;
+        _animIDJump = AnimationConstants.AnimIDJump;
+        _animIDFreeFall = AnimationConstants.AnimIDFreeFall;
+        _animIDMotionSpeed = AnimationConstants.AnimIDMotionSpeed;
     }
 
     /// <summary>
@@ -96,10 +110,10 @@ public class PlayerStateController : MonoBehaviour
     private void OnMovement()
     {
         // 달리기 입력이 있는 경우, 속도를 RunSpeed로 설정
-        float speed = _inputActions.sprint ? _settings.runSpeed : _settings.walkSpeed;
+        float targetSpeed = _inputActions.sprint ? _settings.runSpeed : _settings.walkSpeed;
 
         // 이동 입력이 없는 경우, 속도를 0으로 설정
-        if (_inputActions.move == Vector2.zero) speed = 0.0f;
+        if (_inputActions.move == Vector2.zero) targetSpeed = 0.0f;
 
         // 현재 플레이어의 수평 속도를 계산 (y축 속도는 무시)
         float currentHorizontalSpeed = new Vector3(_characterController.velocity.x, 0.0f, _characterController.velocity.z).magnitude;
@@ -109,21 +123,21 @@ public class PlayerStateController : MonoBehaviour
         float inputMagnitude = _inputActions.analogMovement ? _inputActions.move.magnitude : 1f;
 
         // 목표 속도와 현재 속도의 차이를 확인하여 가속 또는 감속을 처리
-        if (Mathf.Abs(currentHorizontalSpeed - speed) > speedOffset)
+        if (Mathf.Abs(currentHorizontalSpeed - targetSpeed) > speedOffset)
         {
             // Mathf.Lerp는 선형 보간을 통해 속도를 자연스럽게 변경
-            _speed = Mathf.Lerp(currentHorizontalSpeed, speed * inputMagnitude, Time.deltaTime * _settings.speedChangeRate);
+            _speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude, Time.deltaTime * _settings.speedChangeRate);
 
             // 속도를 소수점 3자리까지 반올림하여 처리
             _speed = Mathf.Round(_speed * 1000f) / 1000f;
         }
         else
         {
-            _speed = speed;
+            _speed = targetSpeed;
         }
 
         // 애니메이션 블렌드를 처리하여 이동 애니메이션이 부드럽게 전환되도록 진행
-        _animationBlend = Mathf.Lerp(_animationBlend, speed, Time.deltaTime * _settings.speedChangeRate);
+        _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * _settings.speedChangeRate);
         if (_animationBlend < 0.01f) _animationBlend = 0f;
 
         Vector3 moveDirection = new Vector3(_inputActions.move.x, 0, _inputActions.move.y).normalized;
@@ -131,8 +145,8 @@ public class PlayerStateController : MonoBehaviour
         // 캐릭터가 향하고 있는 방향에 맞게 이동 방향을 변환
         moveDirection = transform.TransformDirection(moveDirection).normalized;
 
-        // 캐릭터를 이동
-        _characterController.Move(moveDirection * speed * Time.deltaTime);
+        // 캐릭터를 이동 / 점프
+        _characterController.Move(moveDirection  * (_speed * Time.deltaTime) + new Vector3(0, _verticalVelocity, 0) * Time.deltaTime);
 
         // 애니메이터가 존재하는 경우, 애니메이션 상태를 업데이트
         if (_hasAnimator)
@@ -155,7 +169,7 @@ public class PlayerStateController : MonoBehaviour
     /// </summary>
     private void CameraRotation()
     {
-        float _xRotation = _inputActions.look.y * rotationSmoothTime;    // 상하 회전
+        float _xRotation = _inputActions.look.y * _rotationSmoothTime;    // 상하 회전
 
         _cinemachineTargetPitch -= _xRotation;
         _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, bottomClamp, topClamp);
@@ -169,7 +183,7 @@ public class PlayerStateController : MonoBehaviour
     private void ChracterRotation()
     {
         float _yRotation = _inputActions.look.x;
-        Vector3 _characterRotationY = new Vector3(0f, _yRotation, 0f) * rotationSmoothTime;
+        Vector3 _characterRotationY = new Vector3(0f, _yRotation, 0f) * _rotationSmoothTime;
         _characterController.transform.Rotate(_characterRotationY);
     }
 
@@ -187,16 +201,107 @@ public class PlayerStateController : MonoBehaviour
         return Mathf.Clamp(lfAngle, lfMin, lfMax);
     }
 
-
+    /// <summary>
+    /// 점프 시에 따른 중력, 수직 속도 처리
+    /// </summary>
     private void OnJump()
     {
+        if (_isGrounded)
+        {
 
+            // 지면에 존재할 경우, 낙하 타이머 초기화
+            _fallTimeoutDelta = _fallTimeout;
+
+            if (_hasAnimator)
+            {
+                _animator.SetBool(_animIDJump, false);
+                _animator.SetBool(_animIDFreeFall, false);
+            }
+
+            // 지면에 닿았을 경우, 수직 속도를 초기화
+            if (_verticalVelocity < 0.0f)
+            {
+                _verticalVelocity = -2.0f;
+            }
+
+            // 점프 입력이 있으며, 점프 타이머가 0 이하일 경우
+            if (_inputActions.jump && _jumpTimeoutDelta <= 0.0f)
+            {
+
+                // 수직 속도를 계산 (원하는 높이까지 올라가기 위한 속도 계산)
+                _verticalVelocity = Mathf.Sqrt(_settings.jumpHeight * -2.0f * _gravity);
+
+                if (_hasAnimator)
+                {
+                    _animator.SetBool(_animIDJump, true);
+                }
+            }
+
+            // 점프 타이머 초기화
+            if (_jumpTimeoutDelta >= 0.0f)
+            {
+                _jumpTimeoutDelta -= Time.deltaTime;
+            }
+        }
+        else
+        {
+            // 지면에 닿지 않은 경우, 낙하 타이머 초기화
+            _jumpTimeoutDelta = _jumpTimeout;
+
+            // 낙하 타이머 업데이트
+            if (_fallTimeoutDelta >= 0.0f)
+            {
+                _fallTimeoutDelta -= Time.deltaTime;
+            }
+            else
+            {
+                if (_hasAnimator)
+                {
+                    _animator.SetBool(_animIDFreeFall, true);
+                }
+            }
+
+            // 지면에 닿았을 때 점프 입력을 비활성화
+            _inputActions.jump = false;
+        }
+
+        // 점프 시 고점에 도착하고 나서 점차 낙하속도가 증가하도록 처리
+        if (_verticalVelocity < _terminalVelocity)
+        {
+            _verticalVelocity += _gravity * Time.deltaTime;
+        }
+    }
+
+    /// <summary>
+    /// 지면에 플레이어가 닿았는지 확인을 위한 함수
+    /// </summary>
+    private void CheckGround()
+    {
+        //스피어의 위치를 설정, 땅으로부터의 거리를 고려하여 위치를 조정
+        Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - _groundedOffset, transform.position.z);
+
+        //스피어를 이용하여 땅에 닿았는지 여부를 확인
+        _isGrounded = Physics.CheckSphere(spherePosition, _groundedRadius, _groundLayers, QueryTriggerInteraction.Ignore);
+
+        if (_hasAnimator)
+        {
+            _animator.SetBool(_animIDGrounded, _isGrounded);
+        }
     }
 
     /// <summary>
     /// 발소리 이벤트
     /// </summary>
     private void OnFootstep(AnimationEvent animationEvent)
+    {
+
+    }
+
+    /// <summary>
+    /// 착지 이벤트
+    /// </summary>
+    /// <param name="animationEvent"></param>
+    private void OnLand(AnimationEvent animationEvent)
     {
 
     }

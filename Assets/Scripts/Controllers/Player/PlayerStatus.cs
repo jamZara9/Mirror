@@ -15,7 +15,7 @@ public class PlayerStatus : MonoBehaviour
         public readonly float walkSpeed = 2.0f;         // 걷기 속도
         public readonly float runSpeed = 5.335f;        // 달리기 속도
         public readonly float speedChangeRate = 10.0f;  // 속도 변경 비율
-        public readonly float jumpHeight = 1.0f;        // 점프 높이
+        public readonly float jumpHeight = 1.5f;        // 점프 높이
     }
 
     public PlayerBasicSettings settings = new();     // 기본 설정
