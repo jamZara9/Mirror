@@ -19,7 +19,7 @@ public class PlayerInventory : MonoBehaviour, IItemContainer
     private UIController_Test uiController;     // UI 컨트롤러
 
     void Start(){
-        uiController = MainGameManager.Instance.uiController;
+        uiController = GameManager.Instance.uiController;
 
         // 인벤토리 슬롯 초기화
         for (int i = 0; i < maxSlots; i++){
