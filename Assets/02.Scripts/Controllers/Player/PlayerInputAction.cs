@@ -15,12 +15,12 @@ public class PlayerInputAction : MonoBehaviour
     public Vector2 look;
     public bool jump = false;
     public bool sprint = false;
-    public bool isShowInventory = false;
-    public bool isPickupItem = false;
+    public bool isInventoryVisible = false;
+    public bool isQuickSlotVisible = false;
+    public bool isInteractable = false;
     public bool isUseItem = false;
     public bool isTransferItem = false;
     public bool isFire = false;
-    public bool isShowQuickSlot = false;
 
     [Header("Mouse Cursor Settings")]
     public bool cursorLocked = true;
@@ -96,12 +96,12 @@ public class PlayerInputAction : MonoBehaviour
 
     public void OnInventory(InputAction.CallbackContext context)
     {
-        isShowInventory = context.ReadValueAsButton();
+        isInventoryVisible = context.ReadValueAsButton();
     }
 
-    public void OnPickupItem(InputAction.CallbackContext context)
+    public void OnInteraction(InputAction.CallbackContext context)
     {
-        isPickupItem = context.ReadValueAsButton();
+        isInteractable = context.ReadValueAsButton();
     }
 
     public void OnUseItem(InputAction.CallbackContext context)
@@ -123,10 +123,10 @@ public class PlayerInputAction : MonoBehaviour
     {
         if(context.performed)   // 마우스 휠 버튼을 누르면
         {
-            isShowQuickSlot = true;
+            isQuickSlotVisible = true;
         }else if(context.canceled)  // 마우스 휠 버튼을 뗐을 때
         {
-            isShowQuickSlot = false;
+            isQuickSlotVisible = false;
         }
     }
 }
