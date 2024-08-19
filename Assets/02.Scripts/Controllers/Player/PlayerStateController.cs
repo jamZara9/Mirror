@@ -15,7 +15,7 @@ public class PlayerStateController : MonoBehaviour
 
     [Header("Jump Settings")]
     private bool _isGrounded = true;              // 땅에 붙어 있는지 여부
-    private float _gravity = -9.81f;              // 중력
+    private float _gravity = -14.0f;              // 중력(기본적으로 -9.81)
     private float _jumpTimeoutDelta = 0.0f;       // 점프 타임아웃 델타
     private float _jumpTimeout = 0.5f;           // 점프 타임아웃
     private float _fallTimeoutDelta;              // 낙하 타임아웃 델타
