@@ -67,28 +67,23 @@ public class PlayerStateController : MonoBehaviour
         {
             _playerHeadTr = _animator.GetBoneTransform(HumanBodyBones.Head);
         }
-
-
-        // 커서를 화면 중앙에 잠그고 숨기기
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
 
     void Update()
     {
-        // _hasAnimator = TryGetComponent(out _animator);
-        // if (_hasAnimator)
-        // {
-        //     _animator.SetBool(_animIDGrounded, _characterController.isGrounded);
-        // }
-
-
         OnMovement();
         CameraRotation();
         ChracterRotation();
 
         OnJump();
         CheckGround();
+
+        UseItem();
+        InteractionObject();
+        TransferItem();
+        ShowInventory();
+        OnFire();
+        ShowQuickSlot();
     }
 
     void LateUpdate()
@@ -321,6 +316,101 @@ public class PlayerStateController : MonoBehaviour
         }
     }
 
+
+    private void UseItem()
+    {
+        if (_inputActions.isUseItem)
+        {
+            Debug.Log("아이템 사용");
+            // GameManager gameManager = GameManager.Instance;
+            // if (gameManager.playerInventory.selectedItem != null)
+            // {
+            //     // 아이템 사용
+            //     EventManager.ItemUse(gameManager.playerInventory);
+            // }
+            _inputActions.isUseItem = false;
+        }
+    }
+
+    private void InteractionObject()
+    {
+        // 키를 입력 받은 경우 
+        if (_inputActions.isInteractable)
+        {
+            Debug.Log("아이템 획득");
+            GameManager gameManager = GameManager.Instance;
+            CameraController cameraController = gameManager.cameraController;
+
+            // 임시 테스트용
+            Inventory_Manager inventoryManager = gameManager.inventoryManager;  // InventoryManager_Test 인스턴스
+
+            // 아이템이 감지된 경우
+            if (cameraController.detectedItem != null)
+            {
+                // // 아이템을 획득
+                // EventManager.ItemPickup(cameraController.detectedItem.GetComponent<BaseItem>(), gameManager.playerInventory);
+                inventoryManager.OnPickUp();
+                cameraController.detectedItem = null;
+            }
+
+            _inputActions.isInteractable = false;
+        }
+    }
+
+    private void TransferItem()
+    {
+        if (_inputActions.isTransferItem)
+        {
+
+            Debug.Log("아이템 이동");
+            // @TODO: 추후 임시코드 제거 및 해당 아이템이 인벤토리에 있는지 확인하는 코드 추가
+
+            // 임시 테스트 코드 진행
+            // 인벤토리에 있는 아이템 하나를 창고로 이동
+            // ItemManager.Instance.TransferItem(PlayerInventory.Instance, Storage.Instance, PlayerInventory.Instance.items[0]);
+            _inputActions.isTransferItem = false;
+        }
+    }
+
+    private void ShowInventory()
+    {
+        if (_inputActions.isInventoryVisible)
+        {
+            GameManager gameManager = GameManager.Instance;     // MainGameManager 인스턴스
+            // UIController_Test uiController = gameManager.uiController;  // UIController_Test 인스턴스
+
+            // 임시 테스트용
+            Inventory_Manager inventoryManager = gameManager.inventoryManager;  // InventoryManager_Test 인스턴스
+
+            // 인벤토리 UI 활성화/비활성화
+            // uiController.inventoryUI.SetActive(!uiController.inventoryUI.activeSelf);
+            inventoryManager.OnShowInventory();
+            // gameManager.cameraController.SetCursorState(uiController.inventoryUI.activeSelf);   // 커서 상태 설정
+            gameManager.cameraController.SetCursorState(inventoryManager.Inventory_Canvas.activeSelf);   // 커서 상태 설정
+
+            _inputActions.isInventoryVisible = false;
+        }
+    }
+
+    private void ShowQuickSlot(){
+        if(_inputActions.isQuickSlotVisible){
+            // Debug.Log("퀵슬롯 활성화/비활성화");
+
+            // 임시 테스트용
+            Inventory_Manager inventoryManager = GameManager.Instance.inventoryManager;  // InventoryManager_Test 인스턴스
+
+            inventoryManager.OnShowQuickSlot();
+        }
+    }
+
+    private void OnFire()
+    {
+        if (_inputActions.isFire)
+        {
+            Debug.Log("Fire");
+            _inputActions.isFire = false;
+        }
+    }
 }
 
 

@@ -13,20 +13,20 @@ public class UI_Slot_bls : MonoBehaviour, IPointerClickHandler, IDropHandler, IP
         QuickSlot
     }
 
-    public SlotType slotType;     // ½½·Ô Å¸ÀÔ
-    public Image ItemIcon; // ½½·Ô¿¡ ¾ÆÀÌÅÛÀÌ ÀÖÀ»°æ¿ì ±×¸± ÀÌ¹ÌÁö
+    public SlotType slotType;     // ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½
+    public Image ItemIcon; // ï¿½ï¿½ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½
 
 
-    public Color testColor; // Å×½ºÆ®¿ë ÄÃ·¯ÄÚµå
+    public Color testColor; // ï¿½×½ï¿½Æ®ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Úµï¿½
     public int index;
 
     public GameObject count;
 
     public Inventory_Manager InventoryMgr;
-    public UI_QuickSlot QuickSlot; //ÇØ´ç ½½·ÔÀ» ÂüÁ¶ÇÏ°íÀÖ´Â Äü½½·Ô
+    public UI_QuickSlot QuickSlot; //ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     [SerializeField, Header("Item")]
-    private BaseItem SlotItem; //´ã°í ÀÖ´Â ¾ÆÀÌÅÛ
+    private BaseItem SlotItem; //ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     
 
@@ -34,9 +34,13 @@ public class UI_Slot_bls : MonoBehaviour, IPointerClickHandler, IDropHandler, IP
 
     private void Awake()
     {
-        ////////////////////// ÀÓ½Ã ÄÚµå
-        InventoryMgr = GameObject.Find("Inventory")?.GetComponent<Inventory_Manager>();
-        //////////////////////
+        // ////////////////////// ï¿½Ó½ï¿½ ï¿½Úµï¿½
+        // InventoryMgr = GameObject.Find("Inventory")?.GetComponent<Inventory_Manager>();
+        // //////////////////////
+
+        // Test
+        InventoryMgr = GameObject.Find("GameManager")?.GetComponent<Inventory_Manager>();
+
 
         SlotItem = null;
         ItemIcon.sprite = null;
@@ -85,7 +89,7 @@ public class UI_Slot_bls : MonoBehaviour, IPointerClickHandler, IDropHandler, IP
 
     public void OnDrop(PointerEventData eventData)
     {
-        Debug.Log(name + "¿¡ µå·Ó");
+        Debug.Log(name + "ï¿½ï¿½ ï¿½ï¿½ï¿½");
 
         if (UI_DragSlot.instance.DragSlot == null)
             return;
@@ -97,24 +101,24 @@ public class UI_Slot_bls : MonoBehaviour, IPointerClickHandler, IDropHandler, IP
     {
         if(eventData.button == PointerEventData.InputButton.Left)
         {
-            Debug.Log(name + " ½½·Ô Å¬¸¯");
+            Debug.Log(name + " ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½");
 
             if(SlotItem != null)
             {
-                Debug.Log("ÀÖÀ½");
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½");
                 InventoryMgr.Text_ItemName.GetComponent<TMPro.TextMeshProUGUI>().text = SlotItem.itemData.name;
                 InventoryMgr.Text_ItemDescription.GetComponent<TMPro.TextMeshProUGUI>().text = SlotItem.itemData.description;
             }
             else
             {
-                Debug.Log("¾øÀ½");
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½");
                 InventoryMgr.Text_ItemName.GetComponent<TMPro.TextMeshProUGUI>().text = "";
                 InventoryMgr.Text_ItemDescription.GetComponent<TMPro.TextMeshProUGUI>().text = "";
             }
         }
         if(eventData.button == PointerEventData.InputButton.Right)
         {
-            Debug.Log(name + " ½½·Ô »ç¿ë");
+            Debug.Log(name + " ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½");
 
             if (SlotItem == null)
                 return;
@@ -128,11 +132,11 @@ public class UI_Slot_bls : MonoBehaviour, IPointerClickHandler, IDropHandler, IP
 
 
 
-        //ÀÎº¥Åä¸® ¸Å´ÏÀú¿¡¼­ ¾ÆÀÌÅÛ ÀÌ¸§, ¼³¸í Ãâ·Â
+        //ï¿½Îºï¿½ï¿½ä¸® ï¿½Å´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
-        Debug.Log(name + "¿¡¼­ µå·¡±× ½ÃÀÛ");
+        Debug.Log(name + "ï¿½ï¿½ï¿½ï¿½ ï¿½å·¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 
         if (SlotItem == null)
             return;
@@ -141,12 +145,12 @@ public class UI_Slot_bls : MonoBehaviour, IPointerClickHandler, IDropHandler, IP
         UI_DragSlot.instance.DragSetItem(SlotItem);
         UI_DragSlot.instance.transform.position = eventData.position;
         UI_DragSlot.instance.Set_Alpha(1);
-        UI_DragSlot.instance.Set_color(testColor);      //Å×½ºÆ®ÄÚµå
+        UI_DragSlot.instance.Set_color(testColor);      //ï¿½×½ï¿½Æ®ï¿½Úµï¿½
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        Debug.Log(name + "µå·¡±× Áß");
+        Debug.Log(name + "ï¿½å·¡ï¿½ï¿½ ï¿½ï¿½");
 
         if (SlotItem == null)
             return;
@@ -157,12 +161,12 @@ public class UI_Slot_bls : MonoBehaviour, IPointerClickHandler, IDropHandler, IP
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        Debug.Log(name + " µå·¡±× ³¡³²");
+        Debug.Log(name + " ï¿½å·¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 
-        ///////////////////////////////////// µå·¡±× ½½·Ô »ç¿ë ¿Ï·á
+        ///////////////////////////////////// ï¿½å·¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½
         UI_DragSlot.instance.Set_Alpha(0);
         UI_DragSlot.instance.DragSlot = null;
-        ///////////////////////////////////// Äü½½·Ô µî·Ï ¿Ï·á
+        ///////////////////////////////////// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½
 
         Update_Slot();
     }
@@ -187,7 +191,7 @@ public class UI_Slot_bls : MonoBehaviour, IPointerClickHandler, IDropHandler, IP
 
     public void Clear()
     {
-        //Å×½ºÆ® ÄÚµå
+        //ï¿½×½ï¿½Æ® ï¿½Úµï¿½
         Set_Color(Color.white);
 
         SlotItem = null;

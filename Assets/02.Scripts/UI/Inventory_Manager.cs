@@ -47,38 +47,38 @@ public class Inventory_Manager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Q) && Use_Inventory)
-        {
-            testitems = FindObjectsOfType<BaseItem>();
+        // if(Input.GetKeyDown(KeyCode.Q) && Use_Inventory)
+        // {
+        //     testitems = FindObjectsOfType<BaseItem>();
 
-            for (int i = 0; i < testitems.Length; i++)
-            {
-                UI_Slot_bls slot = Inventory.Find(x => x.Get_Item()?.itemData.name == testitems[i].itemData.name);
+        //     for (int i = 0; i < testitems.Length; i++)
+        //     {
+        //         UI_Slot_bls slot = Inventory.Find(x => x.Get_Item()?.itemData.name == testitems[i].itemData.name);
 
-                if (slot != null)
-                {
-                    slot.Get_Item().itemData.count++;
-                }
-                else
-                {
-                    Add_Item(testitems[i]);
+        //         if (slot != null)
+        //         {
+        //             slot.Get_Item().itemData.count++;
+        //         }
+        //         else
+        //         {
+        //             Add_Item(testitems[i]);
 
-                }
+        //         }
 
-            }
-        }
+        //     }
+        // }
 
-        if(Input.GetKeyDown(KeyCode.I))
-        {
-            Use_Inventory = !Use_Inventory;
-            Inventory_Canvas.SetActive(Use_Inventory);
-        }
+        // if(Input.GetKeyDown(KeyCode.I))
+        // {
+        //     Use_Inventory = !Use_Inventory;
+        //     Inventory_Canvas.SetActive(Use_Inventory);
+        // }
 
-        if (Input.GetMouseButtonDown((int)MouseButton.Middle))
-            Use_QuickSlot = true;
+        // if (Input.GetMouseButtonDown((int)MouseButton.Middle))
+        //     Use_QuickSlot = true;
 
-        if (Input.GetMouseButtonUp((int)MouseButton.Middle))
-            Use_QuickSlot = false;
+        // if (Input.GetMouseButtonUp((int)MouseButton.Middle))
+        //     Use_QuickSlot = false;
 
         if(!Use_Inventory)
             QuickSlot_Canvas.SetActive(Use_QuickSlot);
@@ -90,6 +90,47 @@ public class Inventory_Manager : MonoBehaviour
                 Remove_Item(slot);
             }
         }
+    }
+
+        /// <summary>
+    /// 아이템을 획득했을 때 호출되는 함수
+    /// </summary>
+    public void OnPickUp()
+    {
+        testitems = FindObjectsOfType<BaseItem>();
+
+        for (int i = 0; i < testitems.Length; i++)
+        {
+            UI_Slot_bls slot = Inventory.Find(x => x.Get_Item()?.itemData.name == testitems[i].itemData.name);
+
+            if (slot != null)
+            {
+                slot.Get_Item().itemData.count++;
+            }
+            else
+            {
+                Add_Item(testitems[i]);
+
+            }
+
+        }
+    }
+
+    /// <summary>
+    /// 인벤토리를 열었을 때 호출되는 함수
+    /// </summary>
+    public void OnShowInventory()
+    {
+        Use_Inventory = !Use_Inventory;
+        Inventory_Canvas.SetActive(Use_Inventory);
+    }
+
+    /// <summary>
+    /// 퀵슬롯을 열었을 때 호출되는 함수
+    /// </summary>
+    public void OnShowQuickSlot()
+    {
+        Use_QuickSlot = !Use_QuickSlot;
     }
 
     public void swap_Item(UI_Slot_bls _from, UI_Slot_bls _to)

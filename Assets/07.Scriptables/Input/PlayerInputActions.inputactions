@@ -60,7 +60,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "PickupItem",
+                    "name": "Interaction",
                     "type": "Button",
                     "id": "f791fc9f-c8eb-408b-8ed4-07ce3193cba7",
                     "expectedControlType": "Button",
@@ -87,7 +87,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "QuickSlot",
+                    "name": "ShowQuickSlot",
                     "type": "Button",
                     "id": "14dc45aa-a6e6-4a89-b97b-e8fe2f02c1ef",
                     "expectedControlType": "Button",
@@ -176,17 +176,6 @@
                 },
                 {
                     "name": "",
-                    "id": "94d0543f-9482-4eeb-9017-35264434e2b2",
-                    "path": "<Mouse>/delta",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Look",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "bd6688a6-297e-4aa6-a359-515cbbc6b71d",
                     "path": "<Keyboard>/i",
                     "interactions": "",
@@ -214,7 +203,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "PickupItem",
+                    "action": "Interaction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -247,7 +236,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "QuickSlot",
+                    "action": "ShowQuickSlot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "94d0543f-9482-4eeb-9017-35264434e2b2",
+                    "path": "<Pointer>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

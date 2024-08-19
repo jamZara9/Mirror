@@ -3675,6 +3675,7 @@ GameObject:
   - component: {fileID: 1200054177}
   - component: {fileID: 1200054176}
   - component: {fileID: 1200054175}
+  - component: {fileID: 1200054182}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3811,6 +3812,7 @@ MonoBehaviour:
   storage: {fileID: 0}
   playerStatus: {fileID: 1904281253}
   playerInventory: {fileID: 0}
+  inventoryManager: {fileID: 0}
 --- !u!114 &1200054176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3856,7 +3858,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d481e514e709cef4e90897e0093c0e42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputActionAsset: {fileID: -944628639613478452, guid: 5924b1d6d473edc48a2a5a393c220b64, type: 3}
   maxDistance: 10
   objectNameText: {fileID: 1629254774}
   detectedItem: {fileID: 0}
@@ -3893,6 +3894,28 @@ MonoBehaviour:
   inventoryUI: {fileID: 0}
   slots: []
   quickSlots: []
+--- !u!114 &1200054182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1200054171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd94c5a547b562a4bab4e5df8b1be43a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Inventory: []
+  QuickSlot: []
+  Text_ItemName: {fileID: 436748375}
+  Text_ItemDescription: {fileID: 539603455}
+  testitems: []
+  HUD_Canvas: {fileID: 1797485129}
+  Inventory_Canvas: {fileID: 1135269878}
+  QuickSlot_Canvas: {fileID: 906102277}
+  Use_Inventory: 0
+  Use_QuickSlot: 0
 --- !u!1 &1214842060
 GameObject:
   m_ObjectHideFlags: 0
@@ -4404,14 +4427,13 @@ GameObject:
   m_Component:
   - component: {fileID: 1530943325}
   - component: {fileID: 1530943324}
-  - component: {fileID: 1530943326}
   m_Layer: 0
   m_Name: Inventory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1530943324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4449,28 +4471,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1530943326
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1530943323}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f50bc52551e26d47a72865ffc542cff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Inventory: []
-  QuickSlot: []
-  Text_ItemName: {fileID: 436748375}
-  Text_ItemDescription: {fileID: 539603455}
-  testitems: []
-  HUD_Canvas: {fileID: 1797485129}
-  Inventory_Canvas: {fileID: 1135269878}
-  QuickSlot_Canvas: {fileID: 906102277}
-  Use_Inventory: 0
-  Use_QuickSlot: 0
 --- !u!1001 &1588384929
 PrefabInstance:
   m_ObjectHideFlags: 0

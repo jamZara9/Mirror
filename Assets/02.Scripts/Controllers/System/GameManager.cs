@@ -19,6 +19,9 @@ public class GameManager : Singleton<GameManager>
     public PlayerStatus playerStatus;                 // 플레이어 상태
     public PlayerInventory playerInventory;           // 플레이어 인벤토리
 
+    // Test
+    public Inventory_Manager inventoryManager;
+
     void Awake(){
 
         playerStatus = FindAnyObjectByType<PlayerStatus>(); // 플레이어 상태 찾기
@@ -28,6 +31,7 @@ public class GameManager : Singleton<GameManager>
         CheckObject(ref cameraController);
         CheckObject(ref storage);
         CheckObject(ref playerInventory);
+        CheckObject(ref inventoryManager);
 
     }
 
