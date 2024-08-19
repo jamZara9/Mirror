@@ -36,7 +36,7 @@ public class CameraController : MonoBehaviour
 
     void Awake(){
         // Input Action Asset에서 Look 액션 참조
-        lookAction = inputActionAsset.FindActionMap("Player").FindAction("Look1");
+        lookAction = inputActionAsset.FindActionMap("Player").FindAction("Look");
     }
 
     void Update(){
