@@ -398,7 +398,7 @@ namespace StarterAssets
 
         private void UseItem(){
             if(_input.useItem){
-                MainGameManager gameManager = MainGameManager.Instance;
+                GameManager gameManager = GameManager.Instance;
                 if(gameManager.playerInventory.selectedItem != null){
                     // 아이템 사용
                     EventManager.ItemUse(gameManager.playerInventory);
@@ -410,7 +410,7 @@ namespace StarterAssets
         private void PickupItem(){
             // 키를 입력 받은 경우 
             if(_input.pickupItem){ 
-                MainGameManager gameManager = MainGameManager.Instance;
+                GameManager gameManager = GameManager.Instance;
                 CameraController cameraController = gameManager.cameraController;
 
                 if(cameraController.detectedItem != null){
@@ -437,7 +437,7 @@ namespace StarterAssets
 
         private void ShowInventory(){
             if(_input.inventory){
-                MainGameManager gameManager = MainGameManager.Instance;     // MainGameManager 인스턴스
+                GameManager gameManager = GameManager.Instance;     // MainGameManager 인스턴스
                 UIController_Test uiController = gameManager.uiController;  // UIController_Test 인스턴스
 
                 // 인벤토리 UI 활성화/비활성화
@@ -452,7 +452,7 @@ namespace StarterAssets
         // 입력받은 키보드 입력에 따라 퀵슬롯을 사용할 수 있도록 해야하나 아직 미구현
         private void UseQuickSlot(){
             if(_input.number != 0){
-                MainGameManager gameManager = MainGameManager.Instance;
+                GameManager gameManager = GameManager.Instance;
                 PlayerInventory playerInventory = gameManager.playerInventory;
 
                 int itemIndex = _input.number - 1;

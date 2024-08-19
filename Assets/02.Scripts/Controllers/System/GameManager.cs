@@ -4,9 +4,12 @@ using UnityEngine;
 using StarterAssets;
 using System;
 
-public class MainGameManager : Singleton<MainGameManager>
+/// <summary>
+/// 게임의 전반적인 관리를 담당하는 클래스
+/// </summary>
+public class GameManager : Singleton<GameManager>
 {
-    private static MainGameManager _mainGameManager;              // 싱글톤 인스턴스
+    private static GameManager _mainGameManager;              // 싱글톤 인스턴스
 
     [Header("Manager")]
     public ItemManager itemManager;
@@ -17,13 +20,13 @@ public class MainGameManager : Singleton<MainGameManager>
     public PlayerInventory playerInventory;           // 플레이어 인벤토리
 
     void Awake(){
-        // itemManager = GetComponent<ItemManager>();
-        // uiController = GetComponent<UIController_Test>();
+
+        playerStatus = FindAnyObjectByType<PlayerStatus>(); // 플레이어 상태 찾기
+
         CheckObject(ref itemManager);
         CheckObject(ref uiController);
         CheckObject(ref cameraController);
         CheckObject(ref storage);
-        CheckObject(ref playerStatus);
         CheckObject(ref playerInventory);
 
     }

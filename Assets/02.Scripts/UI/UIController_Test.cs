@@ -27,8 +27,8 @@ public class UIController_Test : MonoBehaviour
 
     void Start()
     {
-        playerStatus = MainGameManager.Instance.playerStatus;
-        playerInventory = MainGameManager.Instance.playerInventory;
+        playerStatus = GameManager.Instance.playerStatus;
+        playerInventory = GameManager.Instance.playerInventory;
 
         // UI GameObjects 초기화
         if (canvas != null){

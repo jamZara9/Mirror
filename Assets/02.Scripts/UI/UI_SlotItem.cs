@@ -17,7 +17,7 @@ public class UI_SlotItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     private UI_Slot originalSlot;           // 기존 슬롯
 
     private void Start(){
-        canvas = MainGameManager.Instance.uiController.canvas.GetComponent<Canvas>();
+        canvas = GameManager.Instance.uiController.canvas.GetComponent<Canvas>();
         raycaster = canvas.GetComponent<GraphicRaycaster>();
     }
 
@@ -86,7 +86,7 @@ public class UI_SlotItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
             HandleSameSlotTypeMove(newSlot,originalIndex, newIndex);
         }else{  // 서로 다른 슬롯 타입으로 이동한 경우
             if(newSlot.slotType == UI_Slot.SlotType.QuickSlot){
-                MainGameManager.Instance.playerInventory.SetQuickSlotItem(item.gameObject, newIndex);
+                GameManager.Instance.playerInventory.SetQuickSlotItem(item.gameObject, newIndex);
 
                 // 퀵슬롯에 이미 아이템이 있는 경우 해당 아이템을 비우고 새로운 아이템을 추가
                 if(newSlot.transform.childCount > 0){
@@ -96,7 +96,7 @@ public class UI_SlotItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
                 newSlot.SetSlotItem(this);
 
                 // 드래그가 끝난 후, SlotItem을 복사하여 새로운 슬롯에 추가
-                MainGameManager.Instance.uiController.UpdateInventoryUI(originalIndex);
+                GameManager.Instance.uiController.UpdateInventoryUI(originalIndex);
                 transform.SetParent(newSlot.transform);
             }else{
                 ReturnToOriginalSlot();
@@ -137,7 +137,7 @@ public class UI_SlotItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
         }
         // 슬롯의 인덱스를 업데이트
-        MainGameManager.Instance.playerInventory.SwapInventoryItem(originalIndex, newIndex);
+        GameManager.Instance.playerInventory.SwapInventoryItem(originalIndex, newIndex);
 
         newSlot.SetSlotItem(this);
     }
@@ -149,11 +149,11 @@ public class UI_SlotItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     /// <param name="eventData"></param>
     /// @TODO: 아이템을 선택 후 퀵슬롯을 지정해야 해당 퀵 슬롯에 아이템이 추가되도록 수정필요
     public void OnPointerClick(PointerEventData eventData){
-        MainGameManager.Instance.playerInventory.selectedItem = item.gameObject;
+        GameManager.Instance.playerInventory.selectedItem = item.gameObject;
         Debug.Log($"아이템 '{item.itemData.name}'이(가) 선택되었습니다.");
 
-        MainGameManager.Instance.playerInventory.ItemNameTxt.GetComponent<TMPro.TextMeshPro>().text = item.itemData.name;
-        MainGameManager.Instance.playerInventory.ItemSubTxt.GetComponent<TMPro.TextMeshPro>().text = item.itemData.description;
+        GameManager.Instance.playerInventory.ItemNameTxt.GetComponent<TMPro.TextMeshPro>().text = item.itemData.name;
+        GameManager.Instance.playerInventory.ItemSubTxt.GetComponent<TMPro.TextMeshPro>().text = item.itemData.description;
         // 임시로 자동으로 퀵슬롯에 추가
         // MainGameManager.Instance.playerInventory.MoveItemToQuickSlot(item.gameObject, 0);
     }

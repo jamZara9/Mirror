@@ -22,7 +22,7 @@ public class ConsumableItem : BaseItem
 
     void Start()
     {
-        playerStatus = MainGameManager.Instance.playerStatus;
+        playerStatus = GameManager.Instance.playerStatus;
     }
 
     public override void UseItem()
