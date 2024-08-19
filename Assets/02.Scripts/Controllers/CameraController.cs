@@ -18,8 +18,6 @@ public class CameraController : MonoBehaviour
 {
 
     [Header("Mouse Settings")]
-    private InputAction lookAction;             // Look 액션 참조
-    public InputActionAsset  inputActionAsset;  // Input Action Asset 참조
     private Vector2 mousePosition;              // 마우스 위치
     private bool isCursorLocked = true;         // 마우스 커서 상태
 
@@ -35,13 +33,11 @@ public class CameraController : MonoBehaviour
     public GameObject detectedItem;             // 감지된 아이템
 
     void Awake(){
-        // Input Action Asset에서 Look 액션 참조
-        lookAction = inputActionAsset.FindActionMap("Player").FindAction("Look");
+        // 마우스 위치를 화면 중앙으로 초기화
+        mousePosition = new Vector2(Screen.width / 2f, Screen.height / 2f);
     }
 
     void Update(){
-        // Input System을 통해 마우스 위치를 업데이트
-        mousePosition = lookAction.ReadValue<Vector2>();
         CheckForItem();
         if(isCursorLocked){
             Cursor.lockState = CursorLockMode.Locked; // 마우스 커서 고정
@@ -91,18 +87,6 @@ public class CameraController : MonoBehaviour
             detectedItem.GetComponent<BaseItem>().isPickable = false;
             detectedItem = null;
         }
-    }
-
-    // Input System 활성화
-    private void OnEnable()
-    {
-        lookAction.Enable();
-    }
-
-    // Input System 비활성화
-    private void OnDisable()
-    {
-        lookAction.Disable();
     }
 
     /// <summary>
