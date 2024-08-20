@@ -9,8 +9,6 @@ using System;
 /// </summary>
 public class GameManager : Singleton<GameManager>
 {
-    private static GameManager _mainGameManager;              // 싱글톤 인스턴스
-
     [Header("Manager")]
     public ItemManager itemManager;
     public CameraController cameraController;         // 카메라 컨트롤러
@@ -22,7 +20,16 @@ public class GameManager : Singleton<GameManager>
     // Test
     public Inventory_Manager inventoryManager;
 
-    void Awake(){
+    void Awake()
+    {
+        // 싱글톤 패턴 적용
+        if (Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        DontDestroyOnLoad(gameObject); // GameManager가 씬 변경 시에도 파괴되지 않도록 설정
 
         playerStatus = FindAnyObjectByType<PlayerStatus>(); // 플레이어 상태 찾기
 
@@ -40,9 +47,11 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="manager"></param>
-    private void CheckObject<T>(ref T manager) where T : Component{
+    private void CheckObject<T>(ref T manager) where T : Component
+    {
         // 해당 매니저가 null이면 해당 manager의 타입을 찾아서 할당
-        if (manager == null){
+        if (manager == null)
+        {
             manager = GetComponent<T>();
         }
 

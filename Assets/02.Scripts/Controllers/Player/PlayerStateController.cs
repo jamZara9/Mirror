@@ -53,6 +53,8 @@ public class PlayerStateController : MonoBehaviour
     public float bottomClamp = -30.0f;                      // 카메라 하단 회전 제한 각도
     public float cameraAngleOverride = 0.0f;                // 카메라 각도 오버라이드
 
+    private bool _isQuickSlotCurrentlyVisible  = false;     // 현재 퀵슬롯 활성화 여부
+
     void Start()
     {
         _hasAnimator = TryGetComponent(out _animator);
@@ -393,13 +395,21 @@ public class PlayerStateController : MonoBehaviour
     }
 
     private void ShowQuickSlot(){
+        // 임시 테스트용
+        Inventory_Manager inventoryManager = GameManager.Instance.inventoryManager; // InventoryManager_Test 인스턴스
         if(_inputActions.isQuickSlotVisible){
             // Debug.Log("퀵슬롯 활성화/비활성화");
 
-            // 임시 테스트용
-            Inventory_Manager inventoryManager = GameManager.Instance.inventoryManager;  // InventoryManager_Test 인스턴스
+            if(!_isQuickSlotCurrentlyVisible){
+                _isQuickSlotCurrentlyVisible = true;
+                inventoryManager.OnShowQuickSlot();
+            }
 
-            inventoryManager.OnShowQuickSlot();
+        }else{
+            if(_isQuickSlotCurrentlyVisible){
+                _isQuickSlotCurrentlyVisible = false;
+                inventoryManager.OnShowQuickSlot();
+            }
         }
     }
 

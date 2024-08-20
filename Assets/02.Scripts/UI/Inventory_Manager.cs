@@ -80,8 +80,8 @@ public class Inventory_Manager : MonoBehaviour
         // if (Input.GetMouseButtonUp((int)MouseButton.Middle))
         //     Use_QuickSlot = false;
 
-        if(!Use_Inventory)
-            QuickSlot_Canvas.SetActive(Use_QuickSlot);
+        // if(!Use_Inventory)
+        //     QuickSlot_Canvas.SetActive(Use_QuickSlot);
 
         foreach(UI_Slot_bls slot in Inventory)
         {
@@ -131,6 +131,7 @@ public class Inventory_Manager : MonoBehaviour
     public void OnShowQuickSlot()
     {
         Use_QuickSlot = !Use_QuickSlot;
+        QuickSlot_Canvas.SetActive(Use_QuickSlot);
     }
 
     public void swap_Item(UI_Slot_bls _from, UI_Slot_bls _to)
