@@ -16,6 +16,7 @@ public class GameManager : Singleton<GameManager>
     public Storage storage;                           // 저장소
     public PlayerStatus playerStatus;                 // 플레이어 상태
     public PlayerInventory playerInventory;           // 플레이어 인벤토리
+    public WeaponManager weaponManager;               // 무기 매니저
 
     // Test
     public Inventory_Manager inventoryManager;
@@ -39,6 +40,7 @@ public class GameManager : Singleton<GameManager>
         CheckObject(ref storage);
         CheckObject(ref playerInventory);
         CheckObject(ref inventoryManager);
+        CheckObject(ref weaponManager);
 
     }
 
