@@ -34,6 +34,7 @@ public class ItemManager : MonoBehaviour
             items.Add(item);                    // 리스트에 추가
             SetItemData(item);                  // 아이템 데이터 설정
             SetItemActiveState(item, true);     // 아이템 활성화
+            SetItemIcon(item);                  // 아이템 아이콘 설정
             Debug.Log($"아이템 추가: {item.itemID}");
         }
     }
@@ -60,6 +61,23 @@ public class ItemManager : MonoBehaviour
             // json 데이터 -> 딕셔너리로 변환
             itemDictionary = JsonConvert.DeserializeObject<Dictionary<string, BaseItemData>>(jsonData);
             Debug.Log($"아이템 데이터 로드 완료. 아이템 개수: {itemDictionary.Count}");
+        }
+    }
+
+    /// <summary>
+    /// 아이템 아이콘 설정 함수
+    /// </summary>
+    private void SetItemIcon(BaseItem item){
+        BaseItemData data = itemDictionary[item.itemID];
+        try{
+            if(data.iconPath == null || data.iconPath == ""){
+                Debug.LogError("아이템 아이콘 경로가 비어있습니다.");
+                return;
+            }
+
+            item.icon = Resources.Load<Sprite>(data.iconPath);
+        }catch(System.Exception e){
+            Debug.LogError($"아이템 아이콘 설정 중 오류 발생: {e}");
         }
     }
 
