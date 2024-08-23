@@ -18,7 +18,7 @@ public class UIController_Test : MonoBehaviour
     public GameObject hpText;      // HP 텍스트 UI
     public GameObject inventoryUI; // 인벤토리 UI
 
-    private PlayerInventory playerInventory;    // 플레이어 인벤토리
+    private PlayerInventory_Test playerInventory;    // 플레이어 인벤토리
     private PlayerStatus playerStatus;          // 플레이어 상태
 
     public GameObject[] slots;                  // 슬롯 배열 (인벤토리 슬롯 개수만큼 생성)
@@ -28,7 +28,8 @@ public class UIController_Test : MonoBehaviour
     void Start()
     {
         playerStatus = GameManager.Instance.playerStatus;
-        playerInventory = GameManager.Instance.playerInventory;
+        // playerInventory = GameManager.Instance.playerInventory;
+        playerInventory = GetComponent<PlayerInventory_Test>();
 
         // UI GameObjects 초기화
         if (canvas != null){

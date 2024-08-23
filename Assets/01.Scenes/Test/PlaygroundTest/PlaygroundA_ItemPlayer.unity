@@ -3232,6 +3232,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2229629455532933171, guid: 04ce56487357d8a4986a2417a787480a, type: 3}
   m_PrefabInstance: {fileID: 906655994}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &963276248 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3574060308841683697, guid: 8dd6536f3dafc204e96c8fe9f4d46964, type: 3}
+  m_PrefabInstance: {fileID: 1283639178}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &967490087
 GameObject:
   m_ObjectHideFlags: 0
@@ -3812,6 +3817,7 @@ GameObject:
   - component: {fileID: 1200054176}
   - component: {fileID: 1200054175}
   - component: {fileID: 1200054182}
+  - component: {fileID: 1200054183}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3948,6 +3954,7 @@ MonoBehaviour:
   storage: {fileID: 0}
   playerStatus: {fileID: 1904281253}
   playerInventory: {fileID: 0}
+  weaponManager: {fileID: 0}
   inventoryManager: {fileID: 0}
 --- !u!114 &1200054176
 MonoBehaviour:
@@ -4052,6 +4059,19 @@ MonoBehaviour:
   QuickSlot_Canvas: {fileID: 906102277}
   Use_Inventory: 0
   Use_QuickSlot: 0
+--- !u!114 &1200054183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1200054171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e23e6222f06538448a0cc56c39aa8f9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapons: []
 --- !u!1 &1214842060
 GameObject:
   m_ObjectHideFlags: 0
@@ -4287,6 +4307,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3574060308841683697, guid: 8dd6536f3dafc204e96c8fe9f4d46964, type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
     - target: {fileID: 4238534065808244811, guid: 8dd6536f3dafc204e96c8fe9f4d46964, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.3
@@ -4339,16 +4363,43 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -6476588423418352388, guid: 8dd6536f3dafc204e96c8fe9f4d46964, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3574060308841683697, guid: 8dd6536f3dafc204e96c8fe9f4d46964, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1283639183}
   m_SourcePrefab: {fileID: 100100000, guid: 8dd6536f3dafc204e96c8fe9f4d46964, type: 3}
 --- !u!4 &1283639179 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4238534065808244811, guid: 8dd6536f3dafc204e96c8fe9f4d46964, type: 3}
   m_PrefabInstance: {fileID: 1283639178}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1283639183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963276248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d93283662a0100348b89616711c9d992, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponID: Weapon001
+  weaponData:
+    name: 
+    description: 
+    iconPath: 
+    type: 1
+    damage: 0
+  attackType: 0
+  fireRate: 0
+  range: 0
+  icon: {fileID: 0}
 --- !u!1 &1361934019
 GameObject:
   m_ObjectHideFlags: 0

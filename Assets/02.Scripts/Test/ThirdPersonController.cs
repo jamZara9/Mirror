@@ -459,7 +459,10 @@ namespace StarterAssets
                 Debug.Log($"itemIndex : {itemIndex}");
 
                 if(playerInventory.maxQuickSlots > itemIndex && playerInventory.quickSlots[itemIndex] != null){
-                    playerInventory.selectedItem = playerInventory.quickSlots[itemIndex].gameObject;
+                    if(playerInventory.quickSlots[itemIndex] is MonoBehaviour monoBehaviour){
+                        playerInventory.selectedItem = monoBehaviour.gameObject;
+                    }
+                    // playerInventory.selectedItem = playerInventory.quickSlots[itemIndex].gameObject;
 
                     Debug.Log($"playerInventory.selectedItem : {playerInventory.selectedItem.name}");
 
