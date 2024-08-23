@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour, IItemContainer
 {
-    public List<BaseItem> items = new List<BaseItem>();         // 플레이어의 인벤토리 아이템 리스트
-    public List<BaseItem> quickSlots = new List<BaseItem>();    // 퀵슬롯 아이템 리스트
+    public List<IInventoryItem> items = new List<IInventoryItem>();         // 플레이어의 인벤토리 아이템 리스트
+    public List<IInventoryItem> quickSlots = new List<IInventoryItem>();    // 퀵슬롯 아이템 리스트
     public GameObject selectedItem = null;      // 선택된 아이템
 
     public GameObject ItemNameTxt;
@@ -74,48 +74,59 @@ public class PlayerInventory : MonoBehaviour, IItemContainer
         }
     }
 
-    public BaseItem GetItemAt(int index){
-        if (index >= 0 && index < items.Count){
+    public IInventoryItem GetItemAt(int index)
+    {
+        if (index >= 0 && index < items.Count)
+        {
             return items[index];
         }
         return null;
     }
 
-    public void SetQuickSlotItem(GameObject item, int quickSlotIndex){
-        BaseItem baseItem = item.GetComponent<BaseItem>();
+    public void SetQuickSlotItem(GameObject item, int quickSlotIndex)
+    {
+        IInventoryItem inventoryItem = item.GetComponent<IInventoryItem>();
 
-        if (items.Contains(baseItem)) {
-            if (quickSlotIndex >= 0 && quickSlotIndex < quickSlots.Count){
-                quickSlots[quickSlotIndex] = baseItem;
-                baseItem.itemData.quickSlotIndex = quickSlotIndex;
+        if (inventoryItem != null && items.Contains(inventoryItem))
+        {
+            if (quickSlotIndex >= 0 && quickSlotIndex < quickSlots.Count)
+            {
+                quickSlots[quickSlotIndex] = inventoryItem;
+                inventoryItem.InventoryIndex = quickSlotIndex;
 
-                Debug.Log($"아이템 '{baseItem.itemID}'이(가) 퀵슬롯 {quickSlotIndex}에 추가되었습니다.");
-            }else{
+                Debug.Log($"아이템 '{inventoryItem.ItemID}'이(가) 퀵슬롯 {quickSlotIndex}에 추가되었습니다.");
+            }
+            else
+            {
                 Debug.LogError("유효하지 않은 퀵슬롯 인덱스입니다.");
             }
-        }else{
+        }
+        else
+        {
             Debug.LogError("인벤토리에 아이템이 존재하지 않습니다.");
         }
     }
 
-    public void SwapInventoryItem(int originalIndex, int newIndex){
-
+    public void SwapInventoryItem(int originalIndex, int newIndex)
+    {
         Debug.Log($"인벤토리 아이템 스왑: {originalIndex} -> {newIndex}");
-        BaseItem originalItem = GetItemAt(originalIndex);   // 옮길 아이템
-        BaseItem newItem = GetItemAt(newIndex);             // 옮길 위치에 있는 아이템
-        
-        // 옮긴 위치에 슬롯이 비어있지 않은 경우
-        if(newItem != null){
-            items[newIndex] = originalItem; 
-            items[originalIndex] = newItem;     
-        }else{
+        IInventoryItem originalItem = GetItemAt(originalIndex);
+        IInventoryItem newItem = GetItemAt(newIndex);
+
+        if (newItem != null)
+        {
+            items[newIndex] = originalItem;
+            items[originalIndex] = newItem;
+        }
+        else
+        {
             items[newIndex] = originalItem;
             items[originalIndex] = null;
         }
-        
-        originalItem.itemData.inventoryIndex = newIndex;
-        if(items[originalIndex]) newItem.itemData.inventoryIndex = originalIndex;
 
-        Debug.Log($"옮긴 아이템의 인벤토리 인덱스 : {items[newIndex].itemData.inventoryIndex}");
+        originalItem.InventoryIndex = newIndex;
+        if (items[originalIndex] != null) newItem.InventoryIndex = originalIndex;
+
+        Debug.Log($"옮긴 아이템의 인벤토리 인덱스 : {items[newIndex].InventoryIndex}");
     }
 }

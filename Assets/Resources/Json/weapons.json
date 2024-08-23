@@ -4,6 +4,9 @@
 		"description" : "누군가 사랑을 전도하고 싶어했던 야구 배트. 지금 상황에 가장 적합한 무기다.",
 		"type" : "Melee",
 		"iconPath" : "Items/Sprite/Ammo9mm",
+		"count" : 0,
+		"inventoryIndex" : -1,
+		"quickSlotIndex" : -1,
 		"damage" : 10
 	}
 }
