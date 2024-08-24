@@ -51,5 +51,4 @@ public abstract class BaseItemManager<T,D> :  MonoBehaviour where T : MonoBehavi
     protected abstract void SetItemIcon(T item);    // 아이템 아이콘 설정 함수
     protected abstract string GetItemID(T item);    // 아이템 ID 반환 함수
 
-
 }

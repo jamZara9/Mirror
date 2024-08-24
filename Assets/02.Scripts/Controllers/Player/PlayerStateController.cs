@@ -318,18 +318,26 @@ public class PlayerStateController : MonoBehaviour
         }
     }
 
-
+    /// <summary>
+    /// 아이템 사용
+    /// @Todo: 추후 로직을 다른 곳으로 이동 시킬지 고민 필요
+    /// </summary>
     private void UseItem()
     {
         if (_inputActions.isUseItem)
         {
-            Debug.Log("아이템 사용");
-            // GameManager gameManager = GameManager.Instance;
-            // if (gameManager.playerInventory.selectedItem != null)
-            // {
-            //     // 아이템 사용
-            //     EventManager.ItemUse(gameManager.playerInventory);
-            // }
+            GameManager gameManager = GameManager.Instance;
+            PlayerInventory playerInventory = gameManager.playerInventory;
+
+            if(playerInventory.selectedItem != null){
+                BaseItem targetItem = playerInventory.selectedItem.GetComponent<BaseItem>();
+                if(targetItem.Count > 0){
+                    targetItem.UseItem();                        // 아이템 사용
+                    targetItem.Count -= 1;                       // 아이템 개수 감소
+                    playerInventory.selectedItem = null;
+                    Debug.Log("아이템 사용");
+                }
+            }
             _inputActions.isUseItem = false;
         }
     }
@@ -345,13 +353,17 @@ public class PlayerStateController : MonoBehaviour
         {
             GameManager gameManager = GameManager.Instance;
             CameraController cameraController = gameManager.cameraController;
-
+            GameObject detetedItem = cameraController.detectedItem;
+            
             // 아이템이 감지된 경우
-            if (cameraController.detectedItem != null)
+            if (detetedItem != null)
             {
-                // // 아이템을 획득
-                EventManager.ItemPickup(cameraController.detectedItem.GetComponent<IInventoryItem>(), gameManager.playerInventory);
-                // inventoryManager.OnPickUp();
+                IInventoryItem inventoryItem = detetedItem.GetComponent<IInventoryItem>();
+
+                detetedItem.SetActive(false);
+                inventoryItem.IsActive = false;
+                gameManager.playerInventory.AddItem(inventoryItem);// 플레이어 인벤토리에 아이템 추가
+                Debug.Log("아이템 획득");
                 cameraController.detectedItem = null;
             }
 
@@ -366,11 +378,30 @@ public class PlayerStateController : MonoBehaviour
 
             Debug.Log("아이템 이동");
             // @TODO: 추후 임시코드 제거 및 해당 아이템이 인벤토리에 있는지 확인하는 코드 추가
+            // @TODO: 추후 TransferItem 함수를 합칠지 고민 필요
 
             // 임시 테스트 코드 진행
             // 인벤토리에 있는 아이템 하나를 창고로 이동
             // ItemManager.Instance.TransferItem(PlayerInventory.Instance, Storage.Instance, PlayerInventory.Instance.items[0]);
             _inputActions.isTransferItem = false;
+        }
+    }
+
+    /// <summary>
+    /// 아이템 이동 함수
+    /// </summary>
+    /// <param name="from">아이템 존재하는 위치</param>
+    /// <param name="to">아이템을 이동시킬 위치</param>
+    /// <param name="item">전달하고자 하는 아이템</param>
+    private void TransferItem(IItemContainer from, IItemContainer to, BaseItem item){
+        // @ TODO: 아이템 이동 로직 구현 아직 미완성
+
+        if(from != null && to != null){
+            from.RemoveItem(item);
+            to.AddItem(item);
+            Debug.Log("아이템 이동");
+        }else{
+            Debug.LogError("아이템 이동 실패");
         }
     }
 

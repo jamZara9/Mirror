@@ -401,7 +401,7 @@ namespace StarterAssets
                 GameManager gameManager = GameManager.Instance;
                 if(gameManager.playerInventory.selectedItem != null){
                     // 아이템 사용
-                    EventManager.ItemUse(gameManager.playerInventory);
+                    // EventManager.ItemUse(gameManager.playerInventory);
                 }
                 _input.useItem = false;
             }
@@ -415,7 +415,7 @@ namespace StarterAssets
 
                 if(cameraController.detectedItem != null){
                     // 아이템을 획득
-                    EventManager.ItemPickup(cameraController.detectedItem.GetComponent<BaseItem>(), gameManager.playerInventory);
+                    // EventManager.ItemPickup(cameraController.detectedItem.GetComponent<BaseItem>(), gameManager.playerInventory);
                     cameraController.detectedItem = null;
                 }
                 _input.pickupItem = false;
@@ -464,7 +464,7 @@ namespace StarterAssets
                     Debug.Log($"playerInventory.selectedItem : {playerInventory.selectedItem.name}");
 
                     // 아이템 사용
-                    EventManager.ItemUse(playerInventory);
+                    // EventManager.ItemUse(playerInventory);
                 }
                 _input.number = 0;
 
