@@ -44,6 +44,7 @@ public class GameManager : Singleton<GameManager>
         CheckObject(ref playerInventory);
         CheckObject(ref inventoryManager);
         CheckObject(ref weaponManager);
+        CheckObject(ref uiManager);
 
     }
 
