@@ -128,10 +128,13 @@ MonoBehaviour:
   moveSpeed: 4
   attackDelay: 2
   attackPower: 5
+  _currentTime: 0
+  _player: {fileID: 0}
+  m_State: 0
   isMovingMonster: 1
   moveDirectionList:
-  - {x: 0, y: 1, z: 20}
-  - {x: 0, y: 1, z: 10}
+  - {x: 5, y: 1, z: 4}
+  - {x: -5, y: 1, z: 4}
   moveDirectionDelayList:
   - 1
   - 2
@@ -141,11 +144,10 @@ MonoBehaviour:
   TargetMask:
     serializedVersion: 2
     m_Bits: 256
-  ObstacleMask:
-    serializedVersion: 2
-    m_Bits: 0
   Mirror: {fileID: 7204858600453076654}
   isMirrorAttacked: 0
+  dashDistance: 5
+  dashDuration: 0.5
 --- !u!54 &1280834569873104485
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -262,13 +264,42 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: aa2ccdfb702394decb9af437a3dcf9da, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1314299551184728812}
   m_SourcePrefab: {fileID: 100100000, guid: aa2ccdfb702394decb9af437a3dcf9da, type: 3}
 --- !u!4 &6238477269426570407 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: aa2ccdfb702394decb9af437a3dcf9da, type: 3}
   m_PrefabInstance: {fileID: 5843771790902977356}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6762250131144531485 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: aa2ccdfb702394decb9af437a3dcf9da, type: 3}
+  m_PrefabInstance: {fileID: 5843771790902977356}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1314299551184728812
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6762250131144531485}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9b3d0daedb90a49318567cc766f49c21, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7204858600453076654 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -5555766550443321886, guid: aa2ccdfb702394decb9af437a3dcf9da, type: 3}
