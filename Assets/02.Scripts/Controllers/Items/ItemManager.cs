@@ -69,24 +69,4 @@ public class ItemManager : BaseItemManager<BaseItem, BaseItemData>
         // RemoveItem(items.Find(x => x.itemID == testItemID));
     }
 
-
-
-    /// <summary>
-    /// 아이템 이동 함수
-    /// </summary>
-    /// <param name="from">아이템 존재하는 위치</param>
-    /// <param name="to">아이템을 이동시킬 위치</param>
-    /// <param name="item">전달하고자 하는 아이템</param>
-    public void TransferItem(IItemContainer from, IItemContainer to, BaseItem item){
-        // @ TODO: 아이템 이동 로직 구현 아직 미완성
-
-        if(from != null && to != null){
-            from.RemoveItem(item);
-            to.AddItem(item);
-            Debug.Log("아이템 이동");
-        }else{
-            Debug.LogError("아이템 이동 실패");
-        }
-    }
-
 }

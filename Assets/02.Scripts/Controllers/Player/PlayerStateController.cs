@@ -330,6 +330,7 @@ public class PlayerStateController : MonoBehaviour
             PlayerInventory playerInventory = gameManager.playerInventory;
 
             if(playerInventory.selectedItem != null){
+                Debug.Log($"선택된 아이템: {playerInventory.selectedItem.name}");
                 BaseItem targetItem = playerInventory.selectedItem.GetComponent<BaseItem>();
                 if(targetItem.Count > 0){
                     targetItem.UseItem();                        // 아이템 사용
@@ -362,6 +363,8 @@ public class PlayerStateController : MonoBehaviour
 
                 detetedItem.SetActive(false);
                 inventoryItem.IsActive = false;
+                inventoryItem.Count += 1; // 아이템 개수 증가
+                
                 gameManager.playerInventory.AddItem(inventoryItem);// 플레이어 인벤토리에 아이템 추가
                 Debug.Log("아이템 획득");
                 cameraController.detectedItem = null;
