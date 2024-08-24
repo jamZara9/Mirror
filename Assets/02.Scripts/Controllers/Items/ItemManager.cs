@@ -15,17 +15,17 @@ public class ItemManager : BaseItemManager<BaseItem, BaseItemData>
 {
     protected override string DataPath => "Json/items"; // 아이템 데이터 경로
     
-    // // EventManager에 이벤트 핸들러 등록
-    // private void OnEnable() {
-    //     EventManager.OnItemPickup += HandleItemPickup;
-    //     EventManager.OnItemUse += HandleItemUse;
-    // }
+    // EventManager에 이벤트 핸들러 등록
+    private void OnEnable() {
+        EventManager.OnItemPickup += HandleItemPickup;
+        EventManager.OnItemUse += HandleItemUse;
+    }
 
-    // // EventManager에 이벤트 핸들러 해제
-    // private void OnDisable() {
-    //     EventManager.OnItemPickup -= HandleItemPickup;
-    //     EventManager.OnItemUse -= HandleItemUse;
-    // }
+    // EventManager에 이벤트 핸들러 해제
+    private void OnDisable() {
+        EventManager.OnItemPickup -= HandleItemPickup;
+        EventManager.OnItemUse -= HandleItemUse;
+    }
 
     /// <summary>
     /// 아이템 데이터 설정 함수
@@ -81,6 +81,46 @@ public class ItemManager : BaseItemManager<BaseItem, BaseItemData>
         // RemoveItem(items.Find(x => x.itemID == testItemID));
     }
 
+    /// <summary>
+    /// 아이템 활성화 상태 설정 함수
+    /// </summary>
+    /// <param name="item">상태 변경이 일어날 아이템</param>
+    /// <param name="state">상태</param>
+    protected void SetItemActiveState(IInventoryItem item, bool state){
+        item.ItemGameObject.SetActive(state);
+        item.IsActive = state;
+    }
+
+    /// <summary>
+    /// 아이템 픽업 함수 [관측된 아이템을 플레이어 인벤토리에 추가]
+    /// </summary>
+    /// <param name="detectedItem">관측된 아이템</param>
+    /// <param name="playerInventory">아이템을 저장할 인벤토리</param>
+    private void HandleItemPickup(IInventoryItem detectedItem, PlayerInventory playerInventory){
+        if(detectedItem != null){
+            SetItemActiveState(detectedItem, false);          // 아이템 비활성화
+            playerInventory.AddItem(detectedItem);            // 플레이어 인벤토리에 아이템 추가
+            Debug.Log("아이템 획득");
+        }
+    }
+
+    /// <summary>
+    /// 아이템 사용 함수
+    /// </summary>
+    /// <param name="playerInventory">아이템을 사용할 인벤토리</param>
+    private void HandleItemUse(PlayerInventory playerInventory){
+        // 선택된 아이템이 사용 가능한지 확인
+        // @TODO: useable 여부에 대한 확인이 필요
+        if(playerInventory.selectedItem != null){
+            BaseItem targetItem = playerInventory.selectedItem.GetComponent<BaseItem>();
+            if(targetItem.Count > 0){
+                targetItem.UseItem();                        // 아이템 사용
+                targetItem.Count -= 1;                       // 아이템 개수 감소
+                playerInventory.selectedItem = null;
+                Debug.Log("아이템 사용");
+            }
+        }
+    }
 
     /// <summary>
     /// 아이템 이동 함수

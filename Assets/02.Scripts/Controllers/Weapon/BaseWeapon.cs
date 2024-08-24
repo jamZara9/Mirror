@@ -54,9 +54,10 @@ public abstract class BaseWeapon : MonoBehaviour , IInventoryItem
     public float range;                 // 사정거리
     public Sprite icon;                 // 아이콘
 
+    [Header("Item Parameters")]
     public bool isActive = false;       // 활성화 여부
     public bool isUsable = false;       // 사용 가능 여부
-    public bool isPickable = false;     // 줍기 가능 여부
+    public bool isPickable = true;     // 줍기 가능 여부
 
     /// <summary>
     /// 공격할 때 호출되는 함수
