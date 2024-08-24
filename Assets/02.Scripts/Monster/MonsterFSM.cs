@@ -84,9 +84,9 @@ public class MonsterFSM : MonoBehaviour,IDamage
         Vector3 rightDir = AngleToDir(transform.eulerAngles.y + ViewAngle * 0.5f);
         Vector3 leftDir = AngleToDir(transform.eulerAngles.y - ViewAngle * 0.5f);
         
-        Debug.DrawRay(myPos, rightDir * ViewRadius, Color.blue);
-        Debug.DrawRay(myPos, leftDir * ViewRadius, Color.blue);
-        Debug.DrawRay(myPos, transform.forward * ViewRadius, Color.cyan);
+        Debug.DrawRay(myPos, rightDir * ViewRadius, Color.blue,0);
+        Debug.DrawRay(myPos, leftDir * ViewRadius, Color.blue,0);
+        Debug.DrawRay(myPos, transform.forward * ViewRadius, Color.cyan,0);
     }
     private Vector3 AngleToDir(float angle)
     {
