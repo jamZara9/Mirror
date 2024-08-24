@@ -8,9 +8,14 @@ public interface IInventoryItem
     string ItemID { get; }
     IInventoryItemData ItemData { get; }
     Sprite Icon { get; }
-    int Count { get; }
+    int Count { get; set;}
     int InventoryIndex { get; set; }
     int QuickSlotIndex { get; set; }
+    bool IsActive { get; set; }
+    bool IsUsable { get; set; }
+    bool IsPickable { get; set; }
+
+    GameObject ItemGameObject { get; }      // gameobject 반환을 위한 프로퍼티
 }
 
 /// <summary>

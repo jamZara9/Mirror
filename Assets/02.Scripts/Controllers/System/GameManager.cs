@@ -10,6 +10,7 @@ using System;
 public class GameManager : Singleton<GameManager>
 {
     [Header("Manager")]
+    #region Manager
     public ItemManager itemManager;
     public CameraController cameraController;         // 카메라 컨트롤러
     public UIController_Test uiController;            // UI 컨트롤러
@@ -18,6 +19,7 @@ public class GameManager : Singleton<GameManager>
     public PlayerInventory playerInventory;           // 플레이어 인벤토리
     public WeaponManager weaponManager;               // 무기 매니저
     public UIManager uiManager;                       // UI 매니저
+    #endregion
 
     // Test
     public Inventory_Manager inventoryManager;

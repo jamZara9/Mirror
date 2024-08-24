@@ -40,6 +40,10 @@ public abstract class BaseWeapon : MonoBehaviour , IInventoryItem
     public int Count { get => weaponData.count; set => weaponData.count = value; }
     public int InventoryIndex { get => weaponData.inventoryIndex; set => weaponData.inventoryIndex = value; }
     public int QuickSlotIndex { get => weaponData.quickSlotIndex; set => weaponData.quickSlotIndex = value; }
+    public GameObject ItemGameObject => this.gameObject;
+    public bool IsActive { get; set; }
+    public bool IsUsable { get; set; }
+    public bool IsPickable { get; set; }
 
 
     [Header("Information")]
@@ -49,6 +53,10 @@ public abstract class BaseWeapon : MonoBehaviour , IInventoryItem
     public float fireRate;              // 연사속도
     public float range;                 // 사정거리
     public Sprite icon;                 // 아이콘
+
+    public bool isActive = false;       // 활성화 여부
+    public bool isUsable = false;       // 사용 가능 여부
+    public bool isPickable = false;     // 줍기 가능 여부
 
     /// <summary>
     /// 공격할 때 호출되는 함수

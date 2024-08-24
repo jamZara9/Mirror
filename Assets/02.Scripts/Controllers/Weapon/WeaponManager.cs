@@ -31,21 +31,6 @@ public class WeaponManager : BaseItemManager<BaseWeapon, BaseWeaponData>
     /// </summary>
     protected override void SetItemIcon(BaseWeapon item)
     {
-        // if (dataDictionary.TryGetValue(item.weaponID, out var data))
-        // {
-        //     if (!string.IsNullOrEmpty(data.iconPath))
-        //     {
-        //         item.icon = Resources.Load<Sprite>(data.iconPath);
-        //     }
-        //     else
-        //     {
-        //         Debug.LogError("무기 아이콘 경로가 비어있습니다.");
-        //     }
-        // }
-        // else
-        // {
-        //     Debug.LogWarning($"무기 데이터가 없습니다: {item.weaponID}");
-        // }
         if (dataDictionary.TryGetValue(item.weaponID, out var data) && !string.IsNullOrEmpty(data.iconPath))
         {
             item.icon = Resources.Load<Sprite>(data.iconPath);

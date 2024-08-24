@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerInventory_Test : MonoBehaviour, IItemContainer
+public class PlayerInventory_Test : MonoBehaviour
 {
     public List<BaseItem> items = new List<BaseItem>();         // 플레이어의 인벤토리 아이템 리스트
     public List<BaseItem> quickSlots = new List<BaseItem>();    // 퀵슬롯 아이템 리스트

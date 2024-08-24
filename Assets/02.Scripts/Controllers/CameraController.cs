@@ -82,7 +82,7 @@ public class CameraController : MonoBehaviour
 
                     if (hitTag == "Item")
                     {
-                        detectedItem.GetComponent<BaseItem>().isPickable = true;   // 아이템을 획득 가능하도록 설정
+                        detectedItem.GetComponent<IInventoryItem>().IsPickable = true;   // 아이템을 획득 가능하도록 설정
                     }
                 }
             }else{

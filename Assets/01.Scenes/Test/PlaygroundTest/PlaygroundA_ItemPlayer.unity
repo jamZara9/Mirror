@@ -3810,12 +3810,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1200054172}
   - component: {fileID: 1200054174}
+  - component: {fileID: 1200054175}
   - component: {fileID: 1200054180}
   - component: {fileID: 1200054181}
   - component: {fileID: 1200054178}
   - component: {fileID: 1200054177}
   - component: {fileID: 1200054176}
-  - component: {fileID: 1200054175}
   - component: {fileID: 1200054182}
   - component: {fileID: 1200054183}
   m_Layer: 0
@@ -3955,6 +3955,7 @@ MonoBehaviour:
   playerStatus: {fileID: 1904281253}
   playerInventory: {fileID: 0}
   weaponManager: {fileID: 0}
+  uiManager: {fileID: 0}
   inventoryManager: {fileID: 0}
 --- !u!114 &1200054176
 MonoBehaviour:
@@ -4069,7 +4070,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e23e6222f06538448a0cc56c39aa8f9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weapons: []
+  items: []
 --- !u!1 &1214842060
 GameObject:
   m_ObjectHideFlags: 0

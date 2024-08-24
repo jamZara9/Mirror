@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class Storage : MonoBehaviour, IItemContainer
 {
-    public List<BaseItem> items;    // 창고 아이템 리스트
+    public List<IInventoryItem> items;    // 창고 아이템 리스트
 
     void Start(){
         // 아이템 리스트 초기화
-        items = new List<BaseItem>();
+        items = new List<IInventoryItem>();
     }
 
     // 아이템 추가
-    public void AddItem(BaseItem item){
-        item.itemData.count += 1;
+    public void AddItem(IInventoryItem item){
+        item.Count += 1;
 
         if(!items.Contains(item)){
             items.Add(item);
@@ -21,10 +21,11 @@ public class Storage : MonoBehaviour, IItemContainer
     }
 
     // 아이템 제거
-    public void RemoveItem(BaseItem item){
-        item.itemData.count -= 1;
+    public void RemoveItem(IInventoryItem item){
+        
+        item.Count -= 1;
 
-        if(item.itemData.count <= 0){
+        if(item.Count <= 0){
             items.Remove(item);
         }
     }

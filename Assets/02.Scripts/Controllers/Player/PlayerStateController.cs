@@ -334,24 +334,24 @@ public class PlayerStateController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 상호작용 오브젝트 처리
+    /// @Todo: 아이템 외에도 상호작용 오브젝트에 대한 처리가 필요
+    /// </summary>
     private void InteractionObject()
     {
         // 키를 입력 받은 경우 
         if (_inputActions.isInteractable)
         {
-            Debug.Log("아이템 획득");
             GameManager gameManager = GameManager.Instance;
             CameraController cameraController = gameManager.cameraController;
-
-            // 임시 테스트용
-            Inventory_Manager inventoryManager = gameManager.inventoryManager;  // InventoryManager_Test 인스턴스
 
             // 아이템이 감지된 경우
             if (cameraController.detectedItem != null)
             {
                 // // 아이템을 획득
-                // EventManager.ItemPickup(cameraController.detectedItem.GetComponent<BaseItem>(), gameManager.playerInventory);
-                inventoryManager.OnPickUp();
+                EventManager.ItemPickup(cameraController.detectedItem.GetComponent<IInventoryItem>(), gameManager.playerInventory);
+                // inventoryManager.OnPickUp();
                 cameraController.detectedItem = null;
             }
 

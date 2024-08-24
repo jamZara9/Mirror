@@ -39,7 +39,11 @@ public abstract class BaseItem : MonoBehaviour, IInventoryItem
     public int Count { get => itemData.count; set => itemData.count = value; }
     public int InventoryIndex { get => itemData.inventoryIndex; set => itemData.inventoryIndex = value; }
     public int QuickSlotIndex { get => itemData.quickSlotIndex; set => itemData.quickSlotIndex = value; }
-    
+    public GameObject ItemGameObject => this.gameObject;
+    public bool IsActive { get; set; }
+    public bool IsUsable { get; set; }
+    public bool IsPickable { get; set; }
+
 
     [Header("Information")]
     public string itemID;               // 아이템 ID

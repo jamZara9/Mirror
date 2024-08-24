@@ -5,12 +5,12 @@ using System;
 
 public static class EventManager
 {
-    public static event Action<BaseItem, PlayerInventory> OnItemPickup;
+    public static event Action<IInventoryItem, PlayerInventory> OnItemPickup;
     public static event Action<PlayerInventory> OnItemUse;
     public static event Action<GameObject> ShowInventory;
 
 
-    public static void ItemPickup(BaseItem detectedItem, PlayerInventory playerInventory){
+    public static void ItemPickup(IInventoryItem detectedItem, PlayerInventory playerInventory){
         OnItemPickup?.Invoke(detectedItem, playerInventory);
     }
 
