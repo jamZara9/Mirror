@@ -79,11 +79,6 @@ public class CameraController : MonoBehaviour
 
                     var itemOutline = detectedItem.GetComponent<Outline>();
                     itemOutline?.SetOutline(true);     // 아웃라인 활성화
-
-                    if (hitTag == "Item")
-                    {
-                        detectedItem.GetComponent<IInventoryItem>().IsPickable = true;   // 아이템을 획득 가능하도록 설정
-                    }
                 }
             }else{
                 ResetDetectedItem();

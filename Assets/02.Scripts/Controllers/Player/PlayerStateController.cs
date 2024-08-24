@@ -332,6 +332,12 @@ public class PlayerStateController : MonoBehaviour
             if(playerInventory.selectedItem != null){
                 Debug.Log($"선택된 아이템: {playerInventory.selectedItem.name}");
                 BaseItem targetItem = playerInventory.selectedItem.GetComponent<BaseItem>();
+                if(targetItem.IsUsable == false){
+                    Debug.Log("사용할 수 없는 아이템입니다.");
+                    _inputActions.isUseItem = false;
+                    return;
+                }
+
                 if(targetItem.Count > 0){
                     targetItem.UseItem();                        // 아이템 사용
                     targetItem.Count -= 1;                       // 아이템 개수 감소
@@ -360,6 +366,11 @@ public class PlayerStateController : MonoBehaviour
             if (detetedItem != null)
             {
                 IInventoryItem inventoryItem = detetedItem.GetComponent<IInventoryItem>();
+                if(inventoryItem.IsPickable == false){
+                    Debug.Log("획득할 수 없는 아이템입니다.");
+                    _inputActions.isInteractable = false;
+                    return;
+                }
 
                 detetedItem.SetActive(false);
                 inventoryItem.IsActive = false;

@@ -41,9 +41,9 @@ public abstract class BaseWeapon : MonoBehaviour , IInventoryItem
     public int InventoryIndex { get => weaponData.inventoryIndex; set => weaponData.inventoryIndex = value; }
     public int QuickSlotIndex { get => weaponData.quickSlotIndex; set => weaponData.quickSlotIndex = value; }
     public GameObject ItemGameObject => this.gameObject;
-    public bool IsActive { get; set; }
-    public bool IsUsable { get; set; }
-    public bool IsPickable { get; set; }
+    public bool IsActive { get => isActive; set => isActive = value; }
+    public bool IsUsable { get => isUsable; set => isUsable = value; }
+    public bool IsPickable { get => isPickable; set => isPickable = value; }
 
 
     [Header("Information")]

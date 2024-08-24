@@ -23,6 +23,7 @@ public class GameManager : Singleton<GameManager>
 
     // Test
     public Inventory_Manager inventoryManager;
+    public GameObject itemGroup;
 
     void Awake()
     {
@@ -46,6 +47,19 @@ public class GameManager : Singleton<GameManager>
         CheckObject(ref weaponManager);
         CheckObject(ref uiManager);
 
+        if(itemGroup == null)
+        {
+            itemGroup = GameObject.Find("Item");
+
+            // itemGroup의 자식 요소를 모두 활성화
+            for (int i = 0; i < itemGroup.transform.childCount; i++)
+            {
+                itemGroup.transform.GetChild(i).gameObject.SetActive(true);
+                itemGroup.transform.GetChild(i).gameObject.GetComponent<IInventoryItem>().IsActive = true;
+                itemGroup.transform.GetChild(i).gameObject.GetComponent<IInventoryItem>().IsPickable = true;
+                itemGroup.transform.GetChild(i).gameObject.GetComponent<IInventoryItem>().IsUsable = true;
+            }
+        }
     }
 
     /// <summary>
