@@ -3969,7 +3969,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ed54e99fb6f05a4389fe6610b4f4732, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedItem: {fileID: 0}
+  inventoryItems: []
+  quickSlots: []
+  selectedItem: {fileID: 2146506603}
   ItemNameTxt: {fileID: 0}
   ItemSubTxt: {fileID: 0}
   maxSlots: 9
@@ -3987,7 +3989,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f2137acaa4d6804fbfc89e337c38250, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  items: []
 --- !u!114 &1200054178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4402,6 +4403,9 @@ MonoBehaviour:
   fireRate: 0
   range: 0
   icon: {fileID: 0}
+  isActive: 0
+  isUsable: 0
+  isPickable: 0
 --- !u!1 &1361934019
 GameObject:
   m_ObjectHideFlags: 0
