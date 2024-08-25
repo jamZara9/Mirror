@@ -17,9 +17,20 @@ public class UIManager : MonoBehaviour
     }
     public void Find_Canvas()
     {
-        HUD_Canvas = GameObject.Find("HUD")?.GetComponent<Canvas>();
-        Inventory_Canvas = GameObject.Find("Inventory")?.GetComponent<Canvas>();
-        QuickSlot_Canvas = GameObject.Find("QuickSlot")?.GetComponent<Canvas>();
+        HUD_Canvas = GameObject.Find("HUD_Canvas")?.GetComponent<Canvas>();
+        Inventory_Canvas = GameObject.Find("Inventory_Canvas")?.GetComponent<Canvas>();
+        QuickSlot_Canvas = GameObject.Find("QuickSlot_Canvas")?.GetComponent<Canvas>();
+
+        HUD_Canvas.gameObject.SetActive(true);
+        Inventory_Canvas.gameObject.SetActive(true);
+        QuickSlot_Canvas.gameObject.SetActive(true);
+    }
+
+    private void Start()
+    {
+        HUD_Canvas.gameObject.SetActive(true);
+        Inventory_Canvas.gameObject.SetActive(false);
+        QuickSlot_Canvas.gameObject.SetActive(false);
     }
 
     //-------------------------------HUD-------------------------------------//

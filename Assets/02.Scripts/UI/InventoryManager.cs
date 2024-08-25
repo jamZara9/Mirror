@@ -32,19 +32,12 @@ public class InventoryManager : MonoBehaviour
     private void Awake()
     {
         _UIManager = GameManager.Instance.uiManager;
-
-        _UIManager.Inventory_Active(true);      //슬롯을 활성화시키기 위해 1회만 실시
-        _UIManager.QuickSlot_Active(true);      //퀵슬롯을 활성화시키기 위해 1회만 실시
-
     }
 
     private void Start()
     {
         Inventory.Sort(delegate (UI_Slot_bls a, UI_Slot_bls b) { return a.index.CompareTo(b.index); });
         QuickSlot.Sort(delegate (UI_QuickSlot a, UI_QuickSlot b) { return a.index.CompareTo(b.index); });
-
-        _UIManager.Inventory_Active(false);
-        _UIManager.QuickSlot_Active(false);
     }
 
     // Update is called once per frame
