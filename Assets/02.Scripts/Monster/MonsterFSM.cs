@@ -155,7 +155,7 @@ public class MonsterFSM : MonoBehaviour,IDamage
             {
                 StartCoroutine(WaitIdle(_moveDirectionIndex)); //   WaitIdle 함수 시작
             }
-            Debug.Log(_moveDirectionIndex);
+            // Debug.Log(_moveDirectionIndex);
         }
         //  시야 적용 방식
         Vector3 myPos = transform.position + Vector3.up * 0.5f;     //      레이 시작 위치 
