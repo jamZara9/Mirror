@@ -42,7 +42,8 @@ public class PlayerStateController : MonoBehaviour
     [SerializeField] private AudioClip[] footstepAudioClips;    // 발소리 사운드
     [Range(0, 1)] public float footstepAudioVolume = 0.5f;      // 발소리 사운드 볼륨
 
-    private PlayerInputAction _inputActions;            // 플레이어 입력 액션
+
+    [SerializeField] private PlayerInputAction _inputActions;            // 플레이어 입력 액션
     private CharacterController _characterController;   //  캐릭터 컨트롤러
 
     // camera settings
@@ -60,7 +61,8 @@ public class PlayerStateController : MonoBehaviour
         _hasAnimator = TryGetComponent(out _animator);
         _settings = GetComponent<PlayerStatus>().settings;
         _characterController = GetComponent<CharacterController>();
-        _inputActions = GetComponent<PlayerInputAction>();
+        // _inputActions = GetComponent<PlayerInputAction>();
+        _inputActions = GameManager.Instance.inputManager.playerInputAction;
 
         AssignAnimationIDs();
 

@@ -11,6 +11,7 @@ using System;
 /// </summary>
 public class PlayerInputAction : MonoBehaviour
 {
+    [Header("Player Input Values")]
     public Vector2 move;
     public Vector2 look;
     public bool jump = false;
@@ -28,48 +29,10 @@ public class PlayerInputAction : MonoBehaviour
 
     public bool analogMovement; // 이동 입력값을 아날로그로 받을지 디지털로 받을지 결정
 
-    private InputActionAsset _inputActions;
-
-    private void Awake(){
-        _inputActions = GetComponent<PlayerInput>().actions;
-
-        BindAllActions("Player");
+    private void Start(){
+        GameManager.Instance.inputManager.BindAllActions("Player", this);
     }
 
-    /// <summary>
-    /// 전달받은 Map의 모든 Action을 받아 그에 맞는 메소드를 바인딩
-    /// </summary>
-    /// <param name="mapName"></param>
-    private void BindAllActions(string mapName)
-    {
-        // InputActionAsset을 찾아서 할당
-        var playerMap = _inputActions.FindActionMap(mapName);
-
-        if (playerMap != null)
-        {
-            foreach (var action in playerMap.actions)
-            {
-                // 해당 이름을 가진 메소드를 찾아서 바인딩
-                var method = GetType().GetMethod("On" + action.name, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-
-                if (method != null)
-                {
-                    // 해당 메소드를 Delegate로 만들어서 바인딩
-                    var del = Delegate.CreateDelegate(typeof(Action<InputAction.CallbackContext>), this, method);
-                    action.performed += (Action<InputAction.CallbackContext>)del;
-                    action.canceled += (Action<InputAction.CallbackContext>)del;
-                }
-                else
-                {
-                    Debug.LogWarning($"Action과 매칭되는 Method를 찾을 수 없습니다. : {action.name}");
-                }
-            }
-        }
-        else
-        {
-            Debug.LogError("해당 이름을 가진 ActionMap을 찾을 수 없습니다.");
-        }
-    }
 
     public void OnMovement(InputAction.CallbackContext context)
     {
