@@ -18,11 +18,11 @@ public class UI_Slot_bls : MonoBehaviour, IPointerClickHandler, IDropHandler, IP
 
 
     public Color testColor; // �׽�Ʈ�� �÷��ڵ�
-    public int index;
+    public int index;   // 인벤토리에서 검색&스왑시 빠르게 처리하기 위한 인덱스
 
     public GameObject count;
 
-    public Inventory_Manager InventoryMgr;
+    public InventoryManager InventoryMgr;
     public UI_QuickSlot QuickSlot; //�ش� ������ �����ϰ��ִ� ������
 
     [SerializeField, Header("Item")]
@@ -34,26 +34,18 @@ public class UI_Slot_bls : MonoBehaviour, IPointerClickHandler, IDropHandler, IP
 
     private void Awake()
     {
-        // ////////////////////// �ӽ� �ڵ�
-        // InventoryMgr = GameObject.Find("Inventory")?.GetComponent<Inventory_Manager>();
-        // //////////////////////
-
-        // Test
-        InventoryMgr = GameObject.Find("GameManager")?.GetComponent<Inventory_Manager>();
-
+        InventoryMgr = GameManager.Instance.inventoryManager;
 
         SlotItem = null;
         ItemIcon.sprite = null;
         QuickSlot = null;
 
         InventoryMgr.Add_InventorySlot(this);
-
     }
 
     // Start is called before the first frame update
     void Start()
     {
-
         
     }
 

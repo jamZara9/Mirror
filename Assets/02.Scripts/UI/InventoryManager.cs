@@ -8,10 +8,12 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class Inventory_Manager : MonoBehaviour
+public class InventoryManager : MonoBehaviour
 {
     private float Inventory_MaxSize = 12;
     private float QuickSlot_MaxSize = 4;
+
+    static private int Inventory_Index = 0;
 
     //[SerializeField]
     public List<UI_Slot_bls> Inventory = new List<UI_Slot_bls>(12);
@@ -22,67 +24,25 @@ public class Inventory_Manager : MonoBehaviour
 
     public BaseItem[] testitems;
 
-    public GameObject HUD_Canvas;
-    public GameObject Inventory_Canvas;
-    public GameObject QuickSlot_Canvas;
+    private UIManager _UIManager;
 
     public bool Use_Inventory = false;
     public bool Use_QuickSlot = false;
 
     private void Awake()
     {
-
+        _UIManager = GameManager.Instance.uiManager;
     }
 
     private void Start()
     {
         Inventory.Sort(delegate (UI_Slot_bls a, UI_Slot_bls b) { return a.index.CompareTo(b.index); });
         QuickSlot.Sort(delegate (UI_QuickSlot a, UI_QuickSlot b) { return a.index.CompareTo(b.index); });
-
-        Inventory_Canvas.SetActive(false);
-        QuickSlot_Canvas.SetActive(false);
-        
     }
 
     // Update is called once per frame
     void Update()
     {
-        // if(Input.GetKeyDown(KeyCode.Q) && Use_Inventory)
-        // {
-        //     testitems = FindObjectsOfType<BaseItem>();
-
-        //     for (int i = 0; i < testitems.Length; i++)
-        //     {
-        //         UI_Slot_bls slot = Inventory.Find(x => x.Get_Item()?.itemData.name == testitems[i].itemData.name);
-
-        //         if (slot != null)
-        //         {
-        //             slot.Get_Item().itemData.count++;
-        //         }
-        //         else
-        //         {
-        //             Add_Item(testitems[i]);
-
-        //         }
-
-        //     }
-        // }
-
-        // if(Input.GetKeyDown(KeyCode.I))
-        // {
-        //     Use_Inventory = !Use_Inventory;
-        //     Inventory_Canvas.SetActive(Use_Inventory);
-        // }
-
-        // if (Input.GetMouseButtonDown((int)MouseButton.Middle))
-        //     Use_QuickSlot = true;
-
-        // if (Input.GetMouseButtonUp((int)MouseButton.Middle))
-        //     Use_QuickSlot = false;
-
-        // if(!Use_Inventory)
-        //     QuickSlot_Canvas.SetActive(Use_QuickSlot);
-
         foreach(UI_Slot_bls slot in Inventory)
         {
             if(slot.Get_Item()?.itemData.count == 0)
@@ -122,7 +82,7 @@ public class Inventory_Manager : MonoBehaviour
     public void OnShowInventory()
     {
         Use_Inventory = !Use_Inventory;
-        Inventory_Canvas.SetActive(Use_Inventory);
+        _UIManager.Inventory_Active(Use_Inventory);
     }
 
     /// <summary>
@@ -131,7 +91,7 @@ public class Inventory_Manager : MonoBehaviour
     public void OnShowQuickSlot()
     {
         Use_QuickSlot = !Use_QuickSlot;
-        QuickSlot_Canvas.SetActive(Use_QuickSlot);
+        _UIManager.QuickSlot_Active(Use_QuickSlot);
     }
 
     public void swap_Item(UI_Slot_bls _from, UI_Slot_bls _to)
@@ -188,9 +148,7 @@ public class Inventory_Manager : MonoBehaviour
     public void Add_InventorySlot(UI_Slot_bls _Slot)
     {
         if(Inventory.Count < Inventory_MaxSize)
-        {
             Inventory.Add(_Slot);
-        }
     }
 
     public void Add_QuickSlot(UI_QuickSlot _Slot)

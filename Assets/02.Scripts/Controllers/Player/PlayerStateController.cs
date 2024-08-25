@@ -427,13 +427,14 @@ public class PlayerStateController : MonoBehaviour
             // UIController_Test uiController = gameManager.uiController;  // UIController_Test 인스턴스
 
             // 임시 테스트용
-            Inventory_Manager inventoryManager = gameManager.inventoryManager;  // InventoryManager_Test 인스턴스
+            InventoryManager inventoryManager = gameManager.inventoryManager;  // InventoryManager_Test 인스턴스
+            UIManager uIManager = gameManager.uiManager;
 
             // 인벤토리 UI 활성화/비활성화
             // uiController.inventoryUI.SetActive(!uiController.inventoryUI.activeSelf);
             inventoryManager.OnShowInventory();
             // gameManager.cameraController.SetCursorState(uiController.inventoryUI.activeSelf);   // 커서 상태 설정
-            gameManager.cameraController.SetCursorState(inventoryManager.Inventory_Canvas.activeSelf);   // 커서 상태 설정
+            gameManager.cameraController.SetCursorState(uIManager.Inventory().gameObject.activeSelf);   // 커서 상태 설정
 
             _inputActions.isInventoryVisible = false;
         }
@@ -441,7 +442,7 @@ public class PlayerStateController : MonoBehaviour
 
     private void ShowQuickSlot(){
         // 임시 테스트용
-        Inventory_Manager inventoryManager = GameManager.Instance.inventoryManager; // InventoryManager_Test 인스턴스
+        InventoryManager inventoryManager = GameManager.Instance.inventoryManager; // InventoryManager_Test 인스턴스
         if(_inputActions.isQuickSlotVisible){
             // Debug.Log("퀵슬롯 활성화/비활성화");
 

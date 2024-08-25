@@ -22,8 +22,8 @@ public class GameManager : Singleton<GameManager>
     #endregion
 
     // Test
-    public Inventory_Manager inventoryManager;
     public GameObject itemGroup;
+    public InventoryManager inventoryManager;
 
     void Awake()
     {
