@@ -73,6 +73,10 @@ public class PlayerInputAction : MonoBehaviour
 
     public void OnMovement(InputAction.CallbackContext context)
     {
+        //인벤토리 활성화중 이동 제한
+        if (GameManager.Instance.inventoryManager.Use_Inventory)
+            return;
+
         move = context.ReadValue<Vector2>();
     }
 
@@ -80,17 +84,28 @@ public class PlayerInputAction : MonoBehaviour
     {
         if (cursorInputForLook)
         {
-            look = context.ReadValue<Vector2>();
+            if (GameManager.Instance.inventoryManager.Use_Inventory) //인벤토리 활성화중 시야이동 제어
+                look = Vector2.zero;
+            else
+                look = context.ReadValue<Vector2>();
         }
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
+        //인벤토리 활성화중 이동 제한
+        if (GameManager.Instance.inventoryManager.Use_Inventory)
+            return;
+
         jump = context.ReadValueAsButton();
     }
 
     public void OnSprint(InputAction.CallbackContext context)
     {
+        //인벤토리 활성화중 기능 제한
+        if (GameManager.Instance.inventoryManager.Use_Inventory)
+            return;
+
         sprint = context.ReadValueAsButton();
     }
 
@@ -101,6 +116,10 @@ public class PlayerInputAction : MonoBehaviour
 
     public void OnInteraction(InputAction.CallbackContext context)
     {
+        //인벤토리 활성화중 기능 제한
+        if (GameManager.Instance.inventoryManager.Use_Inventory)
+            return;
+
         isInteractable = context.ReadValueAsButton();
     }
 
@@ -116,12 +135,20 @@ public class PlayerInputAction : MonoBehaviour
 
     public void OnFire(InputAction.CallbackContext context)
     {
+        //인벤토리 활성화중 기능 제한
+        if (GameManager.Instance.inventoryManager.Use_Inventory)
+            return;
+
         isFire = context.ReadValueAsButton();
     }
 
     public void OnShowQuickSlot(InputAction.CallbackContext context)
     {
-        if(context.performed)   // 마우스 휠 버튼을 누르면
+        //인벤토리 활성화중 기능 제한
+        if (GameManager.Instance.inventoryManager.Use_Inventory)
+            return;
+
+        if (context.performed)   // 마우스 휠 버튼을 누르면
         {
             isQuickSlotVisible = true;
         }else if(context.canceled)  // 마우스 휠 버튼을 뗐을 때

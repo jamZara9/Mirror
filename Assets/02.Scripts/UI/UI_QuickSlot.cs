@@ -17,7 +17,7 @@ public class UI_QuickSlot : MonoBehaviour, IDropHandler
     public SlotType slotType;     // ���� Ÿ��
     public Image ItemIcon;
 
-    public Inventory_Manager InventoryMgr;
+    public InventoryManager InventoryMgr;
 
     public Color testcolor;
     public int index;
@@ -27,7 +27,7 @@ public class UI_QuickSlot : MonoBehaviour, IDropHandler
         // InventoryMgr = GameObject.Find("Inventory")?.GetComponent<Inventory_Manager>();
 
         // Test
-        InventoryMgr = GameObject.Find("GameManager")?.GetComponent<Inventory_Manager>();
+        InventoryMgr = GameObject.Find("GameManager")?.GetComponent<InventoryManager>();
 
         InventoryMgr.Add_QuickSlot(this);
     }

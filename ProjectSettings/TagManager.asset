@@ -11,6 +11,7 @@ TagManager:
   - Inventory
   - QuickSlot
   - Weapon
+  - HUD
   layers:
   - Default
   - TransparentFX
