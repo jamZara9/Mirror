@@ -27,8 +27,7 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private GameObject _UIGroup;   // UI를 담고 있는 그룹
     // Test
-    private Dictionary<string, Canvas> _canvasDictionary  = new();
-
+    private Dictionary<string, Canvas> _canvasDictionary  = new();  // UI 캠버스 딕셔너리
     private void Awake()
     {
         Find_Canvas();
@@ -61,18 +60,18 @@ public class UIManager : MonoBehaviour
 
             child.SetActive(true);
 
-            // switch(_UIGroup.transform.GetChild(i).name)
-            // {
-            //     case UIConstants.HUDCanvas:
-            //         HUD_Canvas = _UIGroup.transform.GetChild(i).GetComponent<Canvas>();
-            //         break;
-            //     case UIConstants.InventoryCanvas:
-            //         Inventory_Canvas = _UIGroup.transform.GetChild(i).GetComponent<Canvas>();
-            //         break;
-            //     case UIConstants.QuickSlotCanvas:
-            //         QuickSlot_Canvas = _UIGroup.transform.GetChild(i).GetComponent<Canvas>();
-            //         break;
-            // }
+            switch(_UIGroup.transform.GetChild(i).name)
+            {
+                case UIConstants.HUDCanvas:
+                    HUD_Canvas = _UIGroup.transform.GetChild(i).GetComponent<Canvas>();
+                    break;
+                case UIConstants.InventoryCanvas:
+                    Inventory_Canvas = _UIGroup.transform.GetChild(i).GetComponent<Canvas>();
+                    break;
+                case UIConstants.QuickSlotCanvas:
+                    QuickSlot_Canvas = _UIGroup.transform.GetChild(i).GetComponent<Canvas>();
+                    break;
+            }
             
             // _UIGroup.transform.GetChild(i).gameObject.SetActive(true);
         }
@@ -90,9 +89,19 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        HUD_Canvas.gameObject.SetActive(true);
-        Inventory_Canvas.gameObject.SetActive(false);
-        QuickSlot_Canvas.gameObject.SetActive(false);
+        // HUD_Canvas.gameObject.SetActive(true);
+        // Inventory_Canvas.gameObject.SetActive(false);
+        // QuickSlot_Canvas.gameObject.SetActive(false);
+
+        foreach (var canvas in _canvasDictionary)
+        {
+            if(canvas.Key == UIConstants.HUDCanvas)
+            {
+                canvas.Value.gameObject.SetActive(true);
+            }
+
+            canvas.Value.gameObject.SetActive(false);
+        }
     }
 
     //-------------------------------HUD-------------------------------------//
