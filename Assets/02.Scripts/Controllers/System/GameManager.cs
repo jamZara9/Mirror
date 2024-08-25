@@ -18,12 +18,10 @@ public class GameManager : Singleton<GameManager>
     public PlayerStatus playerStatus;                 // 플레이어 상태
     public PlayerInventory playerInventory;           // 플레이어 인벤토리
     public WeaponManager weaponManager;               // 무기 매니저
+    public DialogueManager dialogueManager;           // 대화 매니저
     public UIManager uiManager;                       // UI 매니저
+    public InventoryManager inventoryManager;         // 인벤토리 매니저
     #endregion
-
-    // Test
-    public GameObject itemGroup;
-    public InventoryManager inventoryManager;
 
     void Awake()
     {
@@ -46,22 +44,8 @@ public class GameManager : Singleton<GameManager>
         CheckObject(ref inventoryManager);
         CheckObject(ref weaponManager);
         CheckObject(ref uiManager);
+        CheckObject(ref dialogueManager);
 
-
-        // 추후 ItemManger에서 처리 하도록 변경
-        if(itemGroup == null)
-        {
-            itemGroup = GameObject.Find("Item");
-
-            // itemGroup의 자식 요소를 모두 활성화
-            for (int i = 0; i < itemGroup.transform.childCount; i++)
-            {
-                itemGroup.transform.GetChild(i).gameObject.SetActive(true);
-                itemGroup.transform.GetChild(i).gameObject.GetComponent<IInventoryItem>().IsActive = true;
-                itemGroup.transform.GetChild(i).gameObject.GetComponent<IInventoryItem>().IsPickable = true;
-                itemGroup.transform.GetChild(i).gameObject.GetComponent<IInventoryItem>().IsUsable = true;
-            }
-        }
     }
 
     /// <summary>

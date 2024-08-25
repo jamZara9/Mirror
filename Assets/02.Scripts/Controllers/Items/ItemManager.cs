@@ -14,6 +14,24 @@ using Unity.VisualScripting;
 public class ItemManager : BaseItemManager<BaseItem, BaseItemData>
 {
     protected override string DataPath => "Json/items"; // 아이템 데이터 경로
+
+    [SerializeField] private GameObject itemGroup;   // 아이템 그룹
+    void Start()
+    {
+        if(itemGroup == null)
+        {
+            itemGroup = GameObject.Find("ItemGroup");
+
+            // itemGroup의 자식 요소를 모두 활성화
+            for (int i = 0; i < itemGroup.transform.childCount; i++)
+            {
+                itemGroup.transform.GetChild(i).gameObject.SetActive(true);
+                itemGroup.transform.GetChild(i).gameObject.GetComponent<IInventoryItem>().IsActive = true;
+                itemGroup.transform.GetChild(i).gameObject.GetComponent<IInventoryItem>().IsPickable = true;
+                itemGroup.transform.GetChild(i).gameObject.GetComponent<IInventoryItem>().IsUsable = true;
+            }
+        }
+    }
     
     /// <summary>
     /// 아이템 데이터 설정 함수
