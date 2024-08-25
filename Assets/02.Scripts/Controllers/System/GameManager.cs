@@ -47,6 +47,8 @@ public class GameManager : Singleton<GameManager>
         CheckObject(ref weaponManager);
         CheckObject(ref uiManager);
 
+
+        // 추후 ItemManger에서 처리 하도록 변경
         if(itemGroup == null)
         {
             itemGroup = GameObject.Find("Item");
