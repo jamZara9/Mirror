@@ -33,13 +33,13 @@ public class GameController : MonoBehaviour
     {
         dialoguePanel.SetActive(false);
 
-        // Input Acton 세팅.
-        _dialogueInputAction = new DialogueInputAction();
+        // // Input Acton 세팅.
+        // _dialogueInputAction = new DialogueInputAction();
         
-        _nextSentenceAction = _dialogueInputAction.Dialogue.NextSentence;
-        _skipAction = _dialogueInputAction.Dialogue.Skip;
-        _cancelSkipAction = _dialogueInputAction.Dialogue.CancelSkip;
-        _realSkipAction = _dialogueInputAction.Dialogue.RealSkip;
+        // _nextSentenceAction = _dialogueInputAction.Dialogue.NextSentence;
+        // _skipAction = _dialogueInputAction.Dialogue.Skip;
+        // _cancelSkipAction = _dialogueInputAction.Dialogue.CancelSkip;
+        // _realSkipAction = _dialogueInputAction.Dialogue.RealSkip;
         
         // 컴포넌트 세팅.
         dialogueManager = GetComponent<DialogueManager>();
@@ -47,30 +47,30 @@ public class GameController : MonoBehaviour
 
     private void OnEnable()
     {
-        // Input Acton 세팅(시작).
-        _nextSentenceAction.performed += NextSentence;
-        _skipAction.performed += OnSkip;
-        _cancelSkipAction.performed += OnSkipCancel;
-        _realSkipAction.performed += OnRealSkip;
+        // // Input Acton 세팅(시작).
+        // _nextSentenceAction.performed += NextSentence;
+        // _skipAction.performed += OnSkip;
+        // _cancelSkipAction.performed += OnSkipCancel;
+        // _realSkipAction.performed += OnRealSkip;
         
-        _nextSentenceAction.Enable();
-        _skipAction.Enable();
-        _cancelSkipAction.Enable();
-        _realSkipAction.Enable();
+        // _nextSentenceAction.Enable();
+        // _skipAction.Enable();
+        // _cancelSkipAction.Enable();
+        // _realSkipAction.Enable();
     }
     
     private void OnDisable()
     {
-        // Input Acton 세팅(끝).
-        _nextSentenceAction.performed -= NextSentence;
-        _skipAction.performed -= OnSkip;
-        _cancelSkipAction.performed -= OnSkipCancel;
-        _realSkipAction.performed -= OnRealSkip;
+        // // Input Acton 세팅(끝).
+        // _nextSentenceAction.performed -= NextSentence;
+        // _skipAction.performed -= OnSkip;
+        // _cancelSkipAction.performed -= OnSkipCancel;
+        // _realSkipAction.performed -= OnRealSkip;
 
-        _nextSentenceAction.Disable();
-        _skipAction.Disable();
-        _cancelSkipAction.Disable();
-        _realSkipAction.Disable();
+        // _nextSentenceAction.Disable();
+        // _skipAction.Disable();
+        // _cancelSkipAction.Disable();
+        // _realSkipAction.Disable();
     }
 
     /// <summary>
@@ -85,6 +85,7 @@ public class GameController : MonoBehaviour
         {
             case StoryScene.StoryType.VisualNovel :
                 dialoguePanel.SetActive(true);
+                dialogueManager.IsDialogueSceneActive = true;
                 break;
             
             case StoryScene.StoryType.Movable :

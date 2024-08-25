@@ -46,6 +46,33 @@ public class DialogueManager : MonoBehaviour
 
     private bool _isDelayFinish = true;
 
+    #region  Dialogue Scene Active Test Code
+    private bool _isDialogueSceneActive = false;
+    public bool IsDialogueSceneActive {
+        get => _isDialogueSceneActive;
+        set {
+            if(_isDialogueSceneActive != value)
+            {
+                _isDialogueSceneActive = value;
+                HandleDialogueSceneActive();
+            }
+        }
+    }
+
+    private void HandleDialogueSceneActive(){
+        if(IsDialogueSceneActive)
+        {
+            InputManager.Instance.SwitchActionMap("Dialogue");
+        }
+        else
+        {
+            InputManager.Instance.SwitchActionMap("Player");
+        }
+    }
+
+    #endregion
+
+
     // 타이핑 상태 열거.
     private enum State
     {
@@ -354,5 +381,8 @@ public class DialogueManager : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+
+        // Test
+        IsDialogueSceneActive = false;
     }
 }
