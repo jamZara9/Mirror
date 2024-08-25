@@ -44,6 +44,11 @@ public class MonsterFSM : MonoBehaviour,IDamage
     private readonly List<Collider> _hitTargetList = new List<Collider>();// 탐지한 오브젝트 담을 리스트
     private readonly Vector3[] _directionCache = new Vector3[3];        // 지즈모 그릴 방향
 
+    /// <summary>
+    /// 몬스터의 탐색경로 그룹 Test
+    /// </summary>
+    [SerializeField] private GameObject movePositionGroup;              // 몬스터의 탐색경로 그룹
+
     public enum MonsterState       // 몬스터의 FSM
     {
         Idle,
@@ -70,6 +75,20 @@ public class MonsterFSM : MonoBehaviour,IDamage
         _startPosition = transform.position;
         _player = GameObject.FindWithTag("Player").transform;
         //---------------------------------------------------------------------
+
+        //--------------------------------------------------------------------- Test
+        // 움직일 위치 세팅
+        if(movePositionGroup != null)
+        {
+            moveDirectionList.Clear();
+            moveDirectionDelayList.Clear();
+            for (int i = 0; i < movePositionGroup.transform.childCount; i++)
+            {
+                moveDirectionList.Add(movePositionGroup.transform.GetChild(i).position);
+                moveDirectionDelayList.Add(1.0f);
+            }
+        }
+        //--------------------------------------------------------------------- Test
         
         _navMeshA.SetDestination(moveDirectionList[_moveDirectionIndex++]);
         m_State = MonsterState.Idle;
