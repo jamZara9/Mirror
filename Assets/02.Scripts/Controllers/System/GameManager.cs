@@ -21,6 +21,8 @@ public class GameManager : Singleton<GameManager>
     public DialogueManager dialogueManager;           // 대화 매니저
     public UIManager uiManager;                       // UI 매니저
     public InventoryManager inventoryManager;         // 인벤토리 매니저
+
+    public InputManager inputManager;                 // 입력 매니저
     #endregion
 
     void Awake()
@@ -45,6 +47,7 @@ public class GameManager : Singleton<GameManager>
         CheckObject(ref weaponManager);
         CheckObject(ref uiManager);
         CheckObject(ref dialogueManager);
+        CheckObject(ref inputManager);
 
     }
 
