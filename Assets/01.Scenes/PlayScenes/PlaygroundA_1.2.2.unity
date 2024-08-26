@@ -2068,7 +2068,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1399500553502637192, guid: 26baa91a588bdf9498035dc5c6a456f8, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -3465,7 +3466,6 @@ Transform:
   - {fileID: 1054123277}
   - {fileID: 654333948}
   - {fileID: 2073956253}
-  - {fileID: 1483306104}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &696898410
@@ -6729,120 +6729,6 @@ PrefabInstance:
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4717122184659452783, guid: 1d00d057b223b704ba7bd63279b1fa6b, type: 3}
   m_PrefabInstance: {fileID: 1465462871}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &1483306103
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 684542710}
-    m_Modifications:
-    - target: {fileID: 1694691468131610629, guid: ba640a372e1e97846bda8ae4a8b609a7, type: 3}
-      propertyPath: m_Volume
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3731255001009547965, guid: ba640a372e1e97846bda8ae4a8b609a7, type: 3}
-      propertyPath: dialogueText
-      value: 
-      objectReference: {fileID: 737359191}
-    - target: {fileID: 3731255001009547965, guid: ba640a372e1e97846bda8ae4a8b609a7, type: 3}
-      propertyPath: sentenceText
-      value: 
-      objectReference: {fileID: 19281230}
-    - target: {fileID: 3731255001009547965, guid: ba640a372e1e97846bda8ae4a8b609a7, type: 3}
-      propertyPath: spritesPrefab
-      value: 
-      objectReference: {fileID: 1398548719}
-    - target: {fileID: 3731255001009547965, guid: ba640a372e1e97846bda8ae4a8b609a7, type: 3}
-      propertyPath: speakerNameText
-      value: 
-      objectReference: {fileID: 737359190}
-    - target: {fileID: 3731255001009547965, guid: ba640a372e1e97846bda8ae4a8b609a7, type: 3}
-      propertyPath: backGroundController
-      value: 
-      objectReference: {fileID: 1365540072}
-    - target: {fileID: 3731255001009547965, guid: ba640a372e1e97846bda8ae4a8b609a7, type: 3}
-      propertyPath: movableDialoguePanel
-      value: 
-      objectReference: {fileID: 19281229}
-    - target: {fileID: 3731255001009547965, guid: ba640a372e1e97846bda8ae4a8b609a7, type: 3}
-      propertyPath: movableSpeakerNameText
-      value: 
-      objectReference: {fileID: 19281231}
-    - target: {fileID: 5379550478252883175, guid: ba640a372e1e97846bda8ae4a8b609a7, type: 3}
-      propertyPath: skipPanel
-      value: 
-      objectReference: {fileID: 737359187}
-    - target: {fileID: 5379550478252883175, guid: ba640a372e1e97846bda8ae4a8b609a7, type: 3}
-      propertyPath: dialoguePanel
-      value: 
-      objectReference: {fileID: 737359188}
-    - target: {fileID: 5379550478252883175, guid: ba640a372e1e97846bda8ae4a8b609a7, type: 3}
-      propertyPath: skipPanelStoryText
-      value: 
-      objectReference: {fileID: 737359189}
-    - target: {fileID: 5379550478252883175, guid: ba640a372e1e97846bda8ae4a8b609a7, type: 3}
-      propertyPath: movableDialoguePanel
-      value: 
-      objectReference: {fileID: 19281229}
-    - target: {fileID: 6697636281220402433, guid: ba640a372e1e97846bda8ae4a8b609a7, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 477.69757
-      objectReference: {fileID: 0}
-    - target: {fileID: 6697636281220402433, guid: ba640a372e1e97846bda8ae4a8b609a7, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2.44
-      objectReference: {fileID: 0}
-    - target: {fileID: 6697636281220402433, guid: ba640a372e1e97846bda8ae4a8b609a7, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -1.6887778
-      objectReference: {fileID: 0}
-    - target: {fileID: 6697636281220402433, guid: ba640a372e1e97846bda8ae4a8b609a7, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6697636281220402433, guid: ba640a372e1e97846bda8ae4a8b609a7, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6697636281220402433, guid: ba640a372e1e97846bda8ae4a8b609a7, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6697636281220402433, guid: ba640a372e1e97846bda8ae4a8b609a7, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6697636281220402433, guid: ba640a372e1e97846bda8ae4a8b609a7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6697636281220402433, guid: ba640a372e1e97846bda8ae4a8b609a7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6697636281220402433, guid: ba640a372e1e97846bda8ae4a8b609a7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6789348410898763581, guid: ba640a372e1e97846bda8ae4a8b609a7, type: 3}
-      propertyPath: m_Name
-      value: GameController
-      objectReference: {fileID: 0}
-    - target: {fileID: 6789348410898763581, guid: ba640a372e1e97846bda8ae4a8b609a7, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: ba640a372e1e97846bda8ae4a8b609a7, type: 3}
---- !u!4 &1483306104 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6697636281220402433, guid: ba640a372e1e97846bda8ae4a8b609a7, type: 3}
-  m_PrefabInstance: {fileID: 1483306103}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1492335749
 GameObject:

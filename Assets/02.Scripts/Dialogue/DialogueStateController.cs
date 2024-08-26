@@ -10,9 +10,6 @@ public class DialogueStateController : MonoBehaviour
 {
     [SerializeField] private DialogueInputAction _inputActions;     // 대화 입력 액션
 
-    private GameObject _visualNovelDialoguePanel;                    // 비주얼 노벨 대화 패널
-    private GameObject _movableDialoguePanel;                        // 이동 가능한 대화 패널
-
     private DialogueManager _dialogueManager;                        // 다이얼로그 매니저
     private StoryScene currentScene;                                 // 현재 스토리 씬
 
@@ -59,8 +56,6 @@ public class DialogueStateController : MonoBehaviour
     {
         if (_inputActions.isNextSentence)
         {
-            Debug.Log("NextSentence");
-
             if (!IsDialogueOn())
             {
                 return;
