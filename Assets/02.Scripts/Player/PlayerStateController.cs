@@ -92,7 +92,7 @@ public class PlayerStateController : MonoBehaviour
 
     void LateUpdate()
     {
-        HeadBoneRotation();
+        // HeadBoneRotation();
     }
 
 
@@ -159,14 +159,14 @@ public class PlayerStateController : MonoBehaviour
             _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
         }
     }
-    /// <summary>
-    /// 머리 회전 처리
-    /// </summary>
-    private void HeadBoneRotation()
-    {
-        Vector3 HeadDir = _cinemachineCamera.transform.position + _cinemachineCamera.transform.forward * 10.0f;
-        _playerHeadTr.LookAt(HeadDir);
-    }
+    // /// <summary>
+    // /// 머리 회전 처리
+    // /// </summary>
+    // private void HeadBoneRotation()
+    // {
+    //     Vector3 HeadDir = _cinemachineCamera.transform.position + _cinemachineCamera.transform.forward * 10.0f;
+    //     _playerHeadTr.LookAt(HeadDir);
+    // }
 
     /// <summary>
     /// 카메라 회전 처리

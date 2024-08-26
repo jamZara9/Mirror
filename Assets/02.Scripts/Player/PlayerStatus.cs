@@ -13,7 +13,7 @@ public class PlayerStatus : MonoBehaviour
     {
         public readonly float maxHealth = 100.0f;
         public readonly float walkSpeed = 2.0f;         // 걷기 속도
-        public readonly float runSpeed = 5.335f;        // 달리기 속도
+        public readonly float runSpeed = 4.0f;        // 달리기 속도
         public readonly float speedChangeRate = 10.0f;  // 속도 변경 비율
         public readonly float jumpHeight = 1.2f;        // 점프 높이
     }
