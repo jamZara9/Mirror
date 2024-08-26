@@ -18,7 +18,8 @@ public class StorySceneTrigger : MonoBehaviour
         // 닿으면 내 스토리 실행.
         if (other.CompareTag("Player"))
         {
-            _gameController.PlayScene(myStoryScene);
+            // _gameController.PlayScene(myStoryScene);
+            GameManager.Instance.dialogueManager.StartStoryScene(myStoryScene);
 
             Destroy(gameObject);
         }

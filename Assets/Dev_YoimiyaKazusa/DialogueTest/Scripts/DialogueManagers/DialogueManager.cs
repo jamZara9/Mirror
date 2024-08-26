@@ -14,10 +14,12 @@ public class DialogueManager : MonoBehaviour
     private CsvParser csvParser;
     
     // VN 방식 UI. 
+    [Header ("Visual Novel Dialogue Object")]
     public TextMeshProUGUI dialogueText;
     public TextMeshProUGUI speakerNameText;
     
     // Movable 방식 UI 패널 및 화자 이름 및 대사 텍스트.
+    [Header ("Movable Dialogue Object")]
     [SerializeField] private GameObject movableDialoguePanel;
     [SerializeField] private TextMeshProUGUI movableSpeakerNameText;
     [SerializeField] private TextMeshProUGUI sentenceText;
@@ -28,6 +30,7 @@ public class DialogueManager : MonoBehaviour
 
     [SerializeField] private BackGroundController backGroundController;
 
+    [Header ("Dialogue Parameters")]
     // 대사 텍스트 입력 딜레이.
     [SerializeField] private float typeDelay = 0.025f;
     
@@ -39,6 +42,7 @@ public class DialogueManager : MonoBehaviour
     public GameObject spritesPrefab;
 
     // 메인 BGM 및 사운드 이펙트 AudioSource.
+    [Header ("Audio Source")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioSource sentenceAudioSource;
 
@@ -47,6 +51,7 @@ public class DialogueManager : MonoBehaviour
     private bool _isDelayFinish = true;
 
     #region  Dialogue Scene Active Test Code
+    [Header ("Dialogue Scene Active Test Parameters")]
     private bool _isDialogueSceneActive = false;
     public bool IsDialogueSceneActive {
         get => _isDialogueSceneActive;
@@ -70,6 +75,33 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    public GameObject visualNovelDialoguePanel;               // 비주얼 노벨 대화 패널
+    public GameObject skipPanel;                              // 스킵 패널
+    public TextMeshProUGUI skipPanelStoryText;                // 스킵 패널 스토리 텍스트
+
+    /// <summary>
+    /// 조건에 맞게 다이얼로그 매니저의 스토리 실행 함수를 호출해 스토리를 시작시키는 함수  
+    /// 기존 GameController.PlayScene() -> DialogueManager.StartStoryScene()로 변경
+    /// </summary>
+    /// <param name="storyScene">다이얼로그 매니저에 넘겨 실행할 스토리</param>
+    public void StartStoryScene(StoryScene storyScene)
+    {
+        currentScene = storyScene;
+
+        switch (storyScene.storyType)
+        {
+            case StoryScene.StoryType.VisualNovel :
+                visualNovelDialoguePanel.SetActive(true);
+                IsDialogueSceneActive = true;
+                break;
+            
+            case StoryScene.StoryType.Movable :
+                movableDialoguePanel.SetActive(true);
+                break;
+        }
+        PlayScene(storyScene, storyScene.storyType);
+    }
+
     #endregion
 
 
@@ -84,7 +116,9 @@ public class DialogueManager : MonoBehaviour
     void Awake()
     {
         // CSV Parser 등록.
-        csvParser = GetComponent<CsvParser>();
+        // csvParser = GetComponent<CsvParser>();
+        csvParser = new();
+
         // 딕셔너리 초기화.
         _sprites = new Dictionary<Speaker, SpriteController>();
     }

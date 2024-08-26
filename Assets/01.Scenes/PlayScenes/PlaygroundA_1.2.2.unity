@@ -652,7 +652,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 791292130743612062, guid: 702a57d8256f1498f9c71d75b15f1144, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 995392319121594365, guid: 702a57d8256f1498f9c71d75b15f1144, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5934,6 +5934,9 @@ MonoBehaviour:
   audioSource: {fileID: 871707486}
   sentenceAudioSource: {fileID: 1548047178}
   narrationSpeaker: {fileID: 0}
+  visualNovelDialoguePanel: {fileID: 737359188}
+  skipPanel: {fileID: 737359187}
+  skipPanelStoryText: {fileID: 737359189}
 --- !u!114 &1200054186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6829,7 +6832,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6789348410898763581, guid: ba640a372e1e97846bda8ae4a8b609a7, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
