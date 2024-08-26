@@ -51,11 +51,10 @@ public class UIManager : MonoBehaviour
             Debug.Log(_UIGroup.transform.GetChild(i).name);
             
             var child = _UIGroup.transform.GetChild(i).gameObject;      // 자식 요소를 가져옴
-            var canvas = child.GetComponent<Canvas>();                  // 자식 요소의 Canvas 컴포넌트를 가져옴
-
-            if(canvas != null)
+            if(child.TryGetComponent<Canvas>(out var canvas))
             {
                 _canvasDictionary[child.name] = canvas;
+                Debug.Log($"{child.name} : {canvas}");
             }
 
             child.SetActive(true);
@@ -63,13 +62,13 @@ public class UIManager : MonoBehaviour
             switch(_UIGroup.transform.GetChild(i).name)
             {
                 case UIConstants.HUDCanvas:
-                    HUD_Canvas = _UIGroup.transform.GetChild(i).GetComponent<Canvas>();
+                    HUD_Canvas = _canvasDictionary[UIConstants.HUDCanvas];
                     break;
                 case UIConstants.InventoryCanvas:
-                    Inventory_Canvas = _UIGroup.transform.GetChild(i).GetComponent<Canvas>();
+                    Inventory_Canvas = _canvasDictionary[UIConstants.InventoryCanvas];
                     break;
                 case UIConstants.QuickSlotCanvas:
-                    QuickSlot_Canvas = _UIGroup.transform.GetChild(i).GetComponent<Canvas>();
+                    QuickSlot_Canvas = _canvasDictionary[UIConstants.QuickSlotCanvas];
                     break;
             }
             
@@ -98,9 +97,9 @@ public class UIManager : MonoBehaviour
             if(canvas.Key == UIConstants.HUDCanvas)
             {
                 canvas.Value.gameObject.SetActive(true);
+            }else{
+                canvas.Value.gameObject.SetActive(false);
             }
-
-            canvas.Value.gameObject.SetActive(false);
         }
     }
 
