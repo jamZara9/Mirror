@@ -51,7 +51,7 @@ public class PlayerStateController : MonoBehaviour
 
     // camera settings
     [SerializeField] private GameObject _cinemachineCamera;  // 카메라
-    private Transform _playerHeadTr;                        // 플레이어의 머리 위치
+    private Transform _playerChestTR;                       // 플레이어의 머리 위치
     private float _cinemachineTargetPitch = 0.0f;           // 현재 카메라 회전 각도
     public float topClamp = 70.0f;                          // 카메라 상단 회전 제한 각도
     public float bottomClamp = -30.0f;                      // 카메라 하단 회전 제한 각도
@@ -72,7 +72,7 @@ public class PlayerStateController : MonoBehaviour
         // animator가 있는 경우, 머리 위치를 가져옴
         if (_hasAnimator)
         {
-            _playerHeadTr = _animator.GetBoneTransform(HumanBodyBones.Head);
+            _playerChestTR = _animator.GetBoneTransform(HumanBodyBones.Chest);
         }
     }
 
@@ -98,6 +98,7 @@ public class PlayerStateController : MonoBehaviour
     void LateUpdate()
     {
         // HeadBoneRotation();
+        ChestBoneRotation();
     }
 
 
@@ -185,14 +186,14 @@ public class PlayerStateController : MonoBehaviour
         return Mathf.Round(newSpeed * 1000f) / 1000f;
     }
     
-    // /// <summary>
-    // /// 머리 회전 처리
-    // /// </summary>
-    // private void HeadBoneRotation()
-    // {
-    //     Vector3 HeadDir = _cinemachineCamera.transform.position + _cinemachineCamera.transform.forward * 10.0f;
-    //     _playerHeadTr.LookAt(HeadDir);
-    // }
+    /// <summary>
+    /// 체스트 본 회전 처리
+    /// </summary>
+    private void ChestBoneRotation()
+    {
+        Vector3 chestDir = _cinemachineCamera.transform.position +_cinemachineCamera.transform.right * 10.0f;
+        _playerChestTR.LookAt(chestDir);
+    }
 
     /// <summary>
     /// 카메라 회전 처리
