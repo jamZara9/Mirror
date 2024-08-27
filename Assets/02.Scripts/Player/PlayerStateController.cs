@@ -79,7 +79,7 @@ public class PlayerStateController : MonoBehaviour
     void Update()
     {
         OnMovement();
-        CameraRotation();
+        //CameraRotation();
         CharacterRotation();
 
         OnJump();
@@ -92,13 +92,17 @@ public class PlayerStateController : MonoBehaviour
         OnFire();
         ShowQuickSlot();
 
+        _cinemachineCamera.transform.position = _animator.GetBoneTransform(HumanBodyBones.UpperChest).transform.position 
+            + _animator.GetBoneTransform(HumanBodyBones.UpperChest).transform.right * -0.2f;
+
         _attackTimeoutDelta += Time.deltaTime;  // 공격 타임아웃 델타 증가
     }
 
     void LateUpdate()
     {
         // HeadBoneRotation();
-        ChestBoneRotation();
+        //ChestBoneRotation();
+        CameraRotation();
     }
 
 
@@ -191,7 +195,7 @@ public class PlayerStateController : MonoBehaviour
     /// </summary>
     private void ChestBoneRotation()
     {
-        Vector3 chestDir = _cinemachineCamera.transform.position +_cinemachineCamera.transform.right * 10.0f;
+        Vector3 chestDir = _cinemachineCamera.transform.position +_cinemachineCamera.transform.forward * 10.0f;
         _playerChestTR.LookAt(chestDir);
     }
 
@@ -206,6 +210,7 @@ public class PlayerStateController : MonoBehaviour
         _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, bottomClamp, topClamp);
 
         _cinemachineCamera.transform.localRotation = Quaternion.Euler(_cinemachineTargetPitch + cameraAngleOverride, 0.0f, 0.0f);
+        _playerChestTR.localRotation = Quaternion.Euler(0.0f, 0.0f, -(_cinemachineTargetPitch + cameraAngleOverride));
     }
 
     /// <summary>
