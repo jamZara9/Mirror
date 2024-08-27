@@ -12,6 +12,7 @@ TagManager:
   - QuickSlot
   - Weapon
   - HUD
+  - Enemy
   layers:
   - Default
   - TransparentFX

@@ -6,12 +6,15 @@ using System;
 /// <summary>
 /// 플레이어의 상태(이동, 점프, 달리기등)에 대한 로직을 담당하는 클래스
 /// </summary>
-public class PlayerStateController : MonoBehaviour
+public class PlayerStateController : MonoBehaviour, IDamage
 {
     private PlayerStatus.PlayerBasicSettings _settings;  // PlayerBasicSettings를 참조
-    private float _speed = 0.0f;                // 현재 속도
-    private float _animationBlend;              // 애니메이션 블렌드
-    private float _rotationSmoothTime = 0.12f;    // 회전 부드러움 시간
+    private float _speed = 0.0f;                    // 현재 속도
+    private float _animationBlend;                  // 애니메이션 블렌드
+    private float _rotationSmoothTime = 0.12f;      // 회전 부드러움 시간
+
+    [Header("Attack Settings")]
+    private float _attackTimeoutDelta = 0.0f;     // 공격 타임아웃 델타
 
     [Header("Jump Settings")]
     private bool _isGrounded = true;              // 땅에 붙어 있는지 여부
@@ -88,6 +91,8 @@ public class PlayerStateController : MonoBehaviour
         ShowInventory();
         OnFire();
         ShowQuickSlot();
+
+        _attackTimeoutDelta += Time.deltaTime;  // 공격 타임아웃 델타 증가
     }
 
     void LateUpdate()
@@ -484,11 +489,49 @@ public class PlayerStateController : MonoBehaviour
 
     private void OnFire()
     {
+        
         if (_inputActions.isFire)
         {
-            Debug.Log("Fire");
+            PlayerStatus playerStatus = GetComponent<PlayerStatus>();
+
+            Debug.Log($"{_attackTimeoutDelta} / {playerStatus.settings.attackDelay}");
+
+            if(_attackTimeoutDelta > playerStatus.settings.attackDelay){
+                Debug.Log("Attack");
+
+                // 공격 사거리가 0보다 큰 경우에만 공격 사거리 내에 적이 있는지 확인
+                if(playerStatus.CurrentAttackRange > 0){
+                    //공격 사거리 내에 적이 있는지 확인
+                    Collider[] hitColliders = Physics.OverlapSphere(transform.position, playerStatus.CurrentAttackRange);
+                    foreach (var hitCollider in hitColliders)
+                    {
+                        // 적인 경우에만 데미지를 입힘
+                        if(hitCollider.CompareTag("Enemy")){
+                            GameObject targetObject = hitCollider.gameObject;
+                            IDamage target = hitCollider.GetComponent<IDamage>();
+
+                            MonsterFSM monsterFSM = targetObject.GetComponent<MonsterFSM>();
+
+                            if(target != null){
+                                target.TakeDamage((int)playerStatus.CurrentAttackDamage);
+                                Debug.Log($"공격 성공: {hitCollider.name} || {monsterFSM.MonsterHP}");
+                            }
+                        }
+                    }
+                }
+
+                _attackTimeoutDelta = 0.0f; // 공격 타임아웃 초기화
+            }else{
+                Debug.Log("공격 딜레이 중");
+            }
+
             _inputActions.isFire = false;
         }
+    }
+
+    void IDamage.TakeDamage(int hitPower)
+    {
+        
     }
 }
 

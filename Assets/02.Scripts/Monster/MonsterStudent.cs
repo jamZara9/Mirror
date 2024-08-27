@@ -16,11 +16,16 @@ public class MonsterStudent : MonsterFSM
                 int randValue = Random.Range(0, 10);
                 if (randValue < 5) //50%로 방향을 구함
                 {
-                    Debug.Log("공격");    
+                    // Debug.Log("공격");    
+
+                    // 플레이어의 체력을 감소시킴 (테스트 코드)
+                    _player.GetComponent<PlayerStatus>().AdjustStatus(StatusType.Health, -attackPower);
+                    Debug.Log($"플레이어의 체력 : {_player.GetComponent<PlayerStatus>().CurrentHealth}");
                 }
                 else
                 {
                     Debug.Log("깨물기 공격");
+                    _player.GetComponent<PlayerStatus>().AdjustStatus(StatusType.Health, -(attackPower+5.0f));
                 }
                 _currentTime = 0;       // currentTime 초기화
             }

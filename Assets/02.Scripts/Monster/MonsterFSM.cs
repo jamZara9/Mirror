@@ -9,6 +9,8 @@ public class MonsterFSM : MonoBehaviour,IDamage
     private Vector3 _startPosition;     // 학생(몬스터)의 시작 위치
     [SerializeField] 
     private float monsterHp = 20f;      // 학생(몬스터)의 체력
+    public float MonsterHP => monsterHp;    // Test //////////////// Argonaut
+
     private bool _isDamaged = false;        // 학생(몬스터)의 피격확인용 변수
      
     public float attackDistance = 2f;      // 학생(몬스터)의 공격범위
@@ -16,7 +18,7 @@ public class MonsterFSM : MonoBehaviour,IDamage
     private float moveSpeed = 8f;       // 학생(몬스터)의 이동속도
     public float attackDelay = 2f;     // 학생(몬스터)의 공격 딜레이
     [SerializeField] 
-    private float attackPower = 5f;     // 학생(몬스터)의 공격력
+    protected float attackPower = 5f;     // 학생(몬스터)의 공격력
     [HideInInspector]
     public float _currentTime = 0f;    // 학생(몬스터)의 현재 공격시간 currentTime이 Delay보다 커진다면 공격 진행
     [HideInInspector]
@@ -164,7 +166,7 @@ public class MonsterFSM : MonoBehaviour,IDamage
 
         if (Targets.Length == 0)    //                  아무것도 안 검출되면 리턴
             return;
-        Debug.Log(Targets[0].name);
+        // Debug.Log(Targets[0].name);
         foreach(Collider EnemyColli in Targets) //    검출되었을때 탐색범위(시야각) 내에 있는지 판별하는 부분
         {
             Vector3 targetPos = EnemyColli.transform.position + new Vector3(0, 2, 0);
