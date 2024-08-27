@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 /// <summary>
-/// 플레이어의 상태(이동, 점프, 달리기등)를 관리하는 클래스
+/// 플레이어의 상태(이동, 점프, 달리기등)에 대한 로직을 담당하는 클래스
 /// </summary>
 public class PlayerStateController : MonoBehaviour
 {
@@ -77,7 +77,7 @@ public class PlayerStateController : MonoBehaviour
     {
         OnMovement();
         CameraRotation();
-        ChracterRotation();
+        CharacterRotation();
 
         OnJump();
         CheckGround();
@@ -184,7 +184,7 @@ public class PlayerStateController : MonoBehaviour
     /// <summary>
     /// 캐릭터 회전 처리
     /// </summary>
-    private void ChracterRotation()
+    private void CharacterRotation()
     {
         float _yRotation = _inputActions.look.x;
         Vector3 _characterRotationY = new Vector3(0f, _yRotation, 0f) * _rotationSmoothTime;
