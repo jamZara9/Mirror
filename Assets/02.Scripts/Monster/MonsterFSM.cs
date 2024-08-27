@@ -9,8 +9,6 @@ public class MonsterFSM : MonoBehaviour,IDamage
     private Vector3 _startPosition;     // 학생(몬스터)의 시작 위치
     [SerializeField] 
     private float monsterHp = 20f;      // 학생(몬스터)의 체력
-    public float MonsterHP => monsterHp;    // Test //////////////// Argonaut
-
     private bool _isDamaged = false;        // 학생(몬스터)의 피격확인용 변수
      
     public float attackDistance = 2f;      // 학생(몬스터)의 공격범위
@@ -239,6 +237,9 @@ public class MonsterFSM : MonoBehaviour,IDamage
             m_State = MonsterState.Damaged;// 학생(몬스터)의 상태를 Damaged 변경
             _isDamaged = true;             //피격 상태 
             StartCoroutine(WaitDamage());// WaitDamage 함수 호출
+
+
+            Debug.Log($"현재 Monster 체력 : {monsterHp}");
         }
     }
 

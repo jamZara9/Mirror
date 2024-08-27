@@ -13,7 +13,7 @@ public enum StatusType
 /// <summary>
 /// 플레이어의 상태(체력, 스태미나)를 관리하는 클래스
 /// </summary>
-public class PlayerStatus : MonoBehaviour
+public class PlayerStatus : MonoBehaviour, IDamage
 {
     [Serializable]
     public class PlayerBasicSettings
@@ -65,5 +65,11 @@ public class PlayerStatus : MonoBehaviour
                 CurrentMental = Mathf.Clamp(CurrentMental, 0, settings.maxMental);
                 break;
         }
+    }
+
+    public void TakeDamage(int hitPower)
+    {
+        AdjustStatus(StatusType.Health, -hitPower);
+        Debug.Log($"현재 체력 : {CurrentHealth}");
     }
 }
