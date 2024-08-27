@@ -9,9 +9,6 @@ public class UI_DragSlot : MonoBehaviour
     public UI_Slot_bls DragSlot;
     public IInventoryItem Item;
 
-    public Color testcolor;
-
-
     [SerializeField]
     private Image ItemIcon;
 
@@ -59,12 +56,5 @@ public class UI_DragSlot : MonoBehaviour
         color.a = _alpha;
         ItemIcon.color = color;
     }
-
-    public void Set_color(Color _color)
-    {
-        testcolor = _color;
-        ItemIcon.color = _color;
-    }
-
 
 }

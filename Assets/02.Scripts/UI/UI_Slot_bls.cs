@@ -15,8 +15,6 @@ public class UI_Slot_bls : MonoBehaviour, IItemContainer, IPointerClickHandler, 
 
     public SlotType slotType;     // ���� Ÿ��
 
-
-    public Color testColor; // �׽�Ʈ�� �÷��ڵ�
     public int index;   // 인벤토리에서 검색&스왑시 빠르게 처리하기 위한 인덱스
 
     public UI_QuickSlot QuickSlot; //�ش� ������ �����ϰ��ִ� ������
@@ -50,7 +48,6 @@ public class UI_Slot_bls : MonoBehaviour, IItemContainer, IPointerClickHandler, 
             Clear();
         else
         {
-            Set_Color(testColor);                   //테스트 코드
             _ItemIcon.sprite = SlotItem.Icon;        //아이콘 업데이트
             _countTXT.text = "" + SlotItem.Count;   //아이템 갯수 업데이트
         }
@@ -156,17 +153,9 @@ public class UI_Slot_bls : MonoBehaviour, IItemContainer, IPointerClickHandler, 
         return SlotItem; 
     }
 
-    public void Set_Color(Color _color)
-    {
-        testColor = _color;
-        _ItemIcon.color = testColor;
-    }
-
     //슬롯 초기화용 함수
     public void Clear()
     {
-        Set_Color(Color.white); //테스트 코드
-
         SlotItem = null;            //슬롯 비우기
         _ItemIcon.sprite = null;     //아이콘 제거
         _countTXT.text = "";        //텍스트 초기화

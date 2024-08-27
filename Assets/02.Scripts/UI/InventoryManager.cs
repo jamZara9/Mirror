@@ -39,8 +39,8 @@ public class InventoryManager : MonoBehaviour, IItemContainer
 
     private void Start()
     {
-        
-        for(int i = 0; i < Inventory_MaxSize; i++)
+        //인벤토리에 빈 슬롯 채우기
+        for (int i = 0; i < Inventory_MaxSize; i++)
         {
                                                                            //   HUD_CANVAS           BackGround  InvenSlots   Slot
             UI_Slot_bls slot = GameManager.Instance.uiManager.GetCanvas("Inventory_Canvas").transform.GetChild(0).GetChild(0).GetChild(i).gameObject.GetComponent<UI_Slot_bls>();      // 이게 무슨.. 나중에 줄일게요
@@ -54,13 +54,13 @@ public class InventoryManager : MonoBehaviour, IItemContainer
     // Update is called once per frame
     void Update()
     {
-        foreach(UI_Slot_bls slot in Inventory)
-        {
-            if(slot.Get_Item()?.Count == 0)
-            {
-                Remove_Item(slot);
-            }
-        }
+        //foreach(UI_Slot_bls slot in Inventory)
+        //{
+        //    if(slot.Get_Item()?.Count == 0)
+        //    {
+        //        Remove_Item(slot);
+        //    }
+        //}
     }
 
         /// <summary>
@@ -114,12 +114,6 @@ public class InventoryManager : MonoBehaviour, IItemContainer
         _to.QuickSlot = _from.QuickSlot;
         _from.QuickSlot = tempQSlot;
         ///////////////////////
- 
-        ////////////////////////// �׽�Ʈ �ڵ�
-        Color tempColor = _from.testColor;
-        _from.testColor = _to.testColor;
-        _to.testColor = tempColor;
-        //////////////////////////
 
         /////////////////////// ������ ��ȯ
         IInventoryItem temp = _to.Get_Item();
@@ -171,8 +165,8 @@ public class InventoryManager : MonoBehaviour, IItemContainer
                 {
                     item.Count++;           //아이템 갯수 0->1
                     slot.AddItem(item);     //빈슬롯에 아이템 입력
-                    Slot.Update_Slot();
-                    //slot.Set_Color(new Color(Random.RandomRange(0f, 1f), Random.RandomRange(0f, 1f), Random.RandomRange(0f, 1f)));  //테스트 코드
+                    Slot.Update_Slot();     //업데이트된 정보 반영
+                    
                     return;
                 }
             }
@@ -185,6 +179,6 @@ public class InventoryManager : MonoBehaviour, IItemContainer
 
     public void RemoveItem(IInventoryItem item)
     {
-        throw new System.NotImplementedException();
+        
     }
 }

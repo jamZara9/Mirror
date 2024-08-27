@@ -13,6 +13,11 @@ public class UIConstants
     public const string QuickSlotCanvas = "QuickSlot_Canvas";
 }
 
+public enum ECanvas
+{
+    HUD, INVENTORY, QUICKSLOT, END
+}
+
 /// <summary>
 /// UI를 관리하는 클래스
 /// </summary>
@@ -31,9 +36,21 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _UIGroup;   // UI를 담고 있는 그룹
     // Test
     private Dictionary<string, Canvas> _canvasDictionary  = new();  // UI 캠버스 딕셔너리
+
+    /// <summary>
+    /// 모든 UI를 canvas단위로 나눠 관리할 map인데 실 사용 여부는 좀 더 고민해봐야 합니다
+    /// </summary>
+    private List<Dictionary<string, GameObject>> _uiDictionary = new((int)ECanvas.END); //모든 UI를 canvas단위로 나눠 관리할 딕셔너리
+
+
     private void Awake()
     {
         Find_Canvas();
+
+        for(ECanvas i = ECanvas.HUD; i < ECanvas.END; i++)
+        {
+            _uiDictionary[(int)i] = new();
+        }
     }
 
     /// <summary>
