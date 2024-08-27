@@ -227,7 +227,7 @@ public class MonsterFSM : MonoBehaviour,IDamage
         }
     }
 
-    public void Damage(int hitPower)    //  학생(몬스터)의 피격
+    public void TakeDamage(int hitPower)    //  학생(몬스터)의 피격
     {
         if (m_State == MonsterState.Damaged || m_State == MonsterState.Die) return; 
         if (monsterHp > 0)  
