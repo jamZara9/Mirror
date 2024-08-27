@@ -129,11 +129,13 @@ public class PlayerStateController : MonoBehaviour
         // 목표 속도와 현재 속도의 차이를 확인하여 가속 또는 감속을 처리
         if (Mathf.Abs(currentHorizontalSpeed - targetSpeed) > speedOffset)
         {
-            // Mathf.Lerp는 선형 보간을 통해 속도를 자연스럽게 변경
-            _speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude, Time.deltaTime * _settings.speedChangeRate);
+            // // Mathf.Lerp는 선형 보간을 통해 속도를 자연스럽게 변경
+            // _speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude, Time.deltaTime * _settings.speedChangeRate);
 
-            // 속도를 소수점 3자리까지 반올림하여 처리
-            _speed = Mathf.Round(_speed * 1000f) / 1000f;
+            // // 속도를 소수점 3자리까지 반올림하여 처리
+            // _speed = Mathf.Round(_speed * 1000f) / 1000f;
+
+            _speed = SmoothSpeedTransition(currentHorizontalSpeed, targetSpeed * inputMagnitude, _settings.speedChangeRate);
         }
         else
         {
@@ -141,7 +143,9 @@ public class PlayerStateController : MonoBehaviour
         }
 
         // 애니메이션 블렌드를 처리하여 이동 애니메이션이 부드럽게 전환되도록 진행
-        _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * _settings.speedChangeRate);
+        // _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * _settings.speedChangeRate);
+        _animationBlend = SmoothSpeedTransition(_animationBlend, targetSpeed, _settings.speedChangeRate);
+
         if (_animationBlend < 0.01f) _animationBlend = 0f;
 
         Vector3 moveDirection = new Vector3(_inputActions.move.x, 0, _inputActions.move.y).normalized;
@@ -159,6 +163,23 @@ public class PlayerStateController : MonoBehaviour
             _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
         }
     }
+
+    /// <summary>
+    /// 속도 보정 로직 처리
+    /// </summary>
+    /// <param name="currentSpeed"></param>
+    /// <param name="targetSpeed"></param>
+    /// <param name="speedChangeRate"></param>
+    /// <returns></returns>
+    private float SmoothSpeedTransition(float currentSpeed, float targetSpeed, float speedChangeRate)
+    {
+        // Mathf.Lerp를 사용해 현재 속도를 목표 속도로 부드럽게 전환
+        float newSpeed = Mathf.Lerp(currentSpeed, targetSpeed, Time.deltaTime * speedChangeRate);
+
+        // 속도를 소수점 3자리까지 반올림하여 처리
+        return Mathf.Round(newSpeed * 1000f) / 1000f;
+    }
+    
     // /// <summary>
     // /// 머리 회전 처리
     // /// </summary>
