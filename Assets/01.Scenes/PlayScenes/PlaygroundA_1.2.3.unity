@@ -5665,7 +5665,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1154175172
 Transform:
   m_ObjectHideFlags: 0
@@ -5928,7 +5928,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxDistance: 10
   objectNameText: {fileID: 1629254774}
-  detectedItem: {fileID: 0}
+  detectedObject: {fileID: 0}
 --- !u!114 &1200054180
 MonoBehaviour:
   m_ObjectHideFlags: 0

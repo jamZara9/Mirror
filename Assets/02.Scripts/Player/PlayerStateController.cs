@@ -383,7 +383,7 @@ public class PlayerStateController : MonoBehaviour
         {
             GameManager gameManager = GameManager.Instance;
             CameraController cameraController = gameManager.cameraController;
-            GameObject detetedItem = cameraController.detectedItem;
+            GameObject detetedItem = cameraController.detectedObject;
             
             // 아이템이 감지된 경우
             if (detetedItem != null)
@@ -401,7 +401,7 @@ public class PlayerStateController : MonoBehaviour
                 
                 gameManager.playerInventory.AddItem(inventoryItem);// 플레이어 인벤토리에 아이템 추가
                 Debug.Log("아이템 획득");
-                cameraController.detectedItem = null;
+                cameraController.detectedObject = null;
             }
 
             _inputActions.isInteractable = false;

@@ -413,10 +413,10 @@ namespace StarterAssets
                 GameManager gameManager = GameManager.Instance;
                 CameraController cameraController = gameManager.cameraController;
 
-                if(cameraController.detectedItem != null){
+                if(cameraController.detectedObject != null){
                     // 아이템을 획득
                     // EventManager.ItemPickup(cameraController.detectedItem.GetComponent<BaseItem>(), gameManager.playerInventory);
-                    cameraController.detectedItem = null;
+                    cameraController.detectedObject = null;
                 }
                 _input.pickupItem = false;
             }
