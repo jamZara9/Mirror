@@ -12,7 +12,7 @@ public class UI_QuickSlot : MonoBehaviour, IDropHandler
         QuickSlot
     }
 
-    public BaseItem Item;
+    private IInventoryItem _Item;
 
     public SlotType slotType;     // ���� Ÿ��
     public Image ItemIcon;
@@ -41,7 +41,7 @@ public class UI_QuickSlot : MonoBehaviour, IDropHandler
         testcolor = UI_DragSlot.instance.testcolor;
         /////////////
 
-        Item = UI_DragSlot.instance.Item;
+        _Item = UI_DragSlot.instance.Item;
         UI_DragSlot.instance.DragSlot.QuickSlot = this;
 
         Update_QuickSlot();
@@ -63,6 +63,6 @@ public class UI_QuickSlot : MonoBehaviour, IDropHandler
     {
         testcolor = Color.white;
         ItemIcon.color = testcolor;
-        Item = null;
+        _Item = null;
     }
 }

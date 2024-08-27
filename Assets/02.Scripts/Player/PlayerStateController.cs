@@ -411,6 +411,7 @@ public class PlayerStateController : MonoBehaviour
                 inventoryItem.Count += 1; // 아이템 개수 증가
                 
                 gameManager.playerInventory.AddItem(inventoryItem);// 플레이어 인벤토리에 아이템 추가
+                gameManager.inventoryManager.AddItem(inventoryItem);
                 Debug.Log("아이템 획득");
                 cameraController.detectedObject = null;
             }

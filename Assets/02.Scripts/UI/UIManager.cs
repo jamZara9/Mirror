@@ -25,6 +25,9 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Canvas QuickSlot_Canvas;
 
+    public GameObject Text_ItemName;
+    public GameObject Text_ItemDescription;
+
     [SerializeField] private GameObject _UIGroup;   // UI를 담고 있는 그룹
     // Test
     private Dictionary<string, Canvas> _canvasDictionary  = new();  // UI 캠버스 딕셔너리

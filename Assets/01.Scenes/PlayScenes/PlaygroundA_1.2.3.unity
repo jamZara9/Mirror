@@ -516,7 +516,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7133571870641077146, guid: 1d00d057b223b704ba7bd63279b1fa6b, type: 3}
       propertyPath: m_Name
-      value: ItemSlot1 (5)
+      value: ItemSlot6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1193,7 +1193,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7133571870641077146, guid: 1d00d057b223b704ba7bd63279b1fa6b, type: 3}
       propertyPath: m_Name
-      value: ItemSlot1 (8)
+      value: ItemSlot9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3659,7 +3659,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7133571870641077146, guid: 1d00d057b223b704ba7bd63279b1fa6b, type: 3}
       propertyPath: m_Name
-      value: ItemSlot1 (2)
+      value: ItemSlot3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3909,7 +3909,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DragSlot: {fileID: 0}
-  Item: {fileID: 0}
   testcolor: {r: 0, g: 0, b: 0, a: 0}
   ItemIcon: {fileID: 1800200411}
 --- !u!1 &769476548
@@ -4190,7 +4189,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7133571870641077146, guid: 1d00d057b223b704ba7bd63279b1fa6b, type: 3}
       propertyPath: m_Name
-      value: ItemSlot1 (7)
+      value: ItemSlot8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4579,7 +4578,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7133571870641077146, guid: 1d00d057b223b704ba7bd63279b1fa6b, type: 3}
       propertyPath: m_Name
-      value: ItemSlot1 (3)
+      value: ItemSlot4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4671,7 +4670,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!224 &906102281
 RectTransform:
@@ -5533,7 +5532,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 131039
 --- !u!114 &1135269881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5578,7 +5577,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!1001 &1141454815
 PrefabInstance:
@@ -6046,6 +6045,8 @@ MonoBehaviour:
   HUD_Canvas: {fileID: 0}
   Inventory_Canvas: {fileID: 0}
   QuickSlot_Canvas: {fileID: 0}
+  Text_ItemName: {fileID: 0}
+  Text_ItemDescription: {fileID: 0}
   _UIGroup: {fileID: 260579719}
 --- !u!114 &1200054185
 MonoBehaviour:
@@ -6856,7 +6857,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7133571870641077146, guid: 1d00d057b223b704ba7bd63279b1fa6b, type: 3}
       propertyPath: m_Name
-      value: ItemSlot1 (6)
+      value: ItemSlot7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7166,7 +7167,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7133571870641077146, guid: 1d00d057b223b704ba7bd63279b1fa6b, type: 3}
       propertyPath: m_Name
-      value: ItemSlot1 (11)
+      value: ItemSlot12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7660,7 +7661,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7133571870641077146, guid: 1d00d057b223b704ba7bd63279b1fa6b, type: 3}
       propertyPath: m_Name
-      value: ItemSlot1 (1)
+      value: ItemSlot2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8924,7 +8925,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7133571870641077146, guid: 1d00d057b223b704ba7bd63279b1fa6b, type: 3}
       propertyPath: m_Name
-      value: ItemSlot1 (10)
+      value: ItemSlot11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9414,7 +9415,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7133571870641077146, guid: 1d00d057b223b704ba7bd63279b1fa6b, type: 3}
       propertyPath: m_Name
-      value: ItemSlot1 (9)
+      value: ItemSlot10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10117,7 +10118,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7133571870641077146, guid: 1d00d057b223b704ba7bd63279b1fa6b, type: 3}
       propertyPath: m_Name
-      value: ItemSlot1 (4)
+      value: ItemSlot5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

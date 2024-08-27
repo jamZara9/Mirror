@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2648441815021023695}
   - component: {fileID: 940188055851449040}
   - component: {fileID: 2181294975245782583}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 4001029687619141975}
   - component: {fileID: 7437989570012103162}
   - component: {fileID: 1170571040354767105}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Amount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -142,7 +142,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b5061a9bc38b7284d9cc6568f5a5b7dd, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: 9108110975851271829, guid: b5061a9bc38b7284d9cc6568f5a5b7dd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -221,9 +221,9 @@ GameObject:
   - component: {fileID: 7823427600805890192}
   - component: {fileID: 1561564583302383062}
   - component: {fileID: 5823376425332301742}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ItemSlot
-  m_TagString: Untagged
+  m_TagString: Inventory
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -300,9 +300,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotType: 0
-  ItemIcon: {fileID: 2181294975245782583}
   testColor: {r: 0, g: 0, b: 0, a: 0}
   index: 0
-  count: {fileID: 4604178266868512043}
-  InventoryMgr: {fileID: 0}
-  SlotItem: {fileID: 0}
+  QuickSlot: {fileID: 0}
+  _countTXT: {fileID: 0}
+  ItemIcon: {fileID: 2181294975245782583}
