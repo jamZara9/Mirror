@@ -695,6 +695,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4158749474558174557, guid: 702a57d8256f1498f9c71d75b15f1144, type: 3}
+      propertyPath: DebugMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4158749474558174557, guid: 702a57d8256f1498f9c71d75b15f1144, type: 3}
       propertyPath: TargetMask.m_Bits
       value: 264
       objectReference: {fileID: 0}
@@ -2542,6 +2546,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1460560513099801984, guid: f048fcb3e24f94594a8ea9a92efd1331, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2559947923896037120, guid: f048fcb3e24f94594a8ea9a92efd1331, type: 3}
+      propertyPath: isMirrorAttacked
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2559947923896037120, guid: f048fcb3e24f94594a8ea9a92efd1331, type: 3}
@@ -5336,6 +5344,7 @@ MonoBehaviour:
   currentHealth: 0
   maxStamina: 100
   currentStamina: 0
+  attackRange: 0.5
 --- !u!114 &1114641677
 MonoBehaviour:
   m_ObjectHideFlags: 0

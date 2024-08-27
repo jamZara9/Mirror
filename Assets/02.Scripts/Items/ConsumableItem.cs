@@ -16,7 +16,7 @@ public enum EffectType
 public class ConsumableItem : BaseItem
 {
     [Header("Item Parameters")]
-    public EffectType effectType;   // 아이템 효과 타입
+    public EffectType effectType;       // 아이템 효과 타입
 
     private PlayerStatus playerStatus;  // 플레이어 상태
 
@@ -30,13 +30,13 @@ public class ConsumableItem : BaseItem
         switch (effectType)
         {
             case EffectType.Health:
-                UseHeadthItem();
+                UseHealItem();
                 break;
             case EffectType.Speed:
 
                 break;
             case EffectType.Mental:
-
+                
                 break;
             case EffectType.All:
                 
@@ -44,17 +44,11 @@ public class ConsumableItem : BaseItem
         }
     }
 
-    private void UseHeadthItem()
+    private void UseHealItem()
     {
         // 체력 회복 아이템 사용
-        playerStatus.currentHealth += 10;
-
-        // 최대 체력을 넘어가지 않도록 설정
-        if (playerStatus.currentHealth > playerStatus.maxHealth)
-        {
-            playerStatus.currentHealth = playerStatus.maxHealth;
-        }
-        Debug.Log("체력 회복 아이템 사용" + playerStatus.currentHealth);
+        playerStatus.AdjustStatus(StatusType.Health, 20.0f);
+        Debug.Log("체력 회복 아이템 사용" + playerStatus.CurrentHealth);
     }
 
 }

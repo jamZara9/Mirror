@@ -43,7 +43,7 @@ public class UIController_Test : MonoBehaviour
     void Update()
     {
         if(hpText != null)
-            hpText.GetComponent<TMPro.TextMeshProUGUI>().text = "HP : " + playerStatus.currentHealth;
+            hpText.GetComponent<TMPro.TextMeshProUGUI>().text = "HP : " + playerStatus.CurrentHealth;
     }
 
     private void HandleShowInventory(GameObject inventoryUI){
