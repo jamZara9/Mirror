@@ -2528,6 +2528,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1314299551184728812, guid: f048fcb3e24f94594a8ea9a92efd1331, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1460560513099801984, guid: f048fcb3e24f94594a8ea9a92efd1331, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2569,6 +2573,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2559947923896037120, guid: f048fcb3e24f94594a8ea9a92efd1331, type: 3}
+      propertyPath: DebugMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2559947923896037120, guid: f048fcb3e24f94594a8ea9a92efd1331, type: 3}
       propertyPath: isMirrorAttacked
       value: 0
       objectReference: {fileID: 0}
@@ -2594,7 +2602,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8600125277025255048, guid: f048fcb3e24f94594a8ea9a92efd1331, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8600125277025255048, guid: f048fcb3e24f94594a8ea9a92efd1331, type: 3}
       propertyPath: m_TagString
