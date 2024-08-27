@@ -156,10 +156,11 @@ public class InventoryManager : MonoBehaviour, IItemContainer
     /// </summary>
     public void AddItem(IInventoryItem item)
     {
-        UI_Slot_bls Slot = Inventory.Find(x => x.Get_Item()?.ItemID == item.ItemID);        //인벤토리에 동일한 이름의 아이템이 있는지 먼저 검색
+        UI_Slot_bls Slot = Inventory.Find(x => x.Get_Item()?.ItemData.Name == item.ItemData.Name);        //인벤토리에 동일한 이름의 아이템이 있는지 먼저 검색
         if( null != Slot )                                                                  
         {
             Slot.Get_Item().Count++;                                                        //인벤토리에 같은 이름의 아이템이 있다면 갯수만 늘려주고 종료
+            Slot.Update_Slot();
             return;
         }
         else                                                                                
@@ -170,8 +171,8 @@ public class InventoryManager : MonoBehaviour, IItemContainer
                 {
                     item.Count++;           //아이템 갯수 0->1
                     slot.AddItem(item);     //빈슬롯에 아이템 입력
-                    slot.Update_Slot();     //슬롯 변경사항 업데이트
-                    slot.Set_Color(new Color(Random.RandomRange(0f, 1f), Random.RandomRange(0f, 1f), Random.RandomRange(0f, 1f)));  //테스트 코드
+                    Slot.Update_Slot();
+                    //slot.Set_Color(new Color(Random.RandomRange(0f, 1f), Random.RandomRange(0f, 1f), Random.RandomRange(0f, 1f)));  //테스트 코드
                     return;
                 }
             }
