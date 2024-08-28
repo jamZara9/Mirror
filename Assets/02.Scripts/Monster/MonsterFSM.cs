@@ -22,6 +22,7 @@ public class MonsterFSM : MonoBehaviour,IDamage
     [HideInInspector]
     public Transform _player;          // 플레이어의 위치 값 받아오는 용도
     private Animator _animator;         // 학생(몬스터)의 애니메이터
+    private bool _hasAnimator = false;  // 애니메이터가 있는지 확인용 변수
     private NavMeshAgent _navMeshA;     // 학생(몬스터)의 네비매쉬매니저
     
     private Vector3 _randomPosition;
@@ -71,6 +72,7 @@ public class MonsterFSM : MonoBehaviour,IDamage
         // 초기화들
         _navMeshA = GetComponent<NavMeshAgent>();
         _animator = GetComponentInChildren<Animator>();
+        _hasAnimator = _animator != null;
         _navMeshA.speed = moveSpeed;
         _startPosition = transform.position;
         _player = GameObject.FindWithTag("Player").transform;
@@ -90,8 +92,7 @@ public class MonsterFSM : MonoBehaviour,IDamage
         }
         //--------------------------------------------------------------------- Test
         
-        _navMeshA.SetDestination(moveDirectionList[_moveDirectionIndex++]);
-        m_State = MonsterState.Idle;
+        if(_hasAnimator) StartCoroutine(WaitIdle(_moveDirectionIndex));
         
     }
     // 탐색 범위 가시화
