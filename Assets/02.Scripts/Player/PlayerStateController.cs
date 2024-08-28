@@ -72,16 +72,13 @@ public class PlayerStateController : MonoBehaviour
         // animator가 있는 경우, 머리 위치를 가져옴
         if (_hasAnimator)
         {
-            _playerChestTR = _animator.GetBoneTransform(HumanBodyBones.Chest);
+            _playerChestTR = _animator.GetBoneTransform(HumanBodyBones.UpperChest);
         }
     }
 
     void Update()
     {
         OnMovement();
-        //CameraRotation();
-        CharacterRotation();
-
         OnJump();
         CheckGround();
 
@@ -92,17 +89,18 @@ public class PlayerStateController : MonoBehaviour
         OnFire();
         ShowQuickSlot();
 
-        _cinemachineCamera.transform.position = _animator.GetBoneTransform(HumanBodyBones.UpperChest).transform.position 
-            + _animator.GetBoneTransform(HumanBodyBones.UpperChest).transform.right * -0.2f;
+        
 
         _attackTimeoutDelta += Time.deltaTime;  // 공격 타임아웃 델타 증가
     }
 
     void LateUpdate()
     {
-        // HeadBoneRotation();
-        //ChestBoneRotation();
-        CameraRotation();
+        CharacterRotation();
+        UpdateCameraRotation();
+        UpdateChestBoneRotation();
+
+        _cinemachineCamera.transform.position = _playerChestTR.transform.position + _playerChestTR.transform.right * -0.2f;
     }
 
 
@@ -190,27 +188,25 @@ public class PlayerStateController : MonoBehaviour
         return Mathf.Round(newSpeed * 1000f) / 1000f;
     }
     
-    /// <summary>
-    /// 체스트 본 회전 처리
-    /// </summary>
-    private void ChestBoneRotation()
-    {
-        Vector3 chestDir = _cinemachineCamera.transform.position +_cinemachineCamera.transform.forward * 10.0f;
-        _playerChestTR.LookAt(chestDir);
-    }
 
     /// <summary>
     /// 카메라 회전 처리
     /// </summary>
-    private void CameraRotation()
-    {
+    private void UpdateCameraRotation(){
         float _xRotation = _inputActions.look.y * _rotationSmoothTime;    // 상하 회전
 
         _cinemachineTargetPitch -= _xRotation;
         _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, bottomClamp, topClamp);
 
-        _cinemachineCamera.transform.localRotation = Quaternion.Euler(_cinemachineTargetPitch + cameraAngleOverride, 0.0f, 0.0f);
-        _playerChestTR.localRotation = Quaternion.Euler(0.0f, 0.0f, -(_cinemachineTargetPitch + cameraAngleOverride));
+        Quaternion targetRotation = Quaternion.Euler(_cinemachineTargetPitch + cameraAngleOverride, 0.0f, 0.0f);
+        _cinemachineCamera.transform.localRotation = targetRotation;
+    }
+
+    /// <summary>
+    /// 플레이어  회전 처리
+    /// </summary>
+    private void UpdateChestBoneRotation(){
+        _playerChestTR.localRotation = Quaternion.Euler(0.0f, 0.0f, -_cinemachineCamera.transform.localRotation.eulerAngles.x);
     }
 
     /// <summary>
@@ -218,8 +214,7 @@ public class PlayerStateController : MonoBehaviour
     /// </summary>
     private void CharacterRotation()
     {
-        float _yRotation = _inputActions.look.x;
-        Vector3 _characterRotationY = new Vector3(0f, _yRotation, 0f) * _rotationSmoothTime;
+        Vector3 _characterRotationY = new Vector3(0f, _inputActions.look.x, 0f) * _rotationSmoothTime;
         _characterController.transform.Rotate(_characterRotationY);
     }
 
