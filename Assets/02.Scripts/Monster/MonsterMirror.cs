@@ -31,15 +31,7 @@ public class MonsterMirror : MonsterFSM
                 }
                 else
                 {
-                    int randValue = Random.Range(0, 10);
-                    if (randValue < 5) //50%로 방향을 구함
-                    {
-                        Debug.Log("공격");    
-                    }
-                    else
-                    {
-                        Debug.Log("깨물기 공격");
-                    }
+                    Debug.Log("공격");
                 }
                 _currentTime = 0;       // currentTime 초기화
             }
