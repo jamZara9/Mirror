@@ -228,7 +228,7 @@ public class EKGGraph : MonoBehaviour
         float maxBPMIncrease = 60f;                             // HP가 0%일 때의 최대 BPM 증가량
         float bpm = baseBPM + (1 - hpRatio) * (maxBPMIncrease * 1.2f);
 
-        Debug.Log($"HP Ratio: {hpRatio}, BPM: {bpm}");
+        // Debug.Log($"HP Ratio: {hpRatio}, BPM: {bpm}");
 
         return bpm;
     }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
 
@@ -12,6 +13,12 @@ public class UIConstants
     public const string HUDCanvas = "HUD_Canvas";
     public const string InventoryCanvas = "Inventory_Canvas";
     public const string QuickSlotCanvas = "QuickSlot_Canvas";
+
+    public const string HP = "HP";
+    public const string AttackDamage = "AttackDamage";
+    public const string AttackSpeed = "AttackSpeed";
+    public const string AttackRange = "AttackRange";
+    public const string WalkSpeed = "WalkSpeed";
 }
 
 public enum ECanvas
@@ -44,21 +51,45 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _UIGroup;   // UI를 담고 있는 그룹
     // Test
     private Dictionary<string, Canvas> _canvasDictionary  = new();  // UI 캠버스 딕셔너리
+    private Dictionary<string, GameObject> _uiDictionary = new();  // UI 딕셔너리
 
     /// <summary>
     /// 모든 UI를 canvas단위로 나눠 관리할 map인데 실 사용 여부는 좀 더 고민해봐야 합니다
     /// </summary>
-    private List<Dictionary<string, GameObject>> _uiDictionary = new((int)ECanvas.END); //모든 UI를 canvas단위로 나눠 관리할 딕셔너리
+    // private List<Dictionary<string, GameObject>> _uiDictionary = new((int)ECanvas.END); //모든 UI를 canvas단위로 나눠 관리할 딕셔너리
 
 
     private void Awake()
     {
         Find_Canvas();
         
-        for(ECanvas i = ECanvas.HUD; i < ECanvas.END; i++)
+        SetUiDictionary(_UIGroup);
+    }
+
+    /// <summary>
+    /// UI를 담고 있는 그룹을 찾아 딕셔너리에 추가하는 함수
+    /// </summary>
+    /// <param name="ui"></param>
+    private void SetUiDictionary(GameObject ui)
+    {
+        if (ui == null) return;
+
+        // 큐를 사용하여 계층 구조를 순회합니다.
+        Queue<Transform> queue = new Queue<Transform>();
+        queue.Enqueue(ui.transform);
+
+        while (queue.Count > 0)
         {
-            // _uiDictionary[(int)i] = new();
-            _uiDictionary.Add(new Dictionary<string, GameObject>());
+            Transform current = queue.Dequeue();
+
+            // 현재 Transform의 자식들을 큐에 추가합니다.
+            for (int i = 0; i < current.childCount; i++)
+            {
+                Transform child = current.GetChild(i);
+                queue.Enqueue(child);
+                _uiDictionary[child.gameObject.name] = child.gameObject;
+                // Debug.Log($"{child.gameObject.name} : {child.gameObject}");
+            }
         }
     }
 
@@ -211,6 +242,24 @@ public class UIManager : MonoBehaviour
     #endregion
 
     /// <summary>
+    /// UI 텍스트 갱신
+    /// </summary>
+    /// <param name="target">갱신할 UI 명칭</param>
+    /// <param name="amount">갱신할 UI 수치</param>
+    public void UpdateUIText(string target, float amount){
+        if(target == null) return;
+
+        // uiDictionary에서 target의 이름을 찾아서 해당 UI를 갱신
+        foreach (var ui in _uiDictionary)
+        {
+            if(ui.Key == UIConstants.HP)
+            {
+                UpdateHPText(amount);
+            }
+        }
+    }
+
+    /// <summary>
     /// HP 텍스트 업데이트
     /// </summary>
     /// <param name="hp">갱신된 HP</param>
@@ -218,5 +267,4 @@ public class UIManager : MonoBehaviour
     {
         _txtHP.text = "HP : " + hp + " / 100";
     }
-
 }
