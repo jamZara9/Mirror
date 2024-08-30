@@ -321,33 +321,6 @@ public class PlayerStateController : MonoBehaviour
     }
 
     /// <summary>
-    /// 발소리 이벤트
-    /// </summary>
-    private void OnFootstep(AnimationEvent animationEvent)
-    {
-        if (animationEvent.animatorClipInfo.weight > 0.5f)
-        {
-            if (footstepAudioClips.Length > 0)
-            {
-                var index = UnityEngine.Random.Range(0, footstepAudioClips.Length);
-                AudioSource.PlayClipAtPoint(footstepAudioClips[index], transform.TransformPoint(_characterController.center), footstepAudioVolume);
-            }
-        }
-    }
-
-    /// <summary>
-    /// 착지 이벤트
-    /// </summary>
-    /// <param name="animationEvent"></param>
-    private void OnLand(AnimationEvent animationEvent)
-    {
-        if (animationEvent.animatorClipInfo.weight > 0.5f)
-        {
-            AudioSource.PlayClipAtPoint(landingAudioClip, transform.TransformPoint(_characterController.center), footstepAudioVolume);
-        }
-    }
-
-    /// <summary>
     /// 아이템 사용
     /// @Todo: 추후 로직을 다른 곳으로 이동 시킬지 고민 필요
     /// </summary>
@@ -491,7 +464,6 @@ public class PlayerStateController : MonoBehaviour
 
     private void OnFire()
     {
-        
         if (_inputActions.isFire)
         {
             PlayerStatus playerStatus = GetComponent<PlayerStatus>();
@@ -523,6 +495,36 @@ public class PlayerStateController : MonoBehaviour
             _inputActions.isFire = false;
         }
     }
+
+
+    #region Animation Events
+    /// <summary>
+    /// 발소리 이벤트
+    /// </summary>
+    private void OnFootstep(AnimationEvent animationEvent)
+    {
+        if (animationEvent.animatorClipInfo.weight > 0.5f)
+        {
+            if (footstepAudioClips.Length > 0)
+            {
+                var index = UnityEngine.Random.Range(0, footstepAudioClips.Length);
+                AudioSource.PlayClipAtPoint(footstepAudioClips[index], transform.TransformPoint(_characterController.center), footstepAudioVolume);
+            }
+        }
+    }
+
+    /// <summary>
+    /// 착지 이벤트
+    /// </summary>
+    /// <param name="animationEvent"></param>
+    private void OnLand(AnimationEvent animationEvent)
+    {
+        if (animationEvent.animatorClipInfo.weight > 0.5f)
+        {
+            AudioSource.PlayClipAtPoint(landingAudioClip, transform.TransformPoint(_characterController.center), footstepAudioVolume);
+        }
+    }
+    #endregion
 }
 
 
