@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 /// <summary>
@@ -32,6 +33,9 @@ public class UIManager : MonoBehaviour
 
     public GameObject Text_ItemName;
     public GameObject Text_ItemDescription;
+
+    [SerializeField] private TextMeshProUGUI _txtHP;     // HP 텍스트 (test용)
+
 
     [SerializeField] private GameObject _UIGroup;   // UI를 담고 있는 그룹
     // Test
@@ -122,6 +126,8 @@ public class UIManager : MonoBehaviour
                 canvas.Value.gameObject.SetActive(false);
             }
         }
+
+        _txtHP.text = "HP : " + GameManager.Instance.playerStatus.CurrentHealth;    // (text) 초기 세팅
     }
 
     //-------------------------------HUD-------------------------------------//
@@ -135,10 +141,6 @@ public class UIManager : MonoBehaviour
     {
         HUD_Canvas.gameObject.SetActive(Active);
     }
-
-
-
-
     #endregion
 
 
@@ -198,5 +200,14 @@ public class UIManager : MonoBehaviour
         }
     }
     #endregion
+
+    /// <summary>
+    /// HP 텍스트 업데이트
+    /// </summary>
+    /// <param name="hp">갱신된 HP</param>
+    public void UpdateHPText(float hp)
+    {
+        _txtHP.text = "HP : " + hp;
+    }
 
 }
