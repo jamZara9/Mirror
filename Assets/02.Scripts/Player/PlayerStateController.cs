@@ -385,7 +385,7 @@ public class PlayerStateController : MonoBehaviour
                 inventoryItem.IsActive = false;
                 //inventoryItem.Count += 1; // 아이템 개수 증가
                 
-                gameManager.playerInventory.AddItem(inventoryItem);// 플레이어 인벤토리에 아이템 추가
+                //gameManager.playerInventory.AddItem(inventoryItem);// 플레이어 인벤토리에 아이템 추가
                 gameManager.inventoryManager.AddItem(inventoryItem);
                 // if(inventoryItem.UseSound != null) gameManager.itemManager.PlaySound(inventoryItem.PickSound); // 아이템 획득 사운드 재생
                 audioSource.clip = inventoryItem.PickSound;

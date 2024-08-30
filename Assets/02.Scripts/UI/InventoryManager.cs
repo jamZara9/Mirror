@@ -113,12 +113,9 @@ public class InventoryManager : MonoBehaviour, IItemContainer
         _to.QuickSlot = _from.QuickSlot;
         _from.QuickSlot = tempQslot;
 
-        /////////////////////// ������ ��ȯ
         IInventoryItem tempItem = _to.Get_Item();
         _to.ChangeItem(_from.Get_Item());
         _from.ChangeItem(tempItem);
-        ///////////////////////
-        ///
     }
 
     public void Use_Item(UI_Slot_bls _Slot)
@@ -162,6 +159,7 @@ public class InventoryManager : MonoBehaviour, IItemContainer
             {
                 if (null == slot.Get_Item())                                                //빈 슬롯 발견시 아이템 넣어주고 종료
                 {
+                    item.Count++;
                     slot.AddItem(item);     //빈슬롯에 아이템 입력
                     Slot.Update_Slot();     //업데이트된 정보 반영
                     

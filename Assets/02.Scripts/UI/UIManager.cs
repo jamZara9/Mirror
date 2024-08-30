@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// UI 상수를 관리하는 클래스
@@ -19,6 +20,8 @@ public class UIConstants
     public const string AttackSpeed = "AttackSpeed";
     public const string AttackRange = "AttackRange";
     public const string WalkSpeed = "WalkSpeed";
+
+    public const string QuickSlot = "QuickSlot";
 }
 
 public enum ECanvas
@@ -134,24 +137,10 @@ public class UIManager : MonoBehaviour
             
             // _UIGroup.transform.GetChild(i).gameObject.SetActive(true);
         }
-        ///////////////////////////////////////////////////////////////////////////////////////////////////// Test
-
-
-        // HUD_Canvas = GameObject.Find(UIConstants.HUDCanvas)?.GetComponent<Canvas>();
-        // Inventory_Canvas = GameObject.Find(UIConstants.InventoryCanvas)?.GetComponent<Canvas>();
-        // QuickSlot_Canvas = GameObject.Find(UIConstants.QuickSlotCanvas)?.GetComponent<Canvas>();
-
-        // HUD_Canvas.gameObject.SetActive(true);
-        // Inventory_Canvas.gameObject.SetActive(true);
-        // QuickSlot_Canvas.gameObject.SetActive(true);
     }
 
     private void Start()
     {
-        // HUD_Canvas.gameObject.SetActive(true);
-        // Inventory_Canvas.gameObject.SetActive(false);
-        // QuickSlot_Canvas.gameObject.SetActive(false);
-
         foreach (var canvas in _canvasDictionary)
         {
             if(canvas.Key == UIConstants.HUDCanvas)
