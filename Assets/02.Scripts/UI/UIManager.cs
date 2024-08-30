@@ -34,7 +34,11 @@ public class UIManager : MonoBehaviour
     public GameObject Text_ItemName;
     public GameObject Text_ItemDescription;
 
-    [SerializeField] private TextMeshProUGUI _txtHP;     // HP 텍스트 (test용)
+    [SerializeField] private TextMeshProUGUI _txtHP;                // HP 텍스트 (test용)
+    [SerializeField] private TextMeshProUGUI _txtAttackDamage;      // 공격력 텍스트 (test용)
+    [SerializeField] private TextMeshProUGUI _txtAttackSpeed;       // 공격속도 텍스트 (test용)
+    [SerializeField] private TextMeshProUGUI _txtAttackRange;       // 방어력 텍스트 (test용)
+    [SerializeField] private TextMeshProUGUI _txtWalkSpeed;         // 이동속도 텍스트 (test용)
 
 
     [SerializeField] private GameObject _UIGroup;   // UI를 담고 있는 그룹
@@ -127,7 +131,12 @@ public class UIManager : MonoBehaviour
             }
         }
 
-        _txtHP.text = "HP : " + GameManager.Instance.playerStatus.CurrentHealth;    // (text) 초기 세팅
+        _txtHP.text = "HP : " + GameManager.Instance.playerStatus.CurrentHealth + " / 100";    // (text) 초기 세팅
+        _txtAttackDamage.text = "Attack Damage : " + GameManager.Instance.playerStatus.settings.attackDamage;    // (text) 초기 세팅
+        _txtAttackSpeed.text = "Attack Speed : " + GameManager.Instance.playerStatus.settings.attackDelay;    // (text) 초기 세팅
+        _txtAttackRange.text = "Attack Range : " + GameManager.Instance.playerStatus.settings.attackRange;    // (text) 초기 세팅
+        _txtWalkSpeed.text = "Walk Speed : " + GameManager.Instance.playerStatus.settings.walkSpeed;    // (text) 초기 세팅
+
     }
 
     //-------------------------------HUD-------------------------------------//
@@ -207,7 +216,7 @@ public class UIManager : MonoBehaviour
     /// <param name="hp">갱신된 HP</param>
     public void UpdateHPText(float hp)
     {
-        _txtHP.text = "HP : " + hp;
+        _txtHP.text = "HP : " + hp + " / 100";
     }
 
 }
