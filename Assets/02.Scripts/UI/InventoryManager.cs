@@ -109,18 +109,16 @@ public class InventoryManager : MonoBehaviour, IItemContainer
     {
         Debug.Log("������ ����");
 
+        UI_QuickSlot tempQslot = _to.QuickSlot;
+        _to.QuickSlot = _from.QuickSlot;
+        _from.QuickSlot = tempQslot;
+
         /////////////////////// ������ ��ȯ
         IInventoryItem tempItem = _to.Get_Item();
         _to.ChangeItem(_from.Get_Item());
         _from.ChangeItem(tempItem);
         ///////////////////////
         ///
-        UI_QuickSlot tempQslot = _to.QuickSlot;
-        _to.QuickSlot = _from.QuickSlot;
-        _from.QuickSlot = tempQslot;
-
-        _from.Update_Slot();
-        _to.Update_Slot();
     }
 
     public void Use_Item(UI_Slot_bls _Slot)
