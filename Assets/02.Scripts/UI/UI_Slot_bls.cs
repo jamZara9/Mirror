@@ -7,17 +7,9 @@ using UnityEngine.UI;
 
 public class UI_Slot_bls : MonoBehaviour, IItemContainer, IPointerClickHandler, IDropHandler, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    public enum SlotType
-    {
-        Inventory,
-        QuickSlot
-    }
-
-    public SlotType slotType;     // ���� Ÿ��
-
     public int index;   // 인벤토리에서 검색&스왑시 빠르게 처리하기 위한 인덱스
 
-    public UI_QuickSlot QuickSlot; //�ش� ������ �����ϰ��ִ� ������
+    public UI_QuickSlot QuickSlot; //
 
     [SerializeField, Header("Item")]
     private IInventoryItem SlotItem; //��� �ִ� ������
@@ -45,20 +37,20 @@ public class UI_Slot_bls : MonoBehaviour, IItemContainer, IPointerClickHandler, 
     public void Update_Slot()   //슬롯의 아이템 종류에 따라(없는경우 포함) UI 업데이트
     {
         if (SlotItem == null)   //슬롯에 아이템이 없을경우 초기화
+        {
             Clear();
+            QuickSlot?.Clear();
+        }
         else
         {
             _ItemIcon.sprite = SlotItem.Icon;        //아이콘 업데이트
             _countTXT.text = "" + SlotItem.Count;   //아이템 갯수 업데이트
+            QuickSlot?.Update_QuickSlot(SlotItem);
         }
-
-        QuickSlot?.Update_QuickSlot();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log(name + "에 마우스 입장");
-
         if (SlotItem == null)
             return;
 
@@ -67,20 +59,20 @@ public class UI_Slot_bls : MonoBehaviour, IItemContainer, IPointerClickHandler, 
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        Debug.Log(name + "에 마우스 퇴장");
-
         if (SlotItem == null)
             return;
     }
 
     public void OnDrop(PointerEventData eventData)
     {
-        Debug.Log(name + "에 드랍");
-
-        if (UI_DragSlot.instance.DragSlot == null)
+        if (UI_DragSlot.instance.IsClear)   //드래그 슬롯이 비어진 상태 == 드롭할 정보 없음
             return;
 
-        GameManager.Instance.inventoryManager.Add_InventorySlot(this);   //인벤토리에 자기자신(슬롯) 추가.swap_Item(this, UI_DragSlot.instance.DragSlot);
+        Debug.Log(name + "에 드랍");
+
+        GameManager.Instance.inventoryManager.swap_Item(UI_DragSlot.instance.Get_Slot(), this);
+
+        UI_DragSlot.instance.EndDrag();
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -102,10 +94,12 @@ public class UI_Slot_bls : MonoBehaviour, IItemContainer, IPointerClickHandler, 
         }
         if(eventData.button == PointerEventData.InputButton.Right)
         {
-            Debug.Log(name + " ���� ���");
-
             if (SlotItem == null)
                 return;
+
+            Debug.Log(name + SlotItem.ItemData.Name + " 아이템 사용");
+
+            GameManager.Instance.inventoryManager.Use_Item(this);
         }
 
 
@@ -113,22 +107,16 @@ public class UI_Slot_bls : MonoBehaviour, IItemContainer, IPointerClickHandler, 
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
-        Debug.Log(name + "���� �巡�� ����");
-
         if (SlotItem == null)
             return;
 
-        UI_DragSlot.instance.DragSlot = this;
-        UI_DragSlot.instance.DragSetItem(SlotItem);
-        UI_DragSlot.instance.transform.position = eventData.position;
-        UI_DragSlot.instance.Set_Alpha(1);
-        // UI_DragSlot.instance.Set_color(testColor);      //�׽�Ʈ�ڵ�
+        Debug.Log(name + "에서 드래그 시작");
+
+        UI_DragSlot.instance.StartDrag(eventData, this);   //퀵슬롯에 필요한 정보를 처리하기 위해 드래그를 시작한 슬롯의 정보를 넘겨줌
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        Debug.Log(name + "�巡�� ��");
-
         if (SlotItem == null)
             return;
 
@@ -138,12 +126,12 @@ public class UI_Slot_bls : MonoBehaviour, IItemContainer, IPointerClickHandler, 
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        Debug.Log(name + " �巡�� ����");
+        if (SlotItem == null)
+            return;
 
-        ///////////////////////////////////// �巡�� ���� ��� �Ϸ�
-        UI_DragSlot.instance.Set_Alpha(0);
-        UI_DragSlot.instance.DragSlot = null;
-        ///////////////////////////////////// ������ ��� �Ϸ�
+        Debug.Log(name + "End drag");
+
+        UI_DragSlot.instance.EndDrag();
 
         Update_Slot();
     }
@@ -157,10 +145,11 @@ public class UI_Slot_bls : MonoBehaviour, IItemContainer, IPointerClickHandler, 
     public void Clear()
     {
         SlotItem = null;            //슬롯 비우기
-        _ItemIcon.sprite = null;     //아이콘 제거
+        _ItemIcon.sprite = null;    //아이콘 제거
         _countTXT.text = "";        //텍스트 초기화
 
-        //QuickSlot.Clear();
+        QuickSlot?.Clear();
+        QuickSlot = null;           //참조중인 퀵슬롯 제거
     }
 
     public void AddItem(IInventoryItem item)

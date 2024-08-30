@@ -54,13 +54,13 @@ public class InventoryManager : MonoBehaviour, IItemContainer
     // Update is called once per frame
     void Update()
     {
-        //foreach(UI_Slot_bls slot in Inventory)
-        //{
-        //    if(slot.Get_Item()?.Count == 0)
-        //    {
-        //        Remove_Item(slot);
-        //    }
-        //}
+        foreach (UI_Slot_bls slot in Inventory)
+        {
+            if (slot.Get_Item()?.Count == 0)
+            {
+                Remove_Item(slot);
+            }
+        }
     }
 
         /// <summary>
@@ -109,17 +109,18 @@ public class InventoryManager : MonoBehaviour, IItemContainer
     {
         Debug.Log("������ ����");
 
-        /////////////////////// ��ϵ� ������ ��ȯ
-        UI_QuickSlot tempQSlot = _to.QuickSlot;
-        _to.QuickSlot = _from.QuickSlot;
-        _from.QuickSlot = tempQSlot;
-        ///////////////////////
-
         /////////////////////// ������ ��ȯ
-        IInventoryItem temp = _to.Get_Item();
+        IInventoryItem tempItem = _to.Get_Item();
         _to.ChangeItem(_from.Get_Item());
-        _from.ChangeItem(temp);
+        _from.ChangeItem(tempItem);
         ///////////////////////
+        ///
+        UI_QuickSlot tempQslot = _to.QuickSlot;
+        _to.QuickSlot = _from.QuickSlot;
+        _from.QuickSlot = tempQslot;
+
+        _from.Update_Slot();
+        _to.Update_Slot();
     }
 
     public void Use_Item(UI_Slot_bls _Slot)
@@ -163,7 +164,6 @@ public class InventoryManager : MonoBehaviour, IItemContainer
             {
                 if (null == slot.Get_Item())                                                //빈 슬롯 발견시 아이템 넣어주고 종료
                 {
-                    item.Count++;           //아이템 갯수 0->1
                     slot.AddItem(item);     //빈슬롯에 아이템 입력
                     Slot.Update_Slot();     //업데이트된 정보 반영
                     
