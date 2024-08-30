@@ -41,6 +41,10 @@ public class PlayerStatus : MonoBehaviour, IDamage
     public float CurrentAttackRange { get; private set; }   
     public float CurrentAttackDamage { get; private set; }
 
+    [SerializeField] private AudioSource audioSource; // 효과음 재생을 위한 AudioSource [추후 위치 변경]
+    [SerializeField] private AudioClip[] hitSound;       // 피격 효과음
+    [SerializeField] private AudioClip deathSound;     // 사망 효과음
+
     void Awake()
     {
         CurrentHealth = settings.maxHealth;
@@ -70,7 +74,19 @@ public class PlayerStatus : MonoBehaviour, IDamage
 
     public void TakeDamage(int hitPower)
     {
+        if(CurrentHealth <= 0) return;  // 이미 사망한 경우 데미지를 받지 않음
+
         AdjustStatus(StatusType.Health, -hitPower);
+
+        // 피격 효과음 재생
+        if(CurrentHealth > 0){
+            audioSource.clip = hitSound[UnityEngine.Random.Range(0, hitSound.Length)];
+            audioSource.Play();
+        }else{
+            audioSource.clip = deathSound;
+            audioSource.Play();
+        }
+
         Debug.Log($"현재 체력 : {CurrentHealth}");
     }
 }

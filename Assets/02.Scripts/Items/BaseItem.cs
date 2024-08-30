@@ -43,6 +43,8 @@ public abstract class BaseItem : MonoBehaviour, IInventoryItem
     public bool IsActive { get => isActive; set => isActive = value; }
     public bool IsUsable { get => isUsable; set => isUsable = value; }
     public bool IsPickable { get => isPickable; set => isPickable = value; }
+    public AudioClip UseSound => useSound;
+    public AudioClip PickSound => pickupSound;
 
 
     [Header("Information")]
@@ -61,6 +63,8 @@ public abstract class BaseItem : MonoBehaviour, IInventoryItem
     public bool isUsable = false;       // 사용 가능 여부
     public bool isPickable = false;     // 줍기 가능 여부
     public string pickupArea;           // 픽업 가능한 영역
+    public AudioClip pickupSound;       // 픽업 사운드
+    public AudioClip useSound;          // 사용 사운드
 
     /// <summary>
     /// 아이템을 사용할 때 호출되는 함수

@@ -44,6 +44,8 @@ public abstract class BaseWeapon : MonoBehaviour , IInventoryItem
     public bool IsActive { get => isActive; set => isActive = value; }
     public bool IsUsable { get => isUsable; set => isUsable = value; }
     public bool IsPickable { get => isPickable; set => isPickable = value; }
+    public AudioClip UseSound => useSound;
+    public AudioClip PickSound => pickupSound;
 
 
     [Header("Information")]
@@ -58,6 +60,9 @@ public abstract class BaseWeapon : MonoBehaviour , IInventoryItem
     public bool isActive = false;       // 활성화 여부
     public bool isUsable = false;       // 사용 가능 여부
     public bool isPickable = true;     // 줍기 가능 여부
+
+    public AudioClip useSound;          // 아이템 사용 사운드
+    public AudioClip pickupSound;       // 아이템 줍기 사운드
 
     /// <summary>
     /// 공격할 때 호출되는 함수

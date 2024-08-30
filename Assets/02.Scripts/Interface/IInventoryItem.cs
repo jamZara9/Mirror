@@ -16,6 +16,9 @@ public interface IInventoryItem
     bool IsPickable { get; set; }
 
     GameObject ItemGameObject { get; }      // gameobject 반환을 위한 프로퍼티
+
+    AudioClip UseSound { get; }              // 아이템 사용 사운드
+    AudioClip PickSound { get; }             // 아이템 줍기 사운드
 }
 
 /// <summary>

@@ -88,5 +88,12 @@ public class ItemManager : BaseItemManager<BaseItem, BaseItemData>
         yield return new WaitForSeconds(delay);
         // RemoveItem(items.Find(x => x.itemID == testItemID));
     }
+    
+    public void PlaySound(AudioClip clip){
+        // 아이템 사용 사운드
+        if(clip != null){
+            AudioSource.PlayClipAtPoint(clip, GameManager.Instance.playerStatus.transform.position);
+        }
+    }
 
 }

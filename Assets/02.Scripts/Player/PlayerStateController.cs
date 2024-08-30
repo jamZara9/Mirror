@@ -41,9 +41,11 @@ public class PlayerStateController : MonoBehaviour
     private int _animIDMotionSpeed;
 
     [Header("Audio Settings")]
+    [SerializeField] private AudioSource audioSource;     // 오디오 소스
     [SerializeField] private AudioClip landingAudioClip;        // 착지 사운드
     [SerializeField] private AudioClip[] footstepAudioClips;    // 발소리 사운드
     [Range(0, 1)] public float footstepAudioVolume = 0.5f;      // 발소리 사운드 볼륨
+    [SerializeField] private AudioClip attackAudioClip;         // 공격 사운드
 
 
     [SerializeField] private PlayerInputAction _inputActions;            // 플레이어 입력 액션
@@ -344,7 +346,10 @@ public class PlayerStateController : MonoBehaviour
                     targetItem.UseItem();                        // 아이템 사용
                     targetItem.Count -= 1;                       // 아이템 개수 감소
                     playerInventory.selectedItem = null;
+
+                    if(targetItem.UseSound != null) gameManager.itemManager.PlaySound(targetItem.UseSound); // 아이템 사용 사운드 재생
                     Debug.Log("아이템 사용");
+
                 }
             }
             _inputActions.isUseItem = false;
@@ -380,6 +385,7 @@ public class PlayerStateController : MonoBehaviour
                 
                 gameManager.playerInventory.AddItem(inventoryItem);// 플레이어 인벤토리에 아이템 추가
                 gameManager.inventoryManager.AddItem(inventoryItem);
+                if(inventoryItem.UseSound != null) gameManager.itemManager.PlaySound(inventoryItem.PickSound); // 아이템 획득 사운드 재생
                 Debug.Log("아이템 획득");
                 cameraController.detectedObject = null;
             }
@@ -482,6 +488,14 @@ public class PlayerStateController : MonoBehaviour
 
                         if(target != null){
                             target.TakeDamage((int)playerStatus.CurrentAttackDamage);
+
+                            if(audioSource != null){
+                                // 공격 사운드 추가
+                                audioSource.clip = attackAudioClip;
+                                audioSource.volume = 0.5f;
+                                audioSource.Play();
+                            }
+
                             Debug.Log($"공격 성공: {hitCollider.name}");                            
                         }
                     }
