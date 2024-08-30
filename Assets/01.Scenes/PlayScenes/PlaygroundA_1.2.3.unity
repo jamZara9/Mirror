@@ -6,8 +6,8 @@ OcclusionCullingSettings:
   serializedVersion: 2
   m_OcclusionBakeSettings:
     smallestOccluder: 1
-    smallestHole: 0.05
-    backfaceThreshold: 20
+    smallestHole: 0.01
+    backfaceThreshold: 80
   m_SceneGUID: 468521c592907ad4aa6c37fd849b9c53
   m_OcclusionCullingData: {fileID: 36300000, guid: 1e8dc0ccc079f4e419419b2cb140d407, type: 2}
 --- !u!104 &2
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0017661492, g: 0.0012485184, b: 0.0009817869, a: 1}
+  m_IndirectSpecularColor: {r: 0.0017663257, g: 0.0012487537, b: 0.0009821496, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2147,6 +2147,49 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 283559094}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &299148518
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 299148520}
+  - component: {fileID: 299148519}
+  m_Layer: 0
+  m_Name: Occlusion Area
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!192 &299148519
+OcclusionArea:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 299148518}
+  serializedVersion: 2
+  m_Size: {x: 57.19446, y: 29.416943, z: -44.825718}
+  m_Center: {x: 1.4027729, y: 10.876314, z: 2.6800466}
+  m_IsViewVolume: 1
+--- !u!4 &299148520
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 299148518}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &380085065
 GameObject:
   m_ObjectHideFlags: 0
@@ -11734,3 +11777,4 @@ SceneRoots:
   - {fileID: 1257402869}
   - {fileID: 997711062}
   - {fileID: 1570816768}
+  - {fileID: 299148520}
