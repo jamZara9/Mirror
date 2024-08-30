@@ -3,7 +3,22 @@ guid: c3d4551c7b5d4b54ca657750b8e7e3dc
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: cha_01_wak_body
+    second: {fileID: 2100000, guid: 424d583809f30734ba43ec6b32d99ffe, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: cha_01_wak_uniform
+    second: {fileID: 2100000, guid: 6b68e466d4f166a4f95a3d88e0be12a8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: cha_shoes
+    second: {fileID: 2100000, guid: 83bb8ca8477dd274fbd0b8fbc60d3625, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
