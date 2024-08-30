@@ -91,6 +91,8 @@ public class PlayerStateController : MonoBehaviour
         OnFire();
         ShowQuickSlot();
 
+        SetSelectItem();
+
         
 
         _attackTimeoutDelta += Time.deltaTime;  // 공격 타임아웃 델타 증가
@@ -355,6 +357,31 @@ public class PlayerStateController : MonoBehaviour
                 }
             }
             _inputActions.isUseItem = false;
+        }
+    }
+
+    
+    private void SetSelectItem(){
+        if(_inputActions.isChoiceQuickSlot){
+            GameManager gameManager = GameManager.Instance;
+            PlayerInventory playerInventory = gameManager.playerInventory;
+            InventoryManager inventoryManager = gameManager.inventoryManager;
+
+            // 선택된 퀵슬롯 번호에 해당하는 아이템을 선택
+            for(int i = 0; i < _inputActions.qucikSlots.Length; i++){
+                if(_inputActions.qucikSlots[i]){
+                        // 만일 해당 퀵슬롯에 아이템이 존재하는 경우
+                        if(playerInventory.quickSlots[i] != null){
+                        // playerInventory.selectedItem = playerInventory.quickSlots[i];
+                        playerInventory.selectedItem = playerInventory.quickSlots[i];
+                        Debug.Log($"선택된 아이템: {playerInventory.selectedItem.name}");
+                    }
+                    break;
+                }
+            }
+
+            
+
         }
     }
 

@@ -13,7 +13,7 @@ public class PlayerInventory : MonoBehaviour, IItemContainer
     public GameObject ItemSubTxt;
 
     public int maxSlots = 9;                    // 인벤토리 슬롯 최대 개수
-    public int maxQuickSlots = 5;               // 퀵슬롯 최대 개수
+    public int maxQuickSlots = 4;               // 퀵슬롯 최대 개수
 
     public int currentSlots = 0;                // 현재 사용되는 인벤토리 슬롯
 
