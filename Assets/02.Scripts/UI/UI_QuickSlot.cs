@@ -1,68 +1,53 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UI_QuickSlot : MonoBehaviour, IDropHandler
 {
-    public enum SlotType
-    {
-        Inventory,
-        QuickSlot
-    }
-
-    private IInventoryItem _Item;
-
-    public SlotType slotType;     // ���� Ÿ��
-    public Image ItemIcon;
-
-    public InventoryManager InventoryMgr;
-
-    public Color testcolor;
     public int index;
+
+    private InventoryManager _InventoryMgr = null;
+    private Image _ItemIcon = null;
+    private TextMeshProUGUI _countTXT = null;
 
     private void Awake()
     {
-        // InventoryMgr = GameObject.Find("Inventory")?.GetComponent<Inventory_Manager>();
+        _InventoryMgr = GameObject.Find("GameManager")?.GetComponent<InventoryManager>();
+        _InventoryMgr.Add_QuickSlot(this);
 
-        // Test
-        InventoryMgr = GameObject.Find("GameManager")?.GetComponent<InventoryManager>();
-
-        InventoryMgr.Add_QuickSlot(this);
+        _countTXT = transform.Find("Count")?.GetComponent<TextMeshProUGUI>();
+        _ItemIcon = transform.Find("Icon")?.GetComponent<Image>();  
     }
 
     public void OnDrop(PointerEventData eventData)
     {
-        if (UI_DragSlot.instance.DragSlot == null)
+        if (UI_DragSlot.instance.IsClear)
             return;
 
-        ///////////// �׽�Ʈ �ڵ�
-        // testcolor = UI_DragSlot.instance.testcolor;
-        /////////////
+        UI_DragSlot.instance.Get_Slot().QuickSlot = this;
+    }
 
-        _Item = UI_DragSlot.instance.Item;
-        UI_DragSlot.instance.DragSlot.QuickSlot = this;
 
-        Update_QuickSlot();
+
+    public void Update_QuickSlot(IInventoryItem _item)
+    {
+        Debug.Log("퀵슬롯 업데이트");
+        _ItemIcon.sprite = _item.Icon;        //아이콘 업데이트
+        _countTXT.text = "" + _item.Count;   //아이템 갯수 업데이트
+    }
+
+    public void Clear()
+    {
+        _ItemIcon.sprite = null;
+        _countTXT.text = "";
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
-    }
 
-    // Update is called once per frame
-    public void Update_QuickSlot()
-    {
-        ItemIcon.color = testcolor;
-    }
-
-    public void Clear()
-    {
-        testcolor = Color.white;
-        ItemIcon.color = testcolor;
-        _Item = null;
     }
 }
