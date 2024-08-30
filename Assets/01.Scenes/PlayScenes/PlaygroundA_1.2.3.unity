@@ -3992,7 +3992,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DragSlot: {fileID: 0}
-  testcolor: {r: 0, g: 0, b: 0, a: 0}
   ItemIcon: {fileID: 1800200411}
 --- !u!1 &769476548
 GameObject:
@@ -8506,7 +8505,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7934676402243458867, guid: 89342e94398c6bf41b40cba1cf01f62e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8695698755082551308, guid: 89342e94398c6bf41b40cba1cf01f62e, type: 3}
       propertyPath: m_Enabled
@@ -10651,7 +10650,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7934676402243458867, guid: 89342e94398c6bf41b40cba1cf01f62e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8695698755082551308, guid: 89342e94398c6bf41b40cba1cf01f62e, type: 3}
       propertyPath: m_Enabled

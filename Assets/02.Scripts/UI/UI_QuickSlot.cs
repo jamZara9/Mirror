@@ -38,7 +38,7 @@ public class UI_QuickSlot : MonoBehaviour, IDropHandler
             return;
 
         ///////////// �׽�Ʈ �ڵ�
-        testcolor = UI_DragSlot.instance.testcolor;
+        // testcolor = UI_DragSlot.instance.testcolor;
         /////////////
 
         _Item = UI_DragSlot.instance.Item;

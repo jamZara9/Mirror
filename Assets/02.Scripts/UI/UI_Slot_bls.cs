@@ -122,7 +122,7 @@ public class UI_Slot_bls : MonoBehaviour, IItemContainer, IPointerClickHandler, 
         UI_DragSlot.instance.DragSetItem(SlotItem);
         UI_DragSlot.instance.transform.position = eventData.position;
         UI_DragSlot.instance.Set_Alpha(1);
-        UI_DragSlot.instance.Set_color(testColor);      //�׽�Ʈ�ڵ�
+        // UI_DragSlot.instance.Set_color(testColor);      //�׽�Ʈ�ڵ�
     }
 
     public void OnDrag(PointerEventData eventData)
