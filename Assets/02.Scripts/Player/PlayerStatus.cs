@@ -47,7 +47,7 @@ public class PlayerStatus : MonoBehaviour, IDamage
 
     void Awake()
     {
-        CurrentHealth = settings.maxHealth;
+        CurrentHealth = 60.0f;
         CurrentMental = settings.maxMental;
         CurrentAttackDamage = settings.attackDamage;
         CurrentAttackRange = settings.attackRange;

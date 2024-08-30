@@ -6671,7 +6671,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   _groundedRadius: 0.28
-  audioSource: {fileID: 0}
+  audioSource: {fileID: 1748981681}
   landingAudioClip: {fileID: 8300000, guid: ff697d3070687ce4583faa0561a145a2, type: 3}
   footstepAudioClips:
   - {fileID: 8300000, guid: 72f526a6a9890f643a88e85a61c86c8a, type: 3}
@@ -10126,7 +10126,7 @@ GameObject:
   - component: {fileID: 1748981680}
   - component: {fileID: 1748981681}
   m_Layer: 3
-  m_Name: AttackSound
+  m_Name: UseSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
