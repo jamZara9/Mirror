@@ -1793,6 +1793,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1154175172}
     m_Modifications:
+    - target: {fileID: -1227397339049451055, guid: 2ecdf69d785cec045a11f34049bdc3c1, type: 3}
+      propertyPath: useSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 469eec00905d6b54c990dfbbcd58be49, type: 3}
+    - target: {fileID: -1227397339049451055, guid: 2ecdf69d785cec045a11f34049bdc3c1, type: 3}
+      propertyPath: pickupSound
+      value: 
+      objectReference: {fileID: 8300000, guid: aa6690f415c83f447a90460c4d70c490, type: 3}
     - target: {fileID: 4861262936278299186, guid: 2ecdf69d785cec045a11f34049bdc3c1, type: 3}
       propertyPath: m_Name
       value: P-0034 legenol (1)
@@ -4020,6 +4028,14 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7340924520576233632, guid: fc075da54c60d1d49a0488fc8104952c, type: 3}
+      propertyPath: useSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 469eec00905d6b54c990dfbbcd58be49, type: 3}
+    - target: {fileID: 7340924520576233632, guid: fc075da54c60d1d49a0488fc8104952c, type: 3}
+      propertyPath: pickupSound
+      value: 
+      objectReference: {fileID: 8300000, guid: aa6690f415c83f447a90460c4d70c490, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7511,6 +7527,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1154175172}
     m_Modifications:
+    - target: {fileID: 159926377525999890, guid: 7b60a626dfeac91459d6179be603ae18, type: 3}
+      propertyPath: useSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 469eec00905d6b54c990dfbbcd58be49, type: 3}
+    - target: {fileID: 159926377525999890, guid: 7b60a626dfeac91459d6179be603ae18, type: 3}
+      propertyPath: pickupSound
+      value: 
+      objectReference: {fileID: 8300000, guid: aa6690f415c83f447a90460c4d70c490, type: 3}
     - target: {fileID: 3919439741375994639, guid: 7b60a626dfeac91459d6179be603ae18, type: 3}
       propertyPath: m_Name
       value: I_0001_pendent_v00
@@ -7765,7 +7789,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3574060308841683697, guid: 8dd6536f3dafc204e96c8fe9f4d46964, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3574060308841683697, guid: 8dd6536f3dafc204e96c8fe9f4d46964, type: 3}
       propertyPath: m_TagString
@@ -7866,8 +7890,8 @@ MonoBehaviour:
   isActive: 0
   isUsable: 0
   isPickable: 0
-  useSound: {fileID: 0}
-  pickupSound: {fileID: 0}
+  useSound: {fileID: 8300000, guid: aa6690f415c83f447a90460c4d70c490, type: 3}
+  pickupSound: {fileID: 8300000, guid: 469eec00905d6b54c990dfbbcd58be49, type: 3}
 --- !u!1 &1304044803
 GameObject:
   m_ObjectHideFlags: 0
@@ -9099,6 +9123,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1154175172}
     m_Modifications:
+    - target: {fileID: -1227397339049451055, guid: 2ecdf69d785cec045a11f34049bdc3c1, type: 3}
+      propertyPath: useSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 469eec00905d6b54c990dfbbcd58be49, type: 3}
+    - target: {fileID: -1227397339049451055, guid: 2ecdf69d785cec045a11f34049bdc3c1, type: 3}
+      propertyPath: pickupSound
+      value: 
+      objectReference: {fileID: 8300000, guid: aa6690f415c83f447a90460c4d70c490, type: 3}
     - target: {fileID: 4861262936278299186, guid: 2ecdf69d785cec045a11f34049bdc3c1, type: 3}
       propertyPath: m_Name
       value: P-0034 legenol
@@ -9988,6 +10020,10 @@ PrefabInstance:
       value: Item002
       objectReference: {fileID: 0}
     - target: {fileID: 1285136492569283074, guid: 89342e94398c6bf41b40cba1cf01f62e, type: 3}
+      propertyPath: useSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 469eec00905d6b54c990dfbbcd58be49, type: 3}
+    - target: {fileID: 1285136492569283074, guid: 89342e94398c6bf41b40cba1cf01f62e, type: 3}
       propertyPath: impactVFX
       value: 
       objectReference: {fileID: 7625446714924539852, guid: f4cf90b9d33651143818aa5e15f4993d, type: 3}
@@ -9995,6 +10031,10 @@ PrefabInstance:
       propertyPath: particlePos
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1285136492569283074, guid: 89342e94398c6bf41b40cba1cf01f62e, type: 3}
+      propertyPath: pickupSound
+      value: 
+      objectReference: {fileID: 8300000, guid: aa6690f415c83f447a90460c4d70c490, type: 3}
     - target: {fileID: 1285136492569283074, guid: 89342e94398c6bf41b40cba1cf01f62e, type: 3}
       propertyPath: itemData.name
       value: 
@@ -10069,7 +10109,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7934676402243458867, guid: 89342e94398c6bf41b40cba1cf01f62e, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8695698755082551308, guid: 89342e94398c6bf41b40cba1cf01f62e, type: 3}
       propertyPath: m_Enabled
@@ -11277,6 +11317,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5776363541053999103, guid: b161774b3438f0f4ab14fbc79d71f0eb, type: 3}
+      propertyPath: useSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 469eec00905d6b54c990dfbbcd58be49, type: 3}
+    - target: {fileID: 5776363541053999103, guid: b161774b3438f0f4ab14fbc79d71f0eb, type: 3}
+      propertyPath: pickupSound
+      value: 
+      objectReference: {fileID: 8300000, guid: aa6690f415c83f447a90460c4d70c490, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11401,6 +11449,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1154175172}
     m_Modifications:
+    - target: {fileID: -1227397339049451055, guid: 2ecdf69d785cec045a11f34049bdc3c1, type: 3}
+      propertyPath: useSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 469eec00905d6b54c990dfbbcd58be49, type: 3}
+    - target: {fileID: -1227397339049451055, guid: 2ecdf69d785cec045a11f34049bdc3c1, type: 3}
+      propertyPath: pickupSound
+      value: 
+      objectReference: {fileID: 8300000, guid: aa6690f415c83f447a90460c4d70c490, type: 3}
     - target: {fileID: 4861262936278299186, guid: 2ecdf69d785cec045a11f34049bdc3c1, type: 3}
       propertyPath: m_Name
       value: P-0034 legenol (2)
@@ -11993,6 +12049,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1154175172}
     m_Modifications:
+    - target: {fileID: -1227397339049451055, guid: 2ecdf69d785cec045a11f34049bdc3c1, type: 3}
+      propertyPath: useSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 469eec00905d6b54c990dfbbcd58be49, type: 3}
+    - target: {fileID: -1227397339049451055, guid: 2ecdf69d785cec045a11f34049bdc3c1, type: 3}
+      propertyPath: pickupSound
+      value: 
+      objectReference: {fileID: 8300000, guid: aa6690f415c83f447a90460c4d70c490, type: 3}
     - target: {fileID: 4861262936278299186, guid: 2ecdf69d785cec045a11f34049bdc3c1, type: 3}
       propertyPath: m_Name
       value: P-0034 legenol (3)
@@ -12523,6 +12587,10 @@ PrefabInstance:
       value: Item001
       objectReference: {fileID: 0}
     - target: {fileID: 1285136492569283074, guid: 89342e94398c6bf41b40cba1cf01f62e, type: 3}
+      propertyPath: useSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 469eec00905d6b54c990dfbbcd58be49, type: 3}
+    - target: {fileID: 1285136492569283074, guid: 89342e94398c6bf41b40cba1cf01f62e, type: 3}
       propertyPath: impactVFX
       value: 
       objectReference: {fileID: 7625446714924539852, guid: f4cf90b9d33651143818aa5e15f4993d, type: 3}
@@ -12530,6 +12598,10 @@ PrefabInstance:
       propertyPath: particlePos
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1285136492569283074, guid: 89342e94398c6bf41b40cba1cf01f62e, type: 3}
+      propertyPath: pickupSound
+      value: 
+      objectReference: {fileID: 8300000, guid: aa6690f415c83f447a90460c4d70c490, type: 3}
     - target: {fileID: 1285136492569283074, guid: 89342e94398c6bf41b40cba1cf01f62e, type: 3}
       propertyPath: itemData.name
       value: 
@@ -12604,7 +12676,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7934676402243458867, guid: 89342e94398c6bf41b40cba1cf01f62e, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8695698755082551308, guid: 89342e94398c6bf41b40cba1cf01f62e, type: 3}
       propertyPath: m_Enabled

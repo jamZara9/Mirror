@@ -347,7 +347,9 @@ public class PlayerStateController : MonoBehaviour
                     targetItem.Count -= 1;                       // 아이템 개수 감소
                     playerInventory.selectedItem = null;
 
-                    if(targetItem.UseSound != null) gameManager.itemManager.PlaySound(targetItem.UseSound); // 아이템 사용 사운드 재생
+                    // if(targetItem.UseSound != null) gameManager.itemManager.PlaySound(targetItem.UseSound); // 아이템 사용 사운드 재생
+                    audioSource.clip = targetItem.UseSound;
+                    audioSource.Play();
                     Debug.Log("아이템 사용");
 
                 }
@@ -385,7 +387,10 @@ public class PlayerStateController : MonoBehaviour
                 
                 gameManager.playerInventory.AddItem(inventoryItem);// 플레이어 인벤토리에 아이템 추가
                 gameManager.inventoryManager.AddItem(inventoryItem);
-                if(inventoryItem.UseSound != null) gameManager.itemManager.PlaySound(inventoryItem.PickSound); // 아이템 획득 사운드 재생
+                // if(inventoryItem.UseSound != null) gameManager.itemManager.PlaySound(inventoryItem.PickSound); // 아이템 획득 사운드 재생
+                audioSource.clip = inventoryItem.PickSound;
+                audioSource.Play();
+                
                 Debug.Log("아이템 획득");
                 cameraController.detectedObject = null;
             }
