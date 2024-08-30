@@ -10,7 +10,7 @@ public class EKGGraph : MonoBehaviour
 {
     public RawImage rawImage;                   // RawImage 컴포넌트, EKG 그래프를 표시할 UI 이미지
     public int width = 256;                     // 그래프의 너비
-    public int height = 64;                     // 그래프의 높이
+    public int height = 128;                     // 그래프의 높이
     public float updateInterval = 0.02f;        // 그래프를 업데이트할 간격 (초 단위)
     public Color lineColor = Color.green;       // EKG 선의 색상
     public Color circleColor = Color.green;     // EKG의 현재 위치를 강조할 원의 색상
@@ -184,8 +184,10 @@ public class EKGGraph : MonoBehaviour
         float bpm = GetCurrentBPM();            // 현재 BPM
         float heartCycle = 1f / (bpm / 60f);    // 심박 주기 (초 단위)
 
+        float amplitude = GetWaveformAmplitude(); // 현재 진폭
+
         // 심전도 각 파형의 위치 및 크기 조정
-        float pWave = Mathf.Sin((time % heartCycle) * 2f * Mathf.PI / heartCycle) * 0.05f; // P 파
+        float pWave = Mathf.Sin((time % heartCycle) * 2f * Mathf.PI / heartCycle) * amplitude; // P 파
         float qWave = -0.15f * Mathf.Exp(-Mathf.Pow((time % heartCycle - 0.2f * heartCycle) * 10f, 2f)); // Q 파
         float rWave = 0.6f * Mathf.Exp(-Mathf.Pow((time % heartCycle - 0.25f * heartCycle) * 30f, 2f)); // R 파
         float sWave = -0.15f * Mathf.Exp(-Mathf.Pow((time % heartCycle - 0.3f * heartCycle) * 10f, 2f)); // S 파
@@ -237,6 +239,19 @@ public class EKGGraph : MonoBehaviour
         float bpm = GetCurrentBPM();
         float baseBPM = 60f;
         return bpm / baseBPM;
+    }
+    
+    // 현재 HP 비율에 따라 심전도 진폭을 조정
+    private float GetWaveformAmplitude()
+    {
+        float hpRatio = GameManager.Instance.playerStatus.CurrentHealth / GameManager.Instance.playerStatus.settings.maxHealth;
+
+        // HP가 100%일 때 기본 진폭을 사용하고, HP가 감소할수록 진폭을 증가
+        float baseAmplitude = 0.05f;                            // 기본 진폭
+        float maxAmplitudeIncrease = 0.2f;                      // HP가 0%일 때의 최대 진폭 증가량
+        float amplitude = baseAmplitude + (1 - hpRatio) * maxAmplitudeIncrease;
+
+        return amplitude;
     }
     
 }
