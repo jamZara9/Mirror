@@ -144,6 +144,7 @@ MonoBehaviour:
   TargetMask:
     serializedVersion: 2
     m_Bits: 256
+  movePositionGroup: {fileID: 0}
   Mirror: {fileID: 7204858600453076654}
   isMirrorAttacked: 0
   dashDistance: 5
