@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UI_Slot_bls : MonoBehaviour, IPointerClickHandler, IDropHandler, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class UI_Slot_bls : MonoBehaviour, IItemContainer, IPointerClickHandler, IDropHandler, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public enum SlotType
     {
@@ -14,52 +14,42 @@ public class UI_Slot_bls : MonoBehaviour, IPointerClickHandler, IDropHandler, IP
     }
 
     public SlotType slotType;     // ���� Ÿ��
-    public Image ItemIcon; // ���Կ� �������� ������� �׸� �̹���
 
-
-    public Color testColor; // �׽�Ʈ�� �÷��ڵ�
     public int index;   // 인벤토리에서 검색&스왑시 빠르게 처리하기 위한 인덱스
 
-    public GameObject count;
-
-    public InventoryManager InventoryMgr;
     public UI_QuickSlot QuickSlot; //�ش� ������ �����ϰ��ִ� ������
 
     [SerializeField, Header("Item")]
-    private BaseItem SlotItem; //��� �ִ� ������
+    private IInventoryItem SlotItem; //��� �ִ� ������
 
-    
+    [SerializeField] private TextMeshProUGUI _countTXT; //아이템 갯수를 표시할 text
+    [SerializeField] private Image _ItemIcon; //아이템 아이콘
+
 
 
 
     private void Awake()
     {
-        InventoryMgr = GameManager.Instance.inventoryManager;
+        _countTXT = transform.Find("Amount")?.GetComponent<TextMeshProUGUI>();
+        _ItemIcon = transform.Find("Icon")?.GetComponent<Image>();
 
-        SlotItem = null;
-        ItemIcon.sprite = null;
-        QuickSlot = null;
-
-        InventoryMgr.Add_InventorySlot(this);
+        Clear();    //슬롯 초기화
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
-    public void Update_Slot()
+    public void Update_Slot()   //슬롯의 아이템 종류에 따라(없는경우 포함) UI 업데이트
     {
-        if (SlotItem == null)
-        {
-            Set_Color(Color.white);
-            count.GetComponent<TextMeshProUGUI>().text = "";
-        }
+        if (SlotItem == null)   //슬롯에 아이템이 없을경우 초기화
+            Clear();
         else
         {
-            Set_Color(testColor);
-            count.GetComponent<TextMeshProUGUI>().text = "" + SlotItem.itemData.count;
+            _ItemIcon.sprite = SlotItem.Icon;        //아이콘 업데이트
+            _countTXT.text = "" + SlotItem.Count;   //아이템 갯수 업데이트
         }
 
         QuickSlot?.Update_QuickSlot();
@@ -67,7 +57,9 @@ public class UI_Slot_bls : MonoBehaviour, IPointerClickHandler, IDropHandler, IP
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if(SlotItem == null)
+        Debug.Log(name + "에 마우스 입장");
+
+        if (SlotItem == null)
             return;
 
 
@@ -75,37 +67,37 @@ public class UI_Slot_bls : MonoBehaviour, IPointerClickHandler, IDropHandler, IP
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        Debug.Log(name + "에 마우스 퇴장");
+
         if (SlotItem == null)
             return;
     }
 
     public void OnDrop(PointerEventData eventData)
     {
-        Debug.Log(name + "�� ���");
+        Debug.Log(name + "에 드랍");
 
         if (UI_DragSlot.instance.DragSlot == null)
             return;
 
-        InventoryMgr.swap_Item(this, UI_DragSlot.instance.DragSlot);
+        GameManager.Instance.inventoryManager.Add_InventorySlot(this);   //인벤토리에 자기자신(슬롯) 추가.swap_Item(this, UI_DragSlot.instance.DragSlot);
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
         if(eventData.button == PointerEventData.InputButton.Left)
         {
-            Debug.Log(name + " ���� Ŭ��");
+            Debug.Log(name + " 슬롯 클릭");
 
             if(SlotItem != null)
             {
-                Debug.Log("����");
-                InventoryMgr.Text_ItemName.GetComponent<TMPro.TextMeshProUGUI>().text = SlotItem.itemData.name;
-                InventoryMgr.Text_ItemDescription.GetComponent<TMPro.TextMeshProUGUI>().text = SlotItem.itemData.description;
+                GameManager.Instance.inventoryManager.Text_ItemName.GetComponent<TextMeshProUGUI>().text = SlotItem.ItemData.Name;
+                GameManager.Instance.inventoryManager.Text_ItemDescription.GetComponent<TextMeshProUGUI>().text = SlotItem.ItemData.Description;
             }
             else
             {
-                Debug.Log("����");
-                InventoryMgr.Text_ItemName.GetComponent<TMPro.TextMeshProUGUI>().text = "";
-                InventoryMgr.Text_ItemDescription.GetComponent<TMPro.TextMeshProUGUI>().text = "";
+                GameManager.Instance.inventoryManager.Text_ItemName.GetComponent<TextMeshProUGUI>().text = "";
+                GameManager.Instance.inventoryManager.Text_ItemDescription.GetComponent<TextMeshProUGUI>().text = "";
             }
         }
         if(eventData.button == PointerEventData.InputButton.Right)
@@ -114,17 +106,10 @@ public class UI_Slot_bls : MonoBehaviour, IPointerClickHandler, IDropHandler, IP
 
             if (SlotItem == null)
                 return;
-
-            InventoryMgr.Use_Item(this);
         }
-            
-
-        if (SlotItem == null)
-            return;
 
 
-
-        //�κ��丮 �Ŵ������� ������ �̸�, ���� ���
+        
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -163,34 +148,38 @@ public class UI_Slot_bls : MonoBehaviour, IPointerClickHandler, IDropHandler, IP
         Update_Slot();
     }
 
-    public void Set_Item(BaseItem _Item)
-    {
-        SlotItem = _Item;
-
-        Update_Slot();
-    }
-
-    public BaseItem Get_Item() 
+    public IInventoryItem Get_Item() 
     { 
         return SlotItem; 
     }
 
-    public void Set_Color(Color _color)
-    {
-        testColor = _color;
-        ItemIcon.color = testColor;
-    }
-
+    //슬롯 초기화용 함수
     public void Clear()
     {
-        //�׽�Ʈ �ڵ�
-        Set_Color(Color.white);
+        SlotItem = null;            //슬롯 비우기
+        _ItemIcon.sprite = null;     //아이콘 제거
+        _countTXT.text = "";        //텍스트 초기화
 
-        SlotItem = null;
-        ItemIcon.sprite = null;
-        count.GetComponent<TextMeshProUGUI>().text = "";
-        QuickSlot.Clear();
+        //QuickSlot.Clear();
     }
 
+    public void AddItem(IInventoryItem item)
+    {
+        SlotItem = item;
 
+        Update_Slot();
+    }
+
+    //AddItem과 같은 동작을 하지만 외부에서 함수 호출시 혼란을 방지하기 위해 사용
+    public void ChangeItem(IInventoryItem item)
+    {
+        SlotItem = item;
+
+        Update_Slot();
+    }
+
+    public void RemoveItem(IInventoryItem item)
+    {
+        Debug.Log("아이템 제거 코드 실행");  //임시 코드
+    }
 }

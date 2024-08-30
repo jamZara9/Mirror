@@ -7,10 +7,7 @@ public class UI_DragSlot : MonoBehaviour
 {
     static public UI_DragSlot instance;
     public UI_Slot_bls DragSlot;
-    public BaseItem Item;
-
-    public Color testcolor;
-
+    public IInventoryItem Item;
 
     [SerializeField]
     private Image ItemIcon;
@@ -27,7 +24,7 @@ public class UI_DragSlot : MonoBehaviour
         
     }
 
-    public void DragSetItem(BaseItem _slot)
+    public void DragSetItem(IInventoryItem _slot)
     {
         Item = _slot;
         Update_DragSlot();
@@ -37,9 +34,20 @@ public class UI_DragSlot : MonoBehaviour
     public void Update_DragSlot()
     {
         if(Item != null)
-            ItemIcon.sprite = Item.icon;
+            ItemIcon.sprite = Item.Icon;
 
 
+    }
+
+    public void ActiveDragSlot(bool Active)
+    {
+        if(Active)
+        {
+            Set_Alpha(1f);
+            ItemIcon.sprite = Item.Icon;
+        }
+        else
+            Set_Alpha(0f);
     }
 
     public void Set_Alpha(float _alpha)
@@ -48,12 +56,5 @@ public class UI_DragSlot : MonoBehaviour
         color.a = _alpha;
         ItemIcon.color = color;
     }
-
-    public void Set_color(Color _color)
-    {
-        testcolor = _color;
-        ItemIcon.color = _color;
-    }
-
 
 }

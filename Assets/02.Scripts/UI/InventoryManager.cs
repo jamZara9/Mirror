@@ -8,19 +8,21 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class InventoryManager : MonoBehaviour
+public class InventoryManager : MonoBehaviour, IItemContainer
 {
     private float Inventory_MaxSize = 12;
     private float QuickSlot_MaxSize = 4;
 
     static private int Inventory_Index = 0;
 
-    //[SerializeField]
-    public List<UI_Slot_bls> Inventory = new List<UI_Slot_bls>(12);
-    public List<UI_QuickSlot> QuickSlot = new List<UI_QuickSlot>(4);
 
+    [SerializeField] public List<UI_Slot_bls> Inventory = new List<UI_Slot_bls>(12);
+    [SerializeField] public List<UI_QuickSlot> QuickSlot = new List<UI_QuickSlot>(4);
+
+    //ui매니저 업데이트 하면서 이동예정
     public GameObject Text_ItemName;
     public GameObject Text_ItemDescription;
+    //
 
     public BaseItem[] testitems;
 
@@ -31,11 +33,20 @@ public class InventoryManager : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("inventory awake");
         _UIManager = GameManager.Instance.uiManager;
     }
 
     private void Start()
     {
+        //인벤토리에 빈 슬롯 채우기
+        for (int i = 0; i < Inventory_MaxSize; i++)
+        {
+                                                                           //   HUD_CANVAS           BackGround  InvenSlots   Slot
+            UI_Slot_bls slot = GameManager.Instance.uiManager.GetCanvas("Inventory_Canvas").transform.GetChild(0).GetChild(0).GetChild(i).gameObject.GetComponent<UI_Slot_bls>();      // 이게 무슨.. 나중에 줄일게요
+            Add_InventorySlot(slot);
+        }
+
         Inventory.Sort(delegate (UI_Slot_bls a, UI_Slot_bls b) { return a.index.CompareTo(b.index); });
         QuickSlot.Sort(delegate (UI_QuickSlot a, UI_QuickSlot b) { return a.index.CompareTo(b.index); });
     }
@@ -43,38 +54,38 @@ public class InventoryManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        foreach(UI_Slot_bls slot in Inventory)
-        {
-            if(slot.Get_Item()?.itemData.count == 0)
-            {
-                Remove_Item(slot);
-            }
-        }
+        //foreach(UI_Slot_bls slot in Inventory)
+        //{
+        //    if(slot.Get_Item()?.Count == 0)
+        //    {
+        //        Remove_Item(slot);
+        //    }
+        //}
     }
 
         /// <summary>
     /// 아이템을 획득했을 때 호출되는 함수
     /// </summary>
-    public void OnPickUp()
-    {
-        testitems = FindObjectsOfType<BaseItem>();
+    //public void OnPickUp()
+    //{
+    //    testitems = FindObjectsOfType<BaseItem>();
 
-        for (int i = 0; i < testitems.Length; i++)
-        {
-            UI_Slot_bls slot = Inventory.Find(x => x.Get_Item()?.itemData.name == testitems[i].itemData.name);
+    //    for (int i = 0; i < testitems.Length; i++)
+    //    {
+    //        UI_Slot_bls slot = Inventory.Find(x => x.Get_Item()?.ItemData.Name == testitems[i].itemData.name);
 
-            if (slot != null)
-            {
-                slot.Get_Item().itemData.count++;
-            }
-            else
-            {
-                Add_Item(testitems[i]);
+    //        if (slot != null)
+    //        {
+    //            slot.Get_Item().Count++;
+    //        }
+    //        else
+    //        {
+    //            AddItem(testitems[i]);
 
-            }
+    //        }
 
-        }
-    }
+    //    }
+    //}
 
     /// <summary>
     /// 인벤토리를 열었을 때 호출되는 함수
@@ -103,40 +114,17 @@ public class InventoryManager : MonoBehaviour
         _to.QuickSlot = _from.QuickSlot;
         _from.QuickSlot = tempQSlot;
         ///////////////////////
- 
-        ////////////////////////// �׽�Ʈ �ڵ�
-        Color tempColor = _from.testColor;
-        _from.testColor = _to.testColor;
-        _to.testColor = tempColor;
-        //////////////////////////
 
         /////////////////////// ������ ��ȯ
-        BaseItem temp = _to.Get_Item();
-        _to.Set_Item(_from.Get_Item());
-        _from.Set_Item(temp);
+        IInventoryItem temp = _to.Get_Item();
+        _to.ChangeItem(_from.Get_Item());
+        _from.ChangeItem(temp);
         ///////////////////////
-    }
-
-    public void Add_Item(BaseItem _Item)
-    {
-        foreach (UI_Slot_bls slot in Inventory)
-        {
-            if(null == slot.Get_Item())
-            {
-                _Item.itemData.count++;
-                slot.Set_Item(_Item);
-                slot.Set_Color(new Color(Random.RandomRange(0f, 1f), Random.RandomRange(0f, 1f), Random.RandomRange(0f, 1f)));
-                slot.Update_Slot();
-                return;
-            }
-        }
-
-        
     }
 
     public void Use_Item(UI_Slot_bls _Slot)
     {
-        _Slot.Get_Item().itemData.count--;
+        _Slot.Get_Item().Count--;
         _Slot.Update_Slot();
     }
 
@@ -157,4 +145,40 @@ public class InventoryManager : MonoBehaviour
             QuickSlot.Add(_Slot);
     }
 
+    /// <summary>
+    /// 아이템을 획득했을 때 호출되는 함수
+    /// </summary>
+    public void AddItem(IInventoryItem item)
+    {
+        UI_Slot_bls Slot = Inventory.Find(x => x.Get_Item()?.ItemData.Name == item.ItemData.Name);        //인벤토리에 동일한 이름의 아이템이 있는지 먼저 검색
+        if( null != Slot )                                                                  
+        {
+            Slot.Get_Item().Count++;                                                        //인벤토리에 같은 이름의 아이템이 있다면 갯수만 늘려주고 종료
+            Slot.Update_Slot();
+            return;
+        }
+        else                                                                                
+        {
+            foreach (UI_Slot_bls slot in Inventory)                                         //인벤토리에 같은 이름의 아이템이 없다면 리스트 순회하면서 빈 슬롯을 검색
+            {
+                if (null == slot.Get_Item())                                                //빈 슬롯 발견시 아이템 넣어주고 종료
+                {
+                    item.Count++;           //아이템 갯수 0->1
+                    slot.AddItem(item);     //빈슬롯에 아이템 입력
+                    Slot.Update_Slot();     //업데이트된 정보 반영
+                    
+                    return;
+                }
+            }
+
+            //빈 슬롯 조차 없는 경우
+            Debug.Log("인벤토리 빈공간 부족");
+        }
+       
+    }
+
+    public void RemoveItem(IInventoryItem item)
+    {
+        
+    }
 }
