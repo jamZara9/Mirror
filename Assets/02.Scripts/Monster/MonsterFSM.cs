@@ -242,6 +242,10 @@ public class MonsterFSM : MonoBehaviour,IDamage
 
             Debug.Log($"현재 Monster 체력 : {monsterHp}");
         }
+        else
+        {
+            m_State = MonsterState.Die;
+        }
     }
 
     // public void HitedMonster(int hitPower)  //  학생(몬스터)의 체력을 뺴는 함수
