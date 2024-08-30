@@ -46,10 +46,11 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         Find_Canvas();
-
+        
         for(ECanvas i = ECanvas.HUD; i < ECanvas.END; i++)
         {
-            _uiDictionary[(int)i] = new();
+            // _uiDictionary[(int)i] = new();
+            _uiDictionary.Add(new Dictionary<string, GameObject>());
         }
     }
 
