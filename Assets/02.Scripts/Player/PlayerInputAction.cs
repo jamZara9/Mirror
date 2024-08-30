@@ -14,6 +14,12 @@ public class PlayerInputAction : MonoBehaviour
     [Header("Player Input Values")]
     public Vector2 move;
     public Vector2 look;
+    public Vector2 mousePosition;
+
+    public bool qucikSlot1 = false;
+    public bool qucikSlot2 = false;
+    public bool qucikSlot3 = false;
+    public bool qucikSlot4 = false;
     public bool jump = false;
     public bool sprint = false;
     public bool isInventoryVisible = false;
@@ -52,6 +58,11 @@ public class PlayerInputAction : MonoBehaviour
             else
                 look = context.ReadValue<Vector2>();
         }
+    }
+
+    public void OnMousePosition(InputAction.CallbackContext context)
+    {
+        mousePosition = context.ReadValue<Vector2>();
     }
 
     public void OnJump(InputAction.CallbackContext context)
@@ -118,5 +129,22 @@ public class PlayerInputAction : MonoBehaviour
         {
             isQuickSlotVisible = false;
         }
+    }
+
+    public void OnQuickSlot1(InputAction.CallbackContext context)
+    {
+        qucikSlot1 = context.ReadValueAsButton();
+    }
+    public void OnQuickSlot2(InputAction.CallbackContext context)
+    {
+        qucikSlot2 = context.ReadValueAsButton();
+    }
+    public void OnQuickSlot3(InputAction.CallbackContext context)
+    {
+        qucikSlot3 = context.ReadValueAsButton();
+    }
+    public void OnQuickSlot4(InputAction.CallbackContext context)
+    {
+        qucikSlot4 = context.ReadValueAsButton();
     }
 }
