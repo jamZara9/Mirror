@@ -146,31 +146,58 @@ public class InventoryManager : MonoBehaviour, IItemContainer
     /// </summary>
     public void AddItem(IInventoryItem item)
     {
-        UI_Slot_bls Slot = Inventory.Find(x => x.Get_Item()?.ItemData.Name == item.ItemData.Name);        //인벤토리에 동일한 이름의 아이템이 있는지 먼저 검색
-        if( null != Slot )                                                                  
+        // UI_Slot_bls Slot = Inventory.Find(x => x.Get_Item()?.ItemData.Name == item.ItemData.Name);        //인벤토리에 동일한 이름의 아이템이 있는지 먼저 검색
+        // if( null != Slot )                                                                  
+        // {
+        //     Slot.Get_Item().Count++;                                                        //인벤토리에 같은 이름의 아이템이 있다면 갯수만 늘려주고 종료
+        //     Slot.Update_Slot();
+        //     return;
+        // }
+        // else                                                                                
+        // {
+        //     foreach (UI_Slot_bls slot in Inventory)                                         //인벤토리에 같은 이름의 아이템이 없다면 리스트 순회하면서 빈 슬롯을 검색
+        //     {
+        //         if (null == slot.Get_Item())                                                //빈 슬롯 발견시 아이템 넣어주고 종료
+        //         {
+        //             item.Count++;
+        //             slot.AddItem(item);     //빈슬롯에 아이템 입력
+        //             Slot.Update_Slot();     //업데이트된 정보 반영
+                    
+        //             return;
+        //         }
+        //     }
+
+        //     //빈 슬롯 조차 없는 경우
+        //     Debug.Log("인벤토리 빈공간 부족");
+        // }
+
+        // 인벤토리에 동일한 이름의 아이템이 있는지 먼저 검색
+        UI_Slot_bls slotWithSameItem  = Inventory.Find(x => x.Get_Item()?.ItemData.Name == item.ItemData.Name);
+       
+       if (slotWithSameItem != null)
         {
-            Slot.Get_Item().Count++;                                                        //인벤토리에 같은 이름의 아이템이 있다면 갯수만 늘려주고 종료
-            Slot.Update_Slot();
+            // 인벤토리에 같은 이름의 아이템이 있다면 갯수만 늘려주고 종료
+            slotWithSameItem.Get_Item().Count++;
+            slotWithSameItem.Update_Slot();
             return;
         }
-        else                                                                                
-        {
-            foreach (UI_Slot_bls slot in Inventory)                                         //인벤토리에 같은 이름의 아이템이 없다면 리스트 순회하면서 빈 슬롯을 검색
-            {
-                if (null == slot.Get_Item())                                                //빈 슬롯 발견시 아이템 넣어주고 종료
-                {
-                    item.Count++;
-                    slot.AddItem(item);     //빈슬롯에 아이템 입력
-                    Slot.Update_Slot();     //업데이트된 정보 반영
-                    
-                    return;
-                }
-            }
 
-            //빈 슬롯 조차 없는 경우
-            Debug.Log("인벤토리 빈공간 부족");
+        // 인벤토리에 동일한 아이템이 없을 경우 
+
+        // 인벤토리에 빈 슬롯이 있는지 검색
+        UI_Slot_bls emptySlot = Inventory.Find(x => x.Get_Item() == null);
+
+        if (emptySlot != null)
+        {
+            // 빈 슬롯 발견시 아이템 넣어주고 종료
+            item.Count = 1;  // 아이템의 초기 수량을 1로 설정
+            emptySlot.AddItem(item);
+            emptySlot.Update_Slot();  // 업데이트된 정보 반영
+            return;
         }
-       
+
+        // 빈 슬롯 조차 없는 경우
+        Debug.Log("인벤토리 빈공간 부족");
     }
 
     public void RemoveItem(IInventoryItem item)
