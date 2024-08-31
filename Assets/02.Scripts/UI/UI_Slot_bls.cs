@@ -46,6 +46,9 @@ public class UI_Slot_bls : MonoBehaviour, IItemContainer, IPointerClickHandler, 
             _ItemIcon.sprite = SlotItem.Icon;        //아이콘 업데이트
             _countTXT.text = "" + SlotItem.Count;   //아이템 갯수 업데이트
             QuickSlot?.Update_QuickSlot(SlotItem);
+
+            // Test
+            GameManager.Instance.playerInventory.quickSlots[index-1] = SlotItem.ItemGameObject;
         }
     }
 

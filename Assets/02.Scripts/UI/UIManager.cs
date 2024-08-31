@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+using System.Drawing;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Image = UnityEngine.UI.Image;
 
 /// <summary>
 /// UI 상수를 관리하는 클래스
@@ -255,5 +256,16 @@ public class UIManager : MonoBehaviour
     public void UpdateHPText(float hp)
     {
         _txtHP.text = "HP : " + hp + " / 100";
+    }
+
+    public GameObject FindUIObject(string uiName)
+    {
+        if(_uiDictionary.TryGetValue(uiName, out var ui))
+        {
+            return ui;
+        }else{
+            Debug.LogError($"에러 발생: {uiName}은 존재하지 않는 UI 이름입니다.");
+            return null;
+        }
     }
 }

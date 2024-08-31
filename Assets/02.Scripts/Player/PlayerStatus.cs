@@ -29,7 +29,7 @@ public class PlayerStatus : MonoBehaviour, IDamage
         public readonly float jumpHeight = 1.2f;        // 점프 높이
 
         [Header("Player Attack Settings")]
-        public readonly float attackRange = 0.5f;       // 공격 사정거리
+        public readonly float attackRange = 1.5f;       // 공격 사정거리
         public readonly float attackDamage = 10.0f;     // 공격 데미지
         public readonly float attackDelay = 1.0f;       // 공격 딜레이(공속)
     }

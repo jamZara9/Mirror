@@ -14,6 +14,11 @@ public class PlayerInputAction : MonoBehaviour
     [Header("Player Input Values")]
     public Vector2 move;
     public Vector2 look;
+    public Vector2 mousePosition;
+
+    public bool[] qucikSlots = new bool[4];
+    public bool isChoiceQuickSlot = false;
+
     public bool jump = false;
     public bool sprint = false;
     public bool isInventoryVisible = false;
@@ -52,6 +57,11 @@ public class PlayerInputAction : MonoBehaviour
             else
                 look = context.ReadValue<Vector2>();
         }
+    }
+
+    public void OnMousePosition(InputAction.CallbackContext context)
+    {
+        mousePosition = context.ReadValue<Vector2>();
     }
 
     public void OnJump(InputAction.CallbackContext context)
@@ -118,5 +128,46 @@ public class PlayerInputAction : MonoBehaviour
         {
             isQuickSlotVisible = false;
         }
+    }
+
+    public void OnQuickSlot1(InputAction.CallbackContext context)
+    {
+        OnQuickSlot(0, context);
+    }
+    public void OnQuickSlot2(InputAction.CallbackContext context)
+    {
+        OnQuickSlot(1, context);
+    }
+    public void OnQuickSlot3(InputAction.CallbackContext context)
+    {
+        OnQuickSlot(2, context);
+    }
+    public void OnQuickSlot4(InputAction.CallbackContext context)
+    {
+        OnQuickSlot(3, context);
+    }
+
+    /// <summary>
+    /// 퀵슬롯을 선택하는 함수
+    /// </summary>
+    /// <param name="slotIndex"></param>
+    /// <param name="context"></param>
+    private void OnQuickSlot(int slotIndex, InputAction.CallbackContext context)
+    {
+        if (slotIndex < 0 || slotIndex >= qucikSlots.Length)
+        {
+            Debug.LogError("슬롯 인덱스가 알맞지 않습니다. : " + slotIndex);
+            return;
+        }
+
+        // 모든 슬롯을 비활성화
+        for (int i = 0; i < qucikSlots.Length; i++)
+        {
+            qucikSlots[i] = false;
+        }
+
+        // 선택된 슬롯만 활성화
+        qucikSlots[slotIndex] = context.ReadValueAsButton();
+        isChoiceQuickSlot = qucikSlots[slotIndex];
     }
 }
