@@ -1,56 +1,56 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Pool;     // ¿ÀºêÁ§Æ® Ç®¸µ »ç¿ëÀ» À§ÇÑ ³×ÀÓ ½ºÆäÀÌ½º Ãß°¡
+using UnityEngine.Pool;     // ì˜¤ë¸Œì íŠ¸ í’€ë§ ì‚¬ìš©ì„ ìœ„í•œ ë„¤ì„ ìŠ¤í˜ì´ìŠ¤ ì¶”ê°€
 
 public class ObjectPoolManager : Singleton<ObjectPoolManager>
 {
     [System.Serializable]
-    private class ObjectInfo    // ¿ÀºêÁ§Æ® Ç®·Î °ü¸®ÇÒ ¿ÀºêÁ§Æ® Á¤º¸ Å¬·¡½º
+    private class ObjectInfo    // ì˜¤ë¸Œì íŠ¸ í’€ë¡œ ê´€ë¦¬í•  ì˜¤ë¸Œì íŠ¸ ì •ë³´ í´ë˜ìŠ¤
     {
-        public string objectName;    // ¿ÀºêÁ§Æ® ÀÌ¸§
-        public GameObject prefab;    // ¿ÀºêÁ§Æ® Ç®¿¡¼­ °ü¸®ÇÒ ¿ÀºêÁ§Æ®(ÇÁ¸®ÆÕ)
-        public int count;            // ¹Ì¸® »ı¼ºÇÒ ¿ÀºêÁ§Æ® °¹¼ö
+        public string objectName;    // ì˜¤ë¸Œì íŠ¸ ì´ë¦„
+        public GameObject prefab;    // ì˜¤ë¸Œì íŠ¸ í’€ì—ì„œ ê´€ë¦¬í•  ì˜¤ë¸Œì íŠ¸(í”„ë¦¬íŒ¹)
+        public int count;            // ë¯¸ë¦¬ ìƒì„±í•  ì˜¤ë¸Œì íŠ¸ ê°¯ìˆ˜
     }
 
-    public bool IsReady { get; private set; }    // ¿ÀºêÁ§Æ®Ç® ¸Å´ÏÀú ÁØºñ¿Ï·á Ã¼Å©¿ë º¯¼ö
+    public bool IsReady { get; private set; }    // ì˜¤ë¸Œì íŠ¸í’€ ë§¤ë‹ˆì € ì¤€ë¹„ì™„ë£Œ ì²´í¬ìš© ë³€ìˆ˜
 
     [SerializeField]
-    private ObjectInfo[] objectInfos = null;    // ¿ÀºêÁ§Æ® Ç®·Î °ü¸®ÇÒ ¿ÀºêÁ§Æ® Á¤º¸ ¹è¿­
+    private ObjectInfo[] objectInfos = null;    // ì˜¤ë¸Œì íŠ¸ í’€ë¡œ ê´€ë¦¬í•  ì˜¤ë¸Œì íŠ¸ ì •ë³´ ë°°ì—´
 
-    private string objectName;      // »ı¼ºÇÒ ¿ÀºêÁ§Æ®ÀÇ key°ª ÁöÁ¤À» À§ÇÑ º¯¼ö
+    private string objectName;      // ìƒì„±í•  ì˜¤ë¸Œì íŠ¸ì˜ keyê°’ ì§€ì •ì„ ìœ„í•œ ë³€ìˆ˜
 
-    private Dictionary<string, IObjectPool<GameObject>> objectPoolDic = new Dictionary<string, IObjectPool<GameObject>>();  // ¿ÀºêÁ§Æ® Ç®µéÀ» °ü¸®ÇÒ µñ¼Å³Ê¸®
+    private Dictionary<string, IObjectPool<GameObject>> objectPoolDic = new Dictionary<string, IObjectPool<GameObject>>();  // ì˜¤ë¸Œì íŠ¸ í’€ë“¤ì„ ê´€ë¦¬í•  ë”•ì…”ë„ˆë¦¬
 
-    private Dictionary<string, GameObject> objectDic = new Dictionary<string, GameObject>();    // ¿ÀºêÁ§Æ® Ç®¿¡¼­ ¿ÀºêÁ§Æ®¸¦ »õ·Î »ı¼ºÇÒ¶§ »ç¿ëÇÒ µñ¼Å³Ê¸®
+    private Dictionary<string, GameObject> objectDic = new Dictionary<string, GameObject>();    // ì˜¤ë¸Œì íŠ¸ í’€ì—ì„œ ì˜¤ë¸Œì íŠ¸ë¥¼ ìƒˆë¡œ ìƒì„±í• ë•Œ ì‚¬ìš©í•  ë”•ì…”ë„ˆë¦¬
 
     void Awake()
     {
-        Init();     // ¿ÀºêÁ§Æ® Ç® ÃÊ±â ¼³Á¤
+        Init();     // ì˜¤ë¸Œì íŠ¸ í’€ ì´ˆê¸° ì„¤ì •
     }
 
     /// <summary>
-    /// ¿ÀºêÁ§Æ® Ç® ÃÊ±â ¼³Á¤ ÇÔ¼ö
+    /// ì˜¤ë¸Œì íŠ¸ í’€ ì´ˆê¸° ì„¤ì • í•¨ìˆ˜
     /// </summary>
     private void Init()
     {
-        IsReady = false;    // ¿ÀºêÁ§Æ® Ç® ÁØºñ »óÅÂ·Î º¯°æ
+        IsReady = false;    // ì˜¤ë¸Œì íŠ¸ í’€ ì¤€ë¹„ ìƒíƒœë¡œ ë³€ê²½
 
         for (int idx = 0; idx < objectInfos.Length; idx++)
         {
-            IObjectPool<GameObject> pool = new ObjectPool<GameObject>(CreatePooledItem, OnTakeFromPool, OnReturnedToPool,   // ¿ÀºêÁ§Æ® Ç®À» »õ·Î »ı¼º
+            IObjectPool<GameObject> pool = new ObjectPool<GameObject>(CreatePooledItem, OnTakeFromPool, OnReturnedToPool,   // ì˜¤ë¸Œì íŠ¸ í’€ì„ ìƒˆë¡œ ìƒì„±
             OnDestroyPoolObject, true, objectInfos[idx].count, objectInfos[idx].count);
 
-            if (objectDic.ContainsKey(objectInfos[idx].objectName))     // ÀÌ¹Ì ¿ÀºêÁ§Æ® Ç®ÀÌ »ı¼ºµÈ ¿ÀºêÁ§Æ®ÀÎÁö Ã¼Å©
+            if (objectDic.ContainsKey(objectInfos[idx].objectName))     // ì´ë¯¸ ì˜¤ë¸Œì íŠ¸ í’€ì´ ìƒì„±ëœ ì˜¤ë¸Œì íŠ¸ì¸ì§€ ì²´í¬
             {
-                Debug.LogFormat("{0} ÀÌ¹Ì µî·ÏµÈ ¿ÀºêÁ§Æ®ÀÔ´Ï´Ù.", objectInfos[idx].objectName);
-                return;     // ÀÌ¹Ì »ı¼ºµÇ¾ú´Ù¸é ÇÔ¼ö Á¾·á
+                Debug.LogFormat("{0} ì´ë¯¸ ë“±ë¡ëœ ì˜¤ë¸Œì íŠ¸ì…ë‹ˆë‹¤.", objectInfos[idx].objectName);
+                return;     // ì´ë¯¸ ìƒì„±ë˜ì—ˆë‹¤ë©´ í•¨ìˆ˜ ì¢…ë£Œ
             }
 
-            objectDic.Add(objectInfos[idx].objectName, objectInfos[idx].prefab);    // ¿ÀºêÁ§Æ®¸¦ »õ·Î »ı¼ºÇÏ±â À§ÇÑ µñ¼Å³Ê¸®¿¡ Ãß°¡
-            objectPoolDic.Add(objectInfos[idx].objectName, pool);   // ¿ÀºêÁ§Æ® Ç® °ü¸®¿ë µñ¼Å³Ê¸®¿¡ ¿ÀºêÁ§Æ® Á¤º¸¿Í »ı¼ºµÈ Ç®À» Ãß°¡
+            objectDic.Add(objectInfos[idx].objectName, objectInfos[idx].prefab);    // ì˜¤ë¸Œì íŠ¸ë¥¼ ìƒˆë¡œ ìƒì„±í•˜ê¸° ìœ„í•œ ë”•ì…”ë„ˆë¦¬ì— ì¶”ê°€
+            objectPoolDic.Add(objectInfos[idx].objectName, pool);   // ì˜¤ë¸Œì íŠ¸ í’€ ê´€ë¦¬ìš© ë”•ì…”ë„ˆë¦¬ì— ì˜¤ë¸Œì íŠ¸ ì •ë³´ì™€ ìƒì„±ëœ í’€ì„ ì¶”ê°€
 
-            // Á¤ÇØÁø count¿¡ ¸ÂÃç ¹Ì¸® ¿ÀºêÁ§Æ® »ı¼º
+            // ì •í•´ì§„ countì— ë§ì¶° ë¯¸ë¦¬ ì˜¤ë¸Œì íŠ¸ ìƒì„±
             for (int i = 0; i < objectInfos[idx].count; i++)
             {
                 objectName = objectInfos[idx].objectName;
@@ -59,63 +59,63 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>
             }
         }
 
-        Debug.Log("¿ÀºêÁ§Æ®Ç®¸µ ÁØºñ ¿Ï·á");
-        IsReady = true;     // ¿ÀºêÁ§Æ® Ç® ÁØºñ¿Ï·á »óÅÂ·Î º¯°æ
+        Debug.Log("ì˜¤ë¸Œì íŠ¸í’€ë§ ì¤€ë¹„ ì™„ë£Œ");
+        IsReady = true;     // ì˜¤ë¸Œì íŠ¸ í’€ ì¤€ë¹„ì™„ë£Œ ìƒíƒœë¡œ ë³€ê²½
     }
 
     /// <summary>
-    ///  ¿ÀºêÁ§Æ® Ç®·Î °ü¸®ÇÒ ¿ÀºêÁ§Æ®¸¦ »ı¼ºÇÏ´Â ÇÔ¼ö
+    ///  ì˜¤ë¸Œì íŠ¸ í’€ë¡œ ê´€ë¦¬í•  ì˜¤ë¸Œì íŠ¸ë¥¼ ìƒì„±í•˜ëŠ” í•¨ìˆ˜
     /// </summary>
-    /// <returns>»ı¼ºµÈ ¿ÀºêÁ§Æ®</returns>
+    /// <returns>ìƒì„±ëœ ì˜¤ë¸Œì íŠ¸</returns>
     private GameObject CreatePooledItem()
     {
-        GameObject poolObject = Instantiate(objectDic[objectName]);     // ¿ÀºêÁ§Æ® µñ¼Å³Ê¸®¿¡¼­ ¿ÀºêÁ§Æ® Á¤º¸ °¡Á®¿È
-        poolObject.GetComponent<PoolAble>().pool = objectPoolDic[objectName];   // °¡Á®¿Â ¿ÀºêÁ§Æ®ÀÇ PoolAble ³»ÀÇ ¿ÀºêÁ§Æ® Ç®¿¡ »ç¿ëÇÒ ¿ÀºêÁ§Æ® Ç® Àü´Ş
-        return poolObject;  // ¼¼ÆÃµÈ ¿ÀºêÁ§Æ® ¹İÈ¯
+        GameObject poolObject = Instantiate(objectDic[objectName]);     // ì˜¤ë¸Œì íŠ¸ ë”•ì…”ë„ˆë¦¬ì—ì„œ ì˜¤ë¸Œì íŠ¸ ì •ë³´ ê°€ì ¸ì˜´
+        poolObject.GetComponent<PoolAble>().pool = objectPoolDic[objectName];   // ê°€ì ¸ì˜¨ ì˜¤ë¸Œì íŠ¸ì˜ PoolAble ë‚´ì˜ ì˜¤ë¸Œì íŠ¸ í’€ì— ì‚¬ìš©í•  ì˜¤ë¸Œì íŠ¸ í’€ ì „ë‹¬
+        return poolObject;  // ì„¸íŒ…ëœ ì˜¤ë¸Œì íŠ¸ ë°˜í™˜
     }
 
     /// <summary>
-    /// ¿ÀºêÁ§Æ® Ç® ³»ÀÇ °ü¸®µÇ°í ÀÖ´Â ¿ÀºêÁ§Æ®¸¦ ´ë¿©ÇÏ´Â ÇÔ¼ö
+    /// ì˜¤ë¸Œì íŠ¸ í’€ ë‚´ì˜ ê´€ë¦¬ë˜ê³  ìˆëŠ” ì˜¤ë¸Œì íŠ¸ë¥¼ ëŒ€ì—¬í•˜ëŠ” í•¨ìˆ˜
     /// </summary>
     /// <param name="poolObject"></param>
     private void OnTakeFromPool(GameObject poolObject)
     {
-        poolObject.SetActive(true);     // ¿ÀºêÁ§Æ® È°¼ºÈ­ »óÅÂ·Î º¯°æ
+        poolObject.SetActive(true);     // ì˜¤ë¸Œì íŠ¸ í™œì„±í™” ìƒíƒœë¡œ ë³€ê²½
     }
 
     /// <summary>
-    /// ¿ÀºêÁ§Æ® Ç® ¿¡¼­ ´ë¿©µÈ ¿ÀºêÁ§Æ®¸¦ Ç®·Î ¹İÈ¯ÇÏ´Â ÇÔ¼ö
+    /// ì˜¤ë¸Œì íŠ¸ í’€ ì—ì„œ ëŒ€ì—¬ëœ ì˜¤ë¸Œì íŠ¸ë¥¼ í’€ë¡œ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
     /// </summary>
     /// <param name="poolObject"></param>
     private void OnReturnedToPool(GameObject poolObject)
     {
-        poolObject.SetActive(false);    // ¿ÀºêÁ§Æ® ºñÈ°¼ºÈ­ »óÅÂ·Î º¯°æ
+        poolObject.SetActive(false);    // ì˜¤ë¸Œì íŠ¸ ë¹„í™œì„±í™” ìƒíƒœë¡œ ë³€ê²½
     }
 
     /// <summary>
-    /// ¿ÀºêÁ§Æ® Ç® ³»ÀÇ ¿ÀºêÁ§Æ®¸¦ »èÁ¦ÇÏ´Â ÇÔ¼ö
+    /// ì˜¤ë¸Œì íŠ¸ í’€ ë‚´ì˜ ì˜¤ë¸Œì íŠ¸ë¥¼ ì‚­ì œí•˜ëŠ” í•¨ìˆ˜
     /// </summary>
     /// <param name="poolObject"></param>
     private void OnDestroyPoolObject(GameObject poolObject)
     {
-        Destroy(poolObject);    // ¿ÀºêÁ§Æ® »èÁ¦
+        Destroy(poolObject);    // ì˜¤ë¸Œì íŠ¸ ì‚­ì œ
     }
 
     /// <summary>
-    /// ¿ÀºêÁ§Æ® Ç® ³»ÀÇ ¿ÀºêÁ§Æ®¸¦ ´ë¿©ÇØ¿Ã ¶§ »ç¿ëÇÏ´Â ÇÔ¼ö
+    /// ì˜¤ë¸Œì íŠ¸ í’€ ë‚´ì˜ ì˜¤ë¸Œì íŠ¸ë¥¼ ëŒ€ì—¬í•´ì˜¬ ë•Œ ì‚¬ìš©í•˜ëŠ” í•¨ìˆ˜
     /// </summary>
     /// <param name="gameobjectName"></param>
-    /// <returns>´ë¿©µÇ´Â ¿ÀºêÁ§Æ®</returns>
+    /// <returns>ëŒ€ì—¬ë˜ëŠ” ì˜¤ë¸Œì íŠ¸</returns>
     public GameObject GetPoolObject(string gameobjectName)
     {
-        objectName = gameobjectName;    // ´ë¿©ÇÒ ¿ÀºêÁ§Æ® key°ª Àü´Ş
+        objectName = gameobjectName;    // ëŒ€ì—¬í•  ì˜¤ë¸Œì íŠ¸ keyê°’ ì „ë‹¬
 
-        if (!objectDic.ContainsKey(gameobjectName))     // ¿ÀºêÁ§Æ® Ç®¿¡ µî·ÏµÈ ¿ÀºêÁ§Æ®ÀÎÁö Ã¼Å© 
+        if (!objectDic.ContainsKey(gameobjectName))     // ì˜¤ë¸Œì íŠ¸ í’€ì— ë“±ë¡ëœ ì˜¤ë¸Œì íŠ¸ì¸ì§€ ì²´í¬ 
         {
-            Debug.LogFormat("{0} ¿ÀºêÁ§Æ®Ç®¿¡ µî·ÏµÇÁö ¾ÊÀº ¿ÀºêÁ§Æ®ÀÔ´Ï´Ù.", gameobjectName);
-            return null;    // µî·ÏµÇÁö ¾Ê¾Ò´Ù¸é null ¹İÈ¯
+            Debug.LogFormat("{0} ì˜¤ë¸Œì íŠ¸í’€ì— ë“±ë¡ë˜ì§€ ì•Šì€ ì˜¤ë¸Œì íŠ¸ì…ë‹ˆë‹¤.", gameobjectName);
+            return null;    // ë“±ë¡ë˜ì§€ ì•Šì•˜ë‹¤ë©´ null ë°˜í™˜
         }
 
-        return objectPoolDic[gameobjectName].Get();     // ¿ÀºêÁ§Æ® Ç®¿¡ µî·ÏµÇ¾î ÀÖ´Ù¸é ¿ÀºêÁ§Æ® ¹İÈ¯
+        return objectPoolDic[gameobjectName].Get();     // ì˜¤ë¸Œì íŠ¸ í’€ì— ë“±ë¡ë˜ì–´ ìˆë‹¤ë©´ ì˜¤ë¸Œì íŠ¸ ë°˜í™˜
     }
 }
