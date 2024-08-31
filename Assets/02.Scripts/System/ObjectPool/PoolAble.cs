@@ -8,7 +8,7 @@ public class PoolAble : MonoBehaviour
     public IObjectPool<GameObject> pool { get; set; }
 
     /// <summary>
-    /// ¿ÀºêÁ§Æ® Ç®¿¡ ¿ÀºêÁ§Æ®¸¦ ¹İÈ¯ÇÏ´Â ÇÔ¼ö
+    /// ì˜¤ë¸Œì íŠ¸ í’€ì— ì˜¤ë¸Œì íŠ¸ë¥¼ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
     /// </summary>
     public void ReleaseObject()
     {

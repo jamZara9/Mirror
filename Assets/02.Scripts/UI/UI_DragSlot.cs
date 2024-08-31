@@ -7,9 +7,9 @@ using UnityEngine.UI;
 public class UI_DragSlot : MonoBehaviour
 {
     static public UI_DragSlot instance;
-    public bool IsClear = true;         //½½·Ô¿¡¼­ OnDropÈ£Ãâ½Ã À¯È¿ÇÑ ¾×¼ÇÀÎÁö ÆÇ´ÜÇÏ±â À§ÇØ »ç¿ë
-    private UI_Slot_bls DragSlot;       //µå·¡±× ½ÃÀÛ½Ã ÂüÁ¶ÁßÀÎ ½½·Ô
-    private IInventoryItem Item;        //µå·¡±× ½ÃÀÛ½Ã Âü¼ÒÇÏ´Â ½½·ÔÀÇ ¾ÆÀÌÅÛ
+    public bool IsClear = true;         //ìŠ¬ë¡¯ì—ì„œ OnDropí˜¸ì¶œì‹œ ìœ íš¨í•œ ì•¡ì…˜ì¸ì§€ íŒë‹¨í•˜ê¸° ìœ„í•´ ì‚¬ìš©
+    private UI_Slot_bls DragSlot;       //ë“œë˜ê·¸ ì‹œì‘ì‹œ ì°¸ì¡°ì¤‘ì¸ ìŠ¬ë¡¯
+    private IInventoryItem Item;        //ë“œë˜ê·¸ ì‹œì‘ì‹œ ì°¸ì†Œí•˜ëŠ” ìŠ¬ë¡¯ì˜ ì•„ì´í…œ
 
     [SerializeField] private Image ItemIcon;
 
@@ -27,7 +27,7 @@ public class UI_DragSlot : MonoBehaviour
 
     private void Clear()
     {
-        Set_Alpha(0f);      //Åõ¸í»óÅÂ
+        Set_Alpha(0f);      //íˆ¬ëª…ìƒíƒœ
 
         DragSlot = null;
         Item = null;
@@ -36,21 +36,21 @@ public class UI_DragSlot : MonoBehaviour
         IsClear = true;
     }
 
-    public void StartDrag(PointerEventData _eventData, UI_Slot_bls _slot)   //½½·Ô¿¡¼­ µå·¡±× ½ÃÀÛ½Ã È£Ãâ
+    public void StartDrag(PointerEventData _eventData, UI_Slot_bls _slot)   //ìŠ¬ë¡¯ì—ì„œ ë“œë˜ê·¸ ì‹œì‘ì‹œ í˜¸ì¶œ
     {
-        DragSlot = _slot;                                                   //½½·Ô Á¤º¸ ¾÷µ¥ÀÌÆ®
-        Item = _slot.Get_Item();                                            //¾ÆÀÌÅÛ Á¤º¸ ¾÷µ¥ÀÌÆ®
-        transform.position = _eventData.position;                           //µå·¡±× ½ÃÀÛÀå¼Ò·Î Æ÷Áö¼Ç º¯°æ
-        IsClear = false;                                                    //OnDrop½Ã À¯È¿ÇÑ »óÅÂÃ¼Å©¿ë
+        DragSlot = _slot;                                                   //ìŠ¬ë¡¯ ì •ë³´ ì—…ë°ì´íŠ¸
+        Item = _slot.Get_Item();                                            //ì•„ì´í…œ ì •ë³´ ì—…ë°ì´íŠ¸
+        transform.position = _eventData.position;                           //ë“œë˜ê·¸ ì‹œì‘ì¥ì†Œë¡œ í¬ì§€ì…˜ ë³€ê²½
+        IsClear = false;                                                    //OnDropì‹œ ìœ íš¨í•œ ìƒíƒœì²´í¬ìš©
 
-        Set_Alpha(1f);                                                      //alpha¸¦ 1·Î ¹Ù²ãÁà Åõ¸í»óÅÂ ÇØÁ¦
+        Set_Alpha(1f);                                                      //alphaë¥¼ 1ë¡œ ë°”ê¿”ì¤˜ íˆ¬ëª…ìƒíƒœ í•´ì œ
 
         Update_DragSlot();
     }
 
-    public void EndDrag()   //µå·¡±×°¡ ³¡³­ ½ÃÁ¡¿¡ È£Ãâ
+    public void EndDrag()   //ë“œë˜ê·¸ê°€ ëë‚œ ì‹œì ì— í˜¸ì¶œ
     {
-        Clear();            //µå·¡±× ½½·Ô ÃÊ±âÈ­
+        Clear();            //ë“œë˜ê·¸ ìŠ¬ë¡¯ ì´ˆê¸°í™”
     }
 
     private void Update_DragSlot()
