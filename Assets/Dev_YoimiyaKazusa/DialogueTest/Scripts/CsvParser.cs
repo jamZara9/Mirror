@@ -67,7 +67,8 @@ public class CsvParser : MonoBehaviour
         {
             string[] row = data[i].Split(new char[] { ',' });
 
-            if (row.Length <= 1)
+            // @Todo: 임시 에러 해결 추후 변경 필요
+            if (_sceneData.storyType == StoryScene.StoryType.VisualNovel && i >= data.Length - 2)
             {
                 break;
             }
