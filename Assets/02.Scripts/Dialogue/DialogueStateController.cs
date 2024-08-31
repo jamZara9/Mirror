@@ -117,6 +117,7 @@ public class DialogueStateController : MonoBehaviour
                 return;
             }
             
+            _dialogueManager.GetBGMAudoiSource().Stop();    // BGM 정지
             if (!currentScene.nextScene)
             {
                 _dialogueManager.skipPanel.SetActive(false);

@@ -46,6 +46,10 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioSource sentenceAudioSource;
 
+    public AudioSource GetBGMAudoiSource(){
+        return audioSource;
+    }
+
     [SerializeField] private Speaker narrationSpeaker;
 
     private bool _isDelayFinish = true;
