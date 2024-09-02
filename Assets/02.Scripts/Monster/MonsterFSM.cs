@@ -248,19 +248,6 @@ public class MonsterFSM : MonoBehaviour,IDamage
         }
     }
 
-    // public void HitedMonster(int hitPower)  //  학생(몬스터)의 체력을 뺴는 함수
-    // {
-    //     if (m_State == MonsterState.Damaged || m_State == MonsterState.Die) return; 
-    //     if (monsterHp > 0)  
-    //         //                                  체력이 0 or 죽은 상태가 아니라면
-    //     {
-    //         monsterHp -= hitPower;  // 학생(몬스터)의 체력을 뺌
-    //         m_State = MonsterState.Damaged;// 학생(몬스터)의 상태를 Damaged 변경
-    //         _isDamaged = true;             //피격 상태 
-    //         StartCoroutine(WaitDamage());// WaitDamage 함수 호출
-    //     }
-    // }
-
     IEnumerator WaitDamage()        // 피격 되는 시간동안 움직이지 못하게 하는 함수
     {
         
