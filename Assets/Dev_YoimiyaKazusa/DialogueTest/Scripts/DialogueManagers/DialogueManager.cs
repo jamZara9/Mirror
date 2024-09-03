@@ -50,8 +50,6 @@ public class DialogueManager : MonoBehaviour
         return audioSource;
     }
 
-    [SerializeField] private Speaker narrationSpeaker;
-
     private bool _isDelayFinish = true;
 
     #region  Dialogue Scene Active Test Code
@@ -285,7 +283,7 @@ public class DialogueManager : MonoBehaviour
         // 현재 문장을 말하는 스프라이트 밝게, 나머지 모든 스프라이트 어둡게 함. 
         foreach (var sprite in _sprites)
         {
-            if (currentSpeaker != sprite.Key && currentSpeaker != narrationSpeaker)
+            if (currentSpeaker != sprite.Key)
             {
                 sprite.Value.SetColorDark();
             }
