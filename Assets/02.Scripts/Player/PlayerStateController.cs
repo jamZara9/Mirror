@@ -39,6 +39,7 @@ public class PlayerStateController : MonoBehaviour
     private int _animIDJump;
     private int _animIDFreeFall;
     private int _animIDMotionSpeed;
+    private int _animIDAttack;
 
     [Header("Audio Settings")]
     [SerializeField] private AudioSource audioSource;     // 오디오 소스
@@ -118,6 +119,7 @@ public class PlayerStateController : MonoBehaviour
         _animIDJump = AnimationConstants.AnimIDJump;
         _animIDFreeFall = AnimationConstants.AnimIDFreeFall;
         _animIDMotionSpeed = AnimationConstants.AnimIDMotionSpeed;
+        _animIDAttack = AnimationConstants.AnimIDAttack;
     }
 
     /// <summary>
@@ -154,11 +156,15 @@ public class PlayerStateController : MonoBehaviour
             _speed = targetSpeed;
         }
 
+        // 이동 입력에 따라 애니메이션 블렌드를 설정 (앞으로 갈 때 양수, 뒤로 갈 때 음수)
+        // _inputActions.move.y가 양수면 전진, 음수면 후진
+        float targetBlend = (_inputActions.move.y >= 0) ? targetSpeed : -targetSpeed;
+
         // 애니메이션 블렌드를 처리하여 이동 애니메이션이 부드럽게 전환되도록 진행
         // _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * _settings.speedChangeRate);
-        _animationBlend = SmoothSpeedTransition(_animationBlend, targetSpeed, _settings.speedChangeRate);
+        _animationBlend = SmoothSpeedTransition(_animationBlend, targetBlend , _settings.speedChangeRate);
 
-        if (_animationBlend < 0.01f) _animationBlend = 0f;
+        if (Mathf.Abs(_animationBlend) < 0.01f) _animationBlend = 0f;
 
         Vector3 moveDirection = new Vector3(_inputActions.move.x, 0, _inputActions.move.y).normalized;
 
@@ -509,6 +515,14 @@ public class PlayerStateController : MonoBehaviour
             Debug.Log($"{_attackTimeoutDelta} / {playerStatus.settings.attackDelay}");
 
             if(_attackTimeoutDelta > playerStatus.settings.attackDelay){
+
+                // 애니메이터가 존재하는 경우, 애니메이션 상태를 업데이트
+                if (_hasAnimator)
+                {
+                    // _animator.SetBool(_animIDAttack, true);
+                    _animator.SetTrigger(_animIDAttack);
+                }
+
                 Debug.Log("Attack");
                 //공격 사거리 내에 적이 있는지 확인
                 Collider[] hitColliders = Physics.OverlapSphere(transform.position, playerStatus.CurrentAttackRange);
@@ -541,7 +555,23 @@ public class PlayerStateController : MonoBehaviour
             _inputActions.isFire = false;
         }
     }
+    
+    /// <summary>
+    /// 일정 시간이 지난 후 공격 애니메이션을 종료하고 원래 상태로 복귀
+    /// </summary>
+    /// <param name="delay"></param>
+    /// <returns></returns>
+    private IEnumerator ResetAttackAnimation(float delay)
+    {
+        // 공격 애니메이션이 끝날 때까지 기다림
+        yield return new WaitForSeconds(delay);
 
+        // 애니메이터가 존재하면 공격 애니메이션을 종료
+        if (_hasAnimator)
+        {
+            _animator.SetBool(_animIDAttack, false);
+        }
+    }
 
     #region Animation Events
     /// <summary>
