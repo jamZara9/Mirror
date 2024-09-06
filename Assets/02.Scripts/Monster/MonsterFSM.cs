@@ -10,17 +10,18 @@ public class MonsterFSM : MonoBehaviour,IDamage
     [SerializeField] 
     private float monsterHp = 20f;      // 학생(몬스터)의 체력
     private bool _isDamaged = false;        // 학생(몬스터)의 피격확인용 변수
-     
-    public float attackDistance = 2f;      // 학생(몬스터)의 공격범위
+    [SerializeField] 
+    protected float attackDistance = 2f;      // 학생(몬스터)의 공격범위
     [SerializeField]
     private float moveSpeed = 8f;       // 학생(몬스터)의 이동속도
-    public float attackDelay = 2f;     // 학생(몬스터)의 공격 딜레이
+    [SerializeField]
+    protected float attackDelay = 2f;     // 학생(몬스터)의 공격 딜레이
     [SerializeField] 
     protected float attackPower = 5f;     // 학생(몬스터)의 공격력
-    [HideInInspector]
-    public float _currentTime = 0f;    // 학생(몬스터)의 현재 공격시간 currentTime이 Delay보다 커진다면 공격 진행
-    [HideInInspector]
-    public Transform _player;          // 플레이어의 위치 값 받아오는 용도
+    
+    protected float _currentTime = 0f;    // 학생(몬스터)의 현재 공격시간 currentTime이 Delay보다 커진다면 공격 진행
+    
+    protected Transform _player;          // 플레이어의 위치 값 받아오는 용도
     private Animator _animator;         // 학생(몬스터)의 애니메이터
     private bool _hasAnimator = false;  // 애니메이터가 있는지 확인용 변수
     private NavMeshAgent _navMeshA;     // 학생(몬스터)의 네비매쉬매니저
@@ -28,8 +29,8 @@ public class MonsterFSM : MonoBehaviour,IDamage
     private Vector3 _randomPosition;
     private Vector3 _distance;
     
-    [HideInInspector]
-    public MonsterState m_State;               // 학생(몬스터)의 현재 상태
+    
+    protected MonsterState m_State;               // 학생(몬스터)의 현재 상태
 
     [SerializeField] private bool isMovingMonster = true;               // 학생(몬스터)가 움직일지 여부
     [SerializeField] private List<Vector3> moveDirectionList;           // 학생(몬스터)의 탐색 경로 지정리스트
