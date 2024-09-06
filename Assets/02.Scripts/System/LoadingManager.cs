@@ -9,6 +9,7 @@ public class LoadingManager : MonoBehaviour
 {
     public Slider loadingBar;
     public TextMeshProUGUI loadingText;
+    public CanvasGroup canvasGroup; 
 
     private float minLoadingTime = 5.0f; // 최소 로딩 시간 (초)
 
@@ -47,11 +48,11 @@ public class LoadingManager : MonoBehaviour
             float progress = Mathf.Clamp01(operation.progress / 0.9f);
             float loadingProgress = Mathf.Clamp01(elapsedTime / loadingDuration);
 
-            loadingBar.value = Mathf.Lerp(loadingBar.value, loadingProgress, Time.deltaTime);
-            loadingText.text = $"Loading... {Mathf.RoundToInt(loadingBar.value * 100f)}%";
+            // loadingBar.value = Mathf.Lerp(loadingBar.value, loadingProgress, Time.deltaTime);
+            // loadingText.text = $"Loading... {Mathf.RoundToInt(loadingBar.value * 100f)}%";
 
-            // loadingBar.value = progress;
-            // loadingText.text = $"Loading... {Mathf.RoundToInt(progress * 100f)}%";
+            loadingBar.value = progress;
+            loadingText.text = $"Loading... {Mathf.RoundToInt(progress * 100f)}%";
 
             yield return null;
         }

@@ -26,7 +26,27 @@ public class StartSceneManager : MonoBehaviour
     public void PlayStart()
     {
         PlayerPrefs.SetString("NextScene", SceneConstants.PlaygroundA);
-        SceneManager.LoadScene("PlaygroundLoading");
+        // SceneManager.LoadScene("PlaygroundLoading");
+        // 로딩 화면을 비동기로 로드 시작
+        StartCoroutine(LoadLoadingScene());
+    }
+
+    private IEnumerator LoadLoadingScene()
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(SceneConstants.LoadingScene);
+        asyncLoad.allowSceneActivation = false;
+
+        // 로딩 씬이 준비될 때까지 대기
+        while (!asyncLoad.isDone)
+        {
+            if (asyncLoad.progress >= 0.9f)
+            {
+                // 로딩이 완료되면 씬을 활성화
+                asyncLoad.allowSceneActivation = true;
+            }
+
+            yield return null;
+        }
     }
 
     /// <summary>
