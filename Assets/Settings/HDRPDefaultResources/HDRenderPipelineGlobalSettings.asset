@@ -102,11 +102,55 @@ MonoBehaviour:
     serializedHasVolumes:
     - sceneGUID: 468521c592907ad4aa6c37fd849b9c53
       hasProbeVolumes: 1
+    - sceneGUID: a119199a5015f594eb92a138df8faf19
+      hasProbeVolumes: 0
+    - sceneGUID: 5e1b3cc5a904e324eb305ce18b82663d
+      hasProbeVolumes: 0
     serializedProfiles:
     - sceneGUID: 468521c592907ad4aa6c37fd849b9c53
       profile: {fileID: 11400000, guid: 9f0aedfcd618ce84f8ccc23d9650a7bb, type: 2}
+    - sceneGUID: a119199a5015f594eb92a138df8faf19
+      profile: {fileID: 11400000, guid: 9f0aedfcd618ce84f8ccc23d9650a7bb, type: 2}
+    - sceneGUID: 5e1b3cc5a904e324eb305ce18b82663d
+      profile: {fileID: 11400000, guid: 9f0aedfcd618ce84f8ccc23d9650a7bb, type: 2}
     serializedBakeSettings:
     - sceneGUID: 468521c592907ad4aa6c37fd849b9c53
+      settings:
+        m_Version: 1
+        dilationSettings:
+          enableDilation: 1
+          dilationDistance: 1
+          dilationValidityThreshold: 0.25
+          dilationIterations: 1
+          squaredDistWeighting: 1
+        virtualOffsetSettings:
+          useVirtualOffset: 1
+          outOfGeoOffset: 0.01
+          searchMultiplier: 0.2
+          rayOriginBias: -0.001
+          maxHitsPerRay: 10
+          collisionMask:
+            serializedVersion: 2
+            m_Bits: 4294967291
+    - sceneGUID: a119199a5015f594eb92a138df8faf19
+      settings:
+        m_Version: 1
+        dilationSettings:
+          enableDilation: 1
+          dilationDistance: 1
+          dilationValidityThreshold: 0.25
+          dilationIterations: 1
+          squaredDistWeighting: 1
+        virtualOffsetSettings:
+          useVirtualOffset: 1
+          outOfGeoOffset: 0.01
+          searchMultiplier: 0.2
+          rayOriginBias: -0.001
+          maxHitsPerRay: 10
+          collisionMask:
+            serializedVersion: 2
+            m_Bits: 4294967291
+    - sceneGUID: 5e1b3cc5a904e324eb305ce18b82663d
       settings:
         m_Version: 1
         dilationSettings:
@@ -128,6 +172,8 @@ MonoBehaviour:
     - name: New Baking Set
       sceneGUIDs:
       - 468521c592907ad4aa6c37fd849b9c53
+      - a119199a5015f594eb92a138df8faf19
+      - 5e1b3cc5a904e324eb305ce18b82663d
       settings:
         m_Version: 1
         dilationSettings:
