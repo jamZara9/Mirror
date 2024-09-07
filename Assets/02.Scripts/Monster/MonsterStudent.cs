@@ -10,8 +10,8 @@ public class MonsterStudent : MonsterFSM
     {                           //  만약 플레이어와 학생(몬스터)의 거리가 공격 범위 내라면
         if (Vector3.Distance(_player.position, transform.position) < attackDistance)
         {                       //  currentTime 카운트 시작
-            _currentTime += Time.deltaTime;
-            if (_currentTime > attackDelay)// currentTime이 attackDelay만큼 카운트 했다면 공격 진행
+            currentTime += Time.deltaTime;
+            if (currentTime > attackDelay)// currentTime이 attackDelay만큼 카운트 했다면 공격 진행
             {
                 int randValue = Random.Range(0, 10);
                 
@@ -29,13 +29,13 @@ public class MonsterStudent : MonsterFSM
                     Debug.Log("깨물기 공격");
                     player.TakeDamage((int)attackPower * 2);
                 }
-                _currentTime = 0;       // currentTime 초기화
+                currentTime = 0;       // currentTime 초기화
             }
         }
         else
         {               //  플레이어와 학생(몬스터)의 거리가 공격 범위 보다 멀다면
-            m_State = MonsterState.Move;    // 학생(몬스터)의 상태를 Move로 변경
-            _currentTime = 0;   // currentTime 초기화
+            mState = MonsterState.Move;    // 학생(몬스터)의 상태를 Move로 변경
+            currentTime = 0;   // currentTime 초기화
         }
     }
    
