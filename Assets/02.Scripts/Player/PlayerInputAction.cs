@@ -27,6 +27,7 @@ public class PlayerInputAction : MonoBehaviour
     public bool isUseItem = false;
     public bool isTransferItem = false;
     public bool isFire = false;
+    public bool isSit = false;
 
     [Header("Mouse Cursor Settings")]
     public bool cursorLocked = true;
@@ -127,6 +128,19 @@ public class PlayerInputAction : MonoBehaviour
         }else if(context.canceled)  // 마우스 휠 버튼을 뗐을 때
         {
             isQuickSlotVisible = false;
+        }
+    }
+
+    public void OnSit(InputAction.CallbackContext context)
+    {
+        // 앉기 키를 누르고 있어야 하는 건지? 아니면 한번 누르면 유지되는지 알아야함
+        if(context.performed)
+        {
+            isSit = true;
+        }
+        else if(context.canceled)
+        {
+            isSit = false;
         }
     }
 

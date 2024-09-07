@@ -40,6 +40,7 @@ public class PlayerStateController : MonoBehaviour
     private int _animIDFreeFall;
     private int _animIDMotionSpeed;
     private int _animIDAttack;
+    private int _animIDSit;
 
     [Header("Audio Settings")]
     [SerializeField] private AudioSource audioSource;     // 오디오 소스
@@ -61,6 +62,7 @@ public class PlayerStateController : MonoBehaviour
     public float cameraAngleOverride = 0.0f;                // 카메라 각도 오버라이드
 
     private bool _isQuickSlotCurrentlyVisible  = false;     // 현재 퀵슬롯 활성화 여부
+    private bool _isSitVisible = false;                     // 현재 앉기 상태인지 여부
 
     void Start()
     {
@@ -91,6 +93,7 @@ public class PlayerStateController : MonoBehaviour
         ShowInventory();
         OnFire();
         ShowQuickSlot();
+        OnSit();
 
         SetSelectItem();
 
@@ -120,6 +123,7 @@ public class PlayerStateController : MonoBehaviour
         _animIDFreeFall = AnimationConstants.AnimIDFreeFall;
         _animIDMotionSpeed = AnimationConstants.AnimIDMotionSpeed;
         _animIDAttack = AnimationConstants.AnimIDAttack;
+        _animIDSit = AnimationConstants.AnimIDSit;
     }
 
     /// <summary>
@@ -506,6 +510,9 @@ public class PlayerStateController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 공격 처리
+    /// </summary>
     private void OnFire()
     {
         if (_inputActions.isFire)
@@ -556,6 +563,31 @@ public class PlayerStateController : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// 앉기 처리
+    /// </summary>
+    private void OnSit()
+    {
+        if(_inputActions.isSit){
+            
+            if(!_isSitVisible){
+                _isSitVisible = true;
+
+                if (_hasAnimator)
+                {
+                    _animator.SetBool(_animIDSit, true);
+                }
+            }
+        }else{
+            _isSitVisible = false;
+
+            if (_hasAnimator)
+            {
+                _animator.SetBool(_animIDSit, false);
+            }
+        }
+    }
+
     /// <summary>
     /// 일정 시간이 지난 후 공격 애니메이션을 종료하고 원래 상태로 복귀
     /// </summary>
