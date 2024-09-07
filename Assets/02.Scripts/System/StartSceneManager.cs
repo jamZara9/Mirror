@@ -2,15 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Video;
 
 public class StartSceneManager : MonoBehaviour
 {
     [SerializeField] private CanvasGroup uiCanvasGroup; // UI 요소의 CanvasGroup 컴포넌트 [ 마우스 클릭 시 보여줄 UI]
 
+    [SerializeField] private VideoPlayer introVideo;   // 비디오 플레이어
+    [SerializeField] private GameObject mainMenuUI;     // 메인 메뉴 UI
+    [SerializeField] private AudioSource audioSource;   // 오디오 소스
+
     private bool isUIVisible = false;   // UI가 보이는지 여부
     private float loadUITime = 1.5f;    // UI가 보이는 시간
     void Start()
     {
+        SetIntroVideo();    // 인트로 영상 설정
+
         // 초기 설정: uiTitle은 보이지 않게, uiCanvasGroup은 투명하게 설정
         InitializeUI();
     }
@@ -21,6 +28,30 @@ public class StartSceneManager : MonoBehaviour
             StartCoroutine(LoadUI());   //  UI를 나타내는 코루틴 함수 호출
         }
         
+    }
+
+    /// <summary>
+    /// 인트로 영상 설정
+    /// </summary>
+    private void SetIntroVideo()
+    {
+        audioSource.Stop(); // 오디오 소스 정지
+
+        mainMenuUI.SetActive(false); // 처음에 메인 메뉴 UI는 비활성화
+
+        introVideo.waitForFirstFrame = true;
+        introVideo.Play();
+        introVideo.loopPointReached += OnIntroEnd; // 인트로 영상 끝나면 이벤트 발생
+    }
+
+    /// <summary>
+    /// 인트로 영상이 끝나면 호출되는 함수
+    /// </summary>
+    /// <param name="vp"></param>
+    void OnIntroEnd(VideoPlayer vp)
+    {
+        mainMenuUI.SetActive(true); // 인트로 끝나면 메인 메뉴 UI 활성화
+        audioSource.Play(); // 오디오 소스 재생
     }
 
     public void PlayStart()
