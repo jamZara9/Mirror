@@ -26,7 +26,7 @@ public class PlayerStatus : MonoBehaviour, IDamage
         public readonly float walkSpeed = 2.0f;         // 걷기 속도
         public readonly float runSpeed = 4.0f;          // 달리기 속도
         public readonly float speedChangeRate = 10.0f;  // 속도 변경 비율(가속도)
-        public readonly float jumpHeight = 1.2f;        // 점프 높이
+        public readonly float jumpHeight = 1.0f;        // 점프 높이
 
         [Header("Player Attack Settings")]
         public readonly float attackRange = 1.5f;       // 공격 사정거리

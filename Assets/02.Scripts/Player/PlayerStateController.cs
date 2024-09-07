@@ -18,16 +18,16 @@ public class PlayerStateController : MonoBehaviour
 
     [Header("Jump Settings")]
     private bool _isGrounded = true;              // 땅에 붙어 있는지 여부
-    private float _gravity = -14.0f;              // 중력(기본적으로 -9.81)
+    private float _gravity = -20.0f;              // 중력(기본적으로 -9.81)
     private float _jumpTimeoutDelta = 0.0f;       // 점프 타임아웃 델타
     private float _jumpTimeout = 0.5f;           // 점프 타임아웃
     private float _fallTimeoutDelta;              // 낙하 타임아웃 델타
     private float _fallTimeout = 0.15f;           // 낙하 타임아웃
-    private float _verticalVelocity;              // 수직 속도
+    private float _verticalVelocity = -2.0f;      // 수직 속도
     private float _terminalVelocity = 53.0f;      // 터미널 속도
     [SerializeField] private LayerMask _groundLayers; // 플레이어가 이동할 수 있는 Ground의 Layer
     private float _groundedOffset = -0.14f;         // 땅과의 거리
-    public float _groundedRadius = 0.28f;  // 땅에 붙어 있는지 확인할 반지름(CharacterController의 radius와 동일하게 설정)
+    public float _groundedRadius = 0.28f;           // 땅에 붙어 있는지 확인할 반지름(CharacterController의 radius와 동일하게 설정)
 
     [Header("Animation Settings")]
     private bool _hasAnimator;      // 애니메이터가 있는지 여부
@@ -260,7 +260,7 @@ public class PlayerStateController : MonoBehaviour
             if (_hasAnimator)
             {
                 _animator.SetBool(_animIDJump, false);
-                _animator.SetBool(_animIDFreeFall, false);
+                // _animator.SetBool(_animIDFreeFall, false);
             }
 
             // 지면에 닿았을 경우, 수직 속도를 초기화
@@ -298,13 +298,13 @@ public class PlayerStateController : MonoBehaviour
             {
                 _fallTimeoutDelta -= Time.deltaTime;
             }
-            else
-            {
-                if (_hasAnimator)
-                {
-                    _animator.SetBool(_animIDFreeFall, true);
-                }
-            }
+            // else
+            // {
+            //     if (_hasAnimator)
+            //     {
+            //         _animator.SetBool(_animIDFreeFall, true);
+            //     }
+            // }
 
             // 지면에 닿았을 때 점프 입력을 비활성화
             _inputActions.jump = false;
