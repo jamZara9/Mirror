@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 7480674826776388618}
   m_Layer: 0
   m_Name: Monster_Student
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -132,18 +132,15 @@ MonoBehaviour:
   _player: {fileID: 0}
   m_State: 0
   isMovingMonster: 1
-  moveDirectionList:
-  - {x: -5, y: 1, z: 5}
-  - {x: 5, y: 1, z: 5}
-  moveDirectionDelayList:
-  - 1
-  - 1
-  DebugMode: 1
+  moveDirectionList: []
+  moveDirectionDelayList: []
+  DebugMode: 0
   ViewAngle: 106
   ViewRadius: 4
   TargetMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 264
+  movePositionGroup: {fileID: 0}
 --- !u!54 &6298842902321010137
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -261,6 +258,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 9b3d0daedb90a49318567cc766f49c21, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 1f1f39ddb4b749746af1c0807a4a6a81, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
