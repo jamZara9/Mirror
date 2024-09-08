@@ -23,7 +23,12 @@ public class StartSceneManager : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !isUIVisible){
+        if(introVideo.isPlaying && Input.GetKeyDown(KeyCode.Space)){
+            introVideo.Stop();
+            OnIntroEnd(introVideo);
+        }
+
+        if (Input.GetMouseButtonDown(0) && !isUIVisible && !introVideo.isPlaying){
             isUIVisible = true;
             StartCoroutine(LoadUI());   //  UI를 나타내는 코루틴 함수 호출
         }

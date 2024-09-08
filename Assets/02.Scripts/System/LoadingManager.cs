@@ -23,10 +23,10 @@ public class LoadingManager : MonoBehaviour
         string sceneToLoad = PlayerPrefs.GetString("NextScene", SceneConstants.PlaygroundA);
 
         // 로딩 씬에서 비동기 로드 시작
-        StartCoroutine(LoadSceneAsync(sceneToLoad));
+        // StartCoroutine(LoadSceneAsync(sceneToLoad));
 
         // 비동기 로딩을 시뮬레이션
-        // StartCoroutine(SimulateLoading());
+        StartCoroutine(SimulateLoading());
     }
 
     // 씬을 비동기적으로 로드하는 코루틴
