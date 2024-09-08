@@ -13,8 +13,7 @@ public class StoryScene : ScriptableObject
     public Sprite background; // 기본 배경 이미지.
     public AudioClip backgroundMusic; // BGM Clip.
     public StoryScene nextScene; // 바로 이어져 실행할 다음 스토리.
-
-    public string sheetURL;
+    
     public TextAsset csvFile; // 해당 스토리의 CSV 파일.
     
     public string summaryText; // 요약글.
