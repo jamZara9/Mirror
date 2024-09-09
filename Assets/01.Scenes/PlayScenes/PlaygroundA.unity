@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0017662405, g: 0.0012486862, b: 0.0009819508, a: 1}
+  m_IndirectSpecularColor: {r: 0.0017662176, g: 0.0012485761, b: 0.0009818604, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -108,8 +108,8 @@ NavMeshSettings:
     agentTypeID: 0
     agentRadius: 0.5
     agentHeight: 2
-    agentSlope: 45
-    agentClimb: 0.4
+    agentSlope: 35
+    agentClimb: 0.2
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
     minRegionArea: 2
@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: 8a2b4bf3252be8046a0d1a240bbefa48, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: ef242bcab86881f43b4e87bd600b6e1f, type: 2}
 --- !u!1001 &19281228
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7310,7 +7310,6 @@ MonoBehaviour:
   spritesPrefab: {fileID: 1398548719}
   audioSource: {fileID: 871707486}
   sentenceAudioSource: {fileID: 1548047178}
-  narrationSpeaker: {fileID: 0}
   visualNovelDialoguePanel: {fileID: 737359188}
   skipPanel: {fileID: 737359187}
   skipPanelStoryText: {fileID: 737359189}
@@ -7500,7 +7499,6 @@ MonoBehaviour:
   m_Script: {fileID: 1436636239}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Entries: []
 --- !u!4 &1257402869
 Transform:
   m_ObjectHideFlags: 19
