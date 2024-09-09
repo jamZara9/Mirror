@@ -9,13 +9,21 @@ public class MirrorCamera : MonoBehaviour
 
     private void Start()
     {
-        // 카메라가 거울에 좌우 반전된 상태로 보이도록 설정
-        MirrorCameraFlip();
+        SetupMirrorCamera();
     }
 
     // 카메라 좌우 반전 함수
-    private void MirrorCameraFlip()
+    private void SetupMirrorCamera()
     {
+        if (_mirrorObject == null || _mirrorCamera == null)
+        {
+            Debug.LogError("MirrorObject / MirrorCamera가 할당되지 않았습니다.");
+            return;
+        }
+
+        // 카메라의 위치를 거울 오브젝트의 정중앙으로 설정
+        _mirrorCamera.transform.position = _mirrorObject.position + (_mirrorObject.forward * Vector3.Distance(_mirrorCamera.transform.position, _mirrorObject.position));
+
         // 카메라의 로컬 스케일을 좌우 반전 (X축에 -1)
         Vector3 cameraScale = _mirrorCamera.transform.localScale;
         cameraScale.x *= -1; // X축 반전
