@@ -68,7 +68,7 @@ public class CsvParser
                 if (!_speakerDictionary.ContainsKey(row[_CSV_SPEAKER_INDEX]))
                 {
                     _speakerDictionary.Add(row[_CSV_SPEAKER_INDEX],
-                        Resources.Load<Speaker>("Speaker/" + row[_CSV_SPEAKER_INDEX].Trim()));
+                        Resources.Load<Speaker>("Dialogue/Speaker/" + row[_CSV_SPEAKER_INDEX].Trim()));
                 }
                 _lastSpeaker = _speakerDictionary[row[_CSV_SPEAKER_INDEX].Trim()];
             }
@@ -82,12 +82,12 @@ public class CsvParser
 
             if (row[_CSV_BACKGROUND_INDEX] != "")
             {
-                dialogue.background = Resources.Load<Sprite>("Background/" + row[_CSV_BACKGROUND_INDEX].Trim());
+                dialogue.background = Resources.Load<Sprite>("Dialogue/Background/" + row[_CSV_BACKGROUND_INDEX].Trim());
             }
 
             if (row[_CSV_AUDIOCLIP_INDEX] != "")
             {
-                dialogue.audioClip = Resources.Load<AudioClip>("AudioClips/" + row[_CSV_AUDIOCLIP_INDEX].Trim());
+                dialogue.audioClip = Resources.Load<AudioClip>("Dialogue/AudioClips/" + row[_CSV_AUDIOCLIP_INDEX].Trim());
             }
             
             dialogue.nextSentenceDelay = (row[_CSV_NEXTDELAY_INDEX].Trim() != "" ? float.Parse(row[_CSV_NEXTDELAY_INDEX]) : 0.0f);
@@ -124,7 +124,7 @@ public class CsvParser
         StoryScene.Sentence.Action action = new StoryScene.Sentence.Action();
         if (row[_CSV_ACTION_INDEX] != "")
         {
-            action.speaker = Resources.Load<Speaker>("Speaker/" + row[_CSV_ACTION_INDEX].Trim());
+            action.speaker = Resources.Load<Speaker>("Dialogue/Speaker/" + row[_CSV_ACTION_INDEX].Trim());
 
             int xPos = 0;
             int yPos = 0;
