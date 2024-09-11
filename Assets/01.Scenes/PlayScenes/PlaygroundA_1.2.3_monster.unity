@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0017662405, g: 0.0012486862, b: 0.0009819508, a: 1}
+  m_IndirectSpecularColor: {r: 0.0017654197, g: 0.0012480796, b: 0.0009816875, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7310,7 +7310,6 @@ MonoBehaviour:
   spritesPrefab: {fileID: 1398548719}
   audioSource: {fileID: 871707486}
   sentenceAudioSource: {fileID: 1548047178}
-  narrationSpeaker: {fileID: 0}
   visualNovelDialoguePanel: {fileID: 737359188}
   skipPanel: {fileID: 737359187}
   skipPanelStoryText: {fileID: 737359189}
@@ -7653,6 +7652,57 @@ MonoScript:
   m_ClassName: SceneObjectIDMapSceneAsset
   m_Namespace: UnityEngine.Rendering.HighDefinition
   m_AssemblyName: Unity.RenderPipelines.HighDefinition.Runtime
+--- !u!1 &1297296688
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1297296690}
+  - component: {fileID: 1297296689}
+  m_Layer: 0
+  m_Name: MonsterSpwaner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1297296689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1297296688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52d267af77f54864f8321ea70b0175e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnerMoveDirectionList: []
+  spawnerMoveDirectionDelayList: []
+  isMoving: 1
+  movePositionGroup: {fileID: 1828213532}
+  monsterList: []
+  monsterType: 0
+  _instantiateMonster: {fileID: 0}
+--- !u!4 &1297296690
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1297296688}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.09328912, y: 2.844516, z: 0.007583976}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1304044803
 GameObject:
   m_ObjectHideFlags: 0
@@ -12382,3 +12432,4 @@ SceneRoots:
   - {fileID: 997711062}
   - {fileID: 1570816768}
   - {fileID: 299148520}
+  - {fileID: 1297296690}

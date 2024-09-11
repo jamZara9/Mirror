@@ -5,49 +5,58 @@ using UnityEngine;
 public class MonsterSpawner : PoolAble
 {
     // Start is called before the first frame update
-    [SerializeField] private List<Vector3> spawnerMoveDirectionList;           // 학생(몬스터)의 탐색 경로 지정리스트
-    [SerializeField] private List<float> spawnerMoveDirectionDelayList;        // 학생(몬스터)각 경로에서 몇초 동안 멈출지 지정리스트
+    [Header("몬스터 이동 루트 지정")] [SerializeField]
+    private List<Vector3> spawnerMoveDirectionList; // 학생(몬스터)의 탐색 경로 지정리스트
     
-    [SerializeField] private GameObject movePositionGroup;
-
-    [SerializeField] private string monsterType;
-    
+    [SerializeField] private List<float> spawnerMoveDirectionDelayList; // 학생(몬스터)각 경로에서 몇초 동안 멈출지 지정리스트
+    [Header("몬스터 움직일지 여부")]
     [SerializeField] bool isMoving = true;
-
-    [SerializeField] private List<GameObject> monsterList;                      //몬스터들이 담길 리스트
-
-    [SerializeField]
-    private GameObject[] creatMonster;
+    [Header("몬스터 경로 그룹 오브젝트")]
+    [SerializeField] private GameObject movePositionGroup;
+    [Header("몬스터 리스트")]
+    [SerializeField] private MonsterScriptable monsterList;
+    [Header("몬스터 타입")]
+    [SerializeField] private MonsterType monsterType;
+    
+    private GameObject _instantiateMonster;
+    
+    enum MonsterType
+    {
+        Student = 0,
+        Mirror = 1
+    }
     
     MonsterFSM _monsterFsm;
     
     void Start()
     {
-        creatMonster = Resources.LoadAll<GameObject>("Assets/03.Prefabs/Monster");
-        // _monsterFsm = creatMonster.GetComponent<MonsterFSM>();
-        // if (movePositionGroup != null)
-        // {
-        //     spawnerMoveDirectionList.Clear();
-        //     for (int i = 0; i < movePositionGroup.transform.childCount; i++)
-        //     {
-        //         spawnerMoveDirectionList.Add(movePositionGroup.transform.GetChild(i).position);
-        //     }
-        // }
-        // if (spawnerMoveDirectionDelayList.Count == 0)
-        // {
-        //     spawnerMoveDirectionDelayList.Clear();
-        //     for (int i = 0; i < movePositionGroup.transform.childCount; i++)
-        //     {
-        //         spawnerMoveDirectionDelayList.Add(1);
-        //     }
-        // }
-        //
-        // _monsterFsm.moveDirectionList = spawnerMoveDirectionList;
-        // _monsterFsm.moveDirectionDelayList = spawnerMoveDirectionDelayList;
-
+        _instantiateMonster = monsterList.monsters[(int)monsterType];
     }
     void Update()
     {
             
+    }
+
+    void SettingInit() // 생성한 오브젝트의 이동경로, 멈추는 시간, 움직일지 여부를 초기화하는 함수입니다.
+    {
+        if (movePositionGroup != null)
+        {
+            spawnerMoveDirectionList.Clear();
+            for (int i = 0; i < movePositionGroup.transform.childCount; i++)
+            {
+                spawnerMoveDirectionList.Add(movePositionGroup.transform.GetChild(i).position);
+            }
+        }
+        if (spawnerMoveDirectionDelayList.Count == 0) // 만약 대기 시간을 지정하지 않으면 1초로 다 채움
+        {
+            spawnerMoveDirectionDelayList.Clear();
+            for (int i = 0; i < movePositionGroup.transform.childCount; i++)
+            {
+                spawnerMoveDirectionDelayList.Add(1);
+            }
+        }
+        _monsterFsm.moveDirectionList = spawnerMoveDirectionList;
+        _monsterFsm.moveDirectionDelayList = spawnerMoveDirectionDelayList;
+        _monsterFsm.isMovingMonster = isMoving;
     }
 }
