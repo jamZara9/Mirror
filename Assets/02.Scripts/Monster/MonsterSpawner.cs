@@ -5,9 +5,8 @@ using UnityEngine;
 public class MonsterSpawner : PoolAble
 {
     // Start is called before the first frame update
-    [Header("몬스터 이동 루트 지정")] [SerializeField]
-    private List<Vector3> spawnerMoveDirectionList; // 학생(몬스터)의 탐색 경로 지정리스트
-    
+    [Header("몬스터 이동 루트 지정")]
+
     [SerializeField] private List<float> spawnerMoveDirectionDelayList; // 학생(몬스터)각 경로에서 몇초 동안 멈출지 지정리스트
     [Header("몬스터 움직일지 여부")]
     [SerializeField] bool isMoving = true;
@@ -31,6 +30,10 @@ public class MonsterSpawner : PoolAble
     void Start()
     {
         _instantiateMonster = monsterList.monsters[(int)monsterType];
+        Instantiate(_instantiateMonster);
+        _instantiateMonster.transform.position = transform.position;
+        _monsterFsm = _instantiateMonster.GetComponent<MonsterFSM>();
+        SettingInit();
     }
     void Update()
     {
@@ -41,21 +44,8 @@ public class MonsterSpawner : PoolAble
     {
         if (movePositionGroup != null)
         {
-            spawnerMoveDirectionList.Clear();
-            for (int i = 0; i < movePositionGroup.transform.childCount; i++)
-            {
-                spawnerMoveDirectionList.Add(movePositionGroup.transform.GetChild(i).position);
-            }
+            _monsterFsm.movePositionGroup = movePositionGroup;
         }
-        if (spawnerMoveDirectionDelayList.Count == 0) // 만약 대기 시간을 지정하지 않으면 1초로 다 채움
-        {
-            spawnerMoveDirectionDelayList.Clear();
-            for (int i = 0; i < movePositionGroup.transform.childCount; i++)
-            {
-                spawnerMoveDirectionDelayList.Add(1);
-            }
-        }
-        _monsterFsm.moveDirectionList = spawnerMoveDirectionList;
         _monsterFsm.moveDirectionDelayList = spawnerMoveDirectionDelayList;
         _monsterFsm.isMovingMonster = isMoving;
     }

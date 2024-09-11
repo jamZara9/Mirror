@@ -49,7 +49,7 @@ public class MonsterFSM : MonoBehaviour,IDamage
     /// <summary>
     /// 몬스터의 탐색경로 그룹 Test
     /// </summary>
-    [SerializeField] private GameObject movePositionGroup;              // 몬스터의 탐색경로 그룹
+    [SerializeField] public GameObject movePositionGroup;              // 몬스터의 탐색경로 그룹
 
     public enum MonsterState       // 몬스터의 FSM
     {

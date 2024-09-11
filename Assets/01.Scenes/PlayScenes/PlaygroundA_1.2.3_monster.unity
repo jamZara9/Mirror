@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0017654197, g: 0.0012480796, b: 0.0009816875, a: 1}
+  m_IndirectSpecularColor: {r: 0.0017657027, g: 0.0012483231, b: 0.0009820802, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1045,6 +1045,10 @@ PrefabInstance:
     - target: {fileID: 791292130743612062, guid: 702a57d8256f1498f9c71d75b15f1144, type: 3}
       propertyPath: m_Name
       value: Monster_Student
+      objectReference: {fileID: 0}
+    - target: {fileID: 791292130743612062, guid: 702a57d8256f1498f9c71d75b15f1144, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 995392319121594365, guid: 702a57d8256f1498f9c71d75b15f1144, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7652,57 +7656,6 @@ MonoScript:
   m_ClassName: SceneObjectIDMapSceneAsset
   m_Namespace: UnityEngine.Rendering.HighDefinition
   m_AssemblyName: Unity.RenderPipelines.HighDefinition.Runtime
---- !u!1 &1297296688
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1297296690}
-  - component: {fileID: 1297296689}
-  m_Layer: 0
-  m_Name: MonsterSpwaner
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1297296689
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1297296688}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52d267af77f54864f8321ea70b0175e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnerMoveDirectionList: []
-  spawnerMoveDirectionDelayList: []
-  isMoving: 1
-  movePositionGroup: {fileID: 1828213532}
-  monsterList: []
-  monsterType: 0
-  _instantiateMonster: {fileID: 0}
---- !u!4 &1297296690
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1297296688}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.09328912, y: 2.844516, z: 0.007583976}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1304044803
 GameObject:
   m_ObjectHideFlags: 0
@@ -12342,6 +12295,67 @@ Transform:
   - {fileID: 283559095}
   m_Father: {fileID: 1304044804}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1388901330263559844
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3863721833645658864, guid: 562df678e506a45db98e4e9c11d7326b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -15.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 3863721833645658864, guid: 562df678e506a45db98e4e9c11d7326b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 8.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3863721833645658864, guid: 562df678e506a45db98e4e9c11d7326b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 21.097
+      objectReference: {fileID: 0}
+    - target: {fileID: 3863721833645658864, guid: 562df678e506a45db98e4e9c11d7326b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3863721833645658864, guid: 562df678e506a45db98e4e9c11d7326b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3863721833645658864, guid: 562df678e506a45db98e4e9c11d7326b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3863721833645658864, guid: 562df678e506a45db98e4e9c11d7326b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3863721833645658864, guid: 562df678e506a45db98e4e9c11d7326b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3863721833645658864, guid: 562df678e506a45db98e4e9c11d7326b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3863721833645658864, guid: 562df678e506a45db98e4e9c11d7326b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7556255706186781287, guid: 562df678e506a45db98e4e9c11d7326b, type: 3}
+      propertyPath: movePositionGroup
+      value: 
+      objectReference: {fileID: 1828213532}
+    - target: {fileID: 9133149630602308368, guid: 562df678e506a45db98e4e9c11d7326b, type: 3}
+      propertyPath: m_Name
+      value: MonsterSpwaner
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 562df678e506a45db98e4e9c11d7326b, type: 3}
 --- !u!1001 &4609622256592192093
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12432,4 +12446,4 @@ SceneRoots:
   - {fileID: 997711062}
   - {fileID: 1570816768}
   - {fileID: 299148520}
-  - {fileID: 1297296690}
+  - {fileID: 1388901330263559844}
