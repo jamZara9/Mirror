@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 8600125277025255048}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.26, y: 1, z: 17.97}
+  m_LocalPosition: {x: -15.45, y: 8.2, z: 16.01}
   m_LocalScale: {x: 0.85, y: 0.85, z: 0.85}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -129,7 +129,13 @@ MonoBehaviour:
   attackDelay: 2
   attackPower: 5
   isMovingMonster: 1
-  moveDirectionList: []
+  moveDirectionList:
+  - {x: -15.45, y: 8.2, z: 21}
+  - {x: -15.45, y: 8.2, z: -10}
+  - {x: -23, y: 8.2, z: -7}
+  - {x: -15.45, y: 8.2, z: -3.5}
+  - {x: 15.5, y: 8.2, z: -3.5}
+  - {x: 15.5, y: 8.2, z: 21}
   moveDirectionDelayList: []
   DebugMode: 1
   ViewAngle: 100

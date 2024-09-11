@@ -84,10 +84,17 @@ public class MonsterFSM : MonoBehaviour,IDamage
         if(movePositionGroup != null)
         {
             moveDirectionList.Clear();
-            moveDirectionDelayList.Clear();
             for (int i = 0; i < movePositionGroup.transform.childCount; i++)
             {
                 moveDirectionList.Add(movePositionGroup.transform.GetChild(i).position);
+                
+            }
+        }
+
+        if (moveDirectionDelayList.Count == 0)
+        {
+            for (int i = 0; i < movePositionGroup.transform.childCount; i++)
+            {
                 moveDirectionDelayList.Add(1.0f);
             }
         }

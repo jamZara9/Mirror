@@ -6,7 +6,7 @@ public class MonsterSpawner : PoolAble
 {
     // Start is called before the first frame update
     [Header("몬스터 이동 루트 지정")]
-
+    
     [SerializeField] private List<float> spawnerMoveDirectionDelayList; // 학생(몬스터)각 경로에서 몇초 동안 멈출지 지정리스트
     [Header("몬스터 움직일지 여부")]
     [SerializeField] bool isMoving = true;
@@ -42,9 +42,14 @@ public class MonsterSpawner : PoolAble
 
     void SettingInit() // 생성한 오브젝트의 이동경로, 멈추는 시간, 움직일지 여부를 초기화하는 함수입니다.
     {
-        if (movePositionGroup != null)
+        if (movePositionGroup != null)//이거 떔시 몬스터FSM에서는 딜레이 리스트 추가 안함
         {
             _monsterFsm.movePositionGroup = movePositionGroup;
+            _monsterFsm.moveDirectionList.Clear();
+            for (int i = 0; i < movePositionGroup.transform.childCount; i++)
+            {
+                _monsterFsm.moveDirectionList.Add(movePositionGroup.transform.GetChild(i).position);
+            }
         }
         _monsterFsm.moveDirectionDelayList = spawnerMoveDirectionDelayList;
         _monsterFsm.isMovingMonster = isMoving;
