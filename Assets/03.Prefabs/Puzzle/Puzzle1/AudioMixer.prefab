@@ -1062,7 +1062,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxMove: 2.75
-  buttonMoveSpeed: 3
+  buttonMoveSpeed: 4
   button:
   - {fileID: 5025384217545167909}
   - {fileID: 5624919414529654581}
@@ -1075,6 +1075,7 @@ MonoBehaviour:
   - {fileID: 4804600933946359881}
   myCam: {fileID: 6442664344540271351}
   open: 0
+  test: 0
 --- !u!1 &7584466304219133199
 GameObject:
   m_ObjectHideFlags: 0
@@ -1226,7 +1227,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7397223120758285169
 Transform:
   m_ObjectHideFlags: 0
@@ -1276,8 +1277,8 @@ Camera:
   near clip plane: 0.01
   far clip plane: 2.4
   field of view: 58
-  orthographic: 0
-  orthographic size: 5
+  orthographic: 1
+  orthographic size: 0.9
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
