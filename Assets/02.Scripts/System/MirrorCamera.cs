@@ -12,7 +12,9 @@ public class MirrorCamera : MonoBehaviour
         SetupMirrorCamera();
     }
 
-    // 카메라 좌우 반전 함수
+    /// <summary>
+    /// 거울 카메라 설정
+    /// </summary>
     private void SetupMirrorCamera()
     {
         if (_mirrorObject == null || _mirrorCamera == null)
