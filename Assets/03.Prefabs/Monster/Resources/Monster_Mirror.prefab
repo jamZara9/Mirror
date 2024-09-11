@@ -128,9 +128,6 @@ MonoBehaviour:
   moveSpeed: 4
   attackDelay: 2
   attackPower: 5
-  _currentTime: 0
-  _player: {fileID: 0}
-  m_State: 0
   isMovingMonster: 1
   moveDirectionList: []
   moveDirectionDelayList: []
@@ -141,7 +138,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 264
   movePositionGroup: {fileID: 0}
-  Mirror: {fileID: 7204858600453076654}
+  mirror: {fileID: 7204858600453076654}
   isMirrorAttacked: 0
   dashDistance: 5
   dashDuration: 0.5

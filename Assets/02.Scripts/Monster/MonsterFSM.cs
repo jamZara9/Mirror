@@ -32,9 +32,9 @@ public class MonsterFSM : MonoBehaviour,IDamage
     
     protected MonsterState mState;               // 학생(몬스터)의 현재 상태
 
-    [SerializeField] private bool isMovingMonster = true;               // 학생(몬스터)가 움직일지 여부
-    [SerializeField] private List<Vector3> moveDirectionList;           // 학생(몬스터)의 탐색 경로 지정리스트
-    [SerializeField] private List<float> moveDirectionDelayList;        // 학생(몬스터)각 경로에서 몇초 동안 멈출지 지정리스트
+    [SerializeField] public bool isMovingMonster = true;               // 학생(몬스터)가 움직일지 여부
+    [SerializeField] public List<Vector3> moveDirectionList;           // 학생(몬스터)의 탐색 경로 지정리스트
+    [SerializeField] public List<float> moveDirectionDelayList;        // 학생(몬스터)각 경로에서 몇초 동안 멈출지 지정리스트
     private bool _isWait = false;                                       // 학생(몬스터) 지금 대기중인지 확인용 변수
     private int _moveDirectionIndex = 0;                                // 학생(몬스터)현재 경로 인덱스
     [SerializeField] private bool DebugMode = false;                    // 학생(몬스터)의 탐색범위 가시화 할지 여부
