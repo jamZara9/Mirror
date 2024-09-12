@@ -9,8 +9,8 @@ public class MirrorReflection : MonoBehaviour
 {
     [SerializeField] private Camera mainCamera;             // 플레이어의 카메라
     [SerializeField] private Camera mirrorCameraPrefab;     // 거울에서 사용할 카메라 프리팹
-    private Camera mirrorCamera;           // 각 거울에서 생성될 카메라 인스턴스
-    private RenderTexture renderTexture;   // 각 거울의 렌더 텍스처
+    private Camera mirrorCamera;                            // 각 거울에서 생성될 카메라 인스턴스
+    private RenderTexture renderTexture;                    // 각 거울의 렌더 텍스처
 
     void Start()
     {
