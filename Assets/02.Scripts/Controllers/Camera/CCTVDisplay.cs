@@ -6,8 +6,8 @@ public class CCTVDisplay : CameraFeedBase
 {
     private enum CCTVType { Auto, Manual, Fix }; // CCTV의 타입
 
+    [Header("CCTV Settings")]
     [SerializeField] private Renderer screenRenderer;  // CCTV 화면을 표현할 렌더러
-    [SerializeField] private Transform cctvTransform;    // CCTV 오브젝트
     [SerializeField] private CCTVType cctvType = CCTVType.Auto;        // CCTV 타입
     [SerializeField] private float rotationSpeed = 15.0f; // CCTV 회전 속도
     [SerializeField, Range(0.0f,45.0f)] private float rotationRange = 30.0f; // CCTV 회전 범위
@@ -61,7 +61,7 @@ public class CCTVDisplay : CameraFeedBase
     private void AutoRotate(){
         rotationDirection = isRotatingRight ? 1.0f : -1.0f;                   // 회전 방향 설정
         rotationAmount = rotationSpeed * Time.deltaTime * rotationDirection;  // 회전량 계산
-        cctvTransform.Rotate(Vector3.up, rotationAmount);              // 회전 적용
+        transform.Rotate(Vector3.up, rotationAmount);              // 회전 적용
         currentAngle += rotationAmount;                                       // 현재 회전 각도 업데이트
 
         // 회전 각도가 범위를 넘으면 방향 전환
