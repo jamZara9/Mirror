@@ -13,7 +13,6 @@ public abstract class CameraFeedBase : MonoBehaviour
     [SerializeField] protected LayerMask layerMask;            // 카메라가 레이캐스트할 레이어 마스크
     [SerializeField] protected bool isCameraToChild = false;   // 카메라를 자식 오브젝트에 붙일지 여부
 
-
     protected Camera feedCamera;                   // 실제 화면을 그릴 카메라
     protected RenderTexture renderTexture;         // 화면을 그릴 렌더 텍스처
 
@@ -63,13 +62,11 @@ public abstract class CameraFeedBase : MonoBehaviour
 
     /// <summary>
     /// 카메라의 위치 및 방향을 업데이트하는 추상 메서드.
-    /// 상속받는 클래스에서 구체적으로 구현해야 함.
     /// </summary>
     protected abstract void UpdateCameraPosition();
 
     /// <summary>
     /// 오브젝트가 파괴될 때 호출되는 함수.
-    /// 생성된 카메라와 렌더 텍스처를 정리.
     /// </summary>
     private void OnDestroy()
     {
