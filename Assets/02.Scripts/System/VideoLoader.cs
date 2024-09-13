@@ -37,6 +37,9 @@ public class VideoLoader : MonoBehaviour
     /// </summary>
     public void PlayVedio()
     {
+
+        //@todo: 기존 VideoCanvas를 활성화하는 코드를 추가해야 함
+
         _videoPlayer.waitForFirstFrame = true;
         isVideoPlaying = true;
         _videoPlayer.Play();

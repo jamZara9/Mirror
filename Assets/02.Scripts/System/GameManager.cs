@@ -69,15 +69,25 @@ public class GameManager : Singleton<GameManager>
     }
 
     public void Start()
+    void Start()
     {
-        systemManager.VideoLoader.SetupVideoplayer(uiManager.VideoImage);
-        systemManager.VideoLoader.PlayVedio();
+        // systemManager.VideoLoader.SetupVideoplayer(uiManager.VideoImage);
+        // systemManager.VideoLoader.PlayVedio();
     }
     
     public void Initialize()
     {
         // 매니저 초기화
         systemManager.Initialize();
+    }
+
+    /// <summary>
+    /// 게임 시작 버튼 클릭 시 호출되는 함수
+    /// </summary>
+    public void GameStart()
+    {
+        PlayerPrefs.SetString("NextScene", SceneConstants.PlaygroundB);
+        systemManager.SceneLoader.LoadNextScene(SceneConstants.LoadingScene);
     }
 
 
