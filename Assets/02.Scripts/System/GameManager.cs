@@ -21,9 +21,18 @@ public class GameManager : Singleton<GameManager>
     public DialogueManager dialogueManager;           // 대화 매니저
     public UIManager uiManager;                       // UI 매니저
     public InventoryManager inventoryManager;         // 인벤토리 매니저
+    public AudioManager audioManager;                 // 오디오 매니저
 
     public InputManager inputManager;                 // 입력 매니저
     #endregion
+
+    [SerializeField] private SystemManager systemManager; // 시스템 매니저
+
+    public string CurrentScene {
+        get {
+            return UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        }
+    }
 
     void Awake()
     {
@@ -36,20 +45,41 @@ public class GameManager : Singleton<GameManager>
 
         DontDestroyOnLoad(gameObject); // GameManager가 씬 변경 시에도 파괴되지 않도록 설정
 
-        playerStatus = FindAnyObjectByType<PlayerStatus>(); // 플레이어 상태 찾기
+        // 매니저 세팅
+        systemManager   = GetComponentInChildren<SystemManager>();
+        uiManager       = GetComponentInChildren<UIManager>();
+        audioManager    = GetComponentInChildren<AudioManager>();
+        itemManager     = GetComponentInChildren<ItemManager>();
 
-        CheckObject(ref itemManager);
-        CheckObject(ref uiController);
-        CheckObject(ref cameraController);
-        CheckObject(ref storage);
-        CheckObject(ref playerInventory);
-        CheckObject(ref inventoryManager);
-        CheckObject(ref weaponManager);
-        CheckObject(ref uiManager);
-        CheckObject(ref dialogueManager);
-        CheckObject(ref inputManager);
+        // playerStatus = FindAnyObjectByType<PlayerStatus>(); // 플레이어 상태 찾기
 
+        // CheckObject(ref itemManager);
+        // CheckObject(ref uiController);
+        // CheckObject(ref cameraController);
+        // CheckObject(ref storage);
+        // CheckObject(ref playerInventory);
+        // CheckObject(ref inventoryManager);
+        // CheckObject(ref weaponManager);
+        // CheckObject(ref uiManager);
+        // CheckObject(ref dialogueManager);
+        // CheckObject(ref inputManager);
+        // CheckObject(ref audioManager);
+        
+        Initialize();
     }
+
+    public void Start()
+    {
+        systemManager.VideoLoader.SetupVideoplayer(uiManager.VideoImage);
+        systemManager.VideoLoader.PlayVedio();
+    }
+    
+    public void Initialize()
+    {
+        // 매니저 초기화
+        systemManager.Initialize();
+    }
+
 
     /// <summary>
     /// 해당 매니저가 null인지 확인하고 null이면 해당 manager의 타입을 찾아서 할당
@@ -63,6 +93,5 @@ public class GameManager : Singleton<GameManager>
         {
             manager = GetComponent<T>();
         }
-
     }
 }

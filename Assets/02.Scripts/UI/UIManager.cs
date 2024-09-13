@@ -33,7 +33,7 @@ public enum ECanvas
 /// <summary>
 /// UI를 관리하는 클래스
 /// </summary>
-public class UIManager : MonoBehaviour
+public class UIManager : MonoBehaviour, IManager
 {
     [SerializeField]
     private Canvas HUD_Canvas;
@@ -61,14 +61,12 @@ public class UIManager : MonoBehaviour
     /// 모든 UI를 canvas단위로 나눠 관리할 map인데 실 사용 여부는 좀 더 고민해봐야 합니다
     /// </summary>
     // private List<Dictionary<string, GameObject>> _uiDictionary = new((int)ECanvas.END); //모든 UI를 canvas단위로 나눠 관리할 딕셔너리
+    
 
-
-    private void Awake()
-    {
-        Find_Canvas();
-        
-        SetUiDictionary(_UIGroup);
-    }
+    ///// 테스트용 임시 코드임 추후 삭제 필요 2024-09-13 Argonaut
+    [SerializeField] private RawImage videoImage; // 비디오를 출력할 RawImage
+    public RawImage VideoImage { get => videoImage; }
+    ///// 테스트용 임시 코드임 추후 삭제 필요 2024-09-13 Argonaut
 
     /// <summary>
     /// UI를 담고 있는 그룹을 찾아 딕셔너리에 추가하는 함수
@@ -140,24 +138,30 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private void Start()
+    public void Initialize()
     {
-        foreach (var canvas in _canvasDictionary)
-        {
-            if(canvas.Key == UIConstants.HUDCanvas)
+        if(GameManager.Instance.CurrentScene == SceneConstants.PlaygroundA){
+            Find_Canvas();
+            
+            SetUiDictionary(_UIGroup);
+
+            foreach (var canvas in _canvasDictionary)
             {
-                canvas.Value.gameObject.SetActive(true);
-            }else{
-                canvas.Value.gameObject.SetActive(false);
+                if(canvas.Key == UIConstants.HUDCanvas)
+                {
+                    canvas.Value.gameObject.SetActive(true);
+                }else{
+                    canvas.Value.gameObject.SetActive(false);
+                }
             }
+
+            _txtHP.text = "HP : " + GameManager.Instance.playerStatus.CurrentHealth + " / 100";    // (text) 초기 세팅
+            _txtAttackDamage.text = "Attack Damage : " + GameManager.Instance.playerStatus.settings.attackDamage;    // (text) 초기 세팅
+            _txtAttackSpeed.text = "Attack Speed : " + GameManager.Instance.playerStatus.settings.attackDelay;    // (text) 초기 세팅
+            _txtAttackRange.text = "Attack Range : " + GameManager.Instance.playerStatus.settings.attackRange;    // (text) 초기 세팅
+            _txtWalkSpeed.text = "Walk Speed : " + GameManager.Instance.playerStatus.settings.walkSpeed;    // (text) 초기 세팅
         }
-
-        _txtHP.text = "HP : " + GameManager.Instance.playerStatus.CurrentHealth + " / 100";    // (text) 초기 세팅
-        _txtAttackDamage.text = "Attack Damage : " + GameManager.Instance.playerStatus.settings.attackDamage;    // (text) 초기 세팅
-        _txtAttackSpeed.text = "Attack Speed : " + GameManager.Instance.playerStatus.settings.attackDelay;    // (text) 초기 세팅
-        _txtAttackRange.text = "Attack Range : " + GameManager.Instance.playerStatus.settings.attackRange;    // (text) 초기 세팅
-        _txtWalkSpeed.text = "Walk Speed : " + GameManager.Instance.playerStatus.settings.walkSpeed;    // (text) 초기 세팅
-
+        
     }
 
     //-------------------------------HUD-------------------------------------//
