@@ -21,6 +21,7 @@ public class StartSceneManager : MonoBehaviour
         // 초기 설정: uiTitle은 보이지 않게, uiCanvasGroup은 투명하게 설정
         InitializeUI();
     }
+    
     void Update()
     {
         if(introVideo.isPlaying && Input.GetKeyDown(KeyCode.Space)){
@@ -61,7 +62,7 @@ public class StartSceneManager : MonoBehaviour
 
     public void PlayStart()
     {
-        PlayerPrefs.SetString("NextScene", SceneConstants.PlaygroundA);
+        PlayerPrefs.SetString("NextScene", SceneConstants.PlaygroundB);
         // SceneManager.LoadScene("PlaygroundLoading");
         // 로딩 화면을 비동기로 로드 시작
         StartCoroutine(LoadLoadingScene());
