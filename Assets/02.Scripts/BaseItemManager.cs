@@ -3,7 +3,7 @@ using UnityEngine;
 using Newtonsoft.Json;
 using System;
 
-public abstract class BaseItemManager<T,D> :  MonoBehaviour where T : MonoBehaviour
+public abstract class BaseItemManager<T,D> :  Singleton<BaseItemManager<T,D>> where T : MonoBehaviour
 {
     [Header("Item Data")]
     public Dictionary<string, D> dataDictionary = new();    // 데이터 딕셔너리 [ 아이템 ID, 아이템 데이터 ]

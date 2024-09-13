@@ -1,8 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Newtonsoft.Json;
-using Unity.VisualScripting;
 
 /// <summary>
 /// 아이템을 관리하는 클래스
@@ -11,12 +8,13 @@ using Unity.VisualScripting;
 /// author: Argonaut
 /// </para>
 /// </summary>
-public class ItemManager : BaseItemManager<BaseItem, BaseItemData>
+public class ItemManager : BaseItemManager<BaseItem, BaseItemData>, IManager
 {
     protected override string DataPath => "Json/items"; // 아이템 데이터 경로
 
     [SerializeField] private GameObject itemGroup;   // 아이템 그룹
-    void Start()
+
+    public void Initialize()
     {
         if (itemGroup == null)
         {
@@ -96,4 +94,5 @@ public class ItemManager : BaseItemManager<BaseItem, BaseItemData>
         }
     }
 
+    
 }
