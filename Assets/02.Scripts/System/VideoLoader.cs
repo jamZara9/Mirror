@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
+using TMPro;
 
 /// <summary>
 /// 비디오 플레이어를 로드하는 클래스
@@ -11,9 +12,17 @@ public class VideoLoader : MonoBehaviour
 {
     [SerializeField] private VideoPlayer _videoPlayerPrefab;    // 비디오 플레이어 프리팹
     [SerializeField] private VideoClip[] _videoClip;            // 비디오 클립
+    [SerializeField] private TextMeshProUGUI _skipText;         // 스킵 텍스트
+
+    public bool IsActiveSkipText{                       // 스킵 텍스트가 활성화되어 있는지 여부
+        get{
+            return _skipText.gameObject.activeSelf;
+        }
+    }
 
     public bool IsVideoPlaying{get; private set;}   // 비디오가 재생 중인지 여부
     private VideoPlayer _videoPlayer;               // 비디오 플레이어
+    private Coroutine _skipTextCoroutine;           // 스킵 텍스트 코루틴
 
     public void SetupVideoplayer(RawImage targetImage)
     {
@@ -66,6 +75,60 @@ public class VideoLoader : MonoBehaviour
 
         // GameManager에게 비디오가 종료되었음을 알림
         GameManager.Instance.OnVideoFinished();
+    }
+
+    /// <summary>
+    /// 스킵 텍스트 활성화
+    /// </summary>
+    public void SkipTextActive(bool isActive)
+    {
+        if(isActive){
+            _skipTextCoroutine = StartCoroutine(ShowSkipText(1.0f, 2.0f));
+        }else{
+
+            // 스킵  텍스트 코루틴이 실행 중이면 중지
+            if(_skipTextCoroutine != null){
+                StopCoroutine(_skipTextCoroutine);
+                _skipTextCoroutine = null;
+            }
+            _skipText.gameObject.SetActive(false);
+        }
+    }
+
+    /// <summary>
+    /// 스킵 텍스트를 보여주는 코루틴
+    /// </summary>
+    /// <param name="fadeDuration">텍스트를 온전히 출력하는데 걸리는 시간</param>
+    /// <param name="displayDuration">텍스트 유지 시간</param>
+    /// <returns></returns>
+    private IEnumerator ShowSkipText(float fadeDuration, float displayDuration)
+    {
+        // 텍스트를 천천히 나타나게 함
+        _skipText.gameObject.SetActive(true);
+        _skipText.alpha = 0;
+        float elapsed = 0;
+        
+        while (elapsed < fadeDuration)
+        {
+            _skipText.alpha = Mathf.Lerp(0, 1, elapsed / fadeDuration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        _skipText.alpha = 1;
+
+        // 특정 시간 동안 텍스트를 유지함
+        yield return new WaitForSeconds(displayDuration);
+
+        // 텍스트를 천천히 사라지게 함
+        elapsed = 0;
+        while (elapsed < fadeDuration)
+        {
+            _skipText.alpha = Mathf.Lerp(1, 0, elapsed / fadeDuration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        _skipText.alpha = 0;
+        _skipText.gameObject.SetActive(false);
     }
 
 }
