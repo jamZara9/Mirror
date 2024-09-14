@@ -67,29 +67,12 @@ public class GameManager : Singleton<GameManager>, IManager
         
         Initialize();
     }
-
-    void Start()
-    {
-        uiManager.SetVideoplayerActive(true);
-        systemManager.VideoLoader.SetupVideoplayer(uiManager.VideoImage);
-        systemManager.VideoLoader.PlayVedio();
-    }
     
     public void Initialize()
     {
         // 매니저 초기화
         systemManager.Initialize();
         audioManager.Initialize();
-    }
-
-    /// <summary>
-    /// 게임 시작 버튼 클릭 시 호출되는 함수
-    /// </summary>
-    public void GameStart()
-    {
-        PlayerPrefs.SetString("NextScene", SceneConstants.PlaygroundB);         // 다음 씬 설정
-        systemManager.SceneLoader.LoadNextScene(SceneConstants.LoadingScene);   // 로딩 씬으로 이동
-        audioManager.StopBackgroundMusic();                                     // 배경음악 정지
     }
 
     /// <summary>

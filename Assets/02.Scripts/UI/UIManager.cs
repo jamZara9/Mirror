@@ -33,7 +33,7 @@ public enum ECanvas
 /// <summary>
 /// UI를 관리하는 클래스
 /// </summary>
-public class UIManager : MonoBehaviour, IManager
+public class UIManager : Singleton<UIManager>, IManager
 {
     [SerializeField]
     private Canvas HUD_Canvas;
@@ -66,7 +66,7 @@ public class UIManager : MonoBehaviour, IManager
     ///// 테스트용 임시 코드임 추후 삭제 필요 2024-09-13 Argonaut
     [SerializeField] private RawImage videoImage; // 비디오를 출력할 RawImage
     public RawImage VideoImage { get => videoImage; }
-    ///// 테스트용 임시 코드임 추후 삭제 필요 2024-09-13 Argonaut
+    ///// 테스트용 임시 코드임 추후 삭제 후 대체 변수 필요 2024-09-13 Argonaut
 
     /// <summary>
     /// UI를 담고 있는 그룹을 찾아 딕셔너리에 추가하는 함수
@@ -273,6 +273,7 @@ public class UIManager : MonoBehaviour, IManager
         }
     }
 
+    /////////////////////////////////////////////////////////// 2024-09-14 Argonaut
     /// <summary>
     /// 비디오 플레이어 캔버스를 활성화/비활성화 하는 함수
     /// </summary>
@@ -281,4 +282,5 @@ public class UIManager : MonoBehaviour, IManager
     {
         videoImage.gameObject.SetActive(isActive);
     }
+    /////////////////////////////////////////////////////////// 2024-09-14 Argonaut
 }
