@@ -7,7 +7,7 @@ using System;
 /// <summary>
 /// 게임의 전반적인 관리를 담당하는 클래스
 /// </summary>
-public class GameManager : Singleton<GameManager>
+public class GameManager : Singleton<GameManager>, IManager
 {
     [Header("Manager")]
     #region Manager
@@ -45,7 +45,7 @@ public class GameManager : Singleton<GameManager>
 
         DontDestroyOnLoad(gameObject); // GameManager가 씬 변경 시에도 파괴되지 않도록 설정
 
-        // 매니저 세팅
+        // 매니저 세팅 
         systemManager   = GetComponentInChildren<SystemManager>();
         uiManager       = GetComponentInChildren<UIManager>();
         audioManager    = GetComponentInChildren<AudioManager>();
@@ -68,17 +68,18 @@ public class GameManager : Singleton<GameManager>
         Initialize();
     }
 
-    public void Start()
     void Start()
     {
-        // systemManager.VideoLoader.SetupVideoplayer(uiManager.VideoImage);
-        // systemManager.VideoLoader.PlayVedio();
+        uiManager.SetVideoplayerActive(true);
+        systemManager.VideoLoader.SetupVideoplayer(uiManager.VideoImage);
+        systemManager.VideoLoader.PlayVedio();
     }
     
     public void Initialize()
     {
         // 매니저 초기화
         systemManager.Initialize();
+        audioManager.Initialize();
     }
 
     /// <summary>
@@ -86,11 +87,22 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     public void GameStart()
     {
-        PlayerPrefs.SetString("NextScene", SceneConstants.PlaygroundB);
-        systemManager.SceneLoader.LoadNextScene(SceneConstants.LoadingScene);
+        PlayerPrefs.SetString("NextScene", SceneConstants.PlaygroundB);         // 다음 씬 설정
+        systemManager.SceneLoader.LoadNextScene(SceneConstants.LoadingScene);   // 로딩 씬으로 이동
+        audioManager.StopBackgroundMusic();                                     // 배경음악 정지
     }
 
+    /// <summary>
+    /// 비디오 재생이 끝났을 때 호출되는 함수
+    /// </summary>
+    public void OnVideoFinished()
+    {
+        // @todo: 현재는 첫씬에서 테스트하는 것이므로 추후 씬에 맞게 수정할 필요가 있음
+        audioManager.PlayBackgroundMusic(AudioConstants.BGM_STARTSCENE);
+        uiManager.SetVideoplayerActive(false);
+    }
 
+////////////////////////////////////////////// 추후 제거 예정
     /// <summary>
     /// 해당 매니저가 null인지 확인하고 null이면 해당 manager의 타입을 찾아서 할당
     /// </summary>

@@ -272,4 +272,13 @@ public class UIManager : MonoBehaviour, IManager
             return null;
         }
     }
+
+    /// <summary>
+    /// 비디오 플레이어 캔버스를 활성화/비활성화 하는 함수
+    /// </summary>
+    /// <param name="isActive"></param>
+    public void SetVideoplayerActive(bool isActive)
+    {
+        videoImage.gameObject.SetActive(isActive);
+    }
 }

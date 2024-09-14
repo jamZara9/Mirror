@@ -12,8 +12,8 @@ public class VideoLoader : MonoBehaviour
     [SerializeField] private VideoPlayer _videoPlayerPrefab;    // 비디오 플레이어 프리팹
     [SerializeField] private VideoClip[] _videoClip;            // 비디오 클립
 
-    private bool isVideoPlaying = false; // 비디오가 재생 중인지 여부
-    private VideoPlayer _videoPlayer;    // 비디오 플레이어
+    public bool IsVideoPlaying{get; private set;}   // 비디오가 재생 중인지 여부
+    private VideoPlayer _videoPlayer;               // 비디오 플레이어
 
     public void SetupVideoplayer(RawImage targetImage)
     {
@@ -30,6 +30,8 @@ public class VideoLoader : MonoBehaviour
         _videoPlayer = Instantiate(_videoPlayerPrefab, transform);
         _videoPlayer.clip = videoClip;
         
+        // 비디오가 끝났을 때 호출될 이벤트 핸들러 등록
+        _videoPlayer.loopPointReached += OnVideoFinished;
     }
 
     /// <summary>
@@ -37,23 +39,33 @@ public class VideoLoader : MonoBehaviour
     /// </summary>
     public void PlayVedio()
     {
-
         //@todo: 기존 VideoCanvas를 활성화하는 코드를 추가해야 함
-
         _videoPlayer.waitForFirstFrame = true;
-        isVideoPlaying = true;
+        IsVideoPlaying = true;
         _videoPlayer.Play();
     }
 
     public void StopVedio()
     {
         _videoPlayer.Stop();
-        isVideoPlaying = false;
+        OnVideoFinished(_videoPlayer);
     }
 
     public void PauseVedio()
     {
         _videoPlayer.Pause();
-        isVideoPlaying = false;
+        OnVideoFinished(_videoPlayer);
     }
+
+    /// <summary>
+    /// 비디오가 종료되었을 때 호출되는 콜백 함수
+    /// </summary>
+    /// <param name="vp"></param>
+    private  void OnVideoFinished(VideoPlayer vp){
+        IsVideoPlaying = false;
+
+        // GameManager에게 비디오가 종료되었음을 알림
+        GameManager.Instance.OnVideoFinished();
+    }
+
 }
