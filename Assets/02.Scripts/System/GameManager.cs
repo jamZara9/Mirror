@@ -73,6 +73,7 @@ public class GameManager : Singleton<GameManager>, IManager
         // 매니저 초기화
         systemManager.Initialize();
         audioManager.Initialize();
+        inputManager.Initialize();
     }
 
     /// <summary>
