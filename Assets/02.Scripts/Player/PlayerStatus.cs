@@ -41,9 +41,8 @@ public class PlayerStatus : MonoBehaviour, IDamage
     public float CurrentAttackRange { get; private set; }   
     public float CurrentAttackDamage { get; private set; }
 
-    [SerializeField] private AudioSource audioSource; // 효과음 재생을 위한 AudioSource [추후 위치 변경]
-    [SerializeField] private AudioClip[] hitSound;       // 피격 효과음
-    [SerializeField] private AudioClip deathSound;     // 사망 효과음
+    [SerializeField] private AudioClip[] hitSound;    // 피격 효과음
+    [SerializeField] private AudioClip deathSound;    // 사망 효과음
 
     void Awake()
     {
@@ -80,11 +79,14 @@ public class PlayerStatus : MonoBehaviour, IDamage
 
         // 피격 효과음 재생
         if(CurrentHealth > 0){
-            audioSource.clip = hitSound[UnityEngine.Random.Range(0, hitSound.Length)];
-            audioSource.Play();
+            // audioSource.clip = hitSound[UnityEngine.Random.Range(0, hitSound.Length)];
+            // audioSource.Play();
+            AudioManager.Instance.PlaySoundEffect(hitSound[UnityEngine.Random.Range(0, hitSound.Length)], transform.position, 1.0f);
+
         }else{
-            audioSource.clip = deathSound;
-            audioSource.Play();
+            // audioSource.clip = deathSound;
+            // audioSource.Play();
+            AudioManager.Instance.PlaySoundEffect(deathSound, transform.position, 1.0f);
         }
 
         Debug.Log($"현재 체력 : {CurrentHealth}");

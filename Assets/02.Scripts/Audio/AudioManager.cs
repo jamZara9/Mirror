@@ -10,8 +10,8 @@ public static class AudioConstants
 
 public class AudioManager : Singleton<AudioManager>, IManager
 {
-    [SerializeField] private AudioSource bgmSource;     // 배경음악 소스
-    [SerializeField] private AudioClip[] bgmClips; // 배경음악 클립들
+    [SerializeField] private AudioSource bgmSource;         // 배경음악 소스
+    [SerializeField] private AudioClip[] bgmClips;          // 배경음악 클립들
 
     public void Initialize(string sceneName)
     {
