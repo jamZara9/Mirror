@@ -505,7 +505,7 @@ GameObject:
   - component: {fileID: 5088262389661955505}
   - component: {fileID: 2712309034920045280}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: SkipPanelStoryText (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1062,7 +1062,7 @@ GameObject:
   - component: {fileID: 8140874875275730050}
   - component: {fileID: 6470854619321436756}
   m_Layer: 5
-  m_Name: NameText
+  m_Name: DialogueNameText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1196,7 +1196,7 @@ GameObject:
   - component: {fileID: 1373414711059134709}
   - component: {fileID: 7351243622317604747}
   m_Layer: 5
-  m_Name: Text
+  m_Name: DialogueText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
