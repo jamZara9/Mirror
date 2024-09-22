@@ -31,7 +31,6 @@ public class InputManager : Singleton<InputManager>, IManager
     //     SwitchActionMap("Player");
     // }
 
-    public void Initialize()
     public void Initialize(string sceneName)
     {
         if(sceneName == SceneConstants.StartScene){
@@ -47,6 +46,19 @@ public class InputManager : Singleton<InputManager>, IManager
 
             SwitchActionMap("Player");
         }
+
+        /// 테스트를 위한 임시 세팅
+        if (!inputAction) throw new NullReferenceException("InputActionAsset이 할당되지 않았습니다.");
+
+        inputAction.Enable();                                   // 최초 모든 액션 맵을 활성화
+        actionMaps = new Dictionary<string, InputActionMap>();  // 딕셔너리 초기화
+
+        foreach (var map in inputAction.actionMaps)             // 모든 ActionMap을 순회하며
+        {
+            actionMaps.Add(map.name, map);                      // 딕셔너리에 추가            
+        }
+
+        SwitchActionMap("Player");
     }
 
     /// <summary>
