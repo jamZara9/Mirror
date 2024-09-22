@@ -24,15 +24,16 @@ public class GameManager : Singleton<GameManager>, IManager
     public InventoryManager inventoryManager;         // 인벤토리 매니저
     public AudioManager audioManager;                 // 오디오 매니저
 
-    public InputManager inputManager;                 // 입력 매니저
+    // public InputManager inputManager;                 // 입력 매니저
     #endregion
 
     [SerializeField] private SystemManager systemManager; // 시스템 매니저
     [SerializeField] private CameraManager cameraManager; // 카메라 매니저
+    [SerializeField] private InputManager inputManager;   // 입력 매니저
 
     public string CurrentScene {
         get {
-            return UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+            return SceneManager.GetActiveScene().name;
         }
     }
 
@@ -87,16 +88,16 @@ public class GameManager : Singleton<GameManager>, IManager
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         // Initialize 메서드 호출
-        Initialize();
+        Initialize(CurrentScene);
     }
     
-    public void Initialize()
+    public void Initialize(string sceneName)
     {
         // 매니저 초기화
-        systemManager.Initialize();
-        audioManager.Initialize();
-        inputManager.Initialize();
-        cameraManager.Initialize();
+        systemManager.Initialize(sceneName);
+        audioManager.Initialize(sceneName);
+        inputManager.Initialize(sceneName);
+        cameraManager.Initialize(sceneName);
     }
 
     /// <summary>

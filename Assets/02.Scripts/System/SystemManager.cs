@@ -15,9 +15,9 @@ public class SystemManager : Singleton<SystemManager>, IManager
     /// <summary>
     /// 초기화 함수
     /// </summary>
-    public void Initialize()
+    public void Initialize(string sceneName)
     {
-        if(GameManager.Instance.CurrentScene == SceneConstants.StartScene)      // 시작 씬일 경우
+        if(sceneName == SceneConstants.StartScene)      // 시작 씬일 경우
         {
             SceneLoader = GetComponent<SceneLoader>();
             VideoLoader = GetComponent<VideoLoader>();

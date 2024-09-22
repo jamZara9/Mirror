@@ -14,7 +14,7 @@ public class ItemManager : BaseItemManager<BaseItem, BaseItemData>, IManager
 
     [SerializeField] private GameObject itemGroup;   // 아이템 그룹
 
-    public void Initialize()
+    public void Initialize(string sceneName)
     {
         if (itemGroup == null)
         {

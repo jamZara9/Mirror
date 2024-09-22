@@ -12,13 +12,13 @@ public class CameraManager : Singleton<CameraManager>, IManager
     public bool IsCursorLocked{ get { return Cursor.lockState == CursorLockMode.Locked; } }     
     public bool IsCursorVisible{ get{ return Cursor.visible; } } // 마우스 커서가 보이는지 확인
 
-    public void Initialize()
+    public void Initialize(string sceneName)
     {
-        if(GameManager.Instance.CurrentScene == SceneConstants.StartScene){
+        if(sceneName == SceneConstants.StartScene){
             mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         }
 
-        if(GameManager.Instance.CurrentScene == SceneConstants.PlaygroundA){
+        if(sceneName == SceneConstants.PlaygroundA){
             Debug.Log("PlaygroundA 씬에서 카메라 매니저 초기화");
             // 메인 카메라 => 플레이어 카메라 세팅 필요
             mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();

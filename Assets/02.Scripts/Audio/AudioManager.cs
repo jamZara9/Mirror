@@ -13,7 +13,7 @@ public class AudioManager : Singleton<AudioManager>, IManager
     [SerializeField] private AudioSource bgmSource;     // 배경음악 소스
     [SerializeField] private AudioClip[] bgmClips; // 배경음악 클립들
 
-    public void Initialize()
+    public void Initialize(string sceneName)
     {
         if(bgmSource == null)
         {

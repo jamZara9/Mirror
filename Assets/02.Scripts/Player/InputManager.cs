@@ -32,8 +32,9 @@ public class InputManager : Singleton<InputManager>, IManager
     // }
 
     public void Initialize()
+    public void Initialize(string sceneName)
     {
-        if(GameManager.Instance.CurrentScene == SceneConstants.StartScene){
+        if(sceneName == SceneConstants.StartScene){
             if (!inputAction) throw new NullReferenceException("InputActionAsset이 할당되지 않았습니다.");
 
             inputAction.Enable();                                   // 최초 모든 액션 맵을 활성화

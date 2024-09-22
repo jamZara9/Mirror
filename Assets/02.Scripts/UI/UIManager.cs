@@ -138,9 +138,9 @@ public class UIManager : Singleton<UIManager>, IManager
         }
     }
 
-    public void Initialize()
+    public void Initialize(string sceneName)
     {
-        if(GameManager.Instance.CurrentScene == SceneConstants.PlaygroundA){
+        if(sceneName == SceneConstants.PlaygroundA){
             Find_Canvas();
             
             SetUiDictionary(_UIGroup);
