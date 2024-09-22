@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0017665261, g: 0.0012489791, b: 0.0009825752, a: 1}
+  m_IndirectSpecularColor: {r: 0.0017662428, g: 0.0012486632, b: 0.000981893, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -131,6 +131,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 703064781420994788, guid: 1b0b6e418b35e1642bee18c118cf9a5f, type: 3}
+      propertyPath: m_Name
+      value: SentenceText
+      objectReference: {fileID: 0}
+    - target: {fileID: 3623647952953297093, guid: 1b0b6e418b35e1642bee18c118cf9a5f, type: 3}
+      propertyPath: m_Name
+      value: MovableStoryNameText
+      objectReference: {fileID: 0}
     - target: {fileID: 4637125547250941649, guid: 1b0b6e418b35e1642bee18c118cf9a5f, type: 3}
       propertyPath: m_Name
       value: MovableStory Canvas
@@ -4143,17 +4151,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2362840010681720858, guid: dd378d9af645a55499253b6232381799, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2586213248316808522, guid: dd378d9af645a55499253b6232381799, type: 3}
       propertyPath: m_Name
       value: VisualNovel Canvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 2586213248316808522, guid: dd378d9af645a55499253b6232381799, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2838713883174138232, guid: dd378d9af645a55499253b6232381799, type: 3}
       propertyPath: m_Pivot.x
@@ -6249,39 +6249,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1103986112}
   m_CullTransparentMesh: 1
---- !u!114 &1114641675 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5079062712953784112, guid: eff52e242d589d74db3f3cfa6517ca75, type: 3}
-  m_PrefabInstance: {fileID: 463324631}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfb4930adcc808848a0cfcf92196c1aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1114641676 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6030578383036665637, guid: eff52e242d589d74db3f3cfa6517ca75, type: 3}
-  m_PrefabInstance: {fileID: 463324631}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d09da93e2143a9e4d8fc54132a8c4048, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1114641677 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6260824258983485129, guid: eff52e242d589d74db3f3cfa6517ca75, type: 3}
-  m_PrefabInstance: {fileID: 463324631}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c50f66cad681af145bd87c80feb0efc1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1135269878
 GameObject:
   m_ObjectHideFlags: 0
@@ -6950,15 +6917,17 @@ MonoBehaviour:
   cameraController: {fileID: 0}
   uiController: {fileID: 0}
   storage: {fileID: 0}
-  playerStatus: {fileID: 1114641676}
+  playerStatus: {fileID: 0}
   playerInventory: {fileID: 0}
   weaponManager: {fileID: 0}
-  dialogueManager: {fileID: 0}
   uiManager: {fileID: 0}
   inventoryManager: {fileID: 0}
   audioManager: {fileID: 0}
-  inputManager: {fileID: 0}
   systemManager: {fileID: 0}
+  cameraManager: {fileID: 0}
+  inputManager: {fileID: 0}
+  playerManager: {fileID: 0}
+  dialogueManager: {fileID: 0}
 --- !u!114 &1200054176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7142,8 +7111,8 @@ MonoBehaviour:
     m_Asset: {fileID: 0}
     m_Actions: []
     m_Bindings: []
-  playerInputAction: {fileID: 1114641677}
-  dialogueInputAction: {fileID: 1114641675}
+  playerInputAction: {fileID: 0}
+  dialogueInputAction: {fileID: 0}
 --- !u!114 &1200054187
 MonoBehaviour:
   m_ObjectHideFlags: 0

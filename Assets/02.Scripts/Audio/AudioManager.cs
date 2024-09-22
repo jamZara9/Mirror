@@ -29,6 +29,9 @@ public class AudioManager : Singleton<AudioManager>, IManager
     /// <param name="volume">사운드 크기</param>
     public void PlaySoundEffect(AudioClip clip, Vector3 position, float volume)
     {
+        // 사운드 클립이 없으면 리턴
+        if(clip == null) return;
+
         AudioSource.PlayClipAtPoint(clip, position, volume);
     }
 

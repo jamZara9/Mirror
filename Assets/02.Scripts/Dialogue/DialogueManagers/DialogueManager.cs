@@ -9,7 +9,7 @@ using UnityEditor;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class DialogueManager : MonoBehaviour
+public class DialogueManager : Singleton<DialogueManager>, IManager
 {
     private CsvParser csvParser;
     
@@ -115,14 +115,27 @@ public class DialogueManager : MonoBehaviour
     }
     private State _state = State.Completed;
     
-    void Awake()
-    {
-        // CSV Parser 등록.
-        // csvParser = GetComponent<CsvParser>();
-        csvParser = new();
+    // void Awake()
+    // {
+    //     // csvParser = GetComponent<CsvParser>();
+    //     csvParser = new();
 
-        // 딕셔너리 초기화.
-        _sprites = new Dictionary<Speaker, SpriteController>();
+    //     // 딕셔너리 초기화.
+    //     _sprites = new Dictionary<Speaker, SpriteController>();
+    // }
+
+    // IManager 인터페이스 구현.
+    public void Initialize(string sceneName)
+    {
+        if(sceneName == SceneConstants.PlaygroundA)
+        {
+            // CSV Parser 등록.
+            // csvParser = GetComponent<CsvParser>();
+            csvParser = new();
+
+            // 딕셔너리 초기화.
+            _sprites = new Dictionary<Speaker, SpriteController>();
+        }
     }
 
     /// <summary>
@@ -201,8 +214,9 @@ public class DialogueManager : MonoBehaviour
         
         backGroundController.SwitchImage(currentScene.sentences[_sentenceIndex].background);
 
-        sentenceAudioSource.clip = currentScene.sentences[_sentenceIndex].audioClip;
-        sentenceAudioSource.Play();
+        // sentenceAudioSource.clip = currentScene.sentences[_sentenceIndex].audioClip;
+        // sentenceAudioSource.Play();
+        AudioManager.Instance.PlaySoundEffect(currentScene.sentences[_sentenceIndex].audioClip, transform.position, 1.0f);
 
         ActSpeakers();
     }

@@ -35,17 +35,17 @@ public class DialogueStateController : MonoBehaviour
     {
         // _inputActions = GetComponent<DialogueInputAction>();
         _inputActions = InputManager.Instance.dialogueInputAction;
-        _dialogueManager = GameManager.Instance.dialogueManager;
+        _dialogueManager = DialogueManager.Instance;
 
         currentScene = _dialogueManager.currentScene;
     }
 
     void Update()
     {
-        // NextSentence();
-        // OnSkip();
-        // OnRealSkip();
-        // OnSkipCancel();
+        NextSentence();
+        OnSkip();
+        OnRealSkip();
+        OnSkipCancel();
     }
 
 
