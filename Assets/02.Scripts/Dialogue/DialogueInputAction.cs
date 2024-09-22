@@ -15,7 +15,8 @@ public class DialogueInputAction : MonoBehaviour
     public bool isRealSkip = false;
 
     private void Start(){
-        GameManager.Instance.inputManager.BindAllActions("Dialogue", this);
+        // GameManager.Instance.inputManager.BindAllActions("Dialogue", this);
+        InputManager.Instance.BindAllActions("Dialogue", this);
     }
 
 

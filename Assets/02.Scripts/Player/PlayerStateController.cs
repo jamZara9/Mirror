@@ -71,7 +71,8 @@ public class PlayerStateController : MonoBehaviour
         _settings = GetComponent<PlayerStatus>().settings;
         _characterController = GetComponent<CharacterController>();
         // _inputActions = GetComponent<PlayerInputAction>();
-        _inputActions = GameManager.Instance.inputManager.playerInputAction;
+        // _inputActions = GameManager.Instance.inputManager.playerInputAction;
+        _inputActions = InputManager.Instance.playerInputAction;
 
         AssignAnimationIDs();
 
@@ -493,16 +494,13 @@ public class PlayerStateController : MonoBehaviour
         if (_inputActions.isInventoryVisible)
         {
             GameManager gameManager = GameManager.Instance;     // MainGameManager 인스턴스
-            // UIController_Test uiController = gameManager.uiController;  // UIController_Test 인스턴스
 
             // 임시 테스트용
             InventoryManager inventoryManager = gameManager.inventoryManager;  // InventoryManager_Test 인스턴스
             UIManager uIManager = gameManager.uiManager;
 
             // 인벤토리 UI 활성화/비활성화
-            // uiController.inventoryUI.SetActive(!uiController.inventoryUI.activeSelf);
             inventoryManager.OnShowInventory();
-            // gameManager.cameraController.SetCursorState(uiController.inventoryUI.activeSelf);   // 커서 상태 설정
             gameManager.cameraController.SetCursorState(uIManager.Inventory().gameObject.activeSelf);   // 커서 상태 설정
 
             _inputActions.isInventoryVisible = false;

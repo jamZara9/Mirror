@@ -9,6 +9,6 @@ public class SceneConstants
 {
     public const string StartScene = "PlaygroundStart";
     public const string LoadingScene = "PlaygroundLoading";
-    public const string PlaygroundA = "PlaygroundA_1.2.3";
+    public const string PlaygroundA = "PlaygroundA";
     public const string PlaygroundB = "PlaygroundB_Test";
 }

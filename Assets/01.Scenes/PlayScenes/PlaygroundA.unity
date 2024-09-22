@@ -4217,34 +4217,15 @@ PrefabInstance:
       propertyPath: m_Lens.m_SensorSize.y
       value: 24
       objectReference: {fileID: 0}
+    - target: {fileID: 2915692665440783747, guid: eff52e242d589d74db3f3cfa6517ca75, type: 3}
+      propertyPath: objectNameText
+      value: 
+      objectReference: {fileID: 1629254774}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2032839582269894093, guid: eff52e242d589d74db3f3cfa6517ca75, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 739757877}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eff52e242d589d74db3f3cfa6517ca75, type: 3}
---- !u!1 &739757876 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2032839582269894093, guid: eff52e242d589d74db3f3cfa6517ca75, type: 3}
-  m_PrefabInstance: {fileID: 739757875}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &739757877
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 739757876}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d481e514e709cef4e90897e0093c0e42, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxDistance: 10
-  objectNameText: {fileID: 1629254774}
-  detectedObject: {fileID: 0}
 --- !u!1 &744683708
 GameObject:
   m_ObjectHideFlags: 0

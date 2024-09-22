@@ -36,15 +36,15 @@ public class PlayerInputAction : MonoBehaviour
     public bool analogMovement; // 이동 입력값을 아날로그로 받을지 디지털로 받을지 결정
 
     private void Start(){
-        GameManager.Instance.inputManager.BindAllActions("Player", this);
+        InputManager.Instance.BindAllActions("Player", this);
     }
 
 
     public void OnMovement(InputAction.CallbackContext context)
     {
-        //인벤토리 활성화중 이동 제한
-        if (GameManager.Instance.inventoryManager.Use_Inventory)
-            return;
+        // //인벤토리 활성화중 이동 제한
+        // if (GameManager.Instance.inventoryManager.Use_Inventory)
+        //     return;
 
         move = context.ReadValue<Vector2>();
     }
@@ -53,9 +53,10 @@ public class PlayerInputAction : MonoBehaviour
     {
         if (cursorInputForLook)
         {
-            if (GameManager.Instance.inventoryManager.Use_Inventory) //인벤토리 활성화중 시야이동 제어
-                look = Vector2.zero;
-            else
+            // 추후 PlayerManager에서 PlayerItemContainer를 이용할 예정 [임시]
+            // if (GameManager.Instance.inventoryManager.Use_Inventory) //인벤토리 활성화중 시야이동 제어
+            //     look = Vector2.zero;
+            // else
                 look = context.ReadValue<Vector2>();
         }
     }
@@ -67,18 +68,20 @@ public class PlayerInputAction : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        //인벤토리 활성화중 이동 제한
-        if (GameManager.Instance.inventoryManager.Use_Inventory)
-            return;
+        // 추후 PlayerManager에서 PlayerItemContainer를 이용할 예정 [임시]
+        // //인벤토리 활성화중 이동 제한
+        // if (GameManager.Instance.inventoryManager.Use_Inventory)
+        //     return;
 
         jump = context.ReadValueAsButton();
     }
 
     public void OnSprint(InputAction.CallbackContext context)
     {
-        //인벤토리 활성화중 기능 제한
-        if (GameManager.Instance.inventoryManager.Use_Inventory)
-            return;
+        // 추후 PlayerManager에서 PlayerItemContainer를 이용할 예정 [임시]
+        // //인벤토리 활성화중 기능 제한
+        // if (GameManager.Instance.inventoryManager.Use_Inventory)
+        //     return;
 
         sprint = context.ReadValueAsButton();
     }
@@ -90,9 +93,9 @@ public class PlayerInputAction : MonoBehaviour
 
     public void OnInteraction(InputAction.CallbackContext context)
     {
-        //인벤토리 활성화중 기능 제한
-        if (GameManager.Instance.inventoryManager.Use_Inventory)
-            return;
+        // //인벤토리 활성화중 기능 제한
+        // if (GameManager.Instance.inventoryManager.Use_Inventory)
+        //     return;
 
         isInteractable = context.ReadValueAsButton();
     }
@@ -109,18 +112,18 @@ public class PlayerInputAction : MonoBehaviour
 
     public void OnFire(InputAction.CallbackContext context)
     {
-        //인벤토리 활성화중 기능 제한
-        if (GameManager.Instance.inventoryManager.Use_Inventory)
-            return;
+        // //인벤토리 활성화중 기능 제한
+        // if (GameManager.Instance.inventoryManager.Use_Inventory)
+        //     return;
 
         isFire = context.ReadValueAsButton();
     }
 
     public void OnShowQuickSlot(InputAction.CallbackContext context)
     {
-        //인벤토리 활성화중 기능 제한
-        if (GameManager.Instance.inventoryManager.Use_Inventory)
-            return;
+        // //인벤토리 활성화중 기능 제한 [임시 주석처리]
+        // if (GameManager.Instance.inventoryManager.Use_Inventory)
+        //     return;
 
         if (context.performed)   // 마우스 휠 버튼을 누르면
         {

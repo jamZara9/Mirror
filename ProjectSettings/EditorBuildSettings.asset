@@ -12,8 +12,8 @@ EditorBuildSettings:
     path: Assets/01.Scenes/PlayScenes/PlaygroundLoading.unity
     guid: 5e1b3cc5a904e324eb305ce18b82663d
   - enabled: 1
-    path: Assets/01.Scenes/PlayScenes/PlaygroundA_1.2.3.unity
-    guid: 468521c592907ad4aa6c37fd849b9c53
+    path: Assets/01.Scenes/PlayScenes/PlaygroundA.unity
+    guid: 0c6be9ed6d3fe6b43b6c10bc98adfbec
   - enabled: 1
     path: Assets/01.Scenes/PlayScenes/PlaygroundB_Test.unity
     guid: 28e95d3e131acea4281ec9c07ea613a2

@@ -27,9 +27,9 @@ public class CameraController : MonoBehaviour
     public float maxDistance = 10f;             // Raycast 최대 거리
 
     [Header("UI Settings")]
-    public TextMeshProUGUI objectNameText;      // 오브젝트 이름을 표시할 UI 텍스트
+    public TextMeshProUGUI objectNameText;      // 오브젝트 이름을 표시할 UI 텍스트 [추후 UI에서 관리]
     public GameObject detectedObject;           // 감지된 오브젝트
-    private Outline _targetOutline;              // 아웃라인 캐싱
+    private Outline _targetOutline;             // 아웃라인 캐싱
 
     /// <summary>
     /// 관측가능한 오브젝트 타입
@@ -42,16 +42,17 @@ public class CameraController : MonoBehaviour
         Enemy
     }
 
-    void Awake()
+    void Start()
     {
-        // 마우스 위치를 화면 중앙으로 초기화
         mousePosition = new Vector2(Screen.width / 2f, Screen.height / 2f);
+
+        CameraManager.Instance.LockAndHideCursor(); // 마우스 커서 숨기기
     }
 
     void Update()
     {
         CheckForObject();       //@todo: 추후 마우스 입력이 있을 때만 실행하도록 변경
-        UpdateCursorState();
+        // UpdateCursorState();
     }
 
     /// <summary>
@@ -61,7 +62,6 @@ public class CameraController : MonoBehaviour
     /// </summary>
     private void CheckForObject()
     {
-
         // Raycast를 통해 마우스 위치에 아이템이 있는지 확인 [ 필요에 따라서 카메라 위치로 변경 ]
         ray = Camera.main.ScreenPointToRay(mousePosition);
 
@@ -104,7 +104,6 @@ public class CameraController : MonoBehaviour
                 Debug.Log($"관측된 적: {detectedObject.name}");
             }
         }
-
     }
 
     /// <summary>
@@ -144,12 +143,11 @@ public class CameraController : MonoBehaviour
     /// <param name="state"></param>
     public void SetCursorState(bool state)
     {
-        Cursor.visible = state;
-        isCursorLocked = !state;
-    }
-
-    private void UpdateCursorState(){
-        Cursor.lockState = isCursorLocked ? CursorLockMode.Locked : CursorLockMode.Confined;
+        if(state){
+            CameraManager.Instance.UnlockAndShowCursor();
+        }else{
+            CameraManager.Instance.LockAndHideCursor();
+        }
     }
 
 }

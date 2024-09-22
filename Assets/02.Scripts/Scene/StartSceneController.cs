@@ -49,7 +49,7 @@ public class StartSceneController : MonoBehaviour
     /// </summary>
     public void OnStartButtonClicked()
     {
-        PlayerPrefs.SetString("NextScene", SceneConstants.PlaygroundB);          // 다음 씬 설정
+        PlayerPrefs.SetString("NextScene", SceneConstants.PlaygroundA);          // 다음 씬 설정
         _systemManager.SceneLoader.LoadNextScene(SceneConstants.LoadingScene);   // 로딩 씬으로 이동
         _audioManager.StopBackgroundMusic();                                     // 배경음악 정지
     }

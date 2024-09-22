@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using StarterAssets;
 using System;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// 게임의 전반적인 관리를 담당하는 클래스
@@ -27,6 +28,7 @@ public class GameManager : Singleton<GameManager>, IManager
     #endregion
 
     [SerializeField] private SystemManager systemManager; // 시스템 매니저
+    [SerializeField] private CameraManager cameraManager; // 카메라 매니저
 
     public string CurrentScene {
         get {
@@ -50,6 +52,8 @@ public class GameManager : Singleton<GameManager>, IManager
         uiManager       = GetComponentInChildren<UIManager>();
         audioManager    = GetComponentInChildren<AudioManager>();
         itemManager     = GetComponentInChildren<ItemManager>();
+        cameraManager   = GetComponentInChildren<CameraManager>();
+        inputManager    = GetComponentInChildren<InputManager>();
         
         playerStatus = FindAnyObjectByType<PlayerStatus>(); // 플레이어 상태 찾기
 
@@ -65,6 +69,24 @@ public class GameManager : Singleton<GameManager>, IManager
         // CheckObject(ref inputManager);
         // CheckObject(ref audioManager);
         
+    }
+
+    void OnEnable()
+    {
+        // 씬 로드 이벤트에 메서드 등록
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        // 씬 로드 이벤트에서 메서드 해제
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    // 씬이 로드될 때 호출되는 메서드
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Initialize 메서드 호출
         Initialize();
     }
     
@@ -74,6 +96,7 @@ public class GameManager : Singleton<GameManager>, IManager
         systemManager.Initialize();
         audioManager.Initialize();
         inputManager.Initialize();
+        cameraManager.Initialize();
     }
 
     /// <summary>
@@ -100,4 +123,5 @@ public class GameManager : Singleton<GameManager>, IManager
 //             manager = GetComponent<T>();
 //         }
 //     }
+
 }
