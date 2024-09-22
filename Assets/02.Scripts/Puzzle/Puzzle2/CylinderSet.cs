@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class CylinderSet : MonoBehaviour
+public class CylinderSet : MonoBehaviour, IInteractionable
 {
     [Tooltip("실린더 순서대로 넣기")]
     public SpinCylinder[] spinCylinder;     // 회전할 객체를 넣을 리스트
@@ -18,7 +18,12 @@ public class CylinderSet : MonoBehaviour
     // [HideInInspector]
     public int[] puzzleNowAnswer;           // 각 실린더의 현재 답
 
-    private bool _open;                     // 답이 맞을 경우 true가 됨
+    public bool test;                       // 상호작용 테스트 용 변수   *임시*
+    
+
+    private bool interaction;
+    
+    private bool open;                      // 답이 맞을 경우 true가 됨
 
     public float speed;                     // 실린더들의 회전 속도
     
@@ -43,11 +48,27 @@ public class CylinderSet : MonoBehaviour
 
     void Update()
     {
+        if (test)       // 상호작용 테스트 용  *임시*
+        {
+            Interaction();
+            test = false;
+        }
+
+        if (Input.GetKeyUp(KeyCode.Escape))      // 상호작용 테스트 용  *임시*
+        {
+            // 카메라를 끈다
+            myCam.gameObject.SetActive(false);
+            // 상호작용 종료
+            interaction = false;
+        }
+        
+        if (!interaction) return;   // 상호 작용 중일때만 사용할 수 있도록 함
+        
         // puzzleNowAnswer와 puzzleAnswer의 리스트 값이 같을 경우
         if (puzzleAnswer.SequenceEqual(puzzleNowAnswer))
         {
             // 클리어 판정
-            _open = true;
+            open = true;
             Debug.Log("Clear!");
         }
         // 좌클릭을 했을 때
@@ -81,5 +102,14 @@ public class CylinderSet : MonoBehaviour
                 checkCylinder.GetComponent<SpinCylinder>().PuzzleClick();
             }
         }
+    }
+
+    // 플레이어가 상호작용을 진행했을 경우
+    public void Interaction()
+    {
+        // 카메라를 켠다
+        myCam.gameObject.SetActive(true);
+        // 퍼즐을 풀 수 있도록 한다
+        interaction = true;
     }
 }
