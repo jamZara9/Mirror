@@ -29,7 +29,6 @@ public class CameraController : MonoBehaviour
     [Header("UI Settings")]
     public TextMeshProUGUI objectNameText;      // 오브젝트 이름을 표시할 UI 텍스트
     public GameObject detectedObject;           // 감지된 오브젝트
-
     private Outline _targetOutline;              // 아웃라인 캐싱
 
     /// <summary>
