@@ -32,9 +32,9 @@ public class MonsterFSM : MonoBehaviour,IDamage
     
     protected MonsterState mState;               // 학생(몬스터)의 현재 상태
 
-    [SerializeField] private bool isMovingMonster = true;               // 학생(몬스터)가 움직일지 여부
-    [SerializeField] private List<Vector3> moveDirectionList;           // 학생(몬스터)의 탐색 경로 지정리스트
-    [SerializeField] private List<float> moveDirectionDelayList;        // 학생(몬스터)각 경로에서 몇초 동안 멈출지 지정리스트
+    [SerializeField] public bool isMovingMonster = true;               // 학생(몬스터)가 움직일지 여부
+    [SerializeField] public List<Vector3> moveDirectionList;           // 학생(몬스터)의 탐색 경로 지정리스트
+    [SerializeField] public List<float> moveDirectionDelayList;        // 학생(몬스터)각 경로에서 몇초 동안 멈출지 지정리스트
     private bool _isWait = false;                                       // 학생(몬스터) 지금 대기중인지 확인용 변수
     private int _moveDirectionIndex = 0;                                // 학생(몬스터)현재 경로 인덱스
     [SerializeField] private bool DebugMode = false;                    // 학생(몬스터)의 탐색범위 가시화 할지 여부
@@ -49,7 +49,7 @@ public class MonsterFSM : MonoBehaviour,IDamage
     /// <summary>
     /// 몬스터의 탐색경로 그룹 Test
     /// </summary>
-    [SerializeField] private GameObject movePositionGroup;              // 몬스터의 탐색경로 그룹
+    [SerializeField] public GameObject movePositionGroup;              // 몬스터의 탐색경로 그룹
 
     public enum MonsterState       // 몬스터의 FSM
     {
@@ -84,10 +84,17 @@ public class MonsterFSM : MonoBehaviour,IDamage
         if(movePositionGroup != null)
         {
             moveDirectionList.Clear();
-            moveDirectionDelayList.Clear();
             for (int i = 0; i < movePositionGroup.transform.childCount; i++)
             {
                 moveDirectionList.Add(movePositionGroup.transform.GetChild(i).position);
+                
+            }
+        }
+
+        if (moveDirectionDelayList.Count == 0)
+        {
+            for (int i = 0; i < movePositionGroup.transform.childCount; i++)
+            {
                 moveDirectionDelayList.Add(1.0f);
             }
         }
