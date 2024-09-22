@@ -50,21 +50,20 @@ public class GameManager : Singleton<GameManager>, IManager
         uiManager       = GetComponentInChildren<UIManager>();
         audioManager    = GetComponentInChildren<AudioManager>();
         itemManager     = GetComponentInChildren<ItemManager>();
-        //
         
         playerStatus = FindAnyObjectByType<PlayerStatus>(); // 플레이어 상태 찾기
 
-        CheckObject(ref itemManager);
-        CheckObject(ref uiController);
-        CheckObject(ref cameraController);
-        CheckObject(ref storage);
-        CheckObject(ref playerInventory);
-        CheckObject(ref inventoryManager);
-        CheckObject(ref weaponManager);
-        CheckObject(ref uiManager);
-        CheckObject(ref dialogueManager);
-        CheckObject(ref inputManager);
-        CheckObject(ref audioManager);
+        // CheckObject(ref itemManager);
+        // CheckObject(ref uiController);
+        // CheckObject(ref cameraController);
+        // CheckObject(ref storage);
+        // CheckObject(ref playerInventory);
+        // CheckObject(ref inventoryManager);
+        // CheckObject(ref weaponManager);
+        // CheckObject(ref uiManager);
+        // CheckObject(ref dialogueManager);
+        // CheckObject(ref inputManager);
+        // CheckObject(ref audioManager);
         
         Initialize();
     }
@@ -87,18 +86,18 @@ public class GameManager : Singleton<GameManager>, IManager
         uiManager.SetVideoplayerActive(false);
     }
 
-////////////////////////////////////////////// 추후 제거 예정
-    /// <summary>
-    /// 해당 매니저가 null인지 확인하고 null이면 해당 manager의 타입을 찾아서 할당
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="manager"></param>
-    private void CheckObject<T>(ref T manager) where T : Component
-    {
-        // 해당 매니저가 null이면 해당 manager의 타입을 찾아서 할당
-        if (manager == null)
-        {
-            manager = GetComponent<T>();
-        }
-    }
+// ////////////////////////////////////////////// 추후 제거 예정
+//     /// <summary>
+//     /// 해당 매니저가 null인지 확인하고 null이면 해당 manager의 타입을 찾아서 할당
+//     /// </summary>
+//     /// <typeparam name="T"></typeparam>
+//     /// <param name="manager"></param>
+//     private void CheckObject<T>(ref T manager) where T : Component
+//     {
+//         // 해당 매니저가 null이면 해당 manager의 타입을 찾아서 할당
+//         if (manager == null)
+//         {
+//             manager = GetComponent<T>();
+//         }
+//     }
 }
