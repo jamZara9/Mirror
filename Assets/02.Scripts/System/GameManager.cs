@@ -26,11 +26,13 @@ public class GameManager : Singleton<GameManager>, IManager
     // public InputManager inputManager;                 // 입력 매니저
     #endregion
 
-    [SerializeField] private SystemManager systemManager;       // 시스템 매니저
-    [SerializeField] private CameraManager cameraManager;       // 카메라 매니저
-    [SerializeField] private InputManager inputManager;         // 입력 매니저
-    [SerializeField] private PlayerManager playerManager;       // 플레이어 매니저
-    [SerializeField] private DialogueManager dialogueManager;   // 대화 매니저
+    [SerializeField] private SystemManager systemManager;           // 시스템 매니저
+    [SerializeField] private CameraManager cameraManager;           // 카메라 매니저
+    [SerializeField] private InputManager inputManager;             // 입력 매니저
+    [SerializeField] private PlayerManager playerManager;           // 플레이어 매니저
+    [SerializeField] private DialogueManager dialogueManager;       // 대화 매니저
+    [SerializeField] private MonsterManager monsterManager;         // 몬스터 매니저
+    [SerializeField] private ObjectPoolManager objectPoolManager;   // 오브젝트 풀 매니저
 
     public string CurrentScene {
         get {
@@ -58,6 +60,8 @@ public class GameManager : Singleton<GameManager>, IManager
         inputManager    = GetComponentInChildren<InputManager>();
         playerManager   = GetComponentInChildren<PlayerManager>();
         dialogueManager = GetComponentInChildren<DialogueManager>();
+        monsterManager  = GetComponentInChildren<MonsterManager>();
+        objectPoolManager = GetComponentInChildren<ObjectPoolManager>();
         
         
         // 추후 삭제
@@ -93,6 +97,8 @@ public class GameManager : Singleton<GameManager>, IManager
         cameraManager.Initialize(sceneName);
         playerManager.Initialize(sceneName);
         dialogueManager.Initialize(sceneName);
+        monsterManager.Initialize(sceneName);
+        objectPoolManager.Initialize(sceneName);
     }
 
     /// <summary>
