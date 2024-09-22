@@ -3032,31 +3032,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 539603455}
   m_CullTransparentMesh: 1
---- !u!1 &539661462 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7956522948150777100, guid: 4916eb0ab8f00af4c8422cbc8f4c9b78, type: 3}
-  m_PrefabInstance: {fileID: 1537430685}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &539661466
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 539661462}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c709c567e025205428118c60a91e5a97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerStatus: {fileID: 0}
-  playerTransform: {fileID: 0}
-  hitSound:
-  - {fileID: 8300000, guid: fb754b3c6f8f0704e811e187dccc050a, type: 3}
-  - {fileID: 8300000, guid: c2962179ed51d5549baa12b40626f37d, type: 3}
-  - {fileID: 8300000, guid: 2afc29a7affa12149bfe18c84f064cf5, type: 3}
-  - {fileID: 8300000, guid: 7e04885df1b6c184d9c4ba51010671c9, type: 3}
-  deathSound: {fileID: 8300000, guid: 0b6eb17ff74ae744dad93908391f68dd, type: 3}
 --- !u!1 &547982877
 GameObject:
   m_ObjectHideFlags: 1
@@ -6449,65 +6424,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1220652981
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1220652982}
-  - component: {fileID: 1220652983}
-  m_Layer: 0
-  m_Name: DialogueManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1220652982
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1220652981}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1897182905}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1220652983
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1220652981}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a907be329e74d084498532d40aad6cf4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueText: {fileID: 737359190}
-  speakerNameText: {fileID: 737359189}
-  movableDialoguePanel: {fileID: 19281230}
-  movableSpeakerNameText: {fileID: 19281229}
-  sentenceText: {fileID: 19281231}
-  currentScene: {fileID: 11400000, guid: 152645f4dca84924b8277004d4c3b4a5, type: 2}
-  backGroundController: {fileID: 737359188}
-  typeDelay: 0.025
-  defaultDelay: 1.25
-  spritesPrefab: {fileID: 737359187}
-  audioSource: {fileID: 1537430686}
-  sentenceAudioSource: {fileID: 0}
-  visualNovelDialoguePanel: {fileID: 737359193}
-  skipPanel: {fileID: 737359192}
-  skipPanelStoryText: {fileID: 737359191}
 --- !u!1 &1257402867
 GameObject:
   m_ObjectHideFlags: 19
@@ -7577,6 +7493,46 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3131635620505236942, guid: 4916eb0ab8f00af4c8422cbc8f4c9b78, type: 3}
+      propertyPath: skipPanel
+      value: 
+      objectReference: {fileID: 737359192}
+    - target: {fileID: 3131635620505236942, guid: 4916eb0ab8f00af4c8422cbc8f4c9b78, type: 3}
+      propertyPath: dialogueText
+      value: 
+      objectReference: {fileID: 737359190}
+    - target: {fileID: 3131635620505236942, guid: 4916eb0ab8f00af4c8422cbc8f4c9b78, type: 3}
+      propertyPath: sentenceText
+      value: 
+      objectReference: {fileID: 19281231}
+    - target: {fileID: 3131635620505236942, guid: 4916eb0ab8f00af4c8422cbc8f4c9b78, type: 3}
+      propertyPath: spritesPrefab
+      value: 
+      objectReference: {fileID: 737359187}
+    - target: {fileID: 3131635620505236942, guid: 4916eb0ab8f00af4c8422cbc8f4c9b78, type: 3}
+      propertyPath: speakerNameText
+      value: 
+      objectReference: {fileID: 737359189}
+    - target: {fileID: 3131635620505236942, guid: 4916eb0ab8f00af4c8422cbc8f4c9b78, type: 3}
+      propertyPath: skipPanelStoryText
+      value: 
+      objectReference: {fileID: 737359191}
+    - target: {fileID: 3131635620505236942, guid: 4916eb0ab8f00af4c8422cbc8f4c9b78, type: 3}
+      propertyPath: backGroundController
+      value: 
+      objectReference: {fileID: 737359188}
+    - target: {fileID: 3131635620505236942, guid: 4916eb0ab8f00af4c8422cbc8f4c9b78, type: 3}
+      propertyPath: movableDialoguePanel
+      value: 
+      objectReference: {fileID: 19281230}
+    - target: {fileID: 3131635620505236942, guid: 4916eb0ab8f00af4c8422cbc8f4c9b78, type: 3}
+      propertyPath: movableSpeakerNameText
+      value: 
+      objectReference: {fileID: 19281229}
+    - target: {fileID: 3131635620505236942, guid: 4916eb0ab8f00af4c8422cbc8f4c9b78, type: 3}
+      propertyPath: visualNovelDialoguePanel
+      value: 
+      objectReference: {fileID: 737359193}
     - target: {fileID: 3191404756901017203, guid: 4916eb0ab8f00af4c8422cbc8f4c9b78, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -7623,20 +7579,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 6830112045832957282, guid: 4916eb0ab8f00af4c8422cbc8f4c9b78, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1220652982}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7956522948150777100, guid: 4916eb0ab8f00af4c8422cbc8f4c9b78, type: 3}
-      insertIndex: 1
-      addedObject: {fileID: 539661466}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4916eb0ab8f00af4c8422cbc8f4c9b78, type: 3}
---- !u!82 &1537430686 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 3237698616654025347, guid: 4916eb0ab8f00af4c8422cbc8f4c9b78, type: 3}
-  m_PrefabInstance: {fileID: 1537430685}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1570816766
 GameObject:
   m_ObjectHideFlags: 19
@@ -9558,11 +9503,6 @@ PrefabInstance:
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4717122184659452783, guid: 1d00d057b223b704ba7bd63279b1fa6b, type: 3}
   m_PrefabInstance: {fileID: 1878485109}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1897182905 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6830112045832957282, guid: 4916eb0ab8f00af4c8422cbc8f4c9b78, type: 3}
-  m_PrefabInstance: {fileID: 1537430685}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1920971164
 GameObject:
