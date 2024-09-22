@@ -30,6 +30,7 @@ public class GameManager : Singleton<GameManager>, IManager
     [SerializeField] private SystemManager systemManager; // 시스템 매니저
     [SerializeField] private CameraManager cameraManager; // 카메라 매니저
     [SerializeField] private InputManager inputManager;   // 입력 매니저
+    [SerializeField] private PlayerManager playerManager; // 플레이어 매니저
 
     public string CurrentScene {
         get {
@@ -55,6 +56,7 @@ public class GameManager : Singleton<GameManager>, IManager
         itemManager     = GetComponentInChildren<ItemManager>();
         cameraManager   = GetComponentInChildren<CameraManager>();
         inputManager    = GetComponentInChildren<InputManager>();
+        playerManager   = GetComponentInChildren<PlayerManager>();
         
         playerStatus = FindAnyObjectByType<PlayerStatus>(); // 플레이어 상태 찾기
 
@@ -98,6 +100,7 @@ public class GameManager : Singleton<GameManager>, IManager
         audioManager.Initialize(sceneName);
         inputManager.Initialize(sceneName);
         cameraManager.Initialize(sceneName);
+        playerManager.Initialize(sceneName);
     }
 
     /// <summary>

@@ -9,6 +9,7 @@ using System;
 public class PlayerStateController : MonoBehaviour
 {
     private PlayerStatus.PlayerBasicSettings _settings;  // PlayerBasicSettings를 참조
+    private PlayerStatus _playerStatus;                 // PlayerStatus를 참조
     private float _speed = 0.0f;                    // 현재 속도
     private float _animationBlend;                  // 애니메이션 블렌드
     private float _rotationSmoothTime = 0.12f;      // 회전 부드러움 시간
@@ -68,7 +69,8 @@ public class PlayerStateController : MonoBehaviour
         _hasFPSAnimator = _FPSAnimator != null;
         _has3stAnimator = _3stAnimator != null;
 
-        _settings = GetComponent<PlayerStatus>().settings;
+        _playerStatus = PlayerManager.Instance.GetPlayerStatus();
+        _settings = _playerStatus.settings;
         _characterController = GetComponent<CharacterController>();
         // _inputActions = GetComponent<PlayerInputAction>();
         // _inputActions = GameManager.Instance.inputManager.playerInputAction;
@@ -533,11 +535,9 @@ public class PlayerStateController : MonoBehaviour
     {
         if (_inputActions.isFire)
         {
-            PlayerStatus playerStatus = GetComponent<PlayerStatus>();
+            Debug.Log($"{_attackTimeoutDelta} / {_playerStatus.settings.attackDelay}");
 
-            Debug.Log($"{_attackTimeoutDelta} / {playerStatus.settings.attackDelay}");
-
-            if(_attackTimeoutDelta > playerStatus.settings.attackDelay){
+            if(_attackTimeoutDelta > _playerStatus.settings.attackDelay){
 
                 // 애니메이터가 존재하는 경우, 애니메이션 상태를 업데이트
                 if (_hasFPSAnimator)
@@ -552,7 +552,7 @@ public class PlayerStateController : MonoBehaviour
 
                 Debug.Log("Attack");
                 //공격 사거리 내에 적이 있는지 확인
-                Collider[] hitColliders = Physics.OverlapSphere(transform.position, playerStatus.CurrentAttackRange);
+                Collider[] hitColliders = Physics.OverlapSphere(transform.position, _playerStatus.CurrentAttackRange);
                 foreach (var hitCollider in hitColliders)
                 {
                     // 적인 경우에만 데미지를 입힘
@@ -560,7 +560,7 @@ public class PlayerStateController : MonoBehaviour
                         IDamage target = hitCollider.GetComponent<IDamage>();
 
                         if(target != null){
-                            target.TakeDamage((int)playerStatus.CurrentAttackDamage);
+                            target.TakeDamage((int)_playerStatus.CurrentAttackDamage);
 
                             if(audioSource != null){
                                 // 공격 사운드 추가

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0017661673, g: 0.0012485423, b: 0.0009817869, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1021,7 +1021,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 791292130743612062, guid: 702a57d8256f1498f9c71d75b15f1144, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 995392319121594365, guid: 702a57d8256f1498f9c71d75b15f1144, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2081,7 +2081,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!192 &299148519
 OcclusionArea:
   m_ObjectHideFlags: 0
@@ -2864,7 +2864,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8600125277025255048, guid: f048fcb3e24f94594a8ea9a92efd1331, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3023,6 +3023,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStatus: {fileID: 0}
+  playerTransform: {fileID: 0}
+  hitSound:
+  - {fileID: 8300000, guid: fb754b3c6f8f0704e811e187dccc050a, type: 3}
+  - {fileID: 8300000, guid: c2962179ed51d5549baa12b40626f37d, type: 3}
+  - {fileID: 8300000, guid: 2afc29a7affa12149bfe18c84f064cf5, type: 3}
+  - {fileID: 8300000, guid: 7e04885df1b6c184d9c4ba51010671c9, type: 3}
+  deathSound: {fileID: 8300000, guid: 0b6eb17ff74ae744dad93908391f68dd, type: 3}
 --- !u!1 &547982877
 GameObject:
   m_ObjectHideFlags: 1
@@ -4239,12 +4246,7 @@ PrefabInstance:
       propertyPath: objectNameText
       value: 
       objectReference: {fileID: 1629254774}
-    - target: {fileID: 5275518140063869992, guid: eff52e242d589d74db3f3cfa6517ca75, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6030578383036665637, guid: eff52e242d589d74db3f3cfa6517ca75, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -6554,7 +6556,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1304044804
 Transform:
   m_ObjectHideFlags: 0

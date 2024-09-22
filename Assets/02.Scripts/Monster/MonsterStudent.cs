@@ -15,7 +15,8 @@ public class MonsterStudent : MonsterFSM
             {
                 int randValue = Random.Range(0, 10);
                 
-                IDamage player = _player.GetComponent<IDamage>();
+                // IDamage player = _player.GetComponent<IDamage>();
+                IDamage player = PlayerManager.Instance;
 
                 if (randValue < 5) //50%로 방향을 구함
                 {

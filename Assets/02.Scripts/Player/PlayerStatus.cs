@@ -13,7 +13,7 @@ public enum StatusType
 /// <summary>
 /// 플레이어의 상태(체력, 스태미나)를 관리하는 클래스
 /// </summary>
-public class PlayerStatus : MonoBehaviour, IDamage
+public class PlayerStatus : MonoBehaviour
 {
     [Serializable]
     public class PlayerBasicSettings
@@ -41,9 +41,6 @@ public class PlayerStatus : MonoBehaviour, IDamage
     public float CurrentAttackRange { get; private set; }   
     public float CurrentAttackDamage { get; private set; }
 
-    [SerializeField] private AudioClip[] hitSound;    // 피격 효과음
-    [SerializeField] private AudioClip deathSound;    // 사망 효과음
-
     void Awake()
     {
         CurrentHealth = 60.0f;
@@ -69,26 +66,5 @@ public class PlayerStatus : MonoBehaviour, IDamage
                 CurrentMental = Mathf.Clamp(CurrentMental, 0, settings.maxMental);
                 break;
         }
-    }
-
-    public void TakeDamage(int hitPower)
-    {
-        if(CurrentHealth <= 0) return;  // 이미 사망한 경우 데미지를 받지 않음
-
-        AdjustStatus(StatusType.Health, -hitPower);
-
-        // 피격 효과음 재생
-        if(CurrentHealth > 0){
-            // audioSource.clip = hitSound[UnityEngine.Random.Range(0, hitSound.Length)];
-            // audioSource.Play();
-            AudioManager.Instance.PlaySoundEffect(hitSound[UnityEngine.Random.Range(0, hitSound.Length)], transform.position, 1.0f);
-
-        }else{
-            // audioSource.clip = deathSound;
-            // audioSource.Play();
-            AudioManager.Instance.PlaySoundEffect(deathSound, transform.position, 1.0f);
-        }
-
-        Debug.Log($"현재 체력 : {CurrentHealth}");
     }
 }
