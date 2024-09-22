@@ -12,11 +12,11 @@ public class GameManager : Singleton<GameManager>, IManager
     [Header("Manager")]
     #region Manager
     public ItemManager itemManager;
-    public CameraController cameraController;         // 카메라 컨트롤러
-    public UIController_Test uiController;            // UI 컨트롤러
-    public Storage storage;                           // 저장소
-    public PlayerStatus playerStatus;                 // 플레이어 상태
-    public PlayerInventory playerInventory;           // 플레이어 인벤토리
+    public CameraController cameraController;         // 카메라 컨트롤러      x
+    public UIController_Test uiController;            // UI 컨트롤러         x
+    public Storage storage;                           // 저장소              x
+    public PlayerStatus playerStatus;                 // 플레이어 상태        x
+    public PlayerInventory playerInventory;           // 플레이어 인벤토리     x
     public WeaponManager weaponManager;               // 무기 매니저
     public DialogueManager dialogueManager;           // 대화 매니저
     public UIManager uiManager;                       // UI 매니저
@@ -50,20 +50,21 @@ public class GameManager : Singleton<GameManager>, IManager
         uiManager       = GetComponentInChildren<UIManager>();
         audioManager    = GetComponentInChildren<AudioManager>();
         itemManager     = GetComponentInChildren<ItemManager>();
+        //
+        
+        playerStatus = FindAnyObjectByType<PlayerStatus>(); // 플레이어 상태 찾기
 
-        // playerStatus = FindAnyObjectByType<PlayerStatus>(); // 플레이어 상태 찾기
-
-        // CheckObject(ref itemManager);
-        // CheckObject(ref uiController);
-        // CheckObject(ref cameraController);
-        // CheckObject(ref storage);
-        // CheckObject(ref playerInventory);
-        // CheckObject(ref inventoryManager);
-        // CheckObject(ref weaponManager);
-        // CheckObject(ref uiManager);
-        // CheckObject(ref dialogueManager);
-        // CheckObject(ref inputManager);
-        // CheckObject(ref audioManager);
+        CheckObject(ref itemManager);
+        CheckObject(ref uiController);
+        CheckObject(ref cameraController);
+        CheckObject(ref storage);
+        CheckObject(ref playerInventory);
+        CheckObject(ref inventoryManager);
+        CheckObject(ref weaponManager);
+        CheckObject(ref uiManager);
+        CheckObject(ref dialogueManager);
+        CheckObject(ref inputManager);
+        CheckObject(ref audioManager);
         
         Initialize();
     }

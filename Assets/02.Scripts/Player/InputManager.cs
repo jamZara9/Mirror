@@ -17,18 +17,18 @@ public class InputManager : Singleton<InputManager>, IManager
 
     private void Awake()
     {
-        // 최신 GameManager 미완성 시 PlaygroundA 씬에서 사용이 필요
-        // if (!inputAction) throw new NullReferenceException("InputActionAsset이 할당되지 않았습니다.");
+        //최신 GameManager 미완성 시 PlaygroundA 씬에서 사용이 필요
+        if (!inputAction) throw new NullReferenceException("InputActionAsset이 할당되지 않았습니다.");
 
-        // inputAction.Enable();              // 최초 모든 액션 맵을 활성화
+        inputAction.Enable();              // 최초 모든 액션 맵을 활성화
 
-        // actionMaps = new Dictionary<string, InputActionMap>();  // 딕셔너리 초기화
-        // foreach (var map in inputAction.actionMaps)             // 모든 ActionMap을 순회하며
-        // {
-        //     actionMaps.Add(map.name, map);                      // 딕셔너리에 추가
-        // }
+        actionMaps = new Dictionary<string, InputActionMap>();  // 딕셔너리 초기화
+        foreach (var map in inputAction.actionMaps)             // 모든 ActionMap을 순회하며
+        {
+            actionMaps.Add(map.name, map);                      // 딕셔너리에 추가
+        }
 
-        // SwitchActionMap("Player");
+        SwitchActionMap("Player");
     }
 
     public void Initialize()
