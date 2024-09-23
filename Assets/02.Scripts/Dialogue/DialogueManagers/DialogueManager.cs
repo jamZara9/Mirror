@@ -44,7 +44,6 @@ public class DialogueManager : Singleton<DialogueManager>, IManager
     // 메인 BGM 및 사운드 이펙트 AudioSource.
     [Header ("Audio Source")]
     [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioSource sentenceAudioSource;
 
     public AudioSource GetBGMAudoiSource(){
         return audioSource;
@@ -114,23 +113,13 @@ public class DialogueManager : Singleton<DialogueManager>, IManager
         Playing, Completed
     }
     private State _state = State.Completed;
-    
-    // void Awake()
-    // {
-    //     // csvParser = GetComponent<CsvParser>();
-    //     csvParser = new();
-
-    //     // 딕셔너리 초기화.
-    //     _sprites = new Dictionary<Speaker, SpriteController>();
-    // }
 
     // IManager 인터페이스 구현.
     public void Initialize(string sceneName)
     {
         if(sceneName == SceneConstants.PlaygroundA)
         {
-            // CSV Parser 등록.
-            // csvParser = GetComponent<CsvParser>();
+            // CSV Parser 객체 생성.
             csvParser = new();
 
             // 딕셔너리 초기화.
@@ -176,8 +165,7 @@ public class DialogueManager : Singleton<DialogueManager>, IManager
         _sentenceIndex = -1;
         
         // 스토리 BGM 실행.
-        audioSource.clip = currentScene.backgroundMusic;
-        audioSource.Play();
+        AudioManager.Instance.PlayBackgroundMusic(currentScene.backgroundMusic, 1.0f);
 
         // 스토리 타입에 따라 문장 실행.
         switch (storyType)
@@ -214,8 +202,6 @@ public class DialogueManager : Singleton<DialogueManager>, IManager
         
         backGroundController.SwitchImage(currentScene.sentences[_sentenceIndex].background);
 
-        // sentenceAudioSource.clip = currentScene.sentences[_sentenceIndex].audioClip;
-        // sentenceAudioSource.Play();
         AudioManager.Instance.PlaySoundEffect(currentScene.sentences[_sentenceIndex].audioClip, transform.position, 1.0f);
 
         ActSpeakers();
@@ -422,6 +408,7 @@ public class DialogueManager : Singleton<DialogueManager>, IManager
         _sprites.Clear();
         // 모든 코루틴 정지.
         StopAllCoroutines();
+        audioSource.Stop();
         
         // UI 패널 비활성화.
         movableDialoguePanel.SetActive(false);
