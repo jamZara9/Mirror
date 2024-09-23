@@ -8,7 +8,6 @@ public class Scratch : MonoBehaviour, IInteractionable
     public Camera myCam;                // Raycast 및 화면 전환할 카메라
     public GameObject inputBlock;
     public GameObject playButton;
-    public bool open;
 
     public bool test;                    // 상호작용 테스트 용 변수   *임시*
 
@@ -36,10 +35,7 @@ public class Scratch : MonoBehaviour, IInteractionable
 
         if (Input.GetKeyUp(KeyCode.Escape))      // 상호작용 테스트 용  *임시*
         {
-            // 카메라를 끈다
-            myCam.gameObject.SetActive(false);
-            // 상호작용 종료
-            interaction = false;
+            EndInteraction();
         }
         
         if (!interaction) return;   // 상호 작용 중일때만 사용할 수 있도록 함
@@ -147,6 +143,14 @@ public class Scratch : MonoBehaviour, IInteractionable
         myCam.gameObject.SetActive(true);
     }
 
+    private void EndInteraction()
+    {
+        // 카메라를 끈다
+        myCam.gameObject.SetActive(false);
+        // 상호작용 종료
+        interaction = false;
+    }
+
     private void PlayCode(GameObject getCodeBlock)
     {
         // Debug.Log($"Num = {getCodeBlock.name.Substring(getCodeBlock.name.Length - 1, 1)}");
@@ -167,7 +171,6 @@ public class Scratch : MonoBehaviour, IInteractionable
                 Debug.Log("받아들여");
                 break;
         }
+        EndInteraction();
     }
-    
-    
 }

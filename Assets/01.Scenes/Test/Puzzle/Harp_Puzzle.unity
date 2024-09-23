@@ -382,6 +382,11 @@ MonoBehaviour:
       enableFptlForForwardOpaque: 0
       enableBigTilePrepass: 0
       isFptlEnabled: 0
+--- !u!20 &1153912795 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 1658783747782313618, guid: 90e0b5171a0d0c14db941e6d8032b939, type: 3}
+  m_PrefabInstance: {fileID: 2015291744257244189}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1604129362
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,6 +436,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!20 &1763738471 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 3031992886563818286, guid: 3c62571f952acb4499b4704bf493e4ac, type: 3}
+  m_PrefabInstance: {fileID: 5578843045315956613}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1925670194
 GameObject:
   m_ObjectHideFlags: 0
@@ -959,11 +969,23 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1174675627534336579, guid: 90e0b5171a0d0c14db941e6d8032b939, type: 3}
+      propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2015291744257244194}
+    - target: {fileID: 2388754766750366948, guid: 90e0b5171a0d0c14db941e6d8032b939, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1153912795}
     - target: {fileID: 2606574889037600055, guid: 90e0b5171a0d0c14db941e6d8032b939, type: 3}
       propertyPath: m_Name
       value: LoginMoniter
       objectReference: {fileID: 0}
     - target: {fileID: 2606574889037600055, guid: 90e0b5171a0d0c14db941e6d8032b939, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3143675641857810271, guid: 90e0b5171a0d0c14db941e6d8032b939, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -977,6 +999,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 22911787056474149, guid: 90e0b5171a0d0c14db941e6d8032b939, type: 3}
   m_PrefabInstance: {fileID: 2015291744257244189}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2015291744257244194 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4530277242941876096, guid: 90e0b5171a0d0c14db941e6d8032b939, type: 3}
+  m_PrefabInstance: {fileID: 2015291744257244189}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 029d02e569226e9458a7682ec0845c84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2629183982701766147
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1173,14 +1206,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Scratch
       objectReference: {fileID: 0}
-    - target: {fileID: 4718236282600356243, guid: 3c62571f952acb4499b4704bf493e4ac, type: 3}
-      propertyPath: m_IsActive
+    - target: {fileID: 5165530698461926346, guid: 3c62571f952acb4499b4704bf493e4ac, type: 3}
+      propertyPath: test
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5165530698461926346, guid: 3c62571f952acb4499b4704bf493e4ac, type: 3}
       propertyPath: myCam
       value: 
-      objectReference: {fileID: 1092682997}
+      objectReference: {fileID: 1763738471}
+    - target: {fileID: 5352164612330209873, guid: 3c62571f952acb4499b4704bf493e4ac, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
