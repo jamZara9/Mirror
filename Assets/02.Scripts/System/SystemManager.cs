@@ -6,11 +6,10 @@ using UnityEngine;
 /// 시스템 관리자 클래스
 /// </summary>
 public class SystemManager : Singleton<SystemManager>, IManager
-{
-    //[추후 변수를 private로 바꾸고 SceneLoader 기능을 SystemManager의 함수로 호출하여 사용하도록 변경 진행 예정]
-    // 즉, SceneLoader를 직접 사용하는 것이 아닌 SystemManager를 통해 SceneLoader를 사용하도록 변경할 예정
-    public SceneLoader SceneLoader{get; private set;} // 씬 로더            
+{       
     public VideoLoader VideoLoader{get; private set;} // 인트로 로더
+
+    private SceneLoader _sceneLoader; // 씬 로더
 
     /// <summary>
     /// 초기화 함수
@@ -19,11 +18,30 @@ public class SystemManager : Singleton<SystemManager>, IManager
     {
         if(sceneName == SceneConstants.StartScene)      // 시작 씬일 경우
         {
-            SceneLoader = GetComponent<SceneLoader>();
-            VideoLoader = GetComponent<VideoLoader>();
+            if(VideoLoader == null) VideoLoader = GetComponent<VideoLoader>();
         }
     }
 
+    void Start()
+    {
+        VideoLoader = GetComponent<VideoLoader>();
+
+        _sceneLoader = GetComponent<SceneLoader>();
+
+        Debug.Log($"SceneLoader: {_sceneLoader == null}, VideoLoader: {VideoLoader == null}");
+    }
+
+    #region Scene Control
+    /// <summary>
+    /// 다음 씬을 로드하는 함수
+    /// </summary>
+    /// <param name="sceneName">씬 이름</param>
+    public void LoadNextScene(string sceneName)
+    {
+        StartCoroutine(_sceneLoader.LoadSceneAsync(sceneName));
+    }
+    #endregion
+    
 
     #region Mouse Cursor Control
     /// <summary>

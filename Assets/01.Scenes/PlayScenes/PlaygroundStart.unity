@@ -1206,7 +1206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72b8df4b52edb4542bae617cc0576a1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _systemManager: {fileID: 0}
+  _systemManager: {fileID: 472235338290954534}
   _audioManager: {fileID: 0}
   _uiManager: {fileID: 0}
 --- !u!1 &1879516888
@@ -1399,6 +1399,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4916eb0ab8f00af4c8422cbc8f4c9b78, type: 3}
+--- !u!114 &472235338290954534 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3353841744277424899, guid: 4916eb0ab8f00af4c8422cbc8f4c9b78, type: 3}
+  m_PrefabInstance: {fileID: 472235338290954533}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 598bd11baeea3544582933f831e2d845, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
