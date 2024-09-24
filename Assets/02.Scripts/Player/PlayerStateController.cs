@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Utils;
 
 /// <summary>
 /// 플레이어의 상태(이동, 점프, 달리기등)에 대한 로직을 담당하는 클래스
@@ -219,7 +220,8 @@ public class PlayerStateController : MonoBehaviour
         float _xRotation = _inputActions.look.y * _rotationSmoothTime;    // 상하 회전
 
         _cinemachineTargetPitch -= _xRotation;
-        _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, bottomClamp, topClamp);
+        // _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, bottomClamp, topClamp);
+        _cinemachineTargetPitch = MathUtil.ClampAngle(_cinemachineTargetPitch, bottomClamp, topClamp);
 
         Quaternion targetRotation = Quaternion.Euler(_cinemachineTargetPitch + cameraAngleOverride, 0.0f, 0.0f);
         _cinemachineCamera.transform.localRotation = targetRotation;
@@ -239,20 +241,6 @@ public class PlayerStateController : MonoBehaviour
     {
         Vector3 _characterRotationY = new Vector3(0f, _inputActions.look.x, 0f) * _rotationSmoothTime;
         _characterController.transform.Rotate(_characterRotationY);
-    }
-
-    /// <summary>
-    /// 각도 제한
-    /// </summary>
-    /// <param name="lfAngle"></param>
-    /// <param name="lfMin"></param>
-    /// <param name="lfMax"></param>
-    /// <returns></returns>
-    private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
-    {
-        if (lfAngle < -360f) lfAngle += 360f;
-        if (lfAngle > 360f) lfAngle -= 360f;
-        return Mathf.Clamp(lfAngle, lfMin, lfMax);
     }
 
     /// <summary>

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Utils;
 
 // UI 로드르 위한 네임스페이스
 using TMPro;
@@ -144,9 +145,11 @@ public class CameraController : MonoBehaviour
     public void SetCursorState(bool state)
     {
         if(state){
-            CameraManager.Instance.UnlockAndShowCursor();
+            // CameraManager.Instance.UnlockAndShowCursor();
+            MouseUtil.UnlockAndShowCursor();
         }else{
-            CameraManager.Instance.LockAndHideCursor();
+            // CameraManager.Instance.LockAndHideCursor();
+            MouseUtil.LockAndHideCursor();
         }
     }
 

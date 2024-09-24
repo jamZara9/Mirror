@@ -43,23 +43,14 @@ public class SystemManager : Singleton<SystemManager>, IManager
     #endregion
     
 
-    #region Mouse Cursor Control
     /// <summary>
-    /// 마우스 커서를 숨기고 잠그는 함수
     /// </summary>
-    public void LockAndHideCursor()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
 
     /// <summary>
-    /// 마우스 커서를 풀고 보이게 하는 함수
     /// </summary>
-    public void UnlockAndShowCursor()
     {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
     }
     #endregion
     
