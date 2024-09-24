@@ -18,25 +18,24 @@ public class StartSceneController : MonoBehaviour
 
         // 게임 시작시 인트로 영상 재생
         _uiManager.SetVideoplayerActive(true);
-        _systemManager.VideoLoader.SetupVideoplayer(_uiManager.VideoImage);
-        _systemManager.VideoLoader.PlayVedio();
+        _systemManager.PlayVideo(VideoConstants.INTRO);
     }
 
     void Update()
     {
         // @todo: 스킵 텍스트가 다른 컷씬에서도 사용된다면 VideoLoader에 이 기능 추가를 고려
         // 비디오가 재생 중일 때 아무 키나 누르면 영상 정지
-        if(_systemManager.VideoLoader.IsVideoPlaying){
+        if(_systemManager.IsVideoPlaying){
             foreach (KeyCode keyCode in Enum.GetValues(typeof(KeyCode)))
             {
                 if (Input.GetKeyDown(keyCode))
                 {
                     Debug.Log("Key pressed: " + keyCode);
-                    if(_systemManager.VideoLoader.IsActiveSkipText){    // 스킵 텍스트가 활성화되어 있을 때
-                        _systemManager.VideoLoader.SkipTextActive(false);    // 스킵 텍스트 비활성화
-                        _systemManager.VideoLoader.StopVedio();
+                    if(_systemManager.IsSkipTextActive){    // 스킵 텍스트가 활성화되어 있을 때
+                        _systemManager.SetSkipTextActive(false);    // 스킵 텍스트 비활성화
+                        _systemManager.StopVideo();
                     }else{
-                        _systemManager.VideoLoader.SkipTextActive(true);    // 스킵 텍스트 활성화
+                        _systemManager.SetSkipTextActive(true);    // 스킵 텍스트 활성화
                     }
                 }
             }
