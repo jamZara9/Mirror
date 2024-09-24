@@ -7,12 +7,13 @@ using TMPro;
 
 public class LoadingController : MonoBehaviour
 {
-    public Slider loadingBar;
-    public TextMeshProUGUI loadingText;
-    public CanvasGroup canvasGroup; 
+    public Slider loadingBar;               // 로딩 바
+    public TextMeshProUGUI loadingText;     // 로딩 텍스트
+    public CanvasGroup canvasGroup;         // 캔버스 그룹
 
+    [Header("Loading Settings")]
+    [SerializeField] private float minLoadingTime = 5.0f; // 최소 로딩 시간 (초)
     private float elapsedTime = 0f; // 경과 시간
-    private float minLoadingTime = 5.0f; // 최소 로딩 시간 (초)
 
     private void Start()
     {
