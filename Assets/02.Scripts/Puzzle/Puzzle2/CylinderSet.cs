@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class CylinderSet : MonoBehaviour, IInteractionable
+public class CylinderSet : RaycastCheck, IInteractionable
 {
     [Tooltip("실린더 순서대로 넣기")]
     public SpinCylinder[] spinCylinder;     // 회전할 객체를 넣을 리스트
@@ -80,23 +80,11 @@ public class CylinderSet : MonoBehaviour, IInteractionable
 
     private void CylinderClick()
     {
-        // 마우스의 위치 값을 가져옴
-        Vector3 mousePosition = Input.mousePosition;
-        
-        // 카메라의 마우스 위치에서 Ray를 생성
-        Ray myRay = myCam.ScreenPointToRay(mousePosition);
-        
-        // Ray의 충돌 확인 용도
-        RaycastHit raycastHit;
-        
-        // Ray가 물체와 충돌했을 시 true, 아니면 false
-        bool weHitSomething = Physics.Raycast(myRay, out raycastHit);
-
         // spinCylinder 안의 객체 별로 비교
         foreach (var checkCylinder in spinCylinder)
         {
             // Ray가 물체와 충돌하였고,  현재 비교 중인 객체와 충돌한 객체가 같은 경우
-            if (weHitSomething && raycastHit.transform == checkCylinder.transform)
+            if (RayHitCheck(Input.mousePosition, myCam, checkCylinder.transform))
             {
                 // checkCylinder 객체의 PuzzleClick을 실행
                 checkCylinder.GetComponent<SpinCylinder>().PuzzleClick();

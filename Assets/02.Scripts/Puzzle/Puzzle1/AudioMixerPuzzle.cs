@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AudioMixerPuzzle : MonoBehaviour, IInteractionable
+public class AudioMixerPuzzle : RaycastCheck, IInteractionable
 {
     public float maxMove;               // 슬라이더가 상하로 이동할 수 있는 최대 거리
     public float buttonMoveSpeed = 1;   // 버튼이 이동하는 속도
@@ -42,23 +42,11 @@ public class AudioMixerPuzzle : MonoBehaviour, IInteractionable
     {
         // 좌클릭을 눌렀을 때
         if(Input.GetMouseButtonDown(0)){
-            // 마우스의 위치 값을 가져옴
-            Vector3 mousePosition = Input.mousePosition;
-        
-            // 카메라의 마우스 위치에서 Ray를 생성
-            Ray myRay = myCam.ScreenPointToRay(mousePosition);
-        
-            // Ray의 충돌 확인 용도
-            RaycastHit raycastHit;
-        
-            // Ray가 물체와 충돌했을 시 true, 아니면 false
-            bool weHitSomething = Physics.Raycast(myRay, out raycastHit);
-
             // 버튼의 수만큼 반복
             for (var i = 0; i < button.Length; i++)
             {
                 // Ray가 물체와 충돌하였고,  현재 비교 중인 객체와 충돌한 객체가 같은 경우
-                if (!weHitSomething || raycastHit.transform != button[i].transform) continue;
+                if (RayHitCheck(Input.mousePosition, myCam, button[i].transform)) continue;
                 // 현재 드래그 중인 버튼을 i번째 버튼으로 지정
                 nowDragButton = i;
                 // 드래그 중으로 변환
