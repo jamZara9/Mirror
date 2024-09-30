@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Reflection;
 
-public class InputManager : MonoBehaviour, IManager
+public class InputManager : IManager
 {
     private InputActionAsset inputAction;                       // InputActionAsset
     private Dictionary<string, InputActionMap> actionMaps;      // ActionMap을 저장할 딕셔너리
@@ -38,12 +38,20 @@ public class InputManager : MonoBehaviour, IManager
                 actionMaps.Add(map.name, map);
             }
 
-            // 입력 전략을 미리 초기화하고 저장
+            // AnyKeyInputAction 생성 및 AnyKey ActionMap 추가
+            var anyKeyInputAction = new AnyKeyInputAction();
+            var anyKeyActionMap = anyKeyInputAction.GetActionMap();
+
+            // AnyKey ActionMap을 관리하는 딕셔너리에 추가
+            actionMaps.Add("AnyKey", anyKeyActionMap);
+
+            // InputACtion 초기화하고 저장
             _inputStrategies.Add("Player", new PlayerInputAction());
             _inputStrategies.Add("Dialog", new DialogueInputAction());
+            _inputStrategies.Add("AnyKey", anyKeyInputAction); // AnyKeyInputAction 추가
 
             // 초기 상태로 PlayerInputAction을 활성화
-            SwitchActionMap("Player");
+            SwitchActionMap("AnyKey");
 
         }
         

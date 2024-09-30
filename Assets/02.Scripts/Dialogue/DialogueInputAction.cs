@@ -6,6 +6,7 @@ using System.Reflection;
 using UnityEngine.Events;
 using System;
 
+// 추후 Dialogue -> Dialog로 변경
 
 public class DialogueInputAction : IInputActionStrategy
 {
@@ -29,6 +30,7 @@ public class DialogueInputAction : IInputActionStrategy
     public void OnNextSentence(InputAction.CallbackContext context)
     {
         isNextSentence = context.ReadValueAsButton();
+        Debug.Log("NextSentence");
     }
     public void OnSkip(InputAction.CallbackContext context)
     {
