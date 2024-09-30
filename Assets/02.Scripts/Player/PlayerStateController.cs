@@ -73,9 +73,7 @@ public class PlayerStateController : MonoBehaviour
         _playerStatus = PlayerManager.Instance.GetPlayerStatus();
         _settings = _playerStatus.settings;
         _characterController = GetComponent<CharacterController>();
-        // _inputActions = GetComponent<PlayerInputAction>();
-        // _inputActions = GameManager.Instance.inputManager.playerInputAction;
-        _inputActions = InputManager.Instance.playerInputAction;
+        _inputActions = GameManager.inputManager.GetInputActionStrategy("Player") as PlayerInputAction;
 
         AssignAnimationIDs();
 
@@ -487,7 +485,7 @@ public class PlayerStateController : MonoBehaviour
 
             // 임시 테스트용
             InventoryManager inventoryManager = gameManager.inventoryManager;  // InventoryManager_Test 인스턴스
-            UIManager uIManager = gameManager.uiManager;
+            UIManager uIManager = GameManager.uiManager;
 
             // 인벤토리 UI 활성화/비활성화
             inventoryManager.OnShowInventory();

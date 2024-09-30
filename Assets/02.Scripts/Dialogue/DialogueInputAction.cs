@@ -6,7 +6,8 @@ using System.Reflection;
 using UnityEngine.Events;
 using System;
 
-public class DialogueInputAction : MonoBehaviour
+
+public class DialogueInputAction : IInputActionStrategy
 {
     [Header("Dialog Settings")]
     public bool isNextSentence = false;
@@ -14,11 +15,15 @@ public class DialogueInputAction : MonoBehaviour
     public bool isCancelSkip = false;
     public bool isRealSkip = false;
 
-    private void Start(){
-        // GameManager.Instance.inputManager.BindAllActions("Dialogue", this);
-        InputManager.Instance.BindAllActions("Dialogue", this);
+    // IInputActionStrategy 인터페이스 메서드
+    public void BindInputActions(InputActionMap map)
+    {
+        // Dialogue 관련 액션들을 바인딩
+        map["NextSentence"].performed += OnNextSentence;
+        map["Skip"].performed += OnSkip;
+        map["CancelSkip"].performed += OnCancelSkip;
+        map["RealSkip"].performed += OnRealSkip;
     }
-
 
     #region Dialogue
     public void OnNextSentence(InputAction.CallbackContext context)
