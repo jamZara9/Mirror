@@ -38,21 +38,13 @@ public class InputManager : IManager
                 actionMaps.Add(map.name, map);
             }
 
-            // AnyKeyInputAction 생성 및 AnyKey ActionMap 추가
-            var anyKeyInputAction = new AnyKeyInputAction();
-            var anyKeyActionMap = anyKeyInputAction.GetActionMap();
-
-            // AnyKey ActionMap을 관리하는 딕셔너리에 추가
-            actionMaps.Add("AnyKey", anyKeyActionMap);
-
             // InputACtion 초기화하고 저장
             _inputStrategies.Add("Player", new PlayerInputAction());
             _inputStrategies.Add("Dialog", new DialogueInputAction());
-            _inputStrategies.Add("AnyKey", anyKeyInputAction); // AnyKeyInputAction 추가
+            _inputStrategies.Add("AnyKey", new AnyKeyInputAction()); 
 
-            // 초기 상태로 PlayerInputAction을 활성화
-            SwitchActionMap("AnyKey");
-
+            // 초기 상태로 AnyKey ActionMap 활성화
+            SwitchActionMap("Player");
         }
         
     }
@@ -86,6 +78,11 @@ public class InputManager : IManager
     /// </summary>
     public string GetCurrentActionMapName() => currentActionMap?.name;
 
+    /// <summary>
+    /// 해당 이름을 가진 InputActionStrategy를 반환
+    /// </summary>
+    /// <param name="mapName"></param>
+    /// <returns></returns>
     public IInputActionStrategy GetInputActionStrategy(string mapName)
     {
         if (!_inputStrategies.ContainsKey(mapName))
@@ -95,6 +92,39 @@ public class InputManager : IManager
         }
 
         return _inputStrategies[mapName];
+    }
+
+    /// <summary>
+    /// 해당 이름의 ActionMap에 있는 모든 Action을 바인딩
+    /// </summary>
+    /// <param name="mapName"></param>
+    /// <param name="target"></param>
+    public void BindAllActions(string mapName, object target)
+    {
+        var map = actionMaps[mapName];
+        if (map != null)
+        {
+            foreach (var action in map.actions)
+            {
+                var method = target.GetType().GetMethod("On" + action.name, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                if (method != null)
+                {
+                    var del = Delegate.CreateDelegate(typeof(Action<InputAction.CallbackContext>), target, method);
+                    action.performed += (Action<InputAction.CallbackContext>)del;
+                    action.canceled += (Action<InputAction.CallbackContext>)del;
+                }
+                else
+                {
+                    Debug.LogWarning($"Action과 매칭되는 Method를 찾을 수 없습니다. : {action.name}");
+                }
+            }
+        }
+        else
+        {
+            Debug.LogError("해당 이름을 가진 ActionMap을 찾을 수 없습니다.");
+            Debug.LogError($"{mapName}의 InputActionStrategy가 존재하지 않습니다.");
+            return;
+        }
     }
 
 }

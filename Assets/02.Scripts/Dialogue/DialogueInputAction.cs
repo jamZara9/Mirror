@@ -10,7 +10,6 @@ using System;
 
 public class DialogueInputAction : IInputActionStrategy
 {
-    [Header("Dialog Settings")]
     public bool isNextSentence = false;
     public bool isSkip = false;
     public bool isCancelSkip = false;
@@ -19,11 +18,7 @@ public class DialogueInputAction : IInputActionStrategy
     // IInputActionStrategy 인터페이스 메서드
     public void BindInputActions(InputActionMap map)
     {
-        // Dialogue 관련 액션들을 바인딩
-        map["NextSentence"].performed += OnNextSentence;
-        map["Skip"].performed += OnSkip;
-        map["CancelSkip"].performed += OnCancelSkip;
-        map["RealSkip"].performed += OnRealSkip;
+        GameManager.inputManager.BindAllActions(map.name, this);
     }
 
     #region Dialogue

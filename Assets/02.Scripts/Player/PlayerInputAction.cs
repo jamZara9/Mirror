@@ -38,17 +38,7 @@ public class PlayerInputAction : IInputActionStrategy
     // IInputActionStrategy 인터페이스 메서드
     public void BindInputActions(InputActionMap map)
     {
-        // 각 액션과 해당 메서드를 바인딩
-        map["Movement"].performed += OnMovement;
-        map["Look"].performed += OnLook;
-        map["Jump"].performed += OnJump;
-        map["Sprint"].performed += OnSprint;
-        map["Inventory"].performed += OnInventory;
-        map["Interaction"].performed += OnInteraction;
-        map["UseItem"].performed += OnUseItem;
-        map["Fire"].performed += OnFire;
-        map["Sit"].performed += OnSit;
-        // 추가 바인딩들
+        GameManager.inputManager.BindAllActions(map.name, this);
     }
 
     public void OnMovement(InputAction.CallbackContext context)
