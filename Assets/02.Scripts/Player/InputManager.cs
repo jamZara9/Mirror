@@ -19,7 +19,9 @@ public class InputManager : IManager
     {
         if(sceneName == SceneConstants.StartScene){
 
-            inputAction = Resources.Load<InputActionAsset>("Input/PlayerInputActions");
+            // inputAction = Resources.Load<InputActionAsset>("Input/PlayerInputActions");
+            inputAction = GameManager.resourceManager.LoadResource<InputActionAsset>("Input/PlayerInputActions");
+
 
             if (!inputAction)
             {
@@ -44,7 +46,7 @@ public class InputManager : IManager
             _inputStrategies.Add("AnyKey", new AnyKeyInputAction()); 
 
             // 초기 상태로 AnyKey ActionMap 활성화
-            SwitchActionMap("Player");
+            SwitchActionMap("AnyKey");
         }
         
     }

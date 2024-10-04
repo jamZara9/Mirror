@@ -69,7 +69,8 @@ public class UIManager : IManager
         // 프리팹 경로가 있는지 확인하고 로드
         if (_uiPrefabPaths.TryGetValue(type, out string path))
         {
-            GameObject prefab = Resources.Load<GameObject>(path);
+            // GameObject prefab = Resources.Load<GameObject>(path);
+            GameObject prefab = GameManager.resourceManager.LoadResource<GameObject>(path);
             if (prefab == null)
             {
                 Debug.LogError($"프리팹 경로에 해당하는 오브젝트가 없습니다: {path}");
@@ -77,6 +78,7 @@ public class UIManager : IManager
             }
 
             // UI 프리팹을 인스턴스화하고 저장
+            // 추후 어디서 생성된 오브젝트를 보관할지 고민 (파라미터로 받아서 처리할지/아니면 UI오브젝트에서 처리할지)
             uiObject = GameObject.Instantiate(prefab);
             _uiPrefabs[type] = uiObject;
             return uiObject.GetComponent<T>();
