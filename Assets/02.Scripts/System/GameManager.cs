@@ -1,38 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using StarterAssets;
-using System;
 using UnityEngine.SceneManagement;
+using UnityEngine.Video;
+using TMPro;
 
 /// <summary>
 /// 게임의 전반적인 관리를 담당하는 클래스
 /// </summary>
 public class GameManager : Singleton<GameManager>, IManager
 {
-    [Header("Manager")]
     #region Manager
     public ItemManager itemManager;
     public CameraController cameraController;         // 카메라 컨트롤러      x
     public UIController_Test uiController;            // UI 컨트롤러         x
-    public Storage storage;                           // 저장소              x
     public PlayerStatus playerStatus;                 // 플레이어 상태        x
     public PlayerInventory playerInventory;           // 플레이어 인벤토리     x
     public WeaponManager weaponManager;               // 무기 매니저
-    public UIManager uiManager;                       // UI 매니저
     public InventoryManager inventoryManager;         // 인벤토리 매니저
-    public AudioManager audioManager;                 // 오디오 매니저
-
     // public InputManager inputManager;                 // 입력 매니저
     #endregion
 
-    [SerializeField] private SystemManager systemManager;           // 시스템 매니저
-    [SerializeField] private CameraManager cameraManager;           // 카메라 매니저
-    [SerializeField] private InputManager inputManager;             // 입력 매니저
-    [SerializeField] private PlayerManager playerManager;           // 플레이어 매니저
-    [SerializeField] private DialogueManager dialogueManager;       // 대화 매니저
-    [SerializeField] private MonsterManager monsterManager;         // 몬스터 매니저
-    [SerializeField] private ObjectPoolManager objectPoolManager;   // 오브젝트 풀 매니저
+    [Header("Managers")]
+    public static readonly UIManager uiManager = new();                   // UI 매니저
+
+
+    public static readonly InputManager inputManager = new();             // 입력 매니저
+    public static readonly ResourceManager resourceManager = new();       // 리소스 매니저
+    public static readonly SystemManager systemManager = new();           // 시스템 매니저
+    public static readonly AudioManager audioManager = new();             // 오디오 매니저
+
+    // public static readonly CameraManager cameraManager = new();           // 카메라 매니저
+    // public static readonly PlayerManager playerManager = new();           // 플레이어 매니저
+    // public static readonly DialogueManager dialogueManager = new();       // 대화 매니저
+    // public static readonly MonsterManager monsterManager = new();         // 몬스터 매니저
+    // public static readonly ObjectPoolManager objectPoolManager = new();   // 오브젝트 풀 매니저
 
     public string CurrentScene {
         get {
@@ -51,23 +53,10 @@ public class GameManager : Singleton<GameManager>, IManager
 
         DontDestroyOnLoad(gameObject); // GameManager가 씬 변경 시에도 파괴되지 않도록 설정
 
-        // 매니저 세팅 
-        systemManager   = GetComponentInChildren<SystemManager>();
-        uiManager       = GetComponentInChildren<UIManager>();
-        audioManager    = GetComponentInChildren<AudioManager>();
-        itemManager     = GetComponentInChildren<ItemManager>();
-        cameraManager   = GetComponentInChildren<CameraManager>();
-        inputManager    = GetComponentInChildren<InputManager>();
-        playerManager   = GetComponentInChildren<PlayerManager>();
-        dialogueManager = GetComponentInChildren<DialogueManager>();
-        monsterManager  = GetComponentInChildren<MonsterManager>();
-        objectPoolManager = GetComponentInChildren<ObjectPoolManager>();
-        
-        
-        // 추후 삭제
-        playerStatus = FindAnyObjectByType<PlayerStatus>(); // 플레이어 상태 찾기
-
+        AudioSource bgmSource = GameObject.Find("BGM").GetComponent<AudioSource>();
+        audioManager.SetBGMSource(bgmSource);
     }
+
 
     void OnEnable()
     {
@@ -90,25 +79,8 @@ public class GameManager : Singleton<GameManager>, IManager
     
     public void Initialize(string sceneName)
     {
-        // 매니저 초기화
-        systemManager.Initialize(sceneName);
-        audioManager.Initialize(sceneName);
         inputManager.Initialize(sceneName);
-        cameraManager.Initialize(sceneName);
-        playerManager.Initialize(sceneName);
-        dialogueManager.Initialize(sceneName);
-        monsterManager.Initialize(sceneName);
-        objectPoolManager.Initialize(sceneName);
-    }
 
-    /// <summary>
-    /// 비디오 재생이 끝났을 때 호출되는 함수
-    /// </summary>
-    public void OnVideoFinished()
-    {
-        // @todo: 현재는 첫씬에서 테스트하는 것이므로 추후 씬에 맞게 수정할 필요가 있음
-        audioManager.PlayBackgroundMusic(AudioConstants.BGM_STARTSCENE);
-        uiManager.SetVideoplayerActive(false);
     }
 
 }

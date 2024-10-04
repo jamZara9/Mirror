@@ -15,9 +15,10 @@ namespace UI{
         private Coroutine _skipTextCoroutine;           // 스킵 텍스트 코루틴
         private AnyKeyInputAction _anyKeyInputAction;   // AnyKeyInputAction
 
+        private bool IsSkipTextActive => _skipTextGUI.gameObject.activeSelf;  // 스킵 텍스트 활성화 여부
+        private bool IsVideoPlaying => _videoPlayer.isPlaying;               // 비디오 플레이어 재생 여부
 
-        private bool _isSkipTextActive => _skipTextGUI.gameObject.activeSelf;  // 스킵 텍스트 활성화 여부
-        private bool _isVideoPlaying => _videoPlayer.isPlaying;               // 비디오 플레이어 재생 여부
+        public event Action OnVideoFinishedEvent;  // 비디오 종료 이벤트
 
         private bool _canReceiveInput = true; // 입력을 받을 수 있는지 여부
         private float _inputCooldownTime = 0.5f; // 쿨타임 (예: 0.5초)
@@ -31,9 +32,9 @@ namespace UI{
 
         void Update()
         {
-            if(_isVideoPlaying){
+            if(IsVideoPlaying){
                 if(_anyKeyInputAction.IsAnyKeyPressed && _canReceiveInput){
-                    if(_isSkipTextActive){
+                    if(IsSkipTextActive){
                         SetSkipTextActive(false);
                         StopVideo();
                     }else{
@@ -185,6 +186,9 @@ namespace UI{
         private void OnVideoFinished(VideoPlayer vp)
         {
             GameManager.uiManager.UIFinished(gameObject);
+
+            // 비디오 종료 이벤트 발생
+            OnVideoFinishedEvent?.Invoke();
         }
     }
 }
