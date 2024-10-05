@@ -60,7 +60,7 @@ public class GameManager : Singleton<GameManager>, IManager
 
         sceneLoader = ComponentUtil.GetOrAddComponent<SceneLoader>(gameObject);
 
-        Debug.Log("!111111");
+        Debug.Log("22222");
     }
 
 
