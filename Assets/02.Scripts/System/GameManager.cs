@@ -59,6 +59,8 @@ public class GameManager : Singleton<GameManager>, IManager
         audioManager.SetBGMSource(bgmSource);
 
         sceneLoader = ComponentUtil.GetOrAddComponent<SceneLoader>(gameObject);
+
+        Debug.Log("!111111");
     }
 
 
