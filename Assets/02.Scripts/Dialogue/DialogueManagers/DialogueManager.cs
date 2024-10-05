@@ -13,6 +13,8 @@ public class DialogueManager : Singleton<DialogueManager>, IManager
 {
     private CsvParser csvParser;
     
+    // PR 테스트용
+    
     // VN 방식 UI. 
     [Header ("Visual Novel Dialogue Object")]
     public TextMeshProUGUI dialogueText;
