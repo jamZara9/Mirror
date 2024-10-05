@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Video;
 using TMPro;
+using Utils;
 
 /// <summary>
 /// 게임의 전반적인 관리를 담당하는 클래스
@@ -36,6 +37,8 @@ public class GameManager : Singleton<GameManager>, IManager
     // public static readonly MonsterManager monsterManager = new();         // 몬스터 매니저
     // public static readonly ObjectPoolManager objectPoolManager = new();   // 오브젝트 풀 매니저
 
+    public static SceneLoader sceneLoader; // 씬 로더
+
     public string CurrentScene {
         get {
             return SceneManager.GetActiveScene().name;
@@ -55,6 +58,8 @@ public class GameManager : Singleton<GameManager>, IManager
 
         AudioSource bgmSource = GameObject.Find("BGM").GetComponent<AudioSource>();
         audioManager.SetBGMSource(bgmSource);
+
+        sceneLoader = ComponentUtil.GetOrAddComponent<SceneLoader>(gameObject);
     }
 
 

@@ -24,7 +24,7 @@ namespace UI{
         private float _inputCooldownTime = 0.5f; // 쿨타임 (예: 0.5초)
         private float _lastInputTime = 0f; // 마지막 입력 시간
 
-        void Start()
+        private void Awake()
         {
             Debug.Log("비디오 캔버스 시작");
             _anyKeyInputAction = GameManager.inputManager.GetInputActionStrategy("AnyKey") as AnyKeyInputAction;
@@ -78,7 +78,6 @@ namespace UI{
             // 비디오가 끝났을 때 호출될 이벤트 핸들러 등록
             _videoPlayer.loopPointReached += OnVideoFinished;
         }
-
 
         #region video control
         /// <summary>

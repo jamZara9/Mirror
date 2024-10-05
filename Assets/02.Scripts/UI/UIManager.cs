@@ -46,6 +46,8 @@ public class UIManager : IManager
     // UI 프리팹을 저장하는 Dictionary
     private Dictionary<Type, GameObject> _uiPrefabs = new();
 
+    public Transform UIRoot { get; private set; }
+
     /// <summary>
     /// UI의 사용이 종료되었을 때 호출되는 함수
     /// </summary>
@@ -55,8 +57,13 @@ public class UIManager : IManager
         uiObject.SetActive(false);
     }
 
-    // UI 오브젝트를 가져오거나 없으면 생성
-    public T GetOrAddUI<T>() where T : Component
+    /// <summary>
+    /// UI를 생성하거나 이미 생성된 UI를 반환하는 함수
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="parentObject"></param>
+    /// <returns></returns>
+    public T GetOrAddUI<T>(Transform parentObject = null) where T : Component
     {
         Type type = typeof(T);
 
@@ -78,8 +85,13 @@ public class UIManager : IManager
             }
 
             // UI 프리팹을 인스턴스화하고 저장
-            // 추후 어디서 생성된 오브젝트를 보관할지 고민 (파라미터로 받아서 처리할지/아니면 UI오브젝트에서 처리할지)
             uiObject = GameObject.Instantiate(prefab);
+
+            // 부모 오브젝트가 있으면 부모로 설정
+            if(parentObject != null){
+                uiObject.transform.SetParent(parentObject);
+            }
+
             _uiPrefabs[type] = uiObject;
             return uiObject.GetComponent<T>();
         }
@@ -89,6 +101,8 @@ public class UIManager : IManager
             return null;
         }
     }
+
+    //사용 용도에 맞는 폴더를 찾아서 UI를 생성 할 수 있어야함
 
     // IManager 인터페이스 구현
     public void Initialize(string sceneName)
@@ -120,9 +134,6 @@ public class UIManager : IManager
         }
         
     }
-
-
-
 
     #region refactoring before
     [SerializeField]

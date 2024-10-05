@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UI;
+using Utils;
 
 public class StartSceneController : MonoBehaviour
 {
@@ -20,8 +21,10 @@ public class StartSceneController : MonoBehaviour
         _audioManager = GameManager.audioManager;
         _uiManager = GameManager.uiManager;
         
+        GameObject gameManager = GameObject.Find("GameManager");
+        
         // 인트로 영상 출력
-        videoPlayer = _uiManager.GetOrAddUI<VideoCanvas>();
+        videoPlayer = _uiManager.GetOrAddUI<VideoCanvas>(ComponentUtil.FindChildObject(gameManager, "UI"));
         videoPlayer.SetVideoSetting(_videoSettings[0]);
 
         // 이벤트 구독
@@ -40,7 +43,7 @@ public class StartSceneController : MonoBehaviour
         }
     }
     
-    // 비디오 종료 시 호출
+    // 비디오 종료 시 호출 [ 임시 세팅 ] -> 이걸 각 씬에서 처리할 지 Manager에서 처리할 지 고민
     private void HandleVideoFinished()
     {
         if(_audioClips.Count == 0)
@@ -60,10 +63,10 @@ public class StartSceneController : MonoBehaviour
     /// </summary>
     public void OnStartButtonClicked()
     {
-        SceneLoader sceneLoader = new();
-        PlayerPrefs.SetString("NextScene", SceneConstants.PlaygroundA);     // 다음 씬 설정
+        SceneLoader sceneLoader = GameManager.sceneLoader;
+        PlayerPrefs.SetString("NextScene", SceneConstants.PlaygroundB);     // 다음 씬 설정
 
-        sceneLoader.LoadNextScene(SceneConstants.LoadingScene);          // 로딩 씬으로 이동
+        sceneLoader.LoadNextScene(SceneConstants.LoadingScene);             // 로딩 씬으로 이동
         _audioManager.StopBackgroundMusic();                                // 배경음악 정지
     }
 }
