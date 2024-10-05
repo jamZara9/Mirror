@@ -36,6 +36,8 @@ public class GameManager : Singleton<GameManager>, IManager
     // public static readonly MonsterManager monsterManager = new();         // 몬스터 매니저
     // public static readonly ObjectPoolManager objectPoolManager = new();   // 오브젝트 풀 매니저
 
+    // PRTest
+
     public static SceneLoader sceneLoader; // 씬 로더
 
     public string CurrentScene {
