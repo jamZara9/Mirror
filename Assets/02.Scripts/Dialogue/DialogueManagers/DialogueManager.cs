@@ -69,11 +69,13 @@ public class DialogueManager : Singleton<DialogueManager>, IManager
     private void HandleDialogueSceneActive(){
         if(IsDialogueSceneActive)
         {
-            InputManager.Instance.SwitchActionMap("Dialogue");
+            // InputManager.Instance.SwitchActionMap("Dialogue");
+            GameManager.inputManager.SwitchActionMap("Dialogue");
         }
         else
         {
-            InputManager.Instance.SwitchActionMap("Player");
+            // InputManager.Instance.SwitchActionMap("Player");
+            GameManager.inputManager.SwitchActionMap("Player");
         }
     }
 
@@ -216,7 +218,9 @@ public class DialogueManager : Singleton<DialogueManager>, IManager
 
         // sentenceAudioSource.clip = currentScene.sentences[_sentenceIndex].audioClip;
         // sentenceAudioSource.Play();
-        AudioManager.Instance.PlaySoundEffect(currentScene.sentences[_sentenceIndex].audioClip, transform.position, 1.0f);
+        // AudioManager.Instance.PlaySoundEffect(currentScene.sentences[_sentenceIndex].audioClip, transform.position, 1.0f);
+
+        GameManager.audioManager.PlaySoundEffect(currentScene.sentences[_sentenceIndex].audioClip, transform.position, 1.0f);
 
         ActSpeakers();
     }

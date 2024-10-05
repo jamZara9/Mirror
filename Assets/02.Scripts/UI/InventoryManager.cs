@@ -34,7 +34,7 @@ public class InventoryManager : MonoBehaviour, IItemContainer
     private void Awake()
     {
         Debug.Log("inventory awake");
-        _UIManager = GameManager.Instance.uiManager;
+        _UIManager = GameManager.uiManager;
     }
 
     private void Start()
@@ -43,7 +43,7 @@ public class InventoryManager : MonoBehaviour, IItemContainer
         for (int i = 0; i < Inventory_MaxSize; i++)
         {
                                                                            //   HUD_CANVAS           BackGround  InvenSlots   Slot
-            UI_Slot_bls slot = GameManager.Instance.uiManager.GetCanvas("Inventory_Canvas").transform.GetChild(0).GetChild(0).GetChild(i).gameObject.GetComponent<UI_Slot_bls>();      // 이게 무슨.. 나중에 줄일게요
+            UI_Slot_bls slot = GameManager.uiManager.GetCanvas("Inventory_Canvas").transform.GetChild(0).GetChild(0).GetChild(i).gameObject.GetComponent<UI_Slot_bls>();      // 이게 무슨.. 나중에 줄일게요
             Add_InventorySlot(slot);
         }
 

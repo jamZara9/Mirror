@@ -275,12 +275,9 @@ MonoBehaviour:
     serializedBakingSets:
     - name: New Baking Set
       sceneGUIDs:
-      - 468521c592907ad4aa6c37fd849b9c53
       - a119199a5015f594eb92a138df8faf19
       - 5e1b3cc5a904e324eb305ce18b82663d
       - 0c6be9ed6d3fe6b43b6c10bc98adfbec
-      - 8f73557ba4a59924cb737a76eef340b7
-      - 00000000000000000000000000000000
       - b5bb94bce52b5f44d8fdd2261c2fa69d
       settings:
         m_Version: 1

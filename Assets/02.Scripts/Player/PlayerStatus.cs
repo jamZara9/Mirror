@@ -59,7 +59,7 @@ public class PlayerStatus : MonoBehaviour
             case StatusType.Health:
                 CurrentHealth += amount;
                 CurrentHealth = Mathf.Clamp(CurrentHealth, 0, settings.maxHealth);
-                GameManager.Instance.uiManager.UpdateUIText(UIConstants.HP,CurrentHealth);
+                GameManager.uiManager.UpdateUIText(UIConstants.HP,CurrentHealth);
                 break;
             case StatusType.Mental:
                 CurrentMental += amount;

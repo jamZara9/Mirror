@@ -26,7 +26,7 @@ public class UI_QuickSlot : MonoBehaviour, IDropHandler
     // Start is called before the first frame update
     void Start()
     {
-        Transform QuickSlotUI_BackGround = GameManager.Instance.uiManager.GetCanvas("QuickSlot_Canvas").transform.GetChild(0).GetChild(0);
+        Transform QuickSlotUI_BackGround = GameManager.uiManager.GetCanvas("QuickSlot_Canvas").transform.GetChild(0).GetChild(0);
         GameObject QuickSlot = QuickSlotUI_BackGround.Find("QuickSlot" + (index + 1)).gameObject;
         HUD_QuickSlot = QuickSlot.transform.Find("Icon")?.GetComponent<Image>();
     }
