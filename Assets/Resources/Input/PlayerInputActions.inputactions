@@ -374,7 +374,7 @@
             ]
         },
         {
-            "name": "Dialogue",
+            "name": "Dialog",
             "id": "e0997f1a-87bf-456d-8c26-439fe4464a2d",
             "actions": [
                 {
@@ -467,6 +467,34 @@
                     "processors": "",
                     "groups": "",
                     "action": "RealSkip",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "AnyKey",
+            "id": "94ea0d4a-d970-41b0-a221-8f5365027f6f",
+            "actions": [
+                {
+                    "name": "AnyKey",
+                    "type": "Button",
+                    "id": "2c939ebd-6eff-43a0-bba4-2c7212bd64d9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "2aa16a13-2af5-44da-af05-0e1f2e7af98c",
+                    "path": "<Keyboard>/anyKey",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AnyKey",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

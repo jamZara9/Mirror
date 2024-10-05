@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using TMPro;
+using UI;
 using UnityEngine;
 using UnityEngine.UI;
 using Image = UnityEngine.UI.Image;
@@ -33,8 +35,107 @@ public enum ECanvas
 /// <summary>
 /// UI를 관리하는 클래스
 /// </summary>
-public class UIManager : Singleton<UIManager>, IManager
+public class UIManager : IManager
 {
+    // UI 프리팹 경로를 저장하는 Dictionary
+    private Dictionary<Type, string> _uiPrefabPaths  = new()
+    {
+        { typeof(VideoCanvas), "Prefabs/UI/VideoCanvas" },
+    };
+
+    // UI 프리팹을 저장하는 Dictionary
+    private Dictionary<Type, GameObject> _uiPrefabs = new();
+
+    public Transform UIRoot { get; private set; }
+
+    /// <summary>
+    /// UI의 사용이 종료되었을 때 호출되는 함수
+    /// </summary>
+    /// <param name="uiObject">사용을 종료할 UI</param>
+    public void UIFinished(GameObject uiObject){
+        Debug.Log("UI Finished");
+        uiObject.SetActive(false);
+    }
+
+    /// <summary>
+    /// UI를 생성하거나 이미 생성된 UI를 반환하는 함수
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="parentObject"></param>
+    /// <returns></returns>
+    public T GetOrAddUI<T>(Transform parentObject = null) where T : Component
+    {
+        Type type = typeof(T);
+
+        // 이미 인스턴스화된 UI가 있는지 확인
+        if (_uiPrefabs.TryGetValue(type, out GameObject uiObject))
+        {
+            return uiObject.GetComponent<T>();
+        }
+
+        // 프리팹 경로가 있는지 확인하고 로드
+        if (_uiPrefabPaths.TryGetValue(type, out string path))
+        {
+            // GameObject prefab = Resources.Load<GameObject>(path);
+            GameObject prefab = GameManager.resourceManager.LoadResource<GameObject>(path);
+            if (prefab == null)
+            {
+                Debug.LogError($"프리팹 경로에 해당하는 오브젝트가 없습니다: {path}");
+                return null;
+            }
+
+            // UI 프리팹을 인스턴스화하고 저장
+            uiObject = GameObject.Instantiate(prefab);
+
+            // 부모 오브젝트가 있으면 부모로 설정
+            if(parentObject != null){
+                uiObject.transform.SetParent(parentObject);
+            }
+
+            _uiPrefabs[type] = uiObject;
+            return uiObject.GetComponent<T>();
+        }
+        else
+        {
+            Debug.LogError($"UI 프리팹 경로가 정의되지 않았습니다: {type}");
+            return null;
+        }
+    }
+
+    //사용 용도에 맞는 폴더를 찾아서 UI를 생성 할 수 있어야함
+
+    // IManager 인터페이스 구현
+    public void Initialize(string sceneName)
+    {
+        if(sceneName == SceneConstants.StartScene){
+
+        }
+
+        if(sceneName == SceneConstants.PlaygroundA){
+            // Find_Canvas();
+            
+            // SetUiDictionary(_UIGroup);
+
+            // foreach (var canvas in _canvasDictionary)
+            // {
+            //     if(canvas.Key == UIConstants.HUDCanvas)
+            //     {
+            //         canvas.Value.gameObject.SetActive(true);
+            //     }else{
+            //         canvas.Value.gameObject.SetActive(false);
+            //     }
+            // }
+
+            // _txtHP.text = "HP : " + GameManager.Instance.playerStatus.CurrentHealth + " / 100";    // (text) 초기 세팅
+            // _txtAttackDamage.text = "Attack Damage : " + GameManager.Instance.playerStatus.settings.attackDamage;    // (text) 초기 세팅
+            // _txtAttackSpeed.text = "Attack Speed : " + GameManager.Instance.playerStatus.settings.attackDelay;    // (text) 초기 세팅
+            // _txtAttackRange.text = "Attack Range : " + GameManager.Instance.playerStatus.settings.attackRange;    // (text) 초기 세팅
+            // _txtWalkSpeed.text = "Walk Speed : " + GameManager.Instance.playerStatus.settings.walkSpeed;    // (text) 초기 세팅
+        }
+        
+    }
+
+    #region refactoring before
     [SerializeField]
     private Canvas HUD_Canvas;
     [SerializeField]
@@ -51,7 +152,6 @@ public class UIManager : Singleton<UIManager>, IManager
     [SerializeField] private TextMeshProUGUI _txtAttackRange;       // 방어력 텍스트 (test용)
     [SerializeField] private TextMeshProUGUI _txtWalkSpeed;         // 이동속도 텍스트 (test용)
 
-
     [SerializeField] private GameObject _UIGroup;   // UI를 담고 있는 그룹
     // Test
     private Dictionary<string, Canvas> _canvasDictionary  = new();  // UI 캠버스 딕셔너리
@@ -60,13 +160,7 @@ public class UIManager : Singleton<UIManager>, IManager
     /// <summary>
     /// 모든 UI를 canvas단위로 나눠 관리할 map인데 실 사용 여부는 좀 더 고민해봐야 합니다
     /// </summary>
-    // private List<Dictionary<string, GameObject>> _uiDictionary = new((int)ECanvas.END); //모든 UI를 canvas단위로 나눠 관리할 딕셔너리
-    
-
-    ///// 테스트용 임시 코드임 추후 삭제 필요 2024-09-13 Argonaut
-    [SerializeField] private RawImage videoImage; // 비디오를 출력할 RawImage
-    public RawImage VideoImage { get => videoImage; }
-    ///// 테스트용 임시 코드임 추후 삭제 후 대체 변수 필요 2024-09-13 Argonaut
+    // private List<Dictionary<string, GameObject>> _uiDictionary = new((int)ECanvas.END); //모든 UI를 canvas단위로 나눠 관리할 딕셔너리    
 
     /// <summary>
     /// UI를 담고 있는 그룹을 찾아 딕셔너리에 추가하는 함수
@@ -138,31 +232,6 @@ public class UIManager : Singleton<UIManager>, IManager
         }
     }
 
-    public void Initialize(string sceneName)
-    {
-        if(sceneName == SceneConstants.PlaygroundA){
-            Find_Canvas();
-            
-            SetUiDictionary(_UIGroup);
-
-            foreach (var canvas in _canvasDictionary)
-            {
-                if(canvas.Key == UIConstants.HUDCanvas)
-                {
-                    canvas.Value.gameObject.SetActive(true);
-                }else{
-                    canvas.Value.gameObject.SetActive(false);
-                }
-            }
-
-            _txtHP.text = "HP : " + GameManager.Instance.playerStatus.CurrentHealth + " / 100";    // (text) 초기 세팅
-            _txtAttackDamage.text = "Attack Damage : " + GameManager.Instance.playerStatus.settings.attackDamage;    // (text) 초기 세팅
-            _txtAttackSpeed.text = "Attack Speed : " + GameManager.Instance.playerStatus.settings.attackDelay;    // (text) 초기 세팅
-            _txtAttackRange.text = "Attack Range : " + GameManager.Instance.playerStatus.settings.attackRange;    // (text) 초기 세팅
-            _txtWalkSpeed.text = "Walk Speed : " + GameManager.Instance.playerStatus.settings.walkSpeed;    // (text) 초기 세팅
-        }
-        
-    }
 
     //-------------------------------HUD-------------------------------------//
     #region HUD
@@ -262,25 +331,5 @@ public class UIManager : Singleton<UIManager>, IManager
         _txtHP.text = "HP : " + hp + " / 100";
     }
 
-    public GameObject FindUIObject(string uiName)
-    {
-        if(_uiDictionary.TryGetValue(uiName, out var ui))
-        {
-            return ui;
-        }else{
-            Debug.LogError($"에러 발생: {uiName}은 존재하지 않는 UI 이름입니다.");
-            return null;
-        }
-    }
-
-    /////////////////////////////////////////////////////////// 2024-09-14 Argonaut
-    /// <summary>
-    /// 비디오 플레이어 캔버스를 활성화/비활성화 하는 함수
-    /// </summary>
-    /// <param name="isActive"></param>
-    public void SetVideoplayerActive(bool isActive)
-    {
-        videoImage.gameObject.SetActive(isActive);
-    }
-    /////////////////////////////////////////////////////////// 2024-09-14 Argonaut
+    #endregion
 }

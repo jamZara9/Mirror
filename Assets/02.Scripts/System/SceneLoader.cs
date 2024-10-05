@@ -13,6 +13,12 @@ public class SceneLoader : MonoBehaviour
     /// <param name="sceneName">씬 이름</param>
     public void LoadNextScene(string sceneName)
     {
+        if(sceneName.Equals(""))
+        {
+            Debug.LogError("씬 이름이 비어있습니다.");
+            return;
+        }
+
         StartCoroutine(LoadSceneAsync(sceneName));
     }
 

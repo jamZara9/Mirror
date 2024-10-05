@@ -9,7 +9,7 @@ using System;
 /// <summary>
 /// Player의 입력처리를 담당하는 클래스
 /// </summary>
-public class PlayerInputAction : MonoBehaviour
+public class PlayerInputAction : IInputActionStrategy
 {
     [Header("Player Input Values")]
     public Vector2 move;
@@ -29,16 +29,17 @@ public class PlayerInputAction : MonoBehaviour
     public bool isFire = false;
     public bool isSit = false;
 
-    [Header("Mouse Cursor Settings")]
+    // 마우스 커서 제어
     public bool cursorLocked = true;
     public bool cursorInputForLook = true;
 
     public bool analogMovement; // 이동 입력값을 아날로그로 받을지 디지털로 받을지 결정
 
-    private void Start(){
-        InputManager.Instance.BindAllActions("Player", this);
+    // IInputActionStrategy 인터페이스 메서드
+    public void BindInputActions(InputActionMap map)
+    {
+        GameManager.inputManager.BindAllActions(map.name, this);
     }
-
 
     public void OnMovement(InputAction.CallbackContext context)
     {
@@ -72,7 +73,7 @@ public class PlayerInputAction : MonoBehaviour
         // //인벤토리 활성화중 이동 제한
         // if (GameManager.Instance.inventoryManager.Use_Inventory)
         //     return;
-
+        Debug.Log("Jump");
         jump = context.ReadValueAsButton();
     }
 

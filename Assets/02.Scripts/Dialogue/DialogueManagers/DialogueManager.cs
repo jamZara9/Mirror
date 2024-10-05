@@ -68,11 +68,13 @@ public class DialogueManager : Singleton<DialogueManager>, IManager
     private void HandleDialogueSceneActive(){
         if(IsDialogueSceneActive)
         {
-            InputManager.Instance.SwitchActionMap("Dialogue");
+            // InputManager.Instance.SwitchActionMap("Dialogue");
+            GameManager.inputManager.SwitchActionMap("Dialogue");
         }
         else
         {
-            InputManager.Instance.SwitchActionMap("Player");
+            // InputManager.Instance.SwitchActionMap("Player");
+            GameManager.inputManager.SwitchActionMap("Player");
         }
     }
 
@@ -165,7 +167,7 @@ public class DialogueManager : Singleton<DialogueManager>, IManager
         _sentenceIndex = -1;
         
         // 스토리 BGM 실행.
-        AudioManager.Instance.PlayBackgroundMusic(currentScene.backgroundMusic, 1.0f);
+        GameManager.audioManager.PlayBackgroundMusic(currentScene.backgroundMusic, 1.0f);
 
         // 스토리 타입에 따라 문장 실행.
         switch (storyType)
@@ -201,8 +203,12 @@ public class DialogueManager : Singleton<DialogueManager>, IManager
         speakerNameText.color = currentScene.sentences[_sentenceIndex].speaker.nameColor;
         
         backGroundController.SwitchImage(currentScene.sentences[_sentenceIndex].background);
+    
+        // sentenceAudioSource.clip = currentScene.sentences[_sentenceIndex].audioClip;
+        // sentenceAudioSource.Play();
+        // AudioManager.Instance.PlaySoundEffect(currentScene.sentences[_sentenceIndex].audioClip, transform.position, 1.0f);
 
-        AudioManager.Instance.PlaySoundEffect(currentScene.sentences[_sentenceIndex].audioClip, transform.position, 1.0f);
+        GameManager.audioManager.PlaySoundEffect(currentScene.sentences[_sentenceIndex].audioClip, transform.position, 1.0f);
 
         ActSpeakers();
     }

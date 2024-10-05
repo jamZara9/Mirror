@@ -33,8 +33,8 @@ public class DialogueStateController : MonoBehaviour
 
     void Start()
     {
-        // _inputActions = GetComponent<DialogueInputAction>();
-        _inputActions = InputManager.Instance.dialogueInputAction;
+        _inputActions = _inputActions = GameManager.inputManager.GetInputActionStrategy("Dialog") as DialogueInputAction;
+        
         _dialogueManager = DialogueManager.Instance;
 
         currentScene = _dialogueManager.currentScene;

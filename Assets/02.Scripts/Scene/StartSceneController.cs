@@ -3,54 +3,70 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UI;
+using Utils;
 
 public class StartSceneController : MonoBehaviour
 {
-    [SerializeField] private SystemManager _systemManager;
-    [SerializeField] private AudioManager _audioManager;
-    [SerializeField] private UIManager _uiManager;
+    private AudioManager _audioManager;
+    private UIManager _uiManager;
+
+    [Header("Video & Audio Settings")]
+    [SerializeField] private List<VideoSetting> _videoSettings; // 비디오 설정 [추후 다른 곳에서 관리를 진행할 수 있음]
+    [SerializeField] private List<AudioClip> _audioClips;
+    private VideoCanvas videoPlayer;
 
     void Start()
     {
-        _systemManager = SystemManager.Instance;
-        _audioManager = AudioManager.Instance;
-        _uiManager = UIManager.Instance;
+        _audioManager = GameManager.audioManager;
+        _uiManager = GameManager.uiManager;
+        
+        GameObject gameManager = GameObject.Find("GameManager");
+        
+        // 인트로 영상 출력
+        videoPlayer = _uiManager.GetOrAddUI<VideoCanvas>(ComponentUtil.FindChildObject(gameManager, "UI"));
+        videoPlayer.SetVideoSetting(_videoSettings[0]);
 
-        // 게임 시작시 인트로 영상 재생
-        _uiManager.SetVideoplayerActive(true);
-        _systemManager.VideoLoader.SetupVideoplayer(_uiManager.VideoImage);
-        _systemManager.VideoLoader.PlayVedio();
+        // 이벤트 구독
+        videoPlayer.OnVideoFinishedEvent += HandleVideoFinished;
+
+        videoPlayer.PlayVideo();
     }
 
-    void Update()
+    // 이벤트 해제
+    void OnDestroy()
     {
-        // @todo: 스킵 텍스트가 다른 컷씬에서도 사용된다면 VideoLoader에 이 기능 추가를 고려
-        // 비디오가 재생 중일 때 아무 키나 누르면 영상 정지
-        if(_systemManager.VideoLoader.IsVideoPlaying){
-            foreach (KeyCode keyCode in Enum.GetValues(typeof(KeyCode)))
-            {
-                if (Input.GetKeyDown(keyCode))
-                {
-                    Debug.Log("Key pressed: " + keyCode);
-                    if(_systemManager.VideoLoader.IsActiveSkipText){    // 스킵 텍스트가 활성화되어 있을 때
-                        _systemManager.VideoLoader.SkipTextActive(false);    // 스킵 텍스트 비활성화
-                        _systemManager.VideoLoader.StopVedio();
-                    }else{
-                        _systemManager.VideoLoader.SkipTextActive(true);    // 스킵 텍스트 활성화
-                    }
-                }
-            }
+        // 이벤트 해제
+        if (videoPlayer != null)
+        {
+            videoPlayer.OnVideoFinishedEvent -= HandleVideoFinished;
         }
-        
     }
     
+    // 비디오 종료 시 호출 [ 임시 세팅 ] -> 이걸 각 씬에서 처리할 지 Manager에서 처리할 지 고민
+    private void HandleVideoFinished()
+    {
+        if(_audioClips.Count == 0)
+        {
+            Debug.LogError("오디오 클립이 없습니다.");
+            return;
+        }
+
+        // 비디오 종료 시 오디오 재생
+        _audioManager.PlaySoundEffect(_audioClips[0], Vector3.zero, 1.0f);
+    }
+
+
+    
     /// <summary>
-    /// 시작 버튼 클릭 시 호출
+    /// 시작 버튼 클릭 시 호출 [추후 StartSceneCanvas로 이동]
     /// </summary>
     public void OnStartButtonClicked()
     {
-        PlayerPrefs.SetString("NextScene", SceneConstants.PlaygroundA);          // 다음 씬 설정
-        _systemManager.SceneLoader.LoadNextScene(SceneConstants.LoadingScene);   // 로딩 씬으로 이동
-        _audioManager.StopBackgroundMusic();                                     // 배경음악 정지
+        SceneLoader sceneLoader = GameManager.sceneLoader;
+        PlayerPrefs.SetString("NextScene", SceneConstants.PlaygroundB);     // 다음 씬 설정
+
+        sceneLoader.LoadNextScene(SceneConstants.LoadingScene);             // 로딩 씬으로 이동
+        _audioManager.StopBackgroundMusic();                                // 배경음악 정지
     }
 }

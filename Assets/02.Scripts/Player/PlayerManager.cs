@@ -13,7 +13,7 @@ public class PlayerManager : Singleton<PlayerManager>, IManager, IDamage
 	public void Initialize(string sceneName){
 		if(sceneName == SceneConstants.PlaygroundA)
 		{
-			playerStatus = GetComponent<PlayerStatus>();
+			if(playerStatus == null) playerStatus = GetComponent<PlayerStatus>();
 
 			// 추후에는 해당 씬의 Player를 찾아서 할당해야 함
 			playerTransform = GameObject.FindGameObjectsWithTag("Player")[0].transform;
@@ -32,10 +32,12 @@ public class PlayerManager : Singleton<PlayerManager>, IManager, IDamage
 
         // 피격 효과음 재생
         if(playerStatus.CurrentHealth > 0){
-            AudioManager.Instance.PlaySoundEffect(hitSound[UnityEngine.Random.Range(0, hitSound.Length)], playerTransform.position, 1.0f);
+            // AudioManager.Instance.PlaySoundEffect(hitSound[Random.Range(0, hitSound.Length)], playerTransform.position, 1.0f);
+			GameManager.audioManager.PlaySoundEffect(hitSound[Random.Range(0, hitSound.Length)], playerTransform.position, 1.0f);
 
         }else{
-            AudioManager.Instance.PlaySoundEffect(deathSound, playerTransform.position, 1.0f);
+            // AudioManager.Instance.PlaySoundEffect(deathSound, playerTransform.position, 1.0f);
+			GameManager.audioManager.PlaySoundEffect(deathSound, playerTransform.position, 1.0f);
         }
 
         Debug.Log($"현재 체력 : {playerStatus.CurrentHealth}");

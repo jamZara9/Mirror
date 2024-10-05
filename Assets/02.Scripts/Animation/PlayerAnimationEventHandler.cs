@@ -26,7 +26,8 @@ public class PlayerAnimationEventHandler : MonoBehaviour
             {
                 var index = UnityEngine.Random.Range(0, footstepAudioClips.Length);
                 // AudioSource.PlayClipAtPoint(footstepAudioClips[index], transform.TransformPoint(_characterController.center), footstepAudioVolume);
-                AudioManager.Instance.PlaySoundEffect(footstepAudioClips[index], transform.TransformPoint(_characterController.center), footstepAudioVolume);
+
+                // AudioManager.Instance.PlaySoundEffect(footstepAudioClips[index], transform.TransformPoint(_characterController.center), footstepAudioVolume);
             }
         }
     }
@@ -40,7 +41,8 @@ public class PlayerAnimationEventHandler : MonoBehaviour
         if (animationEvent.animatorClipInfo.weight > 0.5f)
         {
             // AudioSource.PlayClipAtPoint(landingAudioClip, transform.TransformPoint(_characterController.center), footstepAudioVolume);
-            AudioManager.Instance.PlaySoundEffect(landingAudioClip, transform.TransformPoint(_characterController.center), footstepAudioVolume);
+
+            // AudioManager.Instance.PlaySoundEffect(landingAudioClip, transform.TransformPoint(_characterController.center), footstepAudioVolume);
         }
     }
     #endregion
