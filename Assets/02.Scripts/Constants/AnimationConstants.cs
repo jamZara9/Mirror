@@ -13,4 +13,8 @@ public class AnimationConstants
     public static readonly int AnimIDJump 			= Animator.StringToHash("Jump");
     public static readonly int AnimIDFreeFall 		= Animator.StringToHash("FreeFall");
     public static readonly int AnimIDMotionSpeed 	= Animator.StringToHash("MotionSpeed");
+    public static readonly int AnimIDAttack 		= Animator.StringToHash("Attack");
+    public static readonly int AnimIDSit 			= Animator.StringToHash("Sit");
+
+    public static string PlaygroundA { get; internal set; }
 }

@@ -13,7 +13,7 @@ public enum StatusType
 /// <summary>
 /// 플레이어의 상태(체력, 스태미나)를 관리하는 클래스
 /// </summary>
-public class PlayerStatus : MonoBehaviour, IDamage
+public class PlayerStatus : MonoBehaviour
 {
     [Serializable]
     public class PlayerBasicSettings
@@ -26,7 +26,7 @@ public class PlayerStatus : MonoBehaviour, IDamage
         public readonly float walkSpeed = 2.0f;         // 걷기 속도
         public readonly float runSpeed = 4.0f;          // 달리기 속도
         public readonly float speedChangeRate = 10.0f;  // 속도 변경 비율(가속도)
-        public readonly float jumpHeight = 1.2f;        // 점프 높이
+        public readonly float jumpHeight = 1.0f;        // 점프 높이
 
         [Header("Player Attack Settings")]
         public readonly float attackRange = 1.5f;       // 공격 사정거리
@@ -40,10 +40,6 @@ public class PlayerStatus : MonoBehaviour, IDamage
     public float CurrentMental { get; private set; }
     public float CurrentAttackRange { get; private set; }   
     public float CurrentAttackDamage { get; private set; }
-
-    [SerializeField] private AudioSource audioSource; // 효과음 재생을 위한 AudioSource [추후 위치 변경]
-    [SerializeField] private AudioClip[] hitSound;       // 피격 효과음
-    [SerializeField] private AudioClip deathSound;     // 사망 효과음
 
     void Awake()
     {
@@ -63,30 +59,12 @@ public class PlayerStatus : MonoBehaviour, IDamage
             case StatusType.Health:
                 CurrentHealth += amount;
                 CurrentHealth = Mathf.Clamp(CurrentHealth, 0, settings.maxHealth);
-                GameManager.Instance.uiManager.UpdateUIText(UIConstants.HP,CurrentHealth);
+                GameManager.uiManager.UpdateUIText(UIConstants.HP,CurrentHealth);
                 break;
             case StatusType.Mental:
                 CurrentMental += amount;
                 CurrentMental = Mathf.Clamp(CurrentMental, 0, settings.maxMental);
                 break;
         }
-    }
-
-    public void TakeDamage(int hitPower)
-    {
-        if(CurrentHealth <= 0) return;  // 이미 사망한 경우 데미지를 받지 않음
-
-        AdjustStatus(StatusType.Health, -hitPower);
-
-        // 피격 효과음 재생
-        if(CurrentHealth > 0){
-            audioSource.clip = hitSound[UnityEngine.Random.Range(0, hitSound.Length)];
-            audioSource.Play();
-        }else{
-            audioSource.clip = deathSound;
-            audioSource.Play();
-        }
-
-        Debug.Log($"현재 체력 : {CurrentHealth}");
     }
 }

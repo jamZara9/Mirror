@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 4924784111345075434}
   m_Layer: 0
   m_Name: Monster_Mirror
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31,9 +31,9 @@ Transform:
   m_GameObject: {fileID: 8600125277025255048}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.26, y: 1, z: 17.97}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: -15.45, y: 8.2, z: 16.01}
+  m_LocalScale: {x: 0.85, y: 0.85, z: 0.85}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6238477269426570407}
   m_Father: {fileID: 0}
@@ -128,24 +128,23 @@ MonoBehaviour:
   moveSpeed: 4
   attackDelay: 2
   attackPower: 5
-  _currentTime: 0
-  _player: {fileID: 0}
-  m_State: 0
   isMovingMonster: 1
   moveDirectionList:
-  - {x: 5, y: 1, z: 4}
-  - {x: -5, y: 1, z: 4}
-  moveDirectionDelayList:
-  - 1
-  - 2
+  - {x: -15.45, y: 8.2, z: 21}
+  - {x: -15.45, y: 8.2, z: -10}
+  - {x: -23, y: 8.2, z: -7}
+  - {x: -15.45, y: 8.2, z: -3.5}
+  - {x: 15.5, y: 8.2, z: -3.5}
+  - {x: 15.5, y: 8.2, z: 21}
+  moveDirectionDelayList: []
   DebugMode: 1
   ViewAngle: 100
   ViewRadius: 4
   TargetMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 264
   movePositionGroup: {fileID: 0}
-  Mirror: {fileID: 7204858600453076654}
+  mirror: {fileID: 7204858600453076654}
   isMirrorAttacked: 0
   dashDistance: 5
   dashDuration: 0.5

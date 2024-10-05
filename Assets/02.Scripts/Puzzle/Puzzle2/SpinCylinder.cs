@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -27,35 +28,38 @@ public class SpinCylinder : MonoBehaviour
     public void PuzzleClick()
     {
         // 회전 중이 아닐 때 (연속 회전 방지)
-        if (!spin)
+        if (spin) return;
+        
+        spin = true;
+        // CylinderSet에서 가지고 있는 이 객체의 현재 회전 값을 올림
+        cylinderSet.puzzleNowAnswer[myNum]++;
+        // 만약 기본 값이 현재값보다 같거나 작을 시 0으로 바꿈
+        if (cylinderSet.cylinderSpinSet[myNum] <= cylinderSet.puzzleNowAnswer[myNum])
         {
-            spin = true;
-            // CylinderSet에서 가지고 있는 이 객체의 현재 회전 값을 올림
-            cylinderSet.puzzleNowAnswer[myNum]++;
-            // 만약 기본 값이 현재값보다 같거나 작을 시 0으로 바꿈
-            if (cylinderSet.cylinderSpinSet[myNum] <= cylinderSet.puzzleNowAnswer[myNum])
-            {
-                cylinderSet.puzzleNowAnswer[myNum] = 0;
-            }
-            // 회전 코루틴 실행
-            StartCoroutine(Spin());
+            cylinderSet.puzzleNowAnswer[myNum] = 0;
+        }
+        // 회전 코루틴 실행
+        StartCoroutine(Spin());
+    }
+
+    private void Update()
+    {
+        if(!spin) return;
+        
+        if (!ySpin) // y축 회전이 아닐 때
+        {
+            // 정해진 각도만큼 회전
+            transform.Rotate(spinRotate * Time.deltaTime * speed, 0, 0);
+        }
+        else // y축 회전일 때
+        {
+            // 정해진 각도만큼 회전
+            transform.Rotate(0, spinRotate * Time.deltaTime * speed, 0);
         }
     }
 
-    IEnumerator Spin()
+    private IEnumerator Spin()
     {
-        if (!ySpin)     // y축 회전이 아닐 때
-        {
-            // 정해진 각도만큼 회전
-            transform.Rotate(spinRotate * Time.deltaTime * speed,0,0);
-        }
-        else       // y축 회전일 때
-        {
-            // 정해진 각도만큼 회전
-            transform.localRotation =
-                Quaternion.Euler(0, transform.localRotation.eulerAngles.y + spinRotate * Time.deltaTime * speed, 0);
-        }
-        
         // waitTime 이상의 시간이 지났을 경우 다음 코드를 진행
         yield return new WaitForSeconds(waitTime);
 

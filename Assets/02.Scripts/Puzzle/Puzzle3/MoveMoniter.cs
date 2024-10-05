@@ -1,12 +1,7 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
 
-public class MoveMoniter : MonoBehaviour
+public class MoveMoniter : MonoBehaviour, IInteractionable
 {
     public float spinRotate = 30f;  // 한번에 회전하는 각
     public float movePos = 1f;      // 한번에 움직이는 거리
@@ -91,17 +86,8 @@ public class MoveMoniter : MonoBehaviour
         }
     }
 
-    // 테스트 용도의 함수 (삭제 후 플레이어와의 상호작용 시 PuzzleClick() 실행)
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            PuzzleClick();
-        }
-    }
-
     // 플레이어와의 상호작용으로 실행
-    private void PuzzleClick()
+    public void Interaction()
     {
         if (move) return;   // move가 false일 때 진행
         if (leftMove)   // leftMove가 true일 때

@@ -109,27 +109,27 @@ public class UIController_Test : MonoBehaviour
     /// <param name="index">업데이트할 Slot Index</param>
     private void UpdateSlotUI(List<BaseItem> items, GameObject[] slots, int index){
         // UI 슬롯 프리팹과 슬롯 컨테이너가 설정되었는지 확인
-        if (uiSlotPrefab == null){
-            Debug.LogError("UI Slot Prefab이 설정되지 않았습니다.");
-            return;
-        }
+        //if (uiSlotPrefab == null){
+        //    Debug.LogError("UI Slot Prefab이 설정되지 않았습니다.");
+        //    return;
+        //}
 
-        if (itemSlotContainer == null){
-            Debug.LogError("Item Slot Container가 설정되지 않았습니다.");
-            return;
-        }
+        //if (itemSlotContainer == null){
+        //    Debug.LogError("Item Slot Container가 설정되지 않았습니다.");
+        //    return;
+        //}
 
-        GameObject slot = slots[index]; // 슬롯(아이템을 보유할 Slot)을 가져옴
-        ClearSlot(slot);
+        //GameObject slot = slots[index]; // 슬롯(아이템을 보유할 Slot)을 가져옴
+        //ClearSlot(slot);
 
-        GameObject slotItem = Instantiate(uiSlotPrefab, slot.transform);
-        UI_SlotItem uiSlot = slotItem.GetComponent<UI_SlotItem>();
+        //GameObject slotItem = Instantiate(uiSlotPrefab, slot.transform);
+        //UI_SlotItem uiSlot = slotItem.GetComponent<UI_SlotItem>();
 
-        if(uiSlot != null){
-            uiSlot.SetItem(items[index]);
-        }
+        //if(uiSlot != null){
+        //    uiSlot.SetItem(items[index]);
+        //}
 
-        // slotItem을 slot의 자식으로 설정
-        slotItem.transform.SetParent(slot.transform);
+        //// slotItem을 slot의 자식으로 설정
+        //slotItem.transform.SetParent(slot.transform);
     }
 }

@@ -1,29 +1,50 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using StarterAssets;
-using System;
+using UnityEngine.SceneManagement;
+using UnityEngine.Video;
+using TMPro;
+using Utils;
 
 /// <summary>
 /// 게임의 전반적인 관리를 담당하는 클래스
 /// </summary>
-public class GameManager : Singleton<GameManager>
+public class GameManager : Singleton<GameManager>, IManager
 {
-    [Header("Manager")]
     #region Manager
     public ItemManager itemManager;
-    public CameraController cameraController;         // 카메라 컨트롤러
-    public UIController_Test uiController;            // UI 컨트롤러
-    public Storage storage;                           // 저장소
-    public PlayerStatus playerStatus;                 // 플레이어 상태
-    public PlayerInventory playerInventory;           // 플레이어 인벤토리
+    public CameraController cameraController;         // 카메라 컨트롤러      x
+    public UIController_Test uiController;            // UI 컨트롤러         x
+    public PlayerStatus playerStatus;                 // 플레이어 상태        x
+    public PlayerInventory playerInventory;           // 플레이어 인벤토리     x
     public WeaponManager weaponManager;               // 무기 매니저
-    public DialogueManager dialogueManager;           // 대화 매니저
-    public UIManager uiManager;                       // UI 매니저
     public InventoryManager inventoryManager;         // 인벤토리 매니저
-
-    public InputManager inputManager;                 // 입력 매니저
+    // public InputManager inputManager;                 // 입력 매니저
     #endregion
+
+    [Header("Managers")]
+    public static readonly UIManager uiManager = new();                   // UI 매니저
+
+
+    public static readonly InputManager inputManager = new();             // 입력 매니저
+    public static readonly ResourceManager resourceManager = new();       // 리소스 매니저
+    public static readonly AudioManager audioManager = new();             // 오디오 매니저
+
+    // public static readonly CameraManager cameraManager = new();           // 카메라 매니저
+    // public static readonly PlayerManager playerManager = new();           // 플레이어 매니저
+    // public static readonly DialogueManager dialogueManager = new();       // 대화 매니저
+    // public static readonly MonsterManager monsterManager = new();         // 몬스터 매니저
+    // public static readonly ObjectPoolManager objectPoolManager = new();   // 오브젝트 풀 매니저
+
+    // PRTest
+
+    public static SceneLoader sceneLoader; // 씬 로더
+
+    public string CurrentScene {
+        get {
+            return SceneManager.GetActiveScene().name;
+        }
+    }
 
     void Awake()
     {
@@ -36,33 +57,36 @@ public class GameManager : Singleton<GameManager>
 
         DontDestroyOnLoad(gameObject); // GameManager가 씬 변경 시에도 파괴되지 않도록 설정
 
-        playerStatus = FindAnyObjectByType<PlayerStatus>(); // 플레이어 상태 찾기
+        AudioSource bgmSource = GameObject.Find("BGM").GetComponent<AudioSource>();
+        audioManager.SetBGMSource(bgmSource);
 
-        CheckObject(ref itemManager);
-        CheckObject(ref uiController);
-        CheckObject(ref cameraController);
-        CheckObject(ref storage);
-        CheckObject(ref playerInventory);
-        CheckObject(ref inventoryManager);
-        CheckObject(ref weaponManager);
-        CheckObject(ref uiManager);
-        CheckObject(ref dialogueManager);
-        CheckObject(ref inputManager);
-
+        sceneLoader = ComponentUtil.GetOrAddComponent<SceneLoader>(gameObject);
     }
 
-    /// <summary>
-    /// 해당 매니저가 null인지 확인하고 null이면 해당 manager의 타입을 찾아서 할당
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="manager"></param>
-    private void CheckObject<T>(ref T manager) where T : Component
+
+    void OnEnable()
     {
-        // 해당 매니저가 null이면 해당 manager의 타입을 찾아서 할당
-        if (manager == null)
-        {
-            manager = GetComponent<T>();
-        }
+        // 씬 로드 이벤트에 메서드 등록
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        // 씬 로드 이벤트에서 메서드 해제
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    // 씬이 로드될 때 호출되는 메서드
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Initialize 메서드 호출
+        Initialize(CurrentScene);
+    }
+    
+    public void Initialize(string sceneName)
+    {
+        inputManager.Initialize(sceneName);
 
     }
+
 }

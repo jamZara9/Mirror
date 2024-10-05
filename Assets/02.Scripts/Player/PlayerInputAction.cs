@@ -9,7 +9,7 @@ using System;
 /// <summary>
 /// Player의 입력처리를 담당하는 클래스
 /// </summary>
-public class PlayerInputAction : MonoBehaviour
+public class PlayerInputAction : IInputActionStrategy
 {
     [Header("Player Input Values")]
     public Vector2 move;
@@ -27,23 +27,25 @@ public class PlayerInputAction : MonoBehaviour
     public bool isUseItem = false;
     public bool isTransferItem = false;
     public bool isFire = false;
+    public bool isSit = false;
 
-    [Header("Mouse Cursor Settings")]
+    // 마우스 커서 제어
     public bool cursorLocked = true;
     public bool cursorInputForLook = true;
 
     public bool analogMovement; // 이동 입력값을 아날로그로 받을지 디지털로 받을지 결정
 
-    private void Start(){
-        GameManager.Instance.inputManager.BindAllActions("Player", this);
+    // IInputActionStrategy 인터페이스 메서드
+    public void BindInputActions(InputActionMap map)
+    {
+        GameManager.inputManager.BindAllActions(map.name, this);
     }
-
 
     public void OnMovement(InputAction.CallbackContext context)
     {
-        //인벤토리 활성화중 이동 제한
-        if (GameManager.Instance.inventoryManager.Use_Inventory)
-            return;
+        // //인벤토리 활성화중 이동 제한
+        // if (GameManager.Instance.inventoryManager.Use_Inventory)
+        //     return;
 
         move = context.ReadValue<Vector2>();
     }
@@ -52,9 +54,10 @@ public class PlayerInputAction : MonoBehaviour
     {
         if (cursorInputForLook)
         {
-            if (GameManager.Instance.inventoryManager.Use_Inventory) //인벤토리 활성화중 시야이동 제어
-                look = Vector2.zero;
-            else
+            // 추후 PlayerManager에서 PlayerItemContainer를 이용할 예정 [임시]
+            // if (GameManager.Instance.inventoryManager.Use_Inventory) //인벤토리 활성화중 시야이동 제어
+            //     look = Vector2.zero;
+            // else
                 look = context.ReadValue<Vector2>();
         }
     }
@@ -66,18 +69,20 @@ public class PlayerInputAction : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        //인벤토리 활성화중 이동 제한
-        if (GameManager.Instance.inventoryManager.Use_Inventory)
-            return;
-
+        // 추후 PlayerManager에서 PlayerItemContainer를 이용할 예정 [임시]
+        // //인벤토리 활성화중 이동 제한
+        // if (GameManager.Instance.inventoryManager.Use_Inventory)
+        //     return;
+        Debug.Log("Jump");
         jump = context.ReadValueAsButton();
     }
 
     public void OnSprint(InputAction.CallbackContext context)
     {
-        //인벤토리 활성화중 기능 제한
-        if (GameManager.Instance.inventoryManager.Use_Inventory)
-            return;
+        // 추후 PlayerManager에서 PlayerItemContainer를 이용할 예정 [임시]
+        // //인벤토리 활성화중 기능 제한
+        // if (GameManager.Instance.inventoryManager.Use_Inventory)
+        //     return;
 
         sprint = context.ReadValueAsButton();
     }
@@ -89,9 +94,9 @@ public class PlayerInputAction : MonoBehaviour
 
     public void OnInteraction(InputAction.CallbackContext context)
     {
-        //인벤토리 활성화중 기능 제한
-        if (GameManager.Instance.inventoryManager.Use_Inventory)
-            return;
+        // //인벤토리 활성화중 기능 제한
+        // if (GameManager.Instance.inventoryManager.Use_Inventory)
+        //     return;
 
         isInteractable = context.ReadValueAsButton();
     }
@@ -108,18 +113,18 @@ public class PlayerInputAction : MonoBehaviour
 
     public void OnFire(InputAction.CallbackContext context)
     {
-        //인벤토리 활성화중 기능 제한
-        if (GameManager.Instance.inventoryManager.Use_Inventory)
-            return;
+        // //인벤토리 활성화중 기능 제한
+        // if (GameManager.Instance.inventoryManager.Use_Inventory)
+        //     return;
 
         isFire = context.ReadValueAsButton();
     }
 
     public void OnShowQuickSlot(InputAction.CallbackContext context)
     {
-        //인벤토리 활성화중 기능 제한
-        if (GameManager.Instance.inventoryManager.Use_Inventory)
-            return;
+        // //인벤토리 활성화중 기능 제한 [임시 주석처리]
+        // if (GameManager.Instance.inventoryManager.Use_Inventory)
+        //     return;
 
         if (context.performed)   // 마우스 휠 버튼을 누르면
         {
@@ -127,6 +132,19 @@ public class PlayerInputAction : MonoBehaviour
         }else if(context.canceled)  // 마우스 휠 버튼을 뗐을 때
         {
             isQuickSlotVisible = false;
+        }
+    }
+
+    public void OnSit(InputAction.CallbackContext context)
+    {
+        // 앉기 키를 누르고 있어야 하는 건지? 아니면 한번 누르면 유지되는지 알아야함
+        if(context.performed)
+        {
+            isSit = true;
+        }
+        else if(context.canceled)
+        {
+            isSit = false;
         }
     }
 

@@ -1,49 +1,56 @@
 using UnityEngine;
 
-public class AudioMixerPuzzle : MonoBehaviour
+public class AudioMixerPuzzle : RaycastCheck, IInteractionable
 {
     public float maxMove;               // 슬라이더가 상하로 이동할 수 있는 최대 거리
     public float buttonMoveSpeed = 1;   // 버튼이 이동하는 속도
     public GameObject[] button;         // 버튼들을 담을 리스트
-    public Camera myCam;                // Raycast용 카메라
+    public Camera myCam;                // Raycast 및 화면 전환할 카메라
     public bool open;
+
+    public bool test;                    // 상호작용 테스트 용 변수   *임시*
     
+    private bool interaction;            // 상호 작용 확인
     private bool drag;                   // 드래그 중인지 확인할 bool 값
     private int nowDragButton;           // 현재 드래그 중인 버튼 확인 용도
+    
     void Update()
     {
-        Drag();             // 드래그 감지
-        ButtonMove();       // 버튼을 움직이는 용도
-        CheckClear();       // 클리어 확인 용도
+        if (test)       // 상호작용 테스트 용  *임시*
+        {
+            Interaction();
+            test = false;
+        }
+
+        if (Input.GetKeyUp(KeyCode.Escape))      // 상호작용 테스트 용  *임시*
+        {
+            // 카메라를 끈다
+            myCam.gameObject.SetActive(false);
+            // 상호작용 종료
+            interaction = false;
+        }
+        
+        if (!interaction) return;   // 상호 작용 중일때만 사용할 수 있도록 함
+        
+        Drag(); // 드래그 감지
+        ButtonMove(); // 버튼을 움직이는 용도
+        CheckClear();
+        // 클리어 확인 용도
     }
 
     private void Drag()
     {
         // 좌클릭을 눌렀을 때
         if(Input.GetMouseButtonDown(0)){
-            // 마우스의 위치 값을 가져옴
-            Vector3 mousePosition = Input.mousePosition;
-        
-            // 카메라의 마우스 위치에서 Ray를 생성
-            Ray myRay = myCam.ScreenPointToRay(mousePosition);
-        
-            // Ray의 충돌 확인 용도
-            RaycastHit raycastHit;
-        
-            // Ray가 물체와 충돌했을 시 true, 아니면 false
-            bool weHitSomething = Physics.Raycast(myRay, out raycastHit);
-
             // 버튼의 수만큼 반복
             for (var i = 0; i < button.Length; i++)
             {
                 // Ray가 물체와 충돌하였고,  현재 비교 중인 객체와 충돌한 객체가 같은 경우
-                if (weHitSomething && raycastHit.transform == button[i].transform)
-                {
-                    // 현재 드래그 중인 버튼을 i번째 버튼으로 지정
-                    nowDragButton = i;
-                    // 드래그 중으로 변환
-                    drag = true;
-                }
+                if (RayHitCheck(Input.mousePosition, myCam, button[i].transform)) continue;
+                // 현재 드래그 중인 버튼을 i번째 버튼으로 지정
+                nowDragButton = i;
+                // 드래그 중으로 변환
+                drag = true;
             }
             
         }
@@ -71,7 +78,7 @@ public class AudioMixerPuzzle : MonoBehaviour
             Vector3 worldPosition = myCam.ScreenToWorldPoint(position);
             
             // 드래그 중인 버튼의 위치가 최대로 이동할 수 있는 상하 값보다 작을 경우
-            if(buttonPos.z >= -maxMove && buttonPos.z <= maxMove)
+            if((buttonPos.z >= -maxMove && worldPosition.z > -maxMove))
             {
                 // 버튼의 localPosition을 기준으로 z축을 마우스의 이동 값에 따라 이동시킴
                 button[nowDragButton].transform.localPosition = new Vector3(buttonPos.x, buttonPos.y, worldPosition.z * buttonMoveSpeed);
@@ -121,6 +128,20 @@ public class AudioMixerPuzzle : MonoBehaviour
             // 클리어로 변경함
             open = true;
             Debug.Log("Clear!");
+            
+            // 카메라를 끈다
+            myCam.gameObject.SetActive(false);
+            // 상호작용 종료
+            interaction = false;
         }
+    }
+
+    // 플레이어가 상호작용을 진행했을 경우
+    public void Interaction()
+    {
+        // 카메라를 켠다
+        myCam.gameObject.SetActive(true);
+        // 퍼즐을 풀 수 있도록 한다
+        interaction = true;
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Utils;
 
 /// <summary>
 /// 플레이어의 상태(이동, 점프, 달리기등)에 대한 로직을 담당하는 클래스
@@ -9,6 +10,7 @@ using System;
 public class PlayerStateController : MonoBehaviour
 {
     private PlayerStatus.PlayerBasicSettings _settings;  // PlayerBasicSettings를 참조
+    private PlayerStatus _playerStatus;                 // PlayerStatus를 참조
     private float _speed = 0.0f;                    // 현재 속도
     private float _animationBlend;                  // 애니메이션 블렌드
     private float _rotationSmoothTime = 0.12f;      // 회전 부드러움 시간
@@ -18,20 +20,22 @@ public class PlayerStateController : MonoBehaviour
 
     [Header("Jump Settings")]
     private bool _isGrounded = true;              // 땅에 붙어 있는지 여부
-    private float _gravity = -14.0f;              // 중력(기본적으로 -9.81)
+    private float _gravity = -20.0f;              // 중력(기본적으로 -9.81)
     private float _jumpTimeoutDelta = 0.0f;       // 점프 타임아웃 델타
     private float _jumpTimeout = 0.5f;           // 점프 타임아웃
     private float _fallTimeoutDelta;              // 낙하 타임아웃 델타
     private float _fallTimeout = 0.15f;           // 낙하 타임아웃
-    private float _verticalVelocity;              // 수직 속도
+    private float _verticalVelocity = -2.0f;      // 수직 속도
     private float _terminalVelocity = 53.0f;      // 터미널 속도
     [SerializeField] private LayerMask _groundLayers; // 플레이어가 이동할 수 있는 Ground의 Layer
     private float _groundedOffset = -0.14f;         // 땅과의 거리
-    public float _groundedRadius = 0.28f;  // 땅에 붙어 있는지 확인할 반지름(CharacterController의 radius와 동일하게 설정)
+    public float _groundedRadius = 0.28f;           // 땅에 붙어 있는지 확인할 반지름(CharacterController의 radius와 동일하게 설정)
 
     [Header("Animation Settings")]
-    private bool _hasAnimator;      // 애니메이터가 있는지 여부
-    private Animator _animator;     // 애니메이터 컴포넌트
+    private bool _hasFPSAnimator;      // 애니메이터가 있는지 여부
+    private bool _has3stAnimator;      // 애니메이터가 있는지 여부
+    [SerializeField] private Animator _FPSAnimator;     // 애니메이터 컴포넌트
+    [SerializeField] private Animator _3stAnimator;     // 애니메이터 컴포넌트
 
     // animation IDs
     private int _animIDSpeed;
@@ -39,12 +43,11 @@ public class PlayerStateController : MonoBehaviour
     private int _animIDJump;
     private int _animIDFreeFall;
     private int _animIDMotionSpeed;
+    private int _animIDAttack;
+    private int _animIDSit;
 
     [Header("Audio Settings")]
-    [SerializeField] private AudioSource audioSource;     // 오디오 소스
-    [SerializeField] private AudioClip landingAudioClip;        // 착지 사운드
-    [SerializeField] private AudioClip[] footstepAudioClips;    // 발소리 사운드
-    [Range(0, 1)] public float footstepAudioVolume = 0.5f;      // 발소리 사운드 볼륨
+    [SerializeField] private AudioSource audioSource;           // 오디오 소스
     [SerializeField] private AudioClip attackAudioClip;         // 공격 사운드
 
 
@@ -60,21 +63,24 @@ public class PlayerStateController : MonoBehaviour
     public float cameraAngleOverride = 0.0f;                // 카메라 각도 오버라이드
 
     private bool _isQuickSlotCurrentlyVisible  = false;     // 현재 퀵슬롯 활성화 여부
+    private bool _isSitVisible = false;                     // 현재 앉기 상태인지 여부
 
     void Start()
     {
-        _hasAnimator = TryGetComponent(out _animator);
-        _settings = GetComponent<PlayerStatus>().settings;
+        _hasFPSAnimator = _FPSAnimator != null;
+        _has3stAnimator = _3stAnimator != null;
+
+        _playerStatus = PlayerManager.Instance.GetPlayerStatus();
+        _settings = _playerStatus.settings;
         _characterController = GetComponent<CharacterController>();
-        // _inputActions = GetComponent<PlayerInputAction>();
-        _inputActions = GameManager.Instance.inputManager.playerInputAction;
+        _inputActions = GameManager.inputManager.GetInputActionStrategy("Player") as PlayerInputAction;
 
         AssignAnimationIDs();
 
         // animator가 있는 경우, 머리 위치를 가져옴
-        if (_hasAnimator)
+        if (_hasFPSAnimator)
         {
-            _playerChestTR = _animator.GetBoneTransform(HumanBodyBones.UpperChest);
+            _playerChestTR = _FPSAnimator.GetBoneTransform(HumanBodyBones.UpperChest);
         }
     }
 
@@ -90,6 +96,7 @@ public class PlayerStateController : MonoBehaviour
         ShowInventory();
         OnFire();
         ShowQuickSlot();
+        OnSit();
 
         SetSelectItem();
 
@@ -118,6 +125,8 @@ public class PlayerStateController : MonoBehaviour
         _animIDJump = AnimationConstants.AnimIDJump;
         _animIDFreeFall = AnimationConstants.AnimIDFreeFall;
         _animIDMotionSpeed = AnimationConstants.AnimIDMotionSpeed;
+        _animIDAttack = AnimationConstants.AnimIDAttack;
+        _animIDSit = AnimationConstants.AnimIDSit;
     }
 
     /// <summary>
@@ -154,11 +163,15 @@ public class PlayerStateController : MonoBehaviour
             _speed = targetSpeed;
         }
 
+        // 이동 입력에 따라 애니메이션 블렌드를 설정 (앞으로 갈 때 양수, 뒤로 갈 때 음수)
+        // _inputActions.move.y가 양수면 전진, 음수면 후진
+        float targetBlend = (_inputActions.move.y >= 0) ? targetSpeed : -targetSpeed;
+
         // 애니메이션 블렌드를 처리하여 이동 애니메이션이 부드럽게 전환되도록 진행
         // _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * _settings.speedChangeRate);
-        _animationBlend = SmoothSpeedTransition(_animationBlend, targetSpeed, _settings.speedChangeRate);
+        _animationBlend = SmoothSpeedTransition(_animationBlend, targetBlend , _settings.speedChangeRate);
 
-        if (_animationBlend < 0.01f) _animationBlend = 0f;
+        if (Mathf.Abs(_animationBlend) < 0.01f) _animationBlend = 0f;
 
         Vector3 moveDirection = new Vector3(_inputActions.move.x, 0, _inputActions.move.y).normalized;
 
@@ -169,10 +182,15 @@ public class PlayerStateController : MonoBehaviour
         _characterController.Move(moveDirection * (_speed * Time.deltaTime) + new Vector3(0, _verticalVelocity, 0) * Time.deltaTime);
 
         // 애니메이터가 존재하는 경우, 애니메이션 상태를 업데이트
-        if (_hasAnimator)
+        if (_hasFPSAnimator)
         {
-            _animator.SetFloat(_animIDSpeed, _animationBlend);
-            _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
+            _FPSAnimator.SetFloat(_animIDSpeed, _animationBlend);
+            _FPSAnimator.SetFloat(_animIDMotionSpeed, inputMagnitude);
+        }
+
+        if(_has3stAnimator){
+            _3stAnimator.SetFloat(_animIDSpeed, _animationBlend);
+            _3stAnimator.SetFloat(_animIDMotionSpeed, inputMagnitude);
         }
     }
 
@@ -200,7 +218,8 @@ public class PlayerStateController : MonoBehaviour
         float _xRotation = _inputActions.look.y * _rotationSmoothTime;    // 상하 회전
 
         _cinemachineTargetPitch -= _xRotation;
-        _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, bottomClamp, topClamp);
+        // _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, bottomClamp, topClamp);
+        _cinemachineTargetPitch = MathUtil.ClampAngle(_cinemachineTargetPitch, bottomClamp, topClamp);
 
         Quaternion targetRotation = Quaternion.Euler(_cinemachineTargetPitch + cameraAngleOverride, 0.0f, 0.0f);
         _cinemachineCamera.transform.localRotation = targetRotation;
@@ -223,20 +242,6 @@ public class PlayerStateController : MonoBehaviour
     }
 
     /// <summary>
-    /// 각도 제한
-    /// </summary>
-    /// <param name="lfAngle"></param>
-    /// <param name="lfMin"></param>
-    /// <param name="lfMax"></param>
-    /// <returns></returns>
-    private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
-    {
-        if (lfAngle < -360f) lfAngle += 360f;
-        if (lfAngle > 360f) lfAngle -= 360f;
-        return Mathf.Clamp(lfAngle, lfMin, lfMax);
-    }
-
-    /// <summary>
     /// 점프 시에 따른 중력, 수직 속도 처리
     /// </summary>
     private void OnJump()
@@ -247,10 +252,14 @@ public class PlayerStateController : MonoBehaviour
             // 지면에 존재할 경우, 낙하 타이머 초기화
             _fallTimeoutDelta = _fallTimeout;
 
-            if (_hasAnimator)
+            if (_hasFPSAnimator)
             {
-                _animator.SetBool(_animIDJump, false);
-                _animator.SetBool(_animIDFreeFall, false);
+                _FPSAnimator.SetBool(_animIDJump, false);
+                // _FPSAnimator.SetBool(_animIDFreeFall, false);
+            }
+
+            if(_has3stAnimator){
+                _3stAnimator.SetBool(_animIDJump, false);
             }
 
             // 지면에 닿았을 경우, 수직 속도를 초기화
@@ -266,9 +275,13 @@ public class PlayerStateController : MonoBehaviour
                 // 수직 속도를 계산 (원하는 높이까지 올라가기 위한 속도 계산)
                 _verticalVelocity = Mathf.Sqrt(_settings.jumpHeight * -2.0f * _gravity);
 
-                if (_hasAnimator)
+                if (_hasFPSAnimator)
                 {
-                    _animator.SetBool(_animIDJump, true);
+                    _FPSAnimator.SetBool(_animIDJump, true);
+                }
+
+                if(_has3stAnimator){
+                    _3stAnimator.SetBool(_animIDJump, true);
                 }
             }
 
@@ -288,13 +301,13 @@ public class PlayerStateController : MonoBehaviour
             {
                 _fallTimeoutDelta -= Time.deltaTime;
             }
-            else
-            {
-                if (_hasAnimator)
-                {
-                    _animator.SetBool(_animIDFreeFall, true);
-                }
-            }
+            // else
+            // {
+            //     if (_hasFPSAnimator)
+            //     {
+            //         _FPSAnimator.SetBool(_animIDFreeFall, true);
+            //     }
+            // }
 
             // 지면에 닿았을 때 점프 입력을 비활성화
             _inputActions.jump = false;
@@ -318,9 +331,13 @@ public class PlayerStateController : MonoBehaviour
         //스피어를 이용하여 땅에 닿았는지 여부를 확인
         _isGrounded = Physics.CheckSphere(spherePosition, _groundedRadius, _groundLayers, QueryTriggerInteraction.Ignore);
 
-        if (_hasAnimator)
+        if (_hasFPSAnimator)
         {
-            _animator.SetBool(_animIDGrounded, _isGrounded);
+            _FPSAnimator.SetBool(_animIDGrounded, _isGrounded);
+        }
+
+        if(_has3stAnimator){
+            _3stAnimator.SetBool(_animIDGrounded, _isGrounded);
         }
     }
 
@@ -465,16 +482,13 @@ public class PlayerStateController : MonoBehaviour
         if (_inputActions.isInventoryVisible)
         {
             GameManager gameManager = GameManager.Instance;     // MainGameManager 인스턴스
-            // UIController_Test uiController = gameManager.uiController;  // UIController_Test 인스턴스
 
             // 임시 테스트용
             InventoryManager inventoryManager = gameManager.inventoryManager;  // InventoryManager_Test 인스턴스
-            UIManager uIManager = gameManager.uiManager;
+            UIManager uIManager = GameManager.uiManager;
 
             // 인벤토리 UI 활성화/비활성화
-            // uiController.inventoryUI.SetActive(!uiController.inventoryUI.activeSelf);
             inventoryManager.OnShowInventory();
-            // gameManager.cameraController.SetCursorState(uiController.inventoryUI.activeSelf);   // 커서 상태 설정
             gameManager.cameraController.SetCursorState(uIManager.Inventory().gameObject.activeSelf);   // 커서 상태 설정
 
             _inputActions.isInventoryVisible = false;
@@ -500,18 +514,31 @@ public class PlayerStateController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 공격 처리
+    /// </summary>
     private void OnFire()
     {
         if (_inputActions.isFire)
         {
-            PlayerStatus playerStatus = GetComponent<PlayerStatus>();
+            Debug.Log($"{_attackTimeoutDelta} / {_playerStatus.settings.attackDelay}");
 
-            Debug.Log($"{_attackTimeoutDelta} / {playerStatus.settings.attackDelay}");
+            if(_attackTimeoutDelta > _playerStatus.settings.attackDelay){
 
-            if(_attackTimeoutDelta > playerStatus.settings.attackDelay){
+                // 애니메이터가 존재하는 경우, 애니메이션 상태를 업데이트
+                if (_hasFPSAnimator)
+                {
+                    // _FPSAnimator.SetBool(_animIDAttack, true);
+                    _FPSAnimator.SetTrigger(_animIDAttack);
+                }
+
+                if(_has3stAnimator){
+                    _3stAnimator.SetTrigger(_animIDAttack);
+                }
+
                 Debug.Log("Attack");
                 //공격 사거리 내에 적이 있는지 확인
-                Collider[] hitColliders = Physics.OverlapSphere(transform.position, playerStatus.CurrentAttackRange);
+                Collider[] hitColliders = Physics.OverlapSphere(transform.position, _playerStatus.CurrentAttackRange);
                 foreach (var hitCollider in hitColliders)
                 {
                     // 적인 경우에만 데미지를 입힘
@@ -519,7 +546,7 @@ public class PlayerStateController : MonoBehaviour
                         IDamage target = hitCollider.GetComponent<IDamage>();
 
                         if(target != null){
-                            target.TakeDamage((int)playerStatus.CurrentAttackDamage);
+                            target.TakeDamage((int)_playerStatus.CurrentAttackDamage);
 
                             if(audioSource != null){
                                 // 공격 사운드 추가
@@ -541,36 +568,60 @@ public class PlayerStateController : MonoBehaviour
             _inputActions.isFire = false;
         }
     }
-
-
-    #region Animation Events
+    
     /// <summary>
-    /// 발소리 이벤트
+    /// 앉기 처리
     /// </summary>
-    private void OnFootstep(AnimationEvent animationEvent)
+    private void OnSit()
     {
-        if (animationEvent.animatorClipInfo.weight > 0.5f)
-        {
-            if (footstepAudioClips.Length > 0)
+        if(_inputActions.isSit){
+            
+            if(!_isSitVisible){
+                _isSitVisible = true;
+
+                if (_hasFPSAnimator)
+                {
+                    _FPSAnimator.SetBool(_animIDSit, true);
+                }
+
+                if(_has3stAnimator){
+                    _3stAnimator.SetBool(_animIDSit, true);
+                }
+            }
+        }else{
+            _isSitVisible = false;
+
+            if (_hasFPSAnimator)
             {
-                var index = UnityEngine.Random.Range(0, footstepAudioClips.Length);
-                AudioSource.PlayClipAtPoint(footstepAudioClips[index], transform.TransformPoint(_characterController.center), footstepAudioVolume);
+                _FPSAnimator.SetBool(_animIDSit, false);
+            }
+
+            if(_has3stAnimator){
+                _3stAnimator.SetBool(_animIDSit, false);
             }
         }
     }
 
     /// <summary>
-    /// 착지 이벤트
+    /// 일정 시간이 지난 후 공격 애니메이션을 종료하고 원래 상태로 복귀
     /// </summary>
-    /// <param name="animationEvent"></param>
-    private void OnLand(AnimationEvent animationEvent)
+    /// <param name="delay"></param>
+    /// <returns></returns>
+    private IEnumerator ResetAttackAnimation(float delay)
     {
-        if (animationEvent.animatorClipInfo.weight > 0.5f)
+        // 공격 애니메이션이 끝날 때까지 기다림
+        yield return new WaitForSeconds(delay);
+
+        // 애니메이터가 존재하면 공격 애니메이션을 종료
+        if (_hasFPSAnimator)
         {
-            AudioSource.PlayClipAtPoint(landingAudioClip, transform.TransformPoint(_characterController.center), footstepAudioVolume);
+            _FPSAnimator.SetBool(_animIDAttack, false);
+        }
+
+        if(_has3stAnimator){
+            _3stAnimator.SetBool(_animIDAttack, false);
         }
     }
-    #endregion
 }
 
 

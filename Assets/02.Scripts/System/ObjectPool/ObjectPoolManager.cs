@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;     // 오브젝트 풀링 사용을 위한 네임 스페이스 추가
 
-public class ObjectPoolManager : Singleton<ObjectPoolManager>
+public class ObjectPoolManager : Singleton<ObjectPoolManager>, IManager
 {
     [System.Serializable]
     private class ObjectInfo    // 오브젝트 풀로 관리할 오브젝트 정보 클래스
@@ -24,9 +24,18 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>
 
     private Dictionary<string, GameObject> objectDic = new Dictionary<string, GameObject>();    // 오브젝트 풀에서 오브젝트를 새로 생성할때 사용할 딕셔너리
 
-    void Awake()
+    // void Awake()
+    // {
+    //     Init();     // 오브젝트 풀 초기 설정
+    // }
+
+    public void Initialize(string sceneName)
     {
-        Init();     // 오브젝트 풀 초기 설정
+        if(sceneName == SceneConstants.StartScene)
+        {
+            // 오브젝트 풀 초기 설정
+            Init();
+        }
     }
 
     /// <summary>
