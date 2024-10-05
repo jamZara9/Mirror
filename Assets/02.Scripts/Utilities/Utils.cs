@@ -48,7 +48,7 @@ namespace Utils{
         /// <param name="parent">부모 오브젝트</param>
         /// <param name="name">찾을 자식 오브젝트 이름</param>
         /// <returns>찾은 자식 오브젝트</returns>
-        public static GameObject FindChildObject(GameObject parent, string name)
+        public static Transform FindChildObject(GameObject parent, string name)
         {
             Transform[] trs = parent.GetComponentsInChildren<Transform>(true);
 
@@ -56,7 +56,7 @@ namespace Utils{
             {
                 if (tr.name == name)
                 {
-                    return tr.gameObject;
+                    return tr;
                 }
             }
 
@@ -90,19 +90,6 @@ namespace Utils{
             {
                 component.gameObject.SetActive(isActive);
             }
-        }
-
-        public static GameObject[] GetChildObjects(GameObject parent)
-        {
-            Transform[] trs = parent.GetComponentsInChildren<Transform>(true);
-            GameObject[] gos = new GameObject[trs.Length];
-
-            for (int i = 0; i < trs.Length; i++)
-            {
-                gos[i] = trs[i].gameObject;
-            }
-
-            return gos;
         }
     }    
 }
